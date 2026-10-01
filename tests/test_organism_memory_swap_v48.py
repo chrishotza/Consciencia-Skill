@@ -25,6 +25,7 @@ def test_v48_fake_memory_swap(tmp_path: Path, monkeypatch):
         (out / "summary.json").read_text(encoding="utf-8")
     )
 
+    assert summary["base_clones_match"] is True
     assert summary["same_receiver_state_before_intervention"] is True
     assert summary["only_memory_content_changed"] is True
     assert summary["memory_swap_changes_choice"] is True
