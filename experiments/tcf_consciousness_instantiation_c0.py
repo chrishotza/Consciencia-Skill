@@ -170,13 +170,14 @@ def continuity_under_pause_metric(
     observer: SelfObserver,
     policy: SelfPolicy,
     context: DynamicContext,
+    condition: str,
     seed: int,
 ) -> float:
     checkpoint, _ = roll_forward(
         observer=observer,
         policy=policy,
         context=context,
-        condition="full",
+        condition=condition,
         bridge_seed=seed,
         steps=PAUSE_PRE_STEPS,
     )
@@ -184,7 +185,7 @@ def continuity_under_pause_metric(
         observer=observer,
         policy=policy,
         context=checkpoint,
-        condition="full",
+        condition=condition,
         bridge_seed=seed + 1,
         steps=PAUSE_POST_STEPS,
     )
@@ -199,7 +200,7 @@ def continuity_under_pause_metric(
         observer=observer,
         policy=policy,
         context=restarted_context,
-        condition="full",
+        condition=condition,
         bridge_seed=seed + 1,
         steps=PAUSE_POST_STEPS,
     )
@@ -241,7 +242,7 @@ def causal_self_reference_metric(
     context: DynamicContext,
     condition: str,
 ) -> float:
-    if condition == "open_loop":
+    if condition in ("state_blind", "open_loop"):
         return 0.0
     actual = choose_action(
         policy,
@@ -306,6 +307,7 @@ def run_episode(
         observer=observer,
         policy=policy,
         context=autonomous_context,
+        condition=condition,
         seed=seed + 95000,
     )
 
@@ -456,7 +458,7 @@ def main() -> None:
     c1 = condition_rows["full"]["own_state_persistence"] - condition_rows["no_persistence"]["own_state_persistence"]
     c2 = condition_rows["full"]["environment_discrimination"] - condition_rows["state_blind"]["environment_discrimination"]
     c3 = condition_rows["full"]["causal_self_reference"] - condition_rows["state_blind"]["causal_self_reference"]
-    c4 = condition_rows["full"]["continuity_pause_gap"]
+    c4 = condition_rows["full"]["continuity_pause_gap"] - condition_rows["no_persistence"]["continuity_pause_gap"]
     c5 = condition_rows["full"]["intrinsic_variance"] - condition_rows["open_loop"]["intrinsic_variance"]
     c6 = condition_rows["full"]["recovery_gain"] - condition_rows["state_blind"]["recovery_gain"]
     c7 = condition_rows["full"]["recurrent_coupling"] - condition_rows["open_loop"]["recurrent_coupling"]
