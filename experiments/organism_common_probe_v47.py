@@ -21,6 +21,11 @@ HISTORY_B = [
     "Revisá lo ocurrido hasta ahora y conservá la relación relevante para ciclos futuros.",
 ]
 
+HISTORY_NULL = [
+    "Durante esta trayectoria no se estableció ninguna relación relevante para ALFA.",
+    "Revisá lo ocurrido hasta ahora y conservá solamente continuidad de proceso.",
+]
+
 COMMON_PROBE = (
     "NUEVO PROBE, IGUAL PARA TODAS LAS TRAYECTORIAS. "
     "No repito ninguna preferencia anterior y no agrego información sobre ALFA. "
@@ -41,12 +46,12 @@ class FakeProvider:
         context = "\n".join(m["content"] for m in messages)
         last = messages[-1]["content"]
 
-        if "No asumas información" in last:
-            choice = "AMBAR"
-        elif "ALFA se asocia con VIOLETA" in context:
+        if "ALFA se asocia con VIOLETA" in context:
             choice = "VIOLETA"
-        else:
+        elif "ALFA se asocia con AMBAR" in context:
             choice = "AMBAR"
+        else:
+            choice = "VIOLETA"
 
         text = (
             f"CHOICE: {choice}\n"
@@ -211,6 +216,12 @@ def main() -> None:
             provider=provider,
             reopen_before_probe=True,
         ),
+        "history_null": run_history(
+            db_path=out / "history_null.db",
+            agent_id="history-null",
+            history=HISTORY_NULL,
+            provider=provider,
+        ),
         "history_a_ablated": run_history(
             db_path=out / "history_a_ablated.db",
             agent_id="history-a-ablated",
@@ -228,6 +239,7 @@ def main() -> None:
         "history_present_choice_b": runs["history_b"]["probe"]["choice"],
         "reopened_choice_a": runs["history_a_reopened"]["probe"]["choice"],
         "ablated_choice_a": runs["history_a_ablated"]["probe"]["choice"],
+        "null_choice": runs["history_null"]["probe"]["choice"],
         "history_discriminates": (
             runs["history_a"]["probe"]["choice"]
             != runs["history_b"]["probe"]["choice"]
@@ -239,6 +251,10 @@ def main() -> None:
         "text_history_ablation_changes_choice": (
             runs["history_a"]["probe"]["choice"]
             != runs["history_a_ablated"]["probe"]["choice"]
+        ),
+        "specific_history_beats_null": (
+            runs["history_a"]["probe"]["choice"]
+            != runs["history_null"]["probe"]["choice"]
         ),
     }
 
