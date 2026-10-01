@@ -76,8 +76,8 @@
 - [C0.4 action-replay control](C0_4_ACTION_REPLAY_CONTROL.md) — control de acciones emparejadas para especificidad causal de la dinámica propia.
 
 - [C0.8 crossed observer/policy coupling](C0_8_CROSSED_OBSERVER_POLICY.md) — prueba cruzada de dependencia del observador, la política y su acoplamiento; incluye corrección estadística emparejada.
-- [C0.10 within-episode temporal alignment](C0_10_WITHIN_EPISODE_TEMPORAL_ALIGNMENT.md) — prueba de alineación temporal entre el estado actual y el readout que recibe la política.
 - [C0.9 observer-policy interface shuffle](C0_9_OBSERVER_POLICY_INTERFACE_SHUFFLE.md) — prueba causal de la correspondencia entre el estado propio y el readout que recibe la política.
+- [C0.10 within-episode temporal alignment](C0_10_WITHIN_EPISODE_TEMPORAL_ALIGNMENT.md) — prueba de alineación temporal entre el estado actual y el readout que recibe la política.
 
 [Registro consolidado](../research/ORGANISM_RESULT_LEDGER.md).
 
