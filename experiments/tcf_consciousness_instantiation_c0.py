@@ -12,6 +12,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
+from src.ontto.bridge import DynamicStateBridge
 from src.ontto.dynamics import Config as DynamicsConfig
 from src.ontto.self_observer import SelfObserver
 from src.ontto.self_policy import SelfPolicy
@@ -41,8 +42,12 @@ CRITERIA = (
 )
 
 CONDITIONS = ("full", "state_blind", "no_persistence", "open_loop")
-WARMUP_AUTONOMOUS_STEPS = 8
+AUTONOMOUS_STEPS = 8
+PAUSE_PRE_STEPS = 4
+PAUSE_POST_STEPS = 4
 PERTURBATION = 0.50
+C1_STATE_SEPARATION = 0.20
+
 
 def choose_action(
     policy: SelfPolicy,
@@ -62,42 +67,209 @@ def choose_action(
     return float(policy.choose(candidates)["signal"])
 
 
-def autonomous_window(
+def advance_one(
+    *,
+    observer: SelfObserver,
+    policy: SelfPolicy,
+    bridge: DynamicStateBridge,
+    context: DynamicContext,
+    condition: str,
+) -> tuple[DynamicContext, float]:
+    signal = choose_action(
+        policy,
+        observer,
+        context=context,
+        state_blind=condition == "state_blind",
+        open_loop=condition == "open_loop",
+    )
+    _, _, next_context = self_prediction_gain(
+        observer,
+        bridge,
+        context=context,
+        signal=signal,
+    )
+    if condition == "no_persistence":
+        next_context = DynamicContext(
+            previous_state=0.0,
+            state=0.0,
+            memory=0.0,
+            pressure=0.0,
+            step_index=next_context.step_index,
+        )
+    return next_context, float(signal)
+
+
+def roll_forward(
     *,
     observer: SelfObserver,
     policy: SelfPolicy,
     context: DynamicContext,
     condition: str,
+    bridge_seed: int,
     steps: int,
 ) -> tuple[DynamicContext, list[float]]:
-    bridge = __import__("src.ontto.bridge", fromlist=["DynamicStateBridge"]).DynamicStateBridge(
-        DynamicsConfig(), seed=context.step_index + 93001
-    )
+    bridge = DynamicStateBridge(DynamicsConfig(), seed=bridge_seed)
     states = [float(context.state)]
     for _ in range(steps):
-        signal = choose_action(
-            policy,
-            observer,
+        context, _ = advance_one(
+            observer=observer,
+            policy=policy,
+            bridge=bridge,
             context=context,
-            state_blind=condition == "state_blind",
-            open_loop=condition == "open_loop",
+            condition=condition,
         )
-        _, _, context = self_prediction_gain(
-            observer,
-            bridge,
-            context=context,
-            signal=signal,
-        )
-        if condition == "no_persistence":
-            context = DynamicContext(
-                previous_state=0.0,
-                state=0.0,
-                memory=0.0,
-                pressure=0.0,
-                step_index=context.step_index,
-            )
         states.append(float(context.state))
     return context, states
+
+
+def own_state_persistence_metric(
+    *,
+    observer: SelfObserver,
+    policy: SelfPolicy,
+    context: DynamicContext,
+    condition: str,
+    seed: int,
+) -> float:
+    center = float(np.clip(context.state, -0.50, 0.50))
+    left = DynamicContext(
+        previous_state=center,
+        state=center - C1_STATE_SEPARATION / 2.0,
+        memory=context.memory,
+        pressure=context.pressure,
+        step_index=context.step_index,
+    )
+    right = DynamicContext(
+        previous_state=center,
+        state=center + C1_STATE_SEPARATION / 2.0,
+        memory=context.memory,
+        pressure=context.pressure,
+        step_index=context.step_index,
+    )
+    left_final, _ = roll_forward(
+        observer=observer,
+        policy=policy,
+        context=left,
+        condition=condition,
+        bridge_seed=seed,
+        steps=AUTONOMOUS_STEPS,
+    )
+    right_final, _ = roll_forward(
+        observer=observer,
+        policy=policy,
+        context=right,
+        condition=condition,
+        bridge_seed=seed,
+        steps=AUTONOMOUS_STEPS,
+    )
+    final_separation = abs(left_final.state - right_final.state)
+    return float(final_separation / C1_STATE_SEPARATION)
+
+
+def continuity_under_pause_metric(
+    *,
+    observer: SelfObserver,
+    policy: SelfPolicy,
+    context: DynamicContext,
+    condition: str,
+    seed: int,
+) -> float:
+    checkpoint, _ = roll_forward(
+        observer=observer,
+        policy=policy,
+        context=context,
+        condition=condition,
+        bridge_seed=seed,
+        steps=PAUSE_PRE_STEPS,
+    )
+    uninterrupted, uninterrupted_states = roll_forward(
+        observer=observer,
+        policy=policy,
+        context=checkpoint,
+        condition=condition,
+        bridge_seed=seed + 1,
+        steps=PAUSE_POST_STEPS,
+    )
+
+    resumed_context = checkpoint
+    if condition == "no_persistence":
+        resumed_context = DynamicContext(
+            previous_state=0.0,
+            state=0.0,
+            memory=0.0,
+            pressure=0.0,
+            step_index=checkpoint.step_index,
+        )
+
+    resumed, resumed_states = roll_forward(
+        observer=observer,
+        policy=policy,
+        context=resumed_context,
+        condition=condition,
+        bridge_seed=seed + 1,
+        steps=PAUSE_POST_STEPS,
+    )
+
+    trajectory_gap = float(
+        np.mean(
+            np.abs(
+                np.asarray(uninterrupted_states)
+                - np.asarray(resumed_states)
+            )
+        )
+    )
+    endpoint_gap = abs(float(uninterrupted.state) - float(resumed.state))
+    return float(trajectory_gap + endpoint_gap)
+
+
+def action_environment_discrimination(
+    *,
+    observer: SelfObserver,
+    policy: SelfPolicy,
+    context: DynamicContext,
+    condition: str,
+) -> float:
+    positive_context, _, _ = apply_single_impulse(context=context, sign=1.0)
+    negative_context, _, _ = apply_single_impulse(context=context, sign=-1.0)
+    positive = choose_action(
+        policy,
+        observer,
+        context=positive_context,
+        state_blind=condition == "state_blind",
+        open_loop=condition == "open_loop",
+    )
+    negative = choose_action(
+        policy,
+        observer,
+        context=negative_context,
+        state_blind=condition == "state_blind",
+        open_loop=condition == "open_loop",
+    )
+    return float(abs(positive - negative))
+
+
+def causal_self_reference_metric(
+    *,
+    observer: SelfObserver,
+    policy: SelfPolicy,
+    context: DynamicContext,
+    condition: str,
+) -> float:
+    positive_context, _, _ = apply_single_impulse(context=context, sign=1.0)
+    actual = choose_action(
+        policy,
+        observer,
+        context=positive_context,
+        state_blind=False,
+        open_loop=condition == "open_loop",
+    )
+    blinded = choose_action(
+        policy,
+        observer,
+        context=positive_context,
+        state_blind=True,
+        open_loop=condition == "open_loop",
+    )
+    return float(abs(actual - blinded))
 
 
 def run_episode(
@@ -108,52 +280,66 @@ def run_episode(
     condition: str,
     recovery_steps: int,
 ) -> dict[str, float]:
-    from src.ontto.bridge import DynamicStateBridge
-
     policy = SelfPolicy.from_dict(json.loads(json.dumps(policy_snapshot)))
     bridge = DynamicStateBridge(DynamicsConfig(), seed=seed)
     context = warmup_context(bridge, seed=seed + 1000)
 
-    pre_autonomous = float(context.state)
-    context, autonomous_states = autonomous_window(
+    own_state_persistence = own_state_persistence_metric(
         observer=observer,
         policy=policy,
         context=context,
         condition=condition,
-        steps=WARMUP_AUTONOMOUS_STEPS,
+        seed=seed + 93000,
     )
 
+    autonomous_context, autonomous_states = roll_forward(
+        observer=observer,
+        policy=policy,
+        context=context,
+        condition=condition,
+        bridge_seed=seed + 94000,
+        steps=AUTONOMOUS_STEPS,
+    )
     autonomous_variance = float(np.var(autonomous_states))
-    autonomous_displacement = float(abs(context.state - pre_autonomous))
 
-    pre_event = context
-    positive_context, _, _ = apply_single_impulse(context=pre_event, sign=1.0)
-    negative_context, _, _ = apply_single_impulse(context=pre_event, sign=-1.0)
+    c2 = action_environment_discrimination(
+        observer=observer,
+        policy=policy,
+        context=autonomous_context,
+        condition=condition,
+    )
+    c3 = causal_self_reference_metric(
+        observer=observer,
+        policy=policy,
+        context=autonomous_context,
+        condition=condition,
+    )
+    continuity_gap = continuity_under_pause_metric(
+        observer=observer,
+        policy=policy,
+        context=autonomous_context,
+        condition=condition,
+        seed=seed + 95000,
+    )
 
-    positive_action = choose_action(
+    pre_event = autonomous_context
+    pre_action_signal = choose_action(
         policy,
         observer,
-        context=positive_context,
+        context=pre_event,
         state_blind=condition == "state_blind",
         open_loop=condition == "open_loop",
     )
-    negative_action = choose_action(
-        policy,
-        observer,
-        context=negative_context,
-        state_blind=condition == "state_blind",
-        open_loop=condition == "open_loop",
-    )
-    action_discrimination = float(abs(positive_action - negative_action))
 
-    context, _, target_state = apply_single_impulse(
+    intervention_context, _, target_state = apply_single_impulse(
         context=pre_event,
         sign=1.0,
     )
-    intervention_error = float(abs(context.state - target_state))
+    intervention_error = float(abs(intervention_context.state - target_state))
 
     gains: list[float] = []
-    states: list[float] = [float(context.state)]
+    states: list[float] = [float(intervention_context.state)]
+    context = intervention_context
 
     for _ in range(recovery_steps):
         signal = choose_action(
@@ -171,7 +357,6 @@ def run_episode(
         )
         gains.append(float(gain))
         states.append(float(context.state))
-
         if condition == "no_persistence":
             context = DynamicContext(
                 previous_state=0.0,
@@ -182,19 +367,39 @@ def run_episode(
             )
 
     recovery_gain = float(np.mean(gains))
-    continuity = float(1.0 / (1.0 + abs(context.state - pre_event.state)))
-    recovery_displacement = float(abs(context.state - pre_event.state))
-    recurrence_signal = float(np.mean(np.abs(np.diff(states))))
+
+    # C7: causal action -> next-self-state coupling from the same pre-action context.
+    counterfactual_zero = DynamicStateBridge(
+        DynamicsConfig(), seed=seed + 96000
+    )
+    factual_bridge = DynamicStateBridge(
+        DynamicsConfig(), seed=seed + 96000
+    )
+    _, _, factual_next = self_prediction_gain(
+        observer,
+        factual_bridge,
+        context=pre_event,
+        signal=pre_action_signal,
+    )
+    _, _, zero_next = self_prediction_gain(
+        observer,
+        counterfactual_zero,
+        context=pre_event,
+        signal=0.0,
+    )
+    recurrent_coupling = abs(
+        float(factual_next.state) - float(zero_next.state)
+    )
 
     return {
-        "autonomous_variance": autonomous_variance,
-        "autonomous_displacement": autonomous_displacement,
-        "action_discrimination": action_discrimination,
-        "intervention_target_error": intervention_error,
+        "own_state_persistence": own_state_persistence,
+        "environment_discrimination": c2,
+        "causal_self_reference": c3,
+        "continuity_pause_gap": continuity_gap,
+        "intrinsic_variance": autonomous_variance,
         "recovery_gain": recovery_gain,
-        "continuity_index": continuity,
-        "recovery_displacement": recovery_displacement,
-        "recurrent_closure_signal": recurrence_signal,
+        "recurrent_coupling": recurrent_coupling,
+        "intervention_target_error": intervention_error,
     }
 
 
@@ -260,20 +465,14 @@ def main() -> None:
         for condition in CONDITIONS
     }
 
-    # Pre-registered criterion contrasts:
-    # C1: persistent state vs no-persistence control.
-    c1 = condition_rows["full"]["autonomous_displacement"] - condition_rows["no_persistence"]["autonomous_displacement"]
-    # C2/C3: state-sensitive action selection vs masked/open-loop controls.
-    c2 = condition_rows["full"]["action_discrimination"] - condition_rows["state_blind"]["action_discrimination"]
-    c3 = condition_rows["full"]["action_discrimination"] - condition_rows["open_loop"]["action_discrimination"]
-    # C4: continuity after perturbation vs no-persistence control.
-    c4 = condition_rows["full"]["continuity_index"] - condition_rows["no_persistence"]["continuity_index"]
-    # C5: autonomous internal dynamics vs open-loop control.
-    c5 = condition_rows["full"]["autonomous_variance"] - condition_rows["open_loop"]["autonomous_variance"]
-    # C6: active reorganization / self-prediction recovery.
+    # Pre-registered criterion contrasts.
+    c1 = condition_rows["full"]["own_state_persistence"] - condition_rows["no_persistence"]["own_state_persistence"]
+    c2 = condition_rows["full"]["environment_discrimination"] - condition_rows["state_blind"]["environment_discrimination"]
+    c3 = condition_rows["full"]["causal_self_reference"] - condition_rows["state_blind"]["causal_self_reference"]
+    c4 = condition_rows["no_persistence"]["continuity_pause_gap"] - condition_rows["full"]["continuity_pause_gap"]
+    c5 = condition_rows["full"]["intrinsic_variance"] - condition_rows["open_loop"]["intrinsic_variance"]
     c6 = condition_rows["full"]["recovery_gain"] - condition_rows["state_blind"]["recovery_gain"]
-    # C7: recurrent closure proxy: action-mediated internal displacement vs open-loop.
-    c7 = condition_rows["full"]["recurrent_closure_signal"] - condition_rows["open_loop"]["recurrent_closure_signal"]
+    c7 = condition_rows["full"]["recurrent_coupling"] - condition_rows["open_loop"]["recurrent_coupling"]
 
     contrasts = {
         "C1_own_state_persistence": c1,
@@ -293,7 +492,7 @@ def main() -> None:
 
     summary = {
         "experiment": "tcf_consciousness_instantiation_c0",
-        "protocol_version": "C0",
+        "protocol_version": "C0.1",
         "episodes": args.episodes,
         "train_episodes": args.train_episodes,
         "observer_samples": args.observer_samples,
