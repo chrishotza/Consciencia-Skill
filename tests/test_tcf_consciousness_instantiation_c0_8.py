@@ -30,6 +30,8 @@ def test_c0_8_schema(tmp_path):
     assert summary["phenomenal_consciousness_claimed"] is False
     assert summary["semantic_input_during_probe"] is False
     assert summary["external_retraining_during_probe"] is False
+    assert summary["interaction_statistic"]["paired_by_episode_seed"] is True
+    assert summary["interaction_statistic"]["contrast"] == "TT - TP - PT + PP"
     assert summary["intervention_target_error_max"] < 1e-12
     for value in summary["primary_outputs"].values():
         assert set(value) == {"mean", "p"}
