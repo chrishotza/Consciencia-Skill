@@ -82,3 +82,4 @@ Los experimentos anteriores a V47 forman parte del historial científico y de in
 
 - [C0.6 — Causal Lesion / Rescue](C0_6_CAUSAL_LESION_RESCUE.md) — prueba causal de necesidad y rescate del autoobservador y la autopólitica entrenados.
 - [C0.7 — Target-Permutation Specificity Control](C0_7_TARGET_PERMUTATION_CONTROL.md) — control emparejado para probar dependencia de la asignación específica del modelo de transición.
+- [C0.8 — Crossed Observer/Policy Coupling Test](C0_8_CROSSED_OBSERVER_POLICY.md) — prueba cruzada para separar dependencia del observador, la política y su acoplamiento.
