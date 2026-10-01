@@ -92,7 +92,7 @@ Los resultados positivos, nulos y negativos se conservan.
 | C0.4 | Control information-matched para C5 | **Nulo bajo el replay de acciones emparejado** |
 | C0.5 | Control information-matched para C7 | **Nulo bajo el control de cadena de acciones emparejada** |
 | C0.6 | Lesión causal y rescate de autoobservador/autopólítica | **En ejecución** |
-| C0.7 | Control de especificidad por permutación de targets del modelo de sí | **En ejecución** |
+| C0.7 | Control de especificidad por permutación de targets del modelo de sí | **Positivo para ganancia y varianza; nulo para magnitud de acción** |
 | C0 Campaign | 32 ejecuciones en 8 grupos | **Ejecutada: 32 workflows; fallo técnico en el archivado de artifacts** |
 
 ## Fundamentos
@@ -218,7 +218,7 @@ Positive, null, and negative results are all kept.
 | C0.4 | Information-matched control for C5 | **Null under matched action replay** |
 | C0.5 | Information-matched control for C7 | **Null under matched action-chain control** |
 | C0.6 | Causal lesion and rescue of self-observer/self-policy | **Positive necessity and rescue effects under the tested protocol** |
-| C0.7 | Self-model target-permutation specificity control | **Running** |
+| C0.7 | Self-model target-permutation specificity control | **Positive for gain and variance; null for action magnitude** |
 | C0 Campaign | 32 executions across 8 groups | **Executed: 32 workflows; technical artifact-archival failure** |
 
 ## Foundations
