@@ -29,3 +29,4 @@ def test_v47_fake_protocol(tmp_path: Path, monkeypatch):
     assert summary["history_discriminates"] is True
     assert summary["reopen_preserves_choice"] is True
     assert summary["text_history_ablation_changes_choice"] is True
+    assert summary["specific_history_beats_null"] is True
