@@ -268,6 +268,26 @@ El siguiente protocolo debe eliminar la copia manual del modelo hacia las condic
 
 Interpretación: V69 separa dos niveles que hasta ahora estaban mezclados. La **lectura numérica del propio estado es positiva**: el mismo modelo de sí responde de forma distinta a estados internos posteriores a SUEÑO aunque las superficies semánticas hayan sido eliminadas. La **selección conductual es nula** bajo la política actual, porque el selector colapsó en una única acción y por tanto no proporcionó cobertura de decisión. V69 demuestra lectura computacional del estado, pero no demuestra todavía que esa lectura se use para elegir entre acciones.
 
+### V70 — Modelo de sí → acción después de ablación semántica
+
+24 réplicas, 48 ciclos de calibración idénticos antes de SUEÑO y modelo de sí numérico congelado antes de la intervención.
+
+- diferencia media de acción derivada del modelo de sí entre condiciones: **0.1224593696**;
+- p emparejada: **0.00005**;
+- diferencia media de predicción de estado: **0.0257983935**;
+- p emparejada: **0.00005**;
+- diferencia media entre acción con lectura real y acción con estado clamped: **0.0456327609**;
+- p emparejada: **0.00005**;
+- diferencia de acciones del control clamped: **0.0311938478**;
+- error medio de acción después del intercambio de núcleo: **0.0**;
+- diferencia media absoluta de estado después de la acción: **0.0136089447**;
+- modelos numéricos de sí idénticos entre condiciones: **100%**;
+- memorias eliminadas antes de la sonda: **sí**;
+- texto del modelo de sí eliminado: **sí**;
+- entrada textual durante la sonda: **no**.
+
+Interpretación: V70 extiende V69 desde lectura a acción. El modelo de sí, congelado antes de SUEÑO, transforma el estado interno posterior a SUEÑO en una señal de acción continua; la acción difiere entre condiciones y modifica el siguiente estado después de la ablación semántica. El control con estado clamped produce una acción distinta a la lectura real. Este resultado establece un acoplamiento computacional modelo de sí → acción, pero la regla que convierte predicción en acción fue fijada externamente por el experimento.
+
 ## Estado de ingeniería
 
 V60, V61, V62, V63, V64, V65 y V66 finalizaron correctamente en sus respectivos commits registrados de GitHub Actions. Sus artefactos se conservan en las ejecuciones correspondientes. Los resultados anteriores V43–V59 siguen siendo reproducibles a partir de sus workflows históricos y registros de evidencia.
