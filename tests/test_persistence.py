@@ -9,6 +9,10 @@ def test_state_survives_restart(tmp_path):
         mode="DREAM",
         continuity_index=0.8,
         self_model_version=3,
+        dynamic_state=0.4,
+        dynamic_memory=0.2,
+        dynamic_pressure=0.1,
+        dynamic_steps=7,
     )
     a.save_state("agent", state)
     a.conn.close()
@@ -19,6 +23,10 @@ def test_state_survives_restart(tmp_path):
     assert restored.mode == "DREAM"
     assert restored.continuity_index == 0.8
     assert restored.self_model_version == 3
+    assert restored.dynamic_state == 0.4
+    assert restored.dynamic_memory == 0.2
+    assert restored.dynamic_pressure == 0.1
+    assert restored.dynamic_steps == 7
     b.conn.close()
 
 
