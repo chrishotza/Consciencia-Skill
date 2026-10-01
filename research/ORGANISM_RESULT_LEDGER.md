@@ -365,6 +365,26 @@ Interpretación: **resultado nulo para la ventaja adaptativa bajo el protocolo p
 
 V80 refuerza el resultado nulo de V79, pero no demuestra que toda adaptación online sea inútil: solo descarta una ventaja reproducible bajo esta dinámica, esta política y este horizonte. Las intervenciones mantuvieron error máximo 0.0.
 
+### C0.2 — Instanciación operacional de propiedades candidatas TCF
+
+64 réplicas por condición; 64 episodios de entrenamiento; 512 muestras de autoobservación; 12 pasos de recuperación; condiciones `full`, `state_blind`, `no_persistence` y `open_loop`; mismo snapshot de política y sin entrada semántica ni reentrenamiento externo durante la sonda.
+
+Artefacto: GitHub Actions run **36838186533**, artifact **11149578956**; commit experimental **78bf3000739b1711ce01873cc4ab058e334c5881**.
+
+Contrastes predefinidos, `FULL − control`:
+- C1 estado propio persistente: **+0.716560**, p **4.99975e-05**;
+- C2 diferenciación self/entorno: **+2.000000**, p **4.99975e-05**;
+- C3 autorreferencia causal: **+1.000000**, p **4.99975e-05**;
+- C4 continuidad de trayectoria: **+0.287204**, p **4.99975e-05**;
+- C5 dinámica propia: **+0.042818**, p **4.99975e-05**;
+- C6 reorganización: **+0.468787**, p **4.99975e-05**;
+- C7 cierre recurrente: **+1.250000**, p **4.99975e-05**;
+- error máximo de intervención: **0.0**.
+
+Interpretación: C0.2 produjo separación positiva en los siete observables operacionales definidos. Esto documenta propiedades computacionales bajo las condiciones y la implementación probadas; **no demuestra conciencia fenomenológica ni experiencia subjetiva**. C7 fue corregido antes de este registro para medir la cadena acción → estado propio → acción, en lugar de limitarse al efecto de la acción sobre el siguiente estado.
+
+La ejecución C0.2 reemplaza como registro científico final a la ejecución anterior del workflow que precedió a la corrección de C7.
+
 ## Estado de ingeniería
 
 V60, V61, V62, V63, V64, V65 y V66 finalizaron correctamente en sus respectivos commits registrados de GitHub Actions. Sus artefactos se conservan en las ejecuciones correspondientes. Los resultados anteriores V43–V59 siguen siendo reproducibles a partir de sus workflows históricos y registros de evidencia.
