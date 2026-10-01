@@ -399,6 +399,19 @@ Artefacto: GitHub Actions run **36838675864**, artifact **11150238362**; commit 
 
 Interpretación: **resultado no concluyente / nulo bajo el control información-matcheado probado para C3**. La ventaja observada con FULL − STATE_BLIND en C0.2 no se separó de un control que conserva la distribución de estados pero rompe su correspondencia con el episodio. Esto reduce la fuerza de la inferencia específicamente sobre autorreferencia causal; no modifica por sí solo los otros seis criterios de C0.2.
 
+### C0.4 — Control de acción-replay con información equivalente
+
+64 episodios; 8 secuencias replay por episodio; 64 episodios de entrenamiento; 512 muestras del autoobservador. Mismo contexto inicial y misma semilla dinámica por comparación; secuencia de acciones donada por otro episodio mediante permutación sin puntos fijos.
+
+Artefacto: GitHub Actions run **36838953166**, artifact **11150575990**; commit **7e8adcfd8aed0df514662912ded4482c6bda7ad0**.
+
+- varianza autónoma FULL: **0.0531008831**;
+- varianza action-replay: **0.0543576360**;
+- contraste FULL − replay: **−0.0012567529**;
+- p por permutación de signo: **0.4364282**.
+
+Interpretación: **resultado nulo bajo el control información-matcheado para C5**. La varianza autónoma de FULL no superó la de secuencias de acciones provenientes del mismo organismo cuando se rompe la correspondencia online entre estado propio y selección de acción. La separación observada en C0.2 frente a `OPEN_LOOP` queda limitada porque aquel control fijaba la acción en cero y no igualaba la distribución de acciones.
+
 ## Estado de ingeniería
 
 V60, V61, V62, V63, V64, V65 y V66 finalizaron correctamente en sus respectivos commits registrados de GitHub Actions. Sus artefactos se conservan en las ejecuciones correspondientes. Los resultados anteriores V43–V59 siguen siendo reproducibles a partir de sus workflows históricos y registros de evidencia.
