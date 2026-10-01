@@ -15,11 +15,11 @@ The donor multiset is preserved. The target episode, candidate actions, learned 
 
 ## Primary contrasts
 
-1. action mismatch between NORMAL and DONOR-SHUFFLE;
+1. signed action difference, NORMAL − DONOR-SHUFFLE;
 2. self-prediction gain difference, NORMAL − DONOR-SHUFFLE;
-3. next-state difference after one identical-seed environment step.
+3. signed next-state difference after one identical-seed environment step.
 
-The gain contrast is computed elementwise across the same episode seeds.
+Absolute action/state differences are retained as descriptive secondary outputs. The inferential contrasts are signed and computed elementwise across the same episode seeds.
 
 ## Controls
 
