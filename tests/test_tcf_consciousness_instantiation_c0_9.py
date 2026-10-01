@@ -34,6 +34,7 @@ def test_c0_9_schema(tmp_path):
     assert summary["semantic_input_during_probe"] is False
     assert summary["external_retraining_during_probe"] is False
     assert summary["phenomenal_consciousness_claimed"] is False
+    assert "no constant-value pseudo-replication" in summary["analysis_note"]
     assert summary["secondary_outputs"]["intervention_target_error_max"] < 1e-12
     for value in summary["primary_outputs"].values():
         assert set(value) == {"mean", "p"}
