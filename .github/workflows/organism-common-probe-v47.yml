@@ -1,0 +1,32 @@
+name: organism-common-probe-v47
+
+on:
+  push:
+    paths:
+      - "experiments/organism_common_probe_v47.py"
+      - "tests/test_organism_common_probe_v47.py"
+      - "src/ontto/organism.py"
+      - "src/ontto/storage.py"
+      - "src/ontto/bridge.py"
+      - ".github/workflows/organism-common-probe-v47.yml"
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: pip install pytest
+      - run: pytest -q tests/test_organism_common_probe_v47.py
+      - run: python experiments/organism_common_probe_v47.py --mode fake
+      - uses: actions/upload-artifact@v4
+        with:
+          name: organism-common-probe-v47
+          path: results/organism_common_probe_v47/
+          if-no-files-found: error
