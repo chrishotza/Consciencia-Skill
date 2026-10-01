@@ -2,38 +2,38 @@ name: tcf-consciousness-campaign-32
 
 on:
   schedule:
-    - cron: '15 9 1 10 *'
-    - cron: '30 9 1 10 *'
-    - cron: '45 9 1 10 *'
-    - cron: '0 10 1 10 *'
-    - cron: '15 10 1 10 *'
-    - cron: '30 10 1 10 *'
-    - cron: '45 10 1 10 *'
-    - cron: '0 11 1 10 *'
-    - cron: '15 11 1 10 *'
-    - cron: '30 11 1 10 *'
-    - cron: '45 11 1 10 *'
-    - cron: '0 12 1 10 *'
-    - cron: '15 12 1 10 *'
-    - cron: '30 12 1 10 *'
-    - cron: '45 12 1 10 *'
-    - cron: '0 13 1 10 *'
-    - cron: '15 13 1 10 *'
-    - cron: '30 13 1 10 *'
-    - cron: '45 13 1 10 *'
-    - cron: '0 14 1 10 *'
-    - cron: '15 14 1 10 *'
-    - cron: '30 14 1 10 *'
-    - cron: '45 14 1 10 *'
-    - cron: '0 15 1 10 *'
-    - cron: '15 15 1 10 *'
-    - cron: '30 15 1 10 *'
-    - cron: '45 15 1 10 *'
-    - cron: '0 16 1 10 *'
-    - cron: '15 16 1 10 *'
-    - cron: '30 16 1 10 *'
-    - cron: '45 16 1 10 *'
-    - cron: '0 17 1 10 *'
+    - cron: '15 22 1 10 *'
+    - cron: '30 22 1 10 *'
+    - cron: '45 22 1 10 *'
+    - cron: '0 23 1 10 *'
+    - cron: '15 23 1 10 *'
+    - cron: '30 23 1 10 *'
+    - cron: '45 23 1 10 *'
+    - cron: '0 0 2 10 *'
+    - cron: '15 0 2 10 *'
+    - cron: '30 0 2 10 *'
+    - cron: '45 0 2 10 *'
+    - cron: '0 1 2 10 *'
+    - cron: '15 1 2 10 *'
+    - cron: '30 1 2 10 *'
+    - cron: '45 1 2 10 *'
+    - cron: '0 2 2 10 *'
+    - cron: '15 2 2 10 *'
+    - cron: '30 2 2 10 *'
+    - cron: '45 2 2 10 *'
+    - cron: '0 3 2 10 *'
+    - cron: '15 3 2 10 *'
+    - cron: '30 3 2 10 *'
+    - cron: '45 3 2 10 *'
+    - cron: '0 4 2 10 *'
+    - cron: '15 4 2 10 *'
+    - cron: '30 4 2 10 *'
+    - cron: '45 4 2 10 *'
+    - cron: '0 5 2 10 *'
+    - cron: '15 5 2 10 *'
+    - cron: '30 5 2 10 *'
+    - cron: '45 5 2 10 *'
+    - cron: '0 6 2 10 *'
   workflow_dispatch:
     inputs:
       group:
@@ -74,38 +74,38 @@ jobs:
           SCHEDULE='${{ github.event.schedule }}'
           if [ -n "$SCHEDULE" ]; then
             case "$SCHEDULE" in
-              '15 9 1 10 *') GROUP=G1; REPLICATE=1 ;;
-              '30 9 1 10 *') GROUP=G1; REPLICATE=2 ;;
-              '45 9 1 10 *') GROUP=G1; REPLICATE=3 ;;
-              '0 10 1 10 *') GROUP=G1; REPLICATE=4 ;;
-              '15 10 1 10 *') GROUP=G2; REPLICATE=1 ;;
-              '30 10 1 10 *') GROUP=G2; REPLICATE=2 ;;
-              '45 10 1 10 *') GROUP=G2; REPLICATE=3 ;;
-              '0 11 1 10 *') GROUP=G2; REPLICATE=4 ;;
-              '15 11 1 10 *') GROUP=G3; REPLICATE=1 ;;
-              '30 11 1 10 *') GROUP=G3; REPLICATE=2 ;;
-              '45 11 1 10 *') GROUP=G3; REPLICATE=3 ;;
-              '0 12 1 10 *') GROUP=G3; REPLICATE=4 ;;
-              '15 12 1 10 *') GROUP=G4; REPLICATE=1 ;;
-              '30 12 1 10 *') GROUP=G4; REPLICATE=2 ;;
-              '45 12 1 10 *') GROUP=G4; REPLICATE=3 ;;
-              '0 13 1 10 *') GROUP=G4; REPLICATE=4 ;;
-              '15 13 1 10 *') GROUP=G5; REPLICATE=1 ;;
-              '30 13 1 10 *') GROUP=G5; REPLICATE=2 ;;
-              '45 13 1 10 *') GROUP=G5; REPLICATE=3 ;;
-              '0 14 1 10 *') GROUP=G5; REPLICATE=4 ;;
-              '15 14 1 10 *') GROUP=G6; REPLICATE=1 ;;
-              '30 14 1 10 *') GROUP=G6; REPLICATE=2 ;;
-              '45 14 1 10 *') GROUP=G6; REPLICATE=3 ;;
-              '0 15 1 10 *') GROUP=G6; REPLICATE=4 ;;
-              '15 15 1 10 *') GROUP=G7; REPLICATE=1 ;;
-              '30 15 1 10 *') GROUP=G7; REPLICATE=2 ;;
-              '45 15 1 10 *') GROUP=G7; REPLICATE=3 ;;
-              '0 16 1 10 *') GROUP=G7; REPLICATE=4 ;;
-              '15 16 1 10 *') GROUP=G8; REPLICATE=1 ;;
-              '30 16 1 10 *') GROUP=G8; REPLICATE=2 ;;
-              '45 16 1 10 *') GROUP=G8; REPLICATE=3 ;;
-              '0 17 1 10 *') GROUP=G8; REPLICATE=4 ;;
+              '15 22 1 10 *') GROUP=G1; REPLICATE=1 ;;
+              '30 22 1 10 *') GROUP=G1; REPLICATE=2 ;;
+              '45 22 1 10 *') GROUP=G1; REPLICATE=3 ;;
+              '0 23 1 10 *') GROUP=G1; REPLICATE=4 ;;
+              '15 23 1 10 *') GROUP=G2; REPLICATE=1 ;;
+              '30 23 1 10 *') GROUP=G2; REPLICATE=2 ;;
+              '45 23 1 10 *') GROUP=G2; REPLICATE=3 ;;
+              '0 0 2 10 *') GROUP=G2; REPLICATE=4 ;;
+              '15 0 2 10 *') GROUP=G3; REPLICATE=1 ;;
+              '30 0 2 10 *') GROUP=G3; REPLICATE=2 ;;
+              '45 0 2 10 *') GROUP=G3; REPLICATE=3 ;;
+              '0 1 2 10 *') GROUP=G3; REPLICATE=4 ;;
+              '15 1 2 10 *') GROUP=G4; REPLICATE=1 ;;
+              '30 1 2 10 *') GROUP=G4; REPLICATE=2 ;;
+              '45 1 2 10 *') GROUP=G4; REPLICATE=3 ;;
+              '0 2 2 10 *') GROUP=G4; REPLICATE=4 ;;
+              '15 2 2 10 *') GROUP=G5; REPLICATE=1 ;;
+              '30 2 2 10 *') GROUP=G5; REPLICATE=2 ;;
+              '45 2 2 10 *') GROUP=G5; REPLICATE=3 ;;
+              '0 3 2 10 *') GROUP=G5; REPLICATE=4 ;;
+              '15 3 2 10 *') GROUP=G6; REPLICATE=1 ;;
+              '30 3 2 10 *') GROUP=G6; REPLICATE=2 ;;
+              '45 3 2 10 *') GROUP=G6; REPLICATE=3 ;;
+              '0 4 2 10 *') GROUP=G6; REPLICATE=4 ;;
+              '15 4 2 10 *') GROUP=G7; REPLICATE=1 ;;
+              '30 4 2 10 *') GROUP=G7; REPLICATE=2 ;;
+              '45 4 2 10 *') GROUP=G7; REPLICATE=3 ;;
+              '0 5 2 10 *') GROUP=G7; REPLICATE=4 ;;
+              '15 5 2 10 *') GROUP=G8; REPLICATE=1 ;;
+              '30 5 2 10 *') GROUP=G8; REPLICATE=2 ;;
+              '45 5 2 10 *') GROUP=G8; REPLICATE=3 ;;
+              '0 6 2 10 *') GROUP=G8; REPLICATE=4 ;;
               *) echo "Unknown schedule: $SCHEDULE" >&2; exit 1 ;;
             esac
           else
@@ -153,11 +153,15 @@ jobs:
       - name: Attach slot metadata
         shell: bash
         run: |
-          cp campaign_slot_env.json "results/tcf_campaign/$GROUP"_R"$REPLICATE"/scheduled_slot.json
+          SLOT_DIR="results/tcf_campaign/$GROUP"_R"$REPLICATE"
+          test -f "$SLOT_DIR/summary.json"
+          test -f "$SLOT_DIR/policy_snapshot.json"
+          cp campaign_slot_env.json "$SLOT_DIR/scheduled_slot.json"
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload campaign artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: c0-campaign-$GROUP-R$REPLICATE
-          path: results/tcf_campaign/$GROUP"_R"$REPLICATE
+          name: c0-campaign-${{ env.GROUP }}-R${{ env.REPLICATE }}
+          path: results/tcf_campaign
           if-no-files-found: error
           compression-level: 6
