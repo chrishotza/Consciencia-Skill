@@ -422,4 +422,45 @@ Estos resultados establecen propiedades computacionales cada vez más específic
 
 No establecen consciencia fenomenológica ni experiencia subjetiva.
 
-El siguiente experimento debe probar si el **estado interno numérico generado durante SUEÑO puede conservar una huella recuperable y causalmente transferible después de eliminar la memoria semántica y el texto del modelo de sí**, en lugar de depender de una respuesta de recuperación posterior.
+El siguiente experimento en curso es C0.7: probar si los efectos organizacionales dependen de la **asignación específica feature → target** aprendida por el modelo de sí y no simplemente de la presencia de un modelo con el mismo volumen de memoria.
+
+
+### C0.5 — Control información-matcheado de cierre recurrente
+
+64 episodios; 8 reordenamientos por episodio; mismo snapshot de política; control mediante acciones donantes extraídas de la misma distribución empírica y evaluadas sobre el mismo contexto.
+
+Artefacto: GitHub Actions run **36938229171**, artifact **11199385083**, SHA256 **ee3d1260692ba7aa2ba683e7caefba46a0662ca3c887aea0ca0bf3e872e6adf8**; commit **ce62945a3ae2c1642a9450e30e81e6ef094b523e**.
+
+- brecha cadena de acción real: **0.99609375**;
+- brecha cadena de acciones emparejada: **0.99218750**;
+- contraste: **+0.00390625**;
+- p: **1.0**;
+- entrada semántica durante la sonda: **no**;
+- reentrenamiento externo durante la sonda: **no**.
+
+Interpretación: **resultado nulo bajo el control información-matcheado probado para C7**. La cadena acción → estado propio → acción no mostró una separación estadística frente a la cadena construida con acciones donantes de la misma distribución empírica. Por tanto, el resultado positivo de C0.2 para C7 no queda confirmado bajo este control más fuerte.
+
+### C0.6 — Lesión causal y rescate del autoobservador y la autopólitica
+
+64 episodios; 64 episodios de entrenamiento; 512 muestras de autoobservación; una única fase de entrenamiento seguida por lesiones post-entrenamiento y rescate. Mismo snapshot entrenado compartido entre las condiciones.
+
+Artefacto: GitHub Actions run **36939000398**, artifact **11198659986**, SHA256 **cf3442ec57c49b803ae1514aad6c5f4a727651f61dc45864cc803a1c4c35a198**; commit **07943dd5ea979e6d78ed3cd01e0135e35e6de58c**.
+
+- necesidad del autoobservador, FULL − OBSERVER_LESION en ganancia: **+0.2273943**, p **0.00005**;
+- necesidad de la autopólitica, FULL − POLICY_LESION en ganancia: **+0.3555158**, p **0.00005**;
+- necesidad conjunta, FULL − BOTH_LESION: **+0.2273943**, p **0.00005**;
+- efecto de lesión del autoobservador sobre distancia final: **+0.5125025**, p **0.00005**;
+- efecto de lesión de la autopólitica sobre distancia final: **+0.1065877**, p **0.00005**;
+- rescate del autoobservador: **+0.2076185**, p **0.00005**;
+- rescate de la autopólitica: **+0.2875335**, p **0.00005**;
+- error máximo de intervención: **0.0**;
+- entrada semántica durante la sonda: **no**;
+- reentrenamiento externo durante la sonda: **no**.
+
+Interpretación: **C0.6 muestra dependencia causal de los componentes entrenados bajo el protocolo de lesión/rescate probado**. Al eliminar post-entrenamiento el estado interno aprendido del autoobservador o de la autopólitica, las métricas de recuperación y trayectoria cambian; al restaurarlos durante la misma trayectoria experimental aparece un efecto de rescate significativo. Esto es evidencia de necesidad y recuperación funcional de componentes de la organización computacional probada. No constituye por sí solo evidencia de conciencia fenomenológica.
+
+### C0.7 — Control de especificidad por permutación de targets del modelo de sí
+
+Protocolo añadido y actualmente en ejecución. Mantiene el mismo número de muestras del autoobservador, la misma multiconjunto de targets y el mismo presupuesto de entrenamiento de política, pero rompe específicamente la correspondencia feature → target mediante una permutación fija de targets.
+
+Artefacto y resultados: **pendientes**.
