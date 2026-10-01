@@ -216,7 +216,7 @@ Positive, null, and negative results are all kept.
 | C0.3 | Information-matched control for C3 | **Null under the information-matched control** |
 | C0.4 | Information-matched control for C5 | **Null under matched action replay** |
 | C0.5 | Information-matched control for C7 | **Null under matched action-chain control** |
-| C0.6 | Causal lesion and rescue of self-observer/self-policy | **Running** |
+| C0.6 | Causal lesion and rescue of self-observer/self-policy | **Positive necessity and rescue effects under the tested protocol** |
 | C0 Campaign | 32 executions across 8 groups | **Scheduled: 19:15–03:00 ART, 4 per hour** |
 
 ## Foundations
