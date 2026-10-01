@@ -45,7 +45,7 @@ jobs:
       - name: Resolve campaign group
         shell: bash
         run: |
-          SCHEDULE='\${{ github.event.schedule }}'
+          SCHEDULE='${{ github.event.schedule }}'
           if [ -n "$SCHEDULE" ]; then
             case "$SCHEDULE" in
               '30 23 1 10 *') GROUP=G1 ;;
@@ -59,7 +59,7 @@ jobs:
               *) echo "Unknown schedule: $SCHEDULE" >&2; exit 1 ;;
             esac
           else
-            GROUP='\${{ inputs.group }}'
+            GROUP='${{ inputs.group }}'
           fi
 
           case "$GROUP" in
@@ -74,16 +74,16 @@ jobs:
             *) echo "Unknown group: $GROUP" >&2; exit 1 ;;
           esac
 
-          SEED_BASE=$((100000 + GROUP_INDEX * 1000 + \${{ matrix.replicate }} * 100))
+          SEED_BASE=$((100000 + GROUP_INDEX * 1000 + ${{ matrix.replicate }} * 100))
 
           echo "GROUP=$GROUP" >> "$GITHUB_ENV"
-          echo "REPLICATE=\${{ matrix.replicate }}" >> "$GITHUB_ENV"
+          echo "REPLICATE=${{ matrix.replicate }}" >> "$GITHUB_ENV"
           echo "SEED_BASE=$SEED_BASE" >> "$GITHUB_ENV"
 
           cat > campaign_slot_env.json <<EOF
           {
             "group": "$GROUP",
-            "replicate": \${{ matrix.replicate }},
+            "replicate": ${{ matrix.replicate }},
             "seed_base": $SEED_BASE,
             "scheduled_cron": "$SCHEDULE"
           }
@@ -110,7 +110,7 @@ jobs:
       - name: Upload campaign artifact
         uses: actions/upload-artifact@v4
         with:
-          name: c0-campaign-\${{ env.GROUP }}-R\${{ env.REPLICATE }}
-          path: results/tcf_campaign/\${{ env.GROUP }}_R\${{ env.REPLICATE }}
+          name: c0-campaign-${{ env.GROUP }}-R${{ env.REPLICATE }}
+          path: results/tcf_campaign/${{ env.GROUP }}_R${{ env.REPLICATE }}
           if-no-files-found: error
           compression-level: 6
