@@ -508,3 +508,19 @@ La inferencia primaria se calcula por episodio compartido y contrasta:
 No se permite entrada semántica durante la sonda ni reentrenamiento externo.
 
 Estado: **implementado; ejecución pendiente de verificación**.
+
+
+### C0.10 — Alineación temporal observador → política
+
+Protocolo implementado; **sin resultado experimental registrado todavía**.
+
+C0.10 mantiene dentro de cada par el mismo episodio, autoobservador, autopólitica, contexto post-intervención, señales candidatas y semilla de dinámica. La única sustitución es el readout entregado a la política: en el brazo de control se calcula desde el estado propio actual; en el brazo lag se calcula desde el mismo episodio inmediatamente antes de la intervención.
+
+Las inferencias primarias son contrastes firmados y emparejados por episodio para:
+- acción NORMAL − LAG;
+- ganancia de autopredicción NORMAL − LAG;
+- cambio de estado tras un único paso de dinámica.
+
+No se permite entrada semántica ni reentrenamiento externo durante la sonda.
+
+Estado: **implementado; ejecución pendiente de verificación**.
