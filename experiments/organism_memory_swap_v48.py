@@ -115,7 +115,7 @@ def replace_only_memory(path: Path, content: str) -> dict:
     after_swap = store.persistence_observables("receiver")
     state_after = store.load_state("receiver").to_json()
 
-    return {
+    result = {
         "memory_id": int(memory_id),
         "importance": float(importance),
         "created_at": created_at,
@@ -132,6 +132,8 @@ def replace_only_memory(path: Path, content: str) -> dict:
         ),
         "memory_content": content,
     }
+    store.conn.close()
+    return result
 
 
 def run_condition(path: Path, content: str, provider, label: str) -> dict:
@@ -189,15 +191,31 @@ def main() -> None:
 
     provider = build_provider(args.mode)
 
+    base_store = MemoryStore(base)
+    base_observables = base_store.persistence_observables("receiver")
+    base_store.conn.close()
+
+    a_db_store = MemoryStore(a_db)
+    b_db_store = MemoryStore(b_db)
+    a_before = a_db_store.persistence_observables("receiver")
+    b_before = b_db_store.persistence_observables("receiver")
+    a_db_store.conn.close()
+    b_db_store.conn.close()
+
     run_a = run_condition(a_db, MEMORY_A, provider, "MEMORY_A")
     run_b = run_condition(b_db, MEMORY_B, provider, "MEMORY_B")
 
     summary = {
         "experiment": "organism_memory_swap_v48",
         "mode": args.mode,
+        "base_clones_match": (
+            a_before["state_fingerprint"] == b_before["state_fingerprint"]
+            and a_before["event_trajectory_fingerprint"]
+            == b_before["event_trajectory_fingerprint"]
+        ),
         "same_receiver_state_before_intervention": (
-            run_a["controls_before_probe"]["state_unchanged"]
-            and run_b["controls_before_probe"]["state_unchanged"]
+            a_before["state_fingerprint"] == base_observables["state_fingerprint"]
+            and b_before["state_fingerprint"] == base_observables["state_fingerprint"]
         ),
         "only_memory_content_changed": (
             run_a["controls_before_probe"]["event_fingerprint_unchanged"]
