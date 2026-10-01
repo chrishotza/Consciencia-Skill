@@ -199,3 +199,12 @@ C0.3 añadió un control información-matcheado para C3: conserva la distribuci�
 Resultado: contraste **+0.06640625**, p **0.3140343**, con 64 episodios y 8 permutaciones por episodio.
 
 El resultado no separó la sensibilidad al estado propio actual de la sensibilidad a estados ajenos extraídos de la misma distribución. Por ello, la evidencia de C0.2 para C3 queda limitada a la dependencia respecto del estado frente al control `STATE_BLIND`; no establece especificidad causal frente a un control información-matcheado.
+
+
+## C0.4 — control de especificidad causal para C5
+
+C0.4 añadió un control de acción-replay que conserva secuencias de acciones extraídas del mismo organismo pero rompe su correspondencia online con el estado propio actual.
+
+Resultado: contraste **−0.0012567529**, p **0.4364282**, con 64 episodios y 8 replays por episodio. La varianza de FULL fue **0.0531008831** frente a **0.0543576360** en action-replay.
+
+Bajo este control, C5 no mostró una separación estadísticamente detectable. La evidencia positiva de C0.2 frente a `OPEN_LOOP` queda limitada porque ese control no igualaba la distribución de acciones.
