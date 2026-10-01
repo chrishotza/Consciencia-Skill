@@ -4,7 +4,7 @@
 
 Local time: Buenos Aires / ART (UTC−03:00)
 
-Window: **06:00 → 13:45**, 1 October 2026.
+Window: **06:15 → 14:00**, 1 October 2026.
 
 Frequency: **4 executions per hour**, every 15 minutes.
 
@@ -14,14 +14,14 @@ GitHub Actions cron is expressed in UTC, so the scheduled window is **09:00 → 
 
 | Group | Local time | Criterion / question | Control |
 |---|---|---|---|
-| G1 | 06:00–06:45 | C3 causal self-reference | information-matched state shuffle |
-| G2 | 07:00–07:45 | C5 intrinsic dynamics | information-matched action replay |
-| G3 | 08:00–08:45 | C7 recurrent closure | information-matched action-chain shuffle |
-| G4 | 09:00–09:45 | C4 trajectory continuity | FULL − NO_PERSISTENCE |
-| G5 | 10:00–10:45 | C1 own-state persistence | FULL − NO_PERSISTENCE |
-| G6 | 11:00–11:45 | C2 self/environment differentiation | FULL − STATE_BLIND |
-| G7 | 12:00–12:45 | C6 reorganization | FULL − STATE_BLIND |
-| G8 | 13:00–13:45 | C0 confirmatory battery | strong controls for C3/C5/C7 + matched controls for C1/C2/C4/C6 |
+| G1 | 06:15–07:00 | C3 causal self-reference | information-matched state shuffle |
+| G2 | 07:15–08:00 | C5 intrinsic dynamics | information-matched action replay |
+| G3 | 08:15–09:00 | C7 recurrent closure | information-matched action-chain shuffle |
+| G4 | 09:15–10:00 | C4 trajectory continuity | FULL − NO_PERSISTENCE |
+| G5 | 10:15–11:00 | C1 own-state persistence | FULL − NO_PERSISTENCE |
+| G6 | 11:15–12:00 | C2 self/environment differentiation | FULL − STATE_BLIND |
+| G7 | 12:15–13:00 | C6 reorganization | FULL − STATE_BLIND |
+| G8 | 13:15–14:00 | C0 confirmatory battery | strong controls for C3/C5/C7 + matched controls for C1/C2/C4/C6 |
 
 ## Replica seeds
 
