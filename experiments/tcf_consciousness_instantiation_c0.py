@@ -357,7 +357,7 @@ def run_episode(
 
     recovery_gain = float(np.mean(gains))
 
-    # C7: causal action -> next-self-state coupling from the same pre-action context.
+    # C7: action -> next-self-state -> next-action recurrence.
     counterfactual_zero = DynamicStateBridge(
         DynamicsConfig(), seed=seed + 96000
     )
@@ -376,9 +376,36 @@ def run_episode(
         context=pre_event,
         signal=0.0,
     )
-    recurrent_coupling = abs(
-        float(factual_next.state) - float(zero_next.state)
+    if condition == "no_persistence":
+        factual_next = DynamicContext(
+            previous_state=0.0,
+            state=0.0,
+            memory=0.0,
+            pressure=0.0,
+            step_index=factual_next.step_index,
+        )
+        zero_next = DynamicContext(
+            previous_state=0.0,
+            state=0.0,
+            memory=0.0,
+            pressure=0.0,
+            step_index=zero_next.step_index,
+        )
+    factual_followup = choose_action(
+        policy,
+        observer,
+        context=factual_next,
+        state_blind=condition == "state_blind",
+        open_loop=condition == "open_loop",
     )
+    zero_followup = choose_action(
+        policy,
+        observer,
+        context=zero_next,
+        state_blind=condition == "state_blind",
+        open_loop=condition == "open_loop",
+    )
+    recurrent_coupling = abs(factual_followup - zero_followup)
 
     return {
         "own_state_persistence": own_state_persistence,
