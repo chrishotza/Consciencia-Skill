@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Callable
 
+from .bridge import DynamicStateBridge
+from .dynamics import Config
 from .provider import OpenAICompatibleProvider
 from .storage import MemoryStore, OntologicalState
 
@@ -15,6 +17,12 @@ class OrganismConfig:
     dream_every_cycles: int = 40
     memory_limit: int = 12
     event_limit: int = 20
+    dynamic_enabled: bool = True
+    dynamic_seed: int = 7001
+    dynamic_wake_signal: float = 1.0
+    dynamic_wake_steps: int = 1
+    dynamic_dream_steps: int = 5
+    dynamic_autonomous_steps: int = 1
 
 
 class PersistentOrganism:
@@ -32,6 +40,7 @@ class PersistentOrganism:
         self.provider = provider
         self.sleep_fn = sleep_fn
         self.state = store.load_state(cfg.agent_id)
+        self.dynamic_bridge = DynamicStateBridge(Config(), seed=cfg.dynamic_seed)
         self.state.boot_count += 1
         self.cycles = 0
         self.store.save_state(cfg.agent_id, self.state)
@@ -63,6 +72,29 @@ class PersistentOrganism:
             ),
         }]
 
+    def _advance_dynamic(self, signal: float, steps: int) -> dict[str, float | int] | None:
+        if not self.cfg.dynamic_enabled or steps < 1:
+            return None
+
+        snapshot = self.dynamic_bridge.advance(
+            previous_state=self.state.dynamic_prev_state,
+            state=self.state.dynamic_state,
+            memory=self.state.dynamic_memory,
+            pressure=self.state.dynamic_pressure,
+            signal=signal,
+            steps=steps,
+            step_index=self.state.dynamic_steps,
+        )
+
+        self.state.dynamic_prev_state = snapshot.previous_state
+        self.state.dynamic_state = snapshot.state
+        self.state.dynamic_memory = snapshot.memory
+        self.state.dynamic_pressure = snapshot.pressure
+        self.state.dynamic_attractor_distance = snapshot.attractor_distance
+        self.state.dynamic_last_input = snapshot.last_input
+        self.state.dynamic_steps = snapshot.steps
+        return snapshot.to_dict()
+
     def wake_cycle(self, stimulus: str) -> str:
         self.state.mode = "WAKE"
         self.state.lifetime_wake_cycles += 1
@@ -79,11 +111,19 @@ class PersistentOrganism:
         })
         out = self.provider.chat(messages, temperature=0.7)
         self.state.last_thought = out.text[-1200:]
+        dynamic = self._advance_dynamic(
+            self.cfg.dynamic_wake_signal,
+            self.cfg.dynamic_wake_steps,
+        )
         self.store.add_event(
             self.cfg.agent_id,
             "WAKE",
             "interaction",
-            {"stimulus": stimulus, "response": out.text[-2000:]},
+            {
+                "stimulus": stimulus,
+                "response": out.text[-2000:],
+                "dynamic": dynamic,
+            },
         )
         self._extract_memory(out.text)
         self._refresh_operational_indicators()
@@ -114,6 +154,22 @@ class PersistentOrganism:
             memory = text.split(marker, 1)[1].strip().splitlines()[0].strip()
             if memory:
                 self.store.add_memory(self.cfg.agent_id, memory, importance=0.65)
+
+    def autonomous_wake_cycle(self) -> dict[str, float | int] | None:
+        self.state.mode = "WAKE"
+        self.state.lifetime_wake_cycles += 1
+        dynamic = self._advance_dynamic(
+            0.0,
+            self.cfg.dynamic_autonomous_steps,
+        )
+        self.store.add_event(
+            self.cfg.agent_id,
+            "WAKE",
+            "autonomous",
+            {"dynamic": dynamic},
+        )
+        self.store.save_state(self.cfg.agent_id, self.state)
+        return dynamic
 
     def dream_cycle(self) -> str:
         self.state.mode = "DREAM"
@@ -155,11 +211,18 @@ class PersistentOrganism:
         self._extract_memory(out.text)
         self._extract_self_model(out.text)
         self.state.last_thought = out.text[-1400:]
+        dynamic = self._advance_dynamic(
+            0.0,
+            self.cfg.dynamic_dream_steps,
+        )
         self.store.add_event(
             self.cfg.agent_id,
             "DREAM",
             "consolidation",
-            {"summary": out.text[-2500:]},
+            {
+                "summary": out.text[-2500:],
+                "dynamic": dynamic,
+            },
         )
         summary = out.text.split("DREAM_SUMMARY:", 1)[-1].strip()[:1600]
         self.state.mode = "WAKE"
