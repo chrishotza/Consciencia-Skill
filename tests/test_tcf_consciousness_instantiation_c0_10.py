@@ -25,6 +25,7 @@ def test_c0_10_schema(tmp_path):
 
     assert summary["experiment"] == "tcf_consciousness_instantiation_c0_10"
     assert summary["protocol_version"] == "C0.10"
+    assert summary["analysis_note"].startswith("All primary contrasts are signed")
     assert summary["matched_design"]["same_episode"] is True
     assert summary["matched_design"]["lag_is_within_episode"] is True
     assert summary["matched_design"]["same_dynamic_bridge_seed_per_pair"] is True
