@@ -159,11 +159,34 @@ Las extensiones prioritarias son:
 
 ## Estado
 
-**C0.2 — protocolo inicial activo, con revisión metodológica incorporada antes de registrar resultados científicos.**
+**C0.2 — ejecución auditada y archivada.** Run GitHub Actions `36838186533`; commit experimental `78bf3000739b1711ce01873cc4ab058e334c5881`; artefacto `11149578956`.
 
-El resultado experimental debe registrarse después de ejecutar la prueba completa.
+La ejecución completó tests, experimento y publicación del artefacto. La ejecución anterior que usaba el observable C7 previo no se considera el resultado final; el resultado registrado corresponde al protocolo C0.2 con C7 definido como recurrencia acción → estado propio → acción.
 
 
 ## Auditoría de la primera ejecución
 
 La primera ejecución de C0.1 completó técnicamente el workflow y produjo un artefacto, pero **no se registra como evidencia científica final**. La auditoría posterior detectó dos problemas de interpretación: C3 comparaba condiciones de forma que mezclaba la sonda con la ablación, y C4 comparaba dos continuaciones que podían ser idénticas por construcción. Esos observables fueron corregidos en C0.2 antes de repetir la prueba.
+
+
+## Resultado C0.2 — ejecución auditada
+
+Configuración: **64 episodios por condición**, **64 episodios de entrenamiento**, **512 muestras del autoobservador**, **12 pasos de recuperación**, magnitud de perturbación `0.50`. Las condiciones fueron evaluadas desde el mismo snapshot de política y sin entrada semántica ni reentrenamiento externo durante la sonda.
+
+Contrastes registrados como `FULL − control`:
+
+| Criterio | Efecto medio | p por permutación de signo |
+|---|---:|---:|
+| C1 — estado propio persistente | **+0.716560** | **4.99975e-05** |
+| C2 — diferenciación self/entorno | **+2.000000** | **4.99975e-05** |
+| C3 — autorreferencia causal | **+1.000000** | **4.99975e-05** |
+| C4 — continuidad de trayectoria | **+0.287204** | **4.99975e-05** |
+| C5 — dinámica propia | **+0.042818** | **4.99975e-05** |
+| C6 — reorganización | **+0.468787** | **4.99975e-05** |
+| C7 — cierre recurrente | **+1.250000** | **4.99975e-05** |
+
+El error máximo de intervención fue **0.0**.
+
+La ejecución produjo un vector positivo en los siete contrastes operacionales definidos por C0.2. Esto significa que, bajo este protocolo y esta implementación, la condición integrada se separó de la ablación correspondiente en cada observable. No se convierte este vector en una puntuación global de conciencia y **no constituye por sí mismo evidencia de experiencia fenomenal**.
+
+El contraste C7 de esta ejecución ya no mide solamente acción → siguiente estado: mide el cambio de la **acción siguiente** producido por la cadena causal acción → estado propio → acción, que es el observable operacional usado aquí para recurrencia.
