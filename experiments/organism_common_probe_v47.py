@@ -152,7 +152,13 @@ def run_history(
             "DELETE FROM memories WHERE agent_id=?",
             (agent_id,),
         )
-        store.conn.commit()
+        # Remove remaining textual self-history while preserving the numeric
+        # dynamic trajectory for the ablation comparison.
+        organism.state.self_model = ""
+        organism.state.self_model_version = 0
+        organism.state.last_thought = ""
+        organism.state.memory_strength = 0.0
+        store.save_state(agent_id, organism.state)
 
     response = organism.wake_cycle(COMMON_PROBE)
     parsed = parse_probe(response)
