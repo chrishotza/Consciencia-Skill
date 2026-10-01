@@ -170,7 +170,13 @@ def run_history(
     after = store.persistence_observables(agent_id)
 
     return {
-        "history_id": "A" if "AMBAR" in history[0] else "B",
+        "history_id": (
+            "A"
+            if "AMBAR" in history[0]
+            else "B"
+            if "VIOLETA" in history[0]
+            else "NULL"
+        ),
         "ablate_text_history": ablate_text_history,
         "reopen_before_probe": reopen_before_probe,
         "removed_events": removed_events,
