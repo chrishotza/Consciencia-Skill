@@ -24,8 +24,8 @@ jobs:
           test -n "$ONTTO_MODEL" || { echo "Missing ONTTO_MODEL"; exit 1; }
       - name: Run live matched memory swap
         run: |
-          python experiments/organism_memory_swap_v48.py \\
-            --mode live \\
+          python experiments/organism_memory_swap_v48.py \
+            --mode live \
             --out results/organism_memory_swap_v48
       - uses: actions/upload-artifact@v4
         with:
