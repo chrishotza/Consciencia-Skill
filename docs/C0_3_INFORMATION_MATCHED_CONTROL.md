@@ -43,6 +43,18 @@ Una media positiva indica que la acción cambia más cuando se sustituye el esta
 
 C0.3 fortalece la atribución causal de la acción al estado propio bajo esta sonda, pero sigue siendo una propiedad operacional del sistema. No demuestra experiencia fenomenal.
 
+## Resultado auditado
+
+Run GitHub Actions `36838675864`; artifact `11150238362`; commit `413e70499977d759e9effb50505c4db6174925c8`.
+
+- brecha estado propio → estado mezclado: **1.06640625**;
+- brecha entre dos estados mezclados: **1.00000000**;
+- contraste: **+0.06640625**;
+- p por permutación de signo: **0.3140343**;
+- discrepancia de acción real vs. estado mezclado: **0.5332031**.
+
+Interpretación: el control información-matcheado no mostró una separación estadísticamente detectable entre sensibilidad al estado propio actual y sensibilidad a estados ajenos extraídos de la misma distribución empírica. C0.3, por tanto, no confirma una dependencia causal específicamente propia del episodio bajo este criterio más exigente.
+
 ## Estado
 
-Protocolo preparado para ejecución mediante GitHub Actions.
+**Ejecutado y archivado.** El resultado debe tratarse como control de especificidad causal para C3, no como puntuación global de conciencia.
