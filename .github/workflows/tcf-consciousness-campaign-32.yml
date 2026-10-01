@@ -1,0 +1,163 @@
+name: tcf-consciousness-campaign-32
+
+on:
+  schedule:
+    - cron: '0 9 1 10 *'
+    - cron: '15 9 1 10 *'
+    - cron: '30 9 1 10 *'
+    - cron: '45 9 1 10 *'
+    - cron: '0 10 1 10 *'
+    - cron: '15 10 1 10 *'
+    - cron: '30 10 1 10 *'
+    - cron: '45 10 1 10 *'
+    - cron: '0 11 1 10 *'
+    - cron: '15 11 1 10 *'
+    - cron: '30 11 1 10 *'
+    - cron: '45 11 1 10 *'
+    - cron: '0 12 1 10 *'
+    - cron: '15 12 1 10 *'
+    - cron: '30 12 1 10 *'
+    - cron: '45 12 1 10 *'
+    - cron: '0 13 1 10 *'
+    - cron: '15 13 1 10 *'
+    - cron: '30 13 1 10 *'
+    - cron: '45 13 1 10 *'
+    - cron: '0 14 1 10 *'
+    - cron: '15 14 1 10 *'
+    - cron: '30 14 1 10 *'
+    - cron: '45 14 1 10 *'
+    - cron: '0 15 1 10 *'
+    - cron: '15 15 1 10 *'
+    - cron: '30 15 1 10 *'
+    - cron: '45 15 1 10 *'
+    - cron: '0 16 1 10 *'
+    - cron: '15 16 1 10 *'
+    - cron: '30 16 1 10 *'
+    - cron: '45 16 1 10 *'
+  workflow_dispatch:
+    inputs:
+      group:
+        description: "Campaign group to run manually"
+        required: true
+        type: choice
+        options: [G1, G2, G3, G4, G5, G6, G7, G8]
+        default: G1
+      replicate:
+        description: "Replica to run manually"
+        required: true
+        type: choice
+        options: ["1", "2", "3", "4"]
+        default: "1"
+
+jobs:
+  campaign:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r requirements.txt
+      - run: pip install pytest
+
+      - name: Validate campaign runner
+        run: pytest -q tests/test_tcf_consciousness_campaign.py
+
+      - name: Resolve campaign slot
+        shell: bash
+        run: |
+          SCHEDULE='\${{ github.event.schedule }}'
+          if [ -n "$SCHEDULE" ]; then
+            case "$SCHEDULE" in
+              '0 9 1 10 *') GROUP=G1; REPLICATE=1 ;;
+              '15 9 1 10 *') GROUP=G1; REPLICATE=2 ;;
+              '30 9 1 10 *') GROUP=G1; REPLICATE=3 ;;
+              '45 9 1 10 *') GROUP=G1; REPLICATE=4 ;;
+              '0 10 1 10 *') GROUP=G2; REPLICATE=1 ;;
+              '15 10 1 10 *') GROUP=G2; REPLICATE=2 ;;
+              '30 10 1 10 *') GROUP=G2; REPLICATE=3 ;;
+              '45 10 1 10 *') GROUP=G2; REPLICATE=4 ;;
+              '0 11 1 10 *') GROUP=G3; REPLICATE=1 ;;
+              '15 11 1 10 *') GROUP=G3; REPLICATE=2 ;;
+              '30 11 1 10 *') GROUP=G3; REPLICATE=3 ;;
+              '45 11 1 10 *') GROUP=G3; REPLICATE=4 ;;
+              '0 12 1 10 *') GROUP=G4; REPLICATE=1 ;;
+              '15 12 1 10 *') GROUP=G4; REPLICATE=2 ;;
+              '30 12 1 10 *') GROUP=G4; REPLICATE=3 ;;
+              '45 12 1 10 *') GROUP=G4; REPLICATE=4 ;;
+              '0 13 1 10 *') GROUP=G5; REPLICATE=1 ;;
+              '15 13 1 10 *') GROUP=G5; REPLICATE=2 ;;
+              '30 13 1 10 *') GROUP=G5; REPLICATE=3 ;;
+              '45 13 1 10 *') GROUP=G5; REPLICATE=4 ;;
+              '0 14 1 10 *') GROUP=G6; REPLICATE=1 ;;
+              '15 14 1 10 *') GROUP=G6; REPLICATE=2 ;;
+              '30 14 1 10 *') GROUP=G6; REPLICATE=3 ;;
+              '45 14 1 10 *') GROUP=G6; REPLICATE=4 ;;
+              '0 15 1 10 *') GROUP=G7; REPLICATE=1 ;;
+              '15 15 1 10 *') GROUP=G7; REPLICATE=2 ;;
+              '30 15 1 10 *') GROUP=G7; REPLICATE=3 ;;
+              '45 15 1 10 *') GROUP=G7; REPLICATE=4 ;;
+              '0 16 1 10 *') GROUP=G8; REPLICATE=1 ;;
+              '15 16 1 10 *') GROUP=G8; REPLICATE=2 ;;
+              '30 16 1 10 *') GROUP=G8; REPLICATE=3 ;;
+              '45 16 1 10 *') GROUP=G8; REPLICATE=4 ;;
+              *) echo "Unknown schedule: $SCHEDULE" >&2; exit 1 ;;
+            esac
+          else
+            GROUP='\${{ inputs.group }}'
+            REPLICATE='\${{ inputs.replicate }}'
+          fi
+
+          case "$GROUP" in
+            G1) GROUP_INDEX=1 ;;
+            G2) GROUP_INDEX=2 ;;
+            G3) GROUP_INDEX=3 ;;
+            G4) GROUP_INDEX=4 ;;
+            G5) GROUP_INDEX=5 ;;
+            G6) GROUP_INDEX=6 ;;
+            G7) GROUP_INDEX=7 ;;
+            G8) GROUP_INDEX=8 ;;
+            *) echo "Unknown group: $GROUP" >&2; exit 1 ;;
+          esac
+
+          SEED_BASE=$((100000 + GROUP_INDEX * 1000 + REPLICATE * 100))
+
+          echo "GROUP=$GROUP" >> "$GITHUB_ENV"
+          echo "REPLICATE=$REPLICATE" >> "$GITHUB_ENV"
+          echo "SEED_BASE=$SEED_BASE" >> "$GITHUB_ENV"
+
+          cat > campaign_slot_env.json <<EOF
+          {
+            "group": "$GROUP",
+            "replicate": $REPLICATE,
+            "seed_base": $SEED_BASE,
+            "scheduled_cron": "$SCHEDULE"
+          }
+          EOF
+
+      - name: Run campaign slot
+        run: >
+          python experiments/tcf_consciousness_campaign.py
+          --group "$GROUP"
+          --replicate "$REPLICATE"
+          --episodes 64
+          --train-episodes 64
+          --observer-samples 512
+          --out results/tcf_campaign
+
+      - name: Attach slot metadata
+        shell: bash
+        run: |
+          cp campaign_slot_env.json "results/tcf_campaign/$GROUP"_R"$REPLICATE"/scheduled_slot.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c0-campaign-$GROUP-R$REPLICATE
+          path: results/tcf_campaign/$GROUP"_R"$REPLICATE
+          if-no-files-found: error
+          compression-level: 6
