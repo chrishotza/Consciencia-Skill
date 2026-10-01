@@ -36,6 +36,9 @@ def test_c0_9_schema(tmp_path):
     assert summary["phenomenal_consciousness_claimed"] is False
     assert "no constant-value pseudo-replication" in summary["analysis_note"]
     assert summary["secondary_outputs"]["intervention_target_error_max"] < 1e-12
+    assert "action_difference_normal_minus_donor" in summary["primary_outputs"]
+    assert "gain_contrast_normal_minus_donor_shuffle" in summary["primary_outputs"]
+    assert "state_delta_after_step_normal_minus_donor" in summary["primary_outputs"]
     for value in summary["primary_outputs"].values():
         assert set(value) == {"mean", "p"}
         assert 0.0 <= value["p"] <= 1.0
