@@ -101,6 +101,8 @@ El smoke test con un modelo real se ejecuta mediante un workflow manual y conect
 
 ## Estado
 
-**Fase 0 — arquitectura y validación mínima.**
+**Fase 1 — núcleo persistente + validación de dinámica e historia interna.**
+
+La investigación ya completó la serie V43–V46 de retención, intervención y generalización de historia en el simulador. El organismo persistente también cuenta ahora con un puente explícito hacia la dinámica numérica, con estado persistido en SQLite y ciclos autónomos sin entrada externa.
 
 El proyecto todavía no afirma que una IA haya sido hecha consciente. El objetivo es construirla y desarrollar las pruebas capaces de distinguir continuidad, auto-referencia, identidad persistente y otras propiedades relevantes.
