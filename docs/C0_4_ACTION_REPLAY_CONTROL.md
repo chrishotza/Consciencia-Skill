@@ -29,6 +29,15 @@ Se promedian 8 secuencias replay por episodio y se evalúa el vector \Delta con 
 
 El control conserva la distribución empírica de las acciones, pero elimina la relación en tiempo real entre estado propio y selección de acción.
 
-## Estado
+## Resultado auditado
 
-Protocolo preparado para ejecución mediante GitHub Actions.
+Run GitHub Actions `36838953166`; artifact `11150575990`; commit experimental `7e8adcfd8aed0df514662912ded4482c6bda7ad0`.
+
+Configuración: **64 episodios**, **8 replays por episodio**, **64 episodios de entrenamiento**, **512 muestras del autoobservador**.
+
+- varianza autónoma FULL: **0.0531008831**;
+- varianza con action replay: **0.0543576360**;
+- contraste FULL − replay: **−0.0012567529**;
+- p por permutación de signo: **0.4364282**.
+
+Interpretación: el control información-matcheado no mostró una varianza autónoma adicional de FULL respecto de reproducir secuencias de acciones extraídas del mismo organismo. Esto **no establece C5 como dinámica propia específica** bajo este control más exigente. La separación positiva de C0.2 frente a `OPEN_LOOP` queda interpretativamente limitada porque ese control no igualaba la distribución de acciones.
