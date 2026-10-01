@@ -15,6 +15,14 @@
 
 ## Current frontier
 
+### C0.8
+- `docs/C0_8_CROSSED_OBSERVER_POLICY.md` — crossed observer/policy coupling test; first execution required a statistical correction and a confirmatory rerun.
+- `experiments/tcf_consciousness_instantiation_c0_8.py` — elementwise paired interaction statistics.
+
+### C0.9
+- `docs/C0_9_OBSERVER_POLICY_INTERFACE_SHUFFLE.md` — observer → policy interface causal shuffle.
+- `experiments/tcf_consciousness_instantiation_c0_9.py` — matched first-step interface test with donor derangement.
+
 ### V69
 - `docs/V69_SELF_STATE_READOUT.md` — numeric readout; discrete action endpoint is null.
 - `docs/V69_SELF_READ_STATE.md` — readout participates in trajectory selection; includes blinded control and state-swap intervention.
