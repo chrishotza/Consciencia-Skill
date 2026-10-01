@@ -1,0 +1,33 @@
+name: organism-protocol-audit-v1
+
+on:
+  push:
+    paths:
+      - "experiments/longitudinal_organism_v1.py"
+      - "tests/test_longitudinal_organism.py"
+      - "src/ontto/storage.py"
+      - "src/ontto/organism.py"
+      - ".github/workflows/organism-protocol-audit-v1.yml"
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: pip install pytest
+      - run: pytest -q tests/test_longitudinal_organism.py tests/test_bridge.py tests/test_persistence.py
+      - run: python experiments/longitudinal_organism_v1.py --mode fake --cycles 20 --dream-every 5
+      - uses: actions/upload-artifact@v4
+        with:
+          name: organism-protocol-audit-v1
+          path: |
+            results/longitudinal_organism_v1.db
+            results/longitudinal_organism_v1/
+          if-no-files-found: error
