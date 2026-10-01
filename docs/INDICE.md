@@ -72,6 +72,7 @@
 
 [C0 — TCF Consciousness Instantiation Protocol](C0_TCF_CONSCIOUSNESS_INSTANTIATION.md) — primer protocolo explícito para probar propiedades candidatas de conciencia TCF mediante ablaciones controladas.
 - [C0.3 information-matched control](C0_3_INFORMATION_MATCHED_CONTROL.md) — control de información equivalente para especificidad causal del estado propio.
+- [C0.4 action-replay control](C0_4_ACTION_REPLAY_CONTROL.md) — control de acciones emparejadas para especificidad causal de la dinámica propia.
 
 [Registro consolidado](../research/ORGANISM_RESULT_LEDGER.md).
 
