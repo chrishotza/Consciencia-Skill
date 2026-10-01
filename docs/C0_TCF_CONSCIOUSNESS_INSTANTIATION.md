@@ -190,3 +190,12 @@ El error máximo de intervención fue **0.0**.
 La ejecución produjo un vector positivo en los siete contrastes operacionales definidos por C0.2. Esto significa que, bajo este protocolo y esta implementación, la condición integrada se separó de la ablación correspondiente en cada observable. No se convierte este vector en una puntuación global de conciencia y **no constituye por sí mismo evidencia de experiencia fenomenal**.
 
 El contraste C7 de esta ejecución ya no mide solamente acción → siguiente estado: mide el cambio de la **acción siguiente** producido por la cadena causal acción → estado propio → acción, que es el observable operacional usado aquí para recurrencia.
+
+
+## C0.3 — control de especificidad causal
+
+C0.3 añadió un control información-matcheado para C3: conserva la distribución empírica de estados, pero rompe la correspondencia entre episodio y estado usado por la política.
+
+Resultado: contraste **+0.06640625**, p **0.3140343**, con 64 episodios y 8 permutaciones por episodio.
+
+El resultado no separó la sensibilidad al estado propio actual de la sensibilidad a estados ajenos extraídos de la misma distribución. Por ello, la evidencia de C0.2 para C3 queda limitada a la dependencia respecto del estado frente al control `STATE_BLIND`; no establece especificidad causal frente a un control información-matcheado.
