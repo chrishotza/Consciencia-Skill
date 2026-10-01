@@ -134,7 +134,9 @@ def main() -> None:
 
     observer_effect = delta(tt["mean_gain"], pt["mean_gain"])
     policy_effect = delta(tt["mean_gain"], tp["mean_gain"])
-    interaction = tt["mean_gain"] - tp["mean_gain"] - pt["mean_gain"] + pp["mean_gain"]
+    interaction = (
+        tt["mean_gain"] - tp["mean_gain"] - pt["mean_gain"] + pp["mean_gain"]
+    )
 
     variance_observer = delta(tt["state_variance"], pt["state_variance"])
     variance_policy = delta(tt["state_variance"], tp["state_variance"])
@@ -145,8 +147,10 @@ def main() -> None:
     distance_observer = delta(pt["final_state_distance"], tt["final_state_distance"])
     distance_policy = delta(tp["final_state_distance"], tt["final_state_distance"])
     distance_interaction = (
-        tp["final_state_distance"] - tt["final_state_distance"]
-        + pt["final_state_distance"] - pp["final_state_distance"]
+        tt["final_state_distance"]
+        - tp["final_state_distance"]
+        - pt["final_state_distance"]
+        + pp["final_state_distance"]
     )
 
     summary = {
@@ -176,19 +180,13 @@ def main() -> None:
         "primary_outputs": {
             "observer_effect_gain": stat(observer_effect, 98101),
             "policy_effect_gain": stat(policy_effect, 98102),
-            "observer_policy_interaction_gain": stat(
-                np.full(args.episodes, interaction, dtype=float), 98103
-            ),
+            "observer_policy_interaction_gain": stat(interaction, 98103),
             "observer_effect_variance": stat(variance_observer, 98104),
             "policy_effect_variance": stat(variance_policy, 98105),
-            "observer_policy_interaction_variance": stat(
-                np.full(args.episodes, variance_interaction, dtype=float), 98106
-            ),
+            "observer_policy_interaction_variance": stat(variance_interaction, 98106),
             "observer_effect_final_distance": stat(distance_observer, 98107),
             "policy_effect_final_distance": stat(distance_policy, 98108),
-            "observer_policy_interaction_final_distance": stat(
-                np.full(args.episodes, distance_interaction, dtype=float), 98109
-            ),
+            "observer_policy_interaction_final_distance": stat(distance_interaction, 98109),
         },
         "condition_summary": {
             key: {
@@ -207,6 +205,10 @@ def main() -> None:
             float(pt["intervention_target_error"].max()),
             float(pp["intervention_target_error"].max()),
         ),
+        "interaction_statistic": {
+            "paired_by_episode_seed": True,
+            "contrast": "TT - TP - PT + PP",
+        },
         "interpretation_rule": (
             "TT/TP and TT/PT contrasts probe component-specific dependence; "
             "the crossed four-condition interaction probes whether the effect "
