@@ -71,6 +71,7 @@
 - [V80 reversible regime adaptation](V80_REVERSIBLE_REGIME_ADAPTATION.md) — adaptación online bajo cambios de régimen reversibles y no estacionarios.
 
 [C0 — TCF Consciousness Instantiation Protocol](C0_TCF_CONSCIOUSNESS_INSTANTIATION.md) — primer protocolo explícito para probar propiedades candidatas de conciencia TCF mediante ablaciones controladas.
+- [C0.3 information-matched control](C0_3_INFORMATION_MATCHED_CONTROL.md) — control de información equivalente para especificidad causal del estado propio.
 
 [Registro consolidado](../research/ORGANISM_RESULT_LEDGER.md).
 
