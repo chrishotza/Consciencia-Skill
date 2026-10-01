@@ -79,3 +79,5 @@
 
 ## Historial
 Los experimentos anteriores a V47 forman parte del historial científico y de ingeniería. No representan automáticamente el estado actual.
+
+- [C0.6 — Causal Lesion / Rescue](C0_6_CAUSAL_LESION_RESCUE.md) — prueba causal de necesidad y rescate del autoobservador y la autopólitica entrenados.
