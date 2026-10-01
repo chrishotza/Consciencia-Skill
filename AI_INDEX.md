@@ -23,6 +23,10 @@
 - `docs/C0_9_OBSERVER_POLICY_INTERFACE_SHUFFLE.md` — observer → policy interface causal shuffle.
 - `experiments/tcf_consciousness_instantiation_c0_9.py` — matched first-step interface test with donor derangement.
 
+### C0.10
+- `docs/C0_10_WITHIN_EPISODE_TEMPORAL_ALIGNMENT.md` — within-episode temporal lag control for observer → policy alignment.
+- `experiments/tcf_consciousness_instantiation_c0_10.py` — current-state vs. pre-intervention observer-readout comparison.
+
 ### V69
 - `docs/V69_SELF_STATE_READOUT.md` — numeric readout; discrete action endpoint is null.
 - `docs/V69_SELF_READ_STATE.md` — readout participates in trajectory selection; includes blinded control and state-swap intervention.
