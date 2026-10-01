@@ -31,6 +31,14 @@ class OntologicalState:
     lifetime_dream_cycles: int = 0
     boot_count: int = 0
     last_thought: str = ""
+    # Numeric trajectory state bridged to src/ontto/dynamics.py.
+    dynamic_state: float = 0.0
+    dynamic_prev_state: float = 0.0
+    dynamic_memory: float = 0.0
+    dynamic_pressure: float = 0.0
+    dynamic_attractor_distance: float = 0.0
+    dynamic_last_input: float = 0.0
+    dynamic_steps: int = 0
 
     def to_json(self) -> str:
         return json.dumps(asdict(self), ensure_ascii=False)
@@ -338,6 +346,13 @@ class MemoryStore:
             "lifetime_dream_cycles": state.lifetime_dream_cycles,
             "boot_count": state.boot_count,
             "pending_inputs": self.pending_input_count(agent_id),
+            "dynamic_state": state.dynamic_state,
+            "dynamic_prev_state": state.dynamic_prev_state,
+            "dynamic_memory": state.dynamic_memory,
+            "dynamic_pressure": state.dynamic_pressure,
+            "dynamic_attractor_distance": state.dynamic_attractor_distance,
+            "dynamic_last_input": state.dynamic_last_input,
+            "dynamic_steps": state.dynamic_steps,
         }
 
     def begin_dream(self, agent_id: str, state_before: OntologicalState) -> int:
