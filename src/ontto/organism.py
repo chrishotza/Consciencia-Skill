@@ -76,6 +76,7 @@ class PersistentOrganism:
         if not self.cfg.dynamic_enabled or steps < 1:
             return None
 
+        step_start = self.state.dynamic_steps
         snapshot = self.dynamic_bridge.advance(
             previous_state=self.state.dynamic_prev_state,
             state=self.state.dynamic_state,
@@ -83,7 +84,7 @@ class PersistentOrganism:
             pressure=self.state.dynamic_pressure,
             signal=signal,
             steps=steps,
-            step_index=self.state.dynamic_steps,
+            step_index=step_start,
         )
 
         self.state.dynamic_prev_state = snapshot.previous_state
@@ -93,6 +94,23 @@ class PersistentOrganism:
         self.state.dynamic_attractor_distance = snapshot.attractor_distance
         self.state.dynamic_last_input = snapshot.last_input
         self.state.dynamic_steps = snapshot.steps
+        label = {
+            "DREAM": "dream",
+            "WAKE": "autonomous" if signal == 0.0 else "wake",
+        }.get(self.state.mode, self.state.mode.lower())
+        self.store.record_dynamic_snapshot(
+            self.cfg.agent_id,
+            mode=self.state.mode,
+            label=label,
+            step_start=step_start,
+            step_end=snapshot.steps,
+            signal=signal,
+            previous_state=snapshot.previous_state,
+            state=snapshot.state,
+            memory=snapshot.memory,
+            pressure=snapshot.pressure,
+            attractor_distance=snapshot.attractor_distance,
+        )
         return snapshot.to_dict()
 
     def wake_cycle(self, stimulus: str) -> str:
