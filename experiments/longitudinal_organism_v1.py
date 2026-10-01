@@ -144,6 +144,28 @@ def run_protocol(
     store.conn.close()
 
     reopened = MemoryStore(db_path)
+    recovered_before_boot = reopened.persistence_observables(agent_id)
+    recovered_state = reopened.load_state(agent_id)
+
+    recovery_match = {
+        "trajectory_fingerprint": (
+            recovered_before_boot["trajectory_fingerprint"]
+            == before["trajectory_fingerprint"]
+        ),
+        "event_trajectory_fingerprint": (
+            recovered_before_boot["event_trajectory_fingerprint"]
+            == before["event_trajectory_fingerprint"]
+        ),
+        "memory_fingerprint": (
+            recovered_before_boot["memory_fingerprint"]
+            == before["memory_fingerprint"]
+        ),
+        "dynamic_state": recovered_state.dynamic_state == before["dynamic_state"],
+        "dynamic_memory": recovered_state.dynamic_memory == before["dynamic_memory"],
+        "dynamic_pressure": recovered_state.dynamic_pressure == before["dynamic_pressure"],
+        "dynamic_steps": recovered_state.dynamic_steps == before["dynamic_steps"],
+    }
+
     restored = PersistentOrganism(cfg, reopened, provider, time.sleep)
     restored.wake_cycle(
         "Continuá la trayectoria después de un cierre y reapertura del proceso. "
@@ -158,10 +180,13 @@ def run_protocol(
         "cycles_requested": cycles,
         "dream_every": dream_every,
         "sleep_seconds": sleep_seconds,
-        "trajectory_fingerprint_changed_after_reopen": (
-            fingerprint_before != after["trajectory_fingerprint"]
+        "recovery_match_before_boot": recovery_match,
+        "recovery_passed": all(recovery_match.values()),
+        "new_trajectory_after_reopen": (
+            after["trajectory_fingerprint"] != recovered_before_boot["trajectory_fingerprint"]
         ),
         "before_reopen": before,
+        "recovered_before_boot": recovered_before_boot,
         "after_reopen": after,
         "trajectory_summary": summarize(reopened, agent_id),
     }
