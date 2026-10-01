@@ -26,11 +26,12 @@ from experiments.tcf_consciousness_instantiation_c0 import (
     train_self_observer,
 )
 from experiments.organism_repeated_active_continuity_v78 import (
-    AUTONOMOUS_STEPS,
     self_prediction_gain,
     warmup_context,
 )
 from experiments.tcf_consciousness_instantiation_c0 import choose_action
+
+AUTONOMOUS_STEPS = 8
 
 
 PROTOCOL_VERSION = "C0-CAMPAIGN-1.0"
