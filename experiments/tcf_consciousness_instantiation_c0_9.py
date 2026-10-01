@@ -179,10 +179,12 @@ def run_episode(
     return {
         "normal_action": float(normal_action),
         "donor_shuffle_action": float(donor_action),
+        "action_difference": float(normal_action - donor_action),
         "action_mismatch": float(abs(normal_action - donor_action)),
         "normal_gain": float(normal_gain),
         "donor_shuffle_gain": float(donor_gain),
         "gain_contrast": float(normal_gain - donor_gain),
+        "state_delta_after_step": float(normal_next.state - donor_next.state),
         "state_difference_after_step": float(abs(normal_next.state - donor_next.state)),
         "donor_prediction_gap": donor_prediction_gap,
     }
@@ -288,22 +290,24 @@ def main() -> None:
         },
         "phenomenal_consciousness_claimed": False,
         "primary_outputs": {
-            "action_mismatch": {
-                "mean": float(np.mean(arrays["action_mismatch"])),
-                "p": float(sign_p(arrays["action_mismatch"], 99101)),
+            "action_difference_normal_minus_donor": {
+                "mean": float(np.mean(arrays["action_difference"])),
+                "p": float(sign_p(arrays["action_difference"], 99101)),
             },
             "gain_contrast_normal_minus_donor_shuffle": {
                 "mean": float(np.mean(arrays["gain_contrast"])),
                 "p": float(sign_p(arrays["gain_contrast"], 99102)),
             },
-            "state_difference_after_step": {
-                "mean": float(np.mean(arrays["state_difference_after_step"])),
-                "p": float(sign_p(arrays["state_difference_after_step"], 99103)),
+            "state_delta_after_step_normal_minus_donor": {
+                "mean": float(np.mean(arrays["state_delta_after_step"])),
+                "p": float(sign_p(arrays["state_delta_after_step"], 99103)),
             },
         },
         "secondary_outputs": {
             "normal_gain_mean": float(np.mean(arrays["normal_gain"])),
             "donor_shuffle_gain_mean": float(np.mean(arrays["donor_shuffle_gain"])),
+            "action_mismatch_mean": float(np.mean(arrays["action_mismatch"])),
+            "state_difference_after_step_mean": float(np.mean(arrays["state_difference_after_step"])),
             "donor_prediction_gap_mean": float(np.mean(arrays["donor_prediction_gap"])),
             "intervention_target_error_max": float(max(intervention_errors)),
         },
@@ -313,7 +317,7 @@ def main() -> None:
             "a causal organizational test, not a demonstration of phenomenal consciousness."
         ),
         "analysis_note": (
-            "The primary contrast is computed elementwise across the same episode seeds; "
+            "Signed action and state contrasts are computed elementwise across the same episode seeds; "
             "no constant-value pseudo-replication is used."
         ),
     }
