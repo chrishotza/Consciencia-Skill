@@ -2,7 +2,6 @@ name: tcf-consciousness-campaign-32
 
 on:
   schedule:
-    - cron: '0 9 1 10 *'
     - cron: '15 9 1 10 *'
     - cron: '30 9 1 10 *'
     - cron: '45 9 1 10 *'
@@ -34,6 +33,7 @@ on:
     - cron: '15 16 1 10 *'
     - cron: '30 16 1 10 *'
     - cron: '45 16 1 10 *'
+    - cron: '0 17 1 10 *'
   workflow_dispatch:
     inputs:
       group:
@@ -71,46 +71,46 @@ jobs:
       - name: Resolve campaign slot
         shell: bash
         run: |
-          SCHEDULE='\${{ github.event.schedule }}'
+          SCHEDULE='${{ github.event.schedule }}'
           if [ -n "$SCHEDULE" ]; then
             case "$SCHEDULE" in
-              '0 9 1 10 *') GROUP=G1; REPLICATE=1 ;;
-              '15 9 1 10 *') GROUP=G1; REPLICATE=2 ;;
-              '30 9 1 10 *') GROUP=G1; REPLICATE=3 ;;
-              '45 9 1 10 *') GROUP=G1; REPLICATE=4 ;;
-              '0 10 1 10 *') GROUP=G2; REPLICATE=1 ;;
-              '15 10 1 10 *') GROUP=G2; REPLICATE=2 ;;
-              '30 10 1 10 *') GROUP=G2; REPLICATE=3 ;;
-              '45 10 1 10 *') GROUP=G2; REPLICATE=4 ;;
-              '0 11 1 10 *') GROUP=G3; REPLICATE=1 ;;
-              '15 11 1 10 *') GROUP=G3; REPLICATE=2 ;;
-              '30 11 1 10 *') GROUP=G3; REPLICATE=3 ;;
-              '45 11 1 10 *') GROUP=G3; REPLICATE=4 ;;
-              '0 12 1 10 *') GROUP=G4; REPLICATE=1 ;;
-              '15 12 1 10 *') GROUP=G4; REPLICATE=2 ;;
-              '30 12 1 10 *') GROUP=G4; REPLICATE=3 ;;
-              '45 12 1 10 *') GROUP=G4; REPLICATE=4 ;;
-              '0 13 1 10 *') GROUP=G5; REPLICATE=1 ;;
-              '15 13 1 10 *') GROUP=G5; REPLICATE=2 ;;
-              '30 13 1 10 *') GROUP=G5; REPLICATE=3 ;;
-              '45 13 1 10 *') GROUP=G5; REPLICATE=4 ;;
-              '0 14 1 10 *') GROUP=G6; REPLICATE=1 ;;
-              '15 14 1 10 *') GROUP=G6; REPLICATE=2 ;;
-              '30 14 1 10 *') GROUP=G6; REPLICATE=3 ;;
-              '45 14 1 10 *') GROUP=G6; REPLICATE=4 ;;
-              '0 15 1 10 *') GROUP=G7; REPLICATE=1 ;;
-              '15 15 1 10 *') GROUP=G7; REPLICATE=2 ;;
-              '30 15 1 10 *') GROUP=G7; REPLICATE=3 ;;
-              '45 15 1 10 *') GROUP=G7; REPLICATE=4 ;;
-              '0 16 1 10 *') GROUP=G8; REPLICATE=1 ;;
-              '15 16 1 10 *') GROUP=G8; REPLICATE=2 ;;
-              '30 16 1 10 *') GROUP=G8; REPLICATE=3 ;;
-              '45 16 1 10 *') GROUP=G8; REPLICATE=4 ;;
+              '15 9 1 10 *') GROUP=G1; REPLICATE=1 ;;
+              '30 9 1 10 *') GROUP=G1; REPLICATE=2 ;;
+              '45 9 1 10 *') GROUP=G1; REPLICATE=3 ;;
+              '0 10 1 10 *') GROUP=G1; REPLICATE=4 ;;
+              '15 10 1 10 *') GROUP=G2; REPLICATE=1 ;;
+              '30 10 1 10 *') GROUP=G2; REPLICATE=2 ;;
+              '45 10 1 10 *') GROUP=G2; REPLICATE=3 ;;
+              '0 11 1 10 *') GROUP=G2; REPLICATE=4 ;;
+              '15 11 1 10 *') GROUP=G3; REPLICATE=1 ;;
+              '30 11 1 10 *') GROUP=G3; REPLICATE=2 ;;
+              '45 11 1 10 *') GROUP=G3; REPLICATE=3 ;;
+              '0 12 1 10 *') GROUP=G3; REPLICATE=4 ;;
+              '15 12 1 10 *') GROUP=G4; REPLICATE=1 ;;
+              '30 12 1 10 *') GROUP=G4; REPLICATE=2 ;;
+              '45 12 1 10 *') GROUP=G4; REPLICATE=3 ;;
+              '0 13 1 10 *') GROUP=G4; REPLICATE=4 ;;
+              '15 13 1 10 *') GROUP=G5; REPLICATE=1 ;;
+              '30 13 1 10 *') GROUP=G5; REPLICATE=2 ;;
+              '45 13 1 10 *') GROUP=G5; REPLICATE=3 ;;
+              '0 14 1 10 *') GROUP=G5; REPLICATE=4 ;;
+              '15 14 1 10 *') GROUP=G6; REPLICATE=1 ;;
+              '30 14 1 10 *') GROUP=G6; REPLICATE=2 ;;
+              '45 14 1 10 *') GROUP=G6; REPLICATE=3 ;;
+              '0 15 1 10 *') GROUP=G6; REPLICATE=4 ;;
+              '15 15 1 10 *') GROUP=G7; REPLICATE=1 ;;
+              '30 15 1 10 *') GROUP=G7; REPLICATE=2 ;;
+              '45 15 1 10 *') GROUP=G7; REPLICATE=3 ;;
+              '0 16 1 10 *') GROUP=G7; REPLICATE=4 ;;
+              '15 16 1 10 *') GROUP=G8; REPLICATE=1 ;;
+              '30 16 1 10 *') GROUP=G8; REPLICATE=2 ;;
+              '45 16 1 10 *') GROUP=G8; REPLICATE=3 ;;
+              '0 17 1 10 *') GROUP=G8; REPLICATE=4 ;;
               *) echo "Unknown schedule: $SCHEDULE" >&2; exit 1 ;;
             esac
           else
-            GROUP='\${{ inputs.group }}'
-            REPLICATE='\${{ inputs.replicate }}'
+            GROUP='${{ inputs.group }}'
+            REPLICATE='${{ inputs.replicate }}'
           fi
 
           case "$GROUP" in
