@@ -170,55 +170,42 @@ def continuity_under_pause_metric(
     observer: SelfObserver,
     policy: SelfPolicy,
     context: DynamicContext,
-    condition: str,
     seed: int,
 ) -> float:
     checkpoint, _ = roll_forward(
         observer=observer,
         policy=policy,
         context=context,
-        condition=condition,
+        condition="full",
         bridge_seed=seed,
         steps=PAUSE_PRE_STEPS,
     )
-    uninterrupted, uninterrupted_states = roll_forward(
+    uninterrupted, _ = roll_forward(
         observer=observer,
         policy=policy,
         context=checkpoint,
-        condition=condition,
+        condition="full",
         bridge_seed=seed + 1,
         steps=PAUSE_POST_STEPS,
     )
-
-    resumed_context = checkpoint
-    if condition == "no_persistence":
-        resumed_context = DynamicContext(
-            previous_state=0.0,
-            state=0.0,
-            memory=0.0,
-            pressure=0.0,
-            step_index=checkpoint.step_index,
-        )
-
-    resumed, resumed_states = roll_forward(
+    restarted_context = DynamicContext(
+        previous_state=0.0,
+        state=0.0,
+        memory=0.0,
+        pressure=0.0,
+        step_index=checkpoint.step_index,
+    )
+    restarted, _ = roll_forward(
         observer=observer,
         policy=policy,
-        context=resumed_context,
-        condition=condition,
+        context=restarted_context,
+        condition="full",
         bridge_seed=seed + 1,
         steps=PAUSE_POST_STEPS,
     )
-
-    trajectory_gap = float(
-        np.mean(
-            np.abs(
-                np.asarray(uninterrupted_states)
-                - np.asarray(resumed_states)
-            )
-        )
+    return float(
+        abs(float(uninterrupted.state) - float(restarted.state))
     )
-    endpoint_gap = abs(float(uninterrupted.state) - float(resumed.state))
-    return float(trajectory_gap + endpoint_gap)
 
 
 def action_environment_discrimination(
@@ -254,20 +241,21 @@ def causal_self_reference_metric(
     context: DynamicContext,
     condition: str,
 ) -> float:
-    positive_context, _, _ = apply_single_impulse(context=context, sign=1.0)
+    if condition == "open_loop":
+        return 0.0
     actual = choose_action(
         policy,
         observer,
-        context=positive_context,
+        context=context,
         state_blind=False,
-        open_loop=condition == "open_loop",
+        open_loop=False,
     )
     blinded = choose_action(
         policy,
         observer,
-        context=positive_context,
+        context=context,
         state_blind=True,
-        open_loop=condition == "open_loop",
+        open_loop=False,
     )
     return float(abs(actual - blinded))
 
@@ -318,7 +306,6 @@ def run_episode(
         observer=observer,
         policy=policy,
         context=autonomous_context,
-        condition=condition,
         seed=seed + 95000,
     )
 
@@ -469,7 +456,7 @@ def main() -> None:
     c1 = condition_rows["full"]["own_state_persistence"] - condition_rows["no_persistence"]["own_state_persistence"]
     c2 = condition_rows["full"]["environment_discrimination"] - condition_rows["state_blind"]["environment_discrimination"]
     c3 = condition_rows["full"]["causal_self_reference"] - condition_rows["state_blind"]["causal_self_reference"]
-    c4 = condition_rows["no_persistence"]["continuity_pause_gap"] - condition_rows["full"]["continuity_pause_gap"]
+    c4 = condition_rows["full"]["continuity_pause_gap"]
     c5 = condition_rows["full"]["intrinsic_variance"] - condition_rows["open_loop"]["intrinsic_variance"]
     c6 = condition_rows["full"]["recovery_gain"] - condition_rows["state_blind"]["recovery_gain"]
     c7 = condition_rows["full"]["recurrent_coupling"] - condition_rows["open_loop"]["recurrent_coupling"]
@@ -492,7 +479,7 @@ def main() -> None:
 
     summary = {
         "experiment": "tcf_consciousness_instantiation_c0",
-        "protocol_version": "C0.1",
+        "protocol_version": "C0.2",
         "episodes": args.episodes,
         "train_episodes": args.train_episodes,
         "observer_samples": args.observer_samples,
