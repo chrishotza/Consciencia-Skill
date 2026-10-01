@@ -348,6 +348,23 @@ Interpretación: V78 respalda reutilización temporal/composicional de la polít
 
 Interpretación: resultado nulo para adaptación online bajo el protocolo probado. La copia adaptive incorporó las ganancias observadas, pero no se distinguió de la política frozen. El cambio dinámico usado tampoco generó una degradación suficiente de la política congelada como para revelar una ventaja adaptativa.
 
+
+### V80 — Adaptación online ante cambios de régimen reversibles
+
+64 réplicas por condición; entrenamiento bajo `single_impulse`; evaluación `base → shift_a → shift_b → base_return`; dos brazos emparejados desde el mismo snapshot de política.
+
+- endpoint primario, `base_return` evento 3 adaptive − frozen: **-0.0103649267**, p **0.0504475**;
+- `shift_a` evento 3 adaptive − frozen: **-0.0062218940**, p **0.00114994**;
+- `shift_b` evento 3 adaptive − frozen: **+0.0000024599**, p **0.9976001**;
+- adaptive `base_return` evento 3 − evento 1: **-0.0021765106**;
+- frozen `base_return` evento 3 − evento 1: **-0.0004681112**;
+- recuperación diferencial adaptive − frozen: **-0.0017083995**;
+- error máximo de intervención: **0.0**.
+
+Interpretación: **resultado nulo para la ventaja adaptativa bajo el protocolo probado**. La política adaptive, que incorpora online únicamente la ganancia observada de autopredicción, no superó a la copia frozen al atravesar dos cambios de régimen y regresar al régimen base. La diferencia en `base_return` fue ligeramente negativa y la condición `shift_a` también favoreció numéricamente a frozen; `shift_b` no mostró separación apreciable.
+
+V80 refuerza el resultado nulo de V79, pero no demuestra que toda adaptación online sea inútil: solo descarta una ventaja reproducible bajo esta dinámica, esta política y este horizonte. Las intervenciones mantuvieron error máximo 0.0.
+
 ## Estado de ingeniería
 
 V60, V61, V62, V63, V64, V65 y V66 finalizaron correctamente en sus respectivos commits registrados de GitHub Actions. Sus artefactos se conservan en las ejecuciones correspondientes. Los resultados anteriores V43–V59 siguen siendo reproducibles a partir de sus workflows históricos y registros de evidencia.
