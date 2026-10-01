@@ -87,6 +87,12 @@ Los resultados positivos, nulos y negativos se conservan.
 | V78 | Continuidad activa ante perturbaciones repetidas | **Ventaja OOD de autopredicción conservada** |
 | V79 | Adaptación online de la política propia | **Nulo bajo el cambio dinámico probado** |
 | V80 | Adaptación online ante cambios de régimen reversibles | **Nulo bajo el protocolo reversible probado** |
+| C0.2 | Instanciación operacional: C1–C7 | **Vector de criterios; resultados positivos en C1, C2, C4 y C6** |
+| C0.3 | Control information-matched para C3 | **Nulo bajo el control de información emparejada** |
+| C0.4 | Control information-matched para C5 | **Nulo bajo el replay de acciones emparejado** |
+| C0.5 | Control information-matched para C7 | **Nulo bajo el control de cadena de acciones emparejada** |
+| C0.6 | Lesión causal y rescate de autoobservador/autopólítica | **En ejecución** |
+| C0 Campaign | 32 ejecuciones en 8 grupos | **Programada: 19:15–03:00 ART, 4 por hora** |
 
 ## Fundamentos
 
@@ -206,6 +212,12 @@ Positive, null, and negative results are all kept.
 | V78 | Active continuity under repeated perturbations | **OOD self-prediction advantage retained** |
 | V79 | Online self-policy adaptation | **Null under the tested dynamic shift** |
 | V80 | Online adaptation under reversible regime shifts | **Null under the tested reversible protocol** |
+| C0.2 | Operational instantiation: C1–C7 | **Criterion vector; positive results for C1, C2, C4, and C6** |
+| C0.3 | Information-matched control for C3 | **Null under the information-matched control** |
+| C0.4 | Information-matched control for C5 | **Null under matched action replay** |
+| C0.5 | Information-matched control for C7 | **Null under matched action-chain control** |
+| C0.6 | Causal lesion and rescue of self-observer/self-policy | **Running** |
+| C0 Campaign | 32 executions across 8 groups | **Scheduled: 19:15–03:00 ART, 4 per hour** |
 
 ## Foundations
 
