@@ -1,5 +1,9 @@
 # C0 — TCF Consciousness Instantiation Protocol
 
+## Versión
+
+**C0.1** — revisión de los observables iniciales para evitar métricas que confundan continuidad con proximidad a un estado objetivo.
+
 ## Objetivo
 
 C0 es el primer protocolo diseñado explícitamente para evaluar si el organismo artificial puede **instanciar las propiedades organizacionales candidatas de conciencia definidas por TCF**.
@@ -74,13 +78,13 @@ Funciona como control de dinámica no guiada por el bucle de selección.
 
 | Criterio | Contraste principal | Observable |
 |---|---|---|
-| C1 | FULL − NO_PERSISTENCE | desplazamiento durante ventana autónoma |
+| C1 | FULL − NO_PERSISTENCE | retención de separación entre dos estados internos bajo evolución futura común |
 | C2 | FULL − STATE_BLIND | discriminación de acción ante perturbaciones opuestas |
-| C3 | FULL − OPEN_LOOP | discriminación de acción condicionada por el propio estado |
-| C4 | FULL − NO_PERSISTENCE | índice de continuidad post-perturbación |
+| C3 | FULL − STATE_BLIND | cambio de acción al enmascarar el propio estado bajo la misma perturbación |
+| C4 | NO_PERSISTENCE − FULL | divergencia de trayectoria introducida por una pausa/reanudación con o sin conservación del estado |
 | C5 | FULL − OPEN_LOOP | varianza de dinámica sin entrada externa |
 | C6 | FULL − STATE_BLIND | ganancia de autopredicción durante recuperación |
-| C7 | FULL − OPEN_LOOP | señal de cierre recurrente medida por desplazamiento interno |
+| C7 | FULL − OPEN_LOOP | efecto causal de la acción seleccionada sobre el siguiente estado propio |
 
 Los contrastes se conservan como vectores por réplica y se evalúan con una prueba de signo por permutación.
 
@@ -155,7 +159,7 @@ Las extensiones prioritarias son:
 
 ## Estado
 
-**C0 — protocolo inicial activo.**
+**C0.1 — protocolo inicial activo, con observables revisados antes de registrar resultados científicos.**
 
 El resultado experimental debe registrarse después de ejecutar la prueba completa.
 
