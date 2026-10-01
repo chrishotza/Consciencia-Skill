@@ -2,7 +2,7 @@
 
 ## Versión
 
-**C0.1** — revisión de los observables iniciales para evitar métricas que confundan continuidad con proximidad a un estado objetivo.
+**C0.2** — revisión metodológica de C3/C4 después de auditar la primera ejecución; C3 queda anclado a la dependencia causal de la acción respecto del estado propio y C4 compara continuidad persistente frente a reinicio de estado.
 
 ## Objetivo
 
@@ -80,8 +80,8 @@ Funciona como control de dinámica no guiada por el bucle de selección.
 |---|---|---|
 | C1 | FULL − NO_PERSISTENCE | retención de separación entre dos estados internos bajo evolución futura común |
 | C2 | FULL − STATE_BLIND | discriminación de acción ante perturbaciones opuestas |
-| C3 | FULL − STATE_BLIND | cambio de acción al enmascarar el propio estado bajo la misma perturbación |
-| C4 | NO_PERSISTENCE − FULL | divergencia de trayectoria introducida por una pausa/reanudación con o sin conservación del estado |
+| C3 | FULL − STATE_BLIND | efecto de enmascarar el estado propio sobre la acción, medido desde el mismo contexto |
+| C4 | FULL − NO_PERSISTENCE | diferencia de continuación entre estado persistido y estado reiniciado tras la pausa |
 | C5 | FULL − OPEN_LOOP | varianza de dinámica sin entrada externa |
 | C6 | FULL − STATE_BLIND | ganancia de autopredicción durante recuperación |
 | C7 | FULL − OPEN_LOOP | efecto causal de la acción seleccionada sobre el siguiente estado propio |
@@ -159,7 +159,11 @@ Las extensiones prioritarias son:
 
 ## Estado
 
-**C0.1 — protocolo inicial activo, con observables revisados antes de registrar resultados científicos.**
+**C0.2 — protocolo inicial activo, con revisión metodológica incorporada antes de registrar resultados científicos.**
 
 El resultado experimental debe registrarse después de ejecutar la prueba completa.
 
+
+## Auditoría de la primera ejecución
+
+La primera ejecución de C0.1 completó técnicamente el workflow y produjo un artefacto, pero **no se registra como evidencia científica final**. La auditoría posterior detectó dos problemas de interpretación: C3 comparaba condiciones de forma que mezclaba la sonda con la ablación, y C4 comparaba dos continuaciones que podían ser idénticas por construcción. Esos observables fueron corregidos en C0.2 antes de repetir la prueba.
