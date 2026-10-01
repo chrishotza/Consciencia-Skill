@@ -86,7 +86,7 @@ Los resultados positivos, nulos y negativos se conservan.
 | V77 | Generalización ante estructuras causales no vistas | **Ventaja OOD de autopredicción conservada** |
 | V78 | Continuidad activa ante perturbaciones repetidas | **Ventaja OOD de autopredicción conservada** |
 | V79 | Adaptación online de la política propia | **Nulo bajo el cambio dinámico probado** |
-| V80 | Adaptación online ante cambios de régimen reversibles | **Protocolo activo** |
+| V80 | Adaptación online ante cambios de régimen reversibles | **Nulo bajo el protocolo reversible probado** |
 
 ## Fundamentos
 
@@ -205,7 +205,7 @@ Positive, null, and negative results are all kept.
 | V77 | Generalization to unseen causal structures | **OOD self-prediction advantage retained** |
 | V78 | Active continuity under repeated perturbations | **OOD self-prediction advantage retained** |
 | V79 | Online self-policy adaptation | **Null under the tested dynamic shift** |
-| V80 | Online adaptation under reversible regime shifts | **Active protocol** |
+| V80 | Online adaptation under reversible regime shifts | **Null under the tested reversible protocol** |
 
 ## Foundations
 
