@@ -128,13 +128,13 @@ def run_protocol(
     )
     organism = PersistentOrganism(cfg, store, provider, time.sleep)
 
-    for stimulus in stimuli_for_cycles(cycles):
+    for cycle_index, stimulus in enumerate(stimuli_for_cycles(cycles), start=1):
+        organism.cycles = cycle_index
         organism.wake_cycle(stimulus)
-        if organism.cycles % dream_every == 0:
+        if cycle_index % dream_every == 0:
             organism.dream_cycle()
         else:
             organism.autonomous_wake_cycle()
-        organism.cycles += 1
         if sleep_seconds > 0:
             time.sleep(sleep_seconds)
 
