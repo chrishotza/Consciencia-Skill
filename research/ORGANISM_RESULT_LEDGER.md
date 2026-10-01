@@ -477,6 +477,19 @@ Artefacto: GitHub Actions run 36939278865; commit experimental 5e0e1f52eea76c73b
 
 Interpretación: C0.7 muestra especificidad del comportamiento hacia la asignación feature → target bajo el control probado para la ganancia de autopredicción y la varianza interna, mientras que la distancia final y la magnitud de acción no se separaron. Esto fortalece la interpretación de que parte del comportamiento depende del mapeo aprendido y no solamente del tamaño del modelo o de la distribución marginal de targets. No constituye evidencia de conciencia fenomenológica.
 
-### C0.8 — En diseño
+### C0.8 — Acoplamiento cruzado observador/política: corrección estadística
 
-El siguiente experimento cruza los componentes entrenados verdadero/permutado para separar dependencia del observador, dependencia de la política y acoplamiento entre ambos.
+La primera ejecución del protocolo sí completó las cuatro condiciones y produjo los cuatro brazos con las mismas semillas, pero la implementación original construyó los contrastes de interacción como un valor escalar y después lo repitió 64 veces para calcular el valor p. Ese procedimiento no constituye una prueba emparejada válida del contraste interacción y no se conserva como evidencia estadística.
+
+La misma ejecución produjo estas medias descriptivas:
+
+- TT (observador verdadero + política verdadera): ganancia **0.21888936**; distancia final **0.15996548**; varianza **0.06848248**.
+- TP (observador verdadero + política target-permuted): ganancia **-0.12484394**; distancia final **0.67765194**; varianza **0.07943683**.
+- PT (observador target-permuted + política verdadera): ganancia **-0.31516985**; distancia final **0.67765194**; varianza **0.07943683**.
+- PP (observador target-permuted + política target-permuted): ganancia **0.20488969**; distancia final **0.14799625**; varianza **0.06747759**.
+
+Además, el contraste implementado para interacción de distancia tenía el signo opuesto al contraste declarado en el protocolo.
+
+La implementación fue corregida para calcular **TT − TP − PT + PP elemento a elemento por semilla de episodio compartida**, y para usar la misma convención de signo también en distancia final. El siguiente artefacto confirmatorio debe ser el único que se utilice para inferencia sobre la interacción.
+
+Interpretación provisional: la ejecución inicial queda como evidencia descriptiva de los cuatro brazos, no como confirmación estadística del efecto de acoplamiento.
