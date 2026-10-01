@@ -30,7 +30,7 @@ def test_c0_output_schema(tmp_path):
     summary = json.loads(result.stdout)
 
     assert summary["experiment"] == "tcf_consciousness_instantiation_c0"
-    assert summary["protocol_version"] == "C0"
+    assert summary["protocol_version"] == "C0.1"
     assert summary["primary_outputs_are_criterion_vectors"] is True
     assert summary["no_composite_consciousness_score"] is True
     assert summary["phenomenal_consciousness_claimed"] is False
