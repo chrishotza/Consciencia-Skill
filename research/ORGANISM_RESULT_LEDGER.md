@@ -461,6 +461,22 @@ Interpretación: **C0.6 muestra dependencia causal de los componentes entrenados
 
 ### C0.7 — Control de especificidad por permutación de targets del modelo de sí
 
-Protocolo añadido y actualmente en ejecución. Mantiene el mismo número de muestras del autoobservador, la misma multiconjunto de targets y el mismo presupuesto de entrenamiento de política, pero rompe específicamente la correspondencia feature → target mediante una permutación fija de targets.
+64 episodios; 64 episodios de entrenamiento; 512 muestras del autoobservador; control mediante permutación fija de targets conservando las features y el multiconjunto de targets; misma dinámica y semillas de evaluación entre brazos.
 
-Artefacto y resultados: **pendientes**.
+Artefacto: GitHub Actions run 36939278865; commit experimental 5e0e1f52eea76c73b5e9e8273b63bd3d810ed7ff.
+
+- ganancia FULL − target-permuted: +0.0286062, p 0.0019999;
+- distancia final target-permuted − FULL: −0.0113629, p 0.7047648;
+- varianza de estado FULL − target-permuted: +0.0198325, p 0.00005;
+- magnitud media de acción FULL − target-permuted: 0.0, p 1.0;
+- ganancia FULL: 0.2128723;
+- ganancia target-permuted: 0.1842661;
+- varianza FULL: 0.0811531;
+- varianza target-permuted: 0.0613206;
+- error máximo de intervención: 0.0.
+
+Interpretación: C0.7 muestra especificidad del comportamiento hacia la asignación feature → target bajo el control probado para la ganancia de autopredicción y la varianza interna, mientras que la distancia final y la magnitud de acción no se separaron. Esto fortalece la interpretación de que parte del comportamiento depende del mapeo aprendido y no solamente del tamaño del modelo o de la distribución marginal de targets. No constituye evidencia de conciencia fenomenológica.
+
+### C0.8 — En diseño
+
+El siguiente experimento cruza los componentes entrenados verdadero/permutado para separar dependencia del observador, dependencia de la política y acoplamiento entre ambos.
