@@ -95,6 +95,7 @@ Los resultados positivos, nulos y negativos se conservan.
 | C0.7 | Control de especificidad por permutación de targets del modelo de sí | **Positivo para ganancia y varianza; nulo para magnitud de acción** |
 | C0.8 | Acoplamiento cruzado observador/política | **Corrección estadística aplicada; ejecución confirmatoria pendiente** |
 | C0.9 | Interfaz causal observador → política | **Implementado; ejecución pendiente** |
+| C0.10 | Alineación temporal observador → política | **Implementado; ejecución pendiente** |
 | C0 Campaign | 32 ejecuciones en 8 grupos | **Ejecutada: 32 workflows; fallo técnico en el archivado de artifacts** |
 
 ## Fundamentos
@@ -223,6 +224,7 @@ Positive, null, and negative results are all kept.
 | C0.7 | Self-model target-permutation specificity control | **Positive for gain and variance; null for action magnitude** |
 | C0.8 | Crossed observer/policy coupling | **Statistical correction applied; confirmatory run pending** |
 | C0.9 | Observer → policy causal interface | **Implemented; run pending** |
+| C0.10 | Within-episode temporal observer → policy alignment | **Implemented; run pending** |
 | C0 Campaign | 32 executions across 8 groups | **Executed: 32 workflows; technical artifact-archival failure** |
 
 ## Foundations
