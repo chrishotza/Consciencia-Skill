@@ -493,3 +493,18 @@ Además, el contraste implementado para interacción de distancia tenía el sign
 La implementación fue corregida para calcular **TT − TP − PT + PP elemento a elemento por semilla de episodio compartida**, y para usar la misma convención de signo también en distancia final. El siguiente artefacto confirmatorio debe ser el único que se utilice para inferencia sobre la interacción.
 
 Interpretación provisional: la ejecución inicial queda como evidencia descriptiva de los cuatro brazos, no como confirmación estadística del efecto de acoplamiento.
+
+
+### C0.9 — Interfaz causal observador → política
+
+Protocolo implementado: **no se registra todavía un resultado experimental**. El diseño mantiene fijo el organismo, el autoobservador, la autopólitica, la perturbación y la dinámica dentro de cada par. Solo se sustituye el readout del autoobservador que recibe la política por el readout de otro episodio mediante una permutación sin puntos fijos.
+
+La inferencia primaria se calcula por episodio compartido y contrasta:
+
+- acción normal frente a acción con donor-shuffle;
+- ganancia de autopredicción normal − donor-shuffle;
+- diferencia de estado después de un único paso de dinámica.
+
+No se permite entrada semántica durante la sonda ni reentrenamiento externo.
+
+Estado: **implementado; ejecución pendiente de verificación**.
