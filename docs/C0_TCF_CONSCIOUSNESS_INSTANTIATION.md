@@ -84,7 +84,7 @@ Funciona como control de dinámica no guiada por el bucle de selección.
 | C4 | FULL − NO_PERSISTENCE | diferencia de continuación entre estado persistido y estado reiniciado tras la pausa |
 | C5 | FULL − OPEN_LOOP | varianza de dinámica sin entrada externa |
 | C6 | FULL − STATE_BLIND | ganancia de autopredicción durante recuperación |
-| C7 | FULL − OPEN_LOOP | efecto causal de la acción seleccionada sobre el siguiente estado propio |
+| C7 | FULL − OPEN_LOOP | diferencia de la acción siguiente causada por la cadena acción → estado propio → acción |
 
 Los contrastes se conservan como vectores por réplica y se evalúan con una prueba de signo por permutación.
 
