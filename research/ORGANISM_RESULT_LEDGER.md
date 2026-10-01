@@ -385,6 +385,20 @@ Interpretación: C0.2 produjo separación positiva en los siete observables oper
 
 La ejecución C0.2 reemplaza como registro científico final a la ejecución anterior del workflow que precedió a la corrección de C7.
 
+### C0.3 — Control de información equivalente para autorreferencia causal
+
+64 episodios; 8 permutaciones sin puntos fijos por episodio; mismo snapshot de política; estados de control extraídos de la distribución empírica de las trayectorias FULL.
+
+Artefacto: GitHub Actions run **36838675864**, artifact **11150238362**; commit **413e70499977d759e9effb50505c4db6174925c8**.
+
+- brecha estado propio → estado mezclado: **1.06640625**;
+- brecha entre dos estados mezclados: **1.00000000**;
+- contraste: **+0.06640625**;
+- p por permutación de signo: **0.3140343**;
+- discrepancia de acción real vs. estado mezclado: **0.5332031**.
+
+Interpretación: **resultado no concluyente / nulo bajo el control información-matcheado probado para C3**. La ventaja observada con FULL − STATE_BLIND en C0.2 no se separó de un control que conserva la distribución de estados pero rompe su correspondencia con el episodio. Esto reduce la fuerza de la inferencia específicamente sobre autorreferencia causal; no modifica por sí solo los otros seis criterios de C0.2.
+
 ## Estado de ingeniería
 
 V60, V61, V62, V63, V64, V65 y V66 finalizaron correctamente en sus respectivos commits registrados de GitHub Actions. Sus artefactos se conservan en las ejecuciones correspondientes. Los resultados anteriores V43–V59 siguen siendo reproducibles a partir de sus workflows históricos y registros de evidencia.
