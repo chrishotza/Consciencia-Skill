@@ -4,11 +4,14 @@
 
 Local time: Buenos Aires / ART (UTC−03:00)
 
-Window: **06:15 → 14:00**, 1 October 2026.
+Window: **19:15 → 03:00 ART**, 1–2 October 2026.
 
 Frequency: **4 executions per hour**, every 15 minutes.
 
-GitHub Actions cron is expressed in UTC, so the scheduled window is **09:00 → 16:45 UTC**.
+GitHub Actions cron is expressed in UTC. The restarted campaign uses **22:15 UTC (1 Oct) → 06:00 UTC (2 Oct)**.
+
+The first 32-run campaign completed its experimental step but failed only during artifact upload because the workflow passed literal shell variables to `actions/upload-artifact`. Those historical runs are retained as execution evidence in GitHub logs. This restarted campaign validates the result files before upload and uploads the complete `results/tcf_campaign` directory.
+
 
 ## Groups
 
@@ -40,42 +43,40 @@ Training, trajectories, controls, and statistics derive separate seeds from the 
 
 ## Schedule
 
-The first 06:00 local slot was missed because the campaign commit landed after its 09:00 UTC schedule. The complete 32-run campaign is therefore aligned to the next quarter-hour, preserving **4 executions per hour** and 32 total slots.
-
 | UTC | Local ART | Slot |
 |---|---|---|
-| 09:15 | 06:15 | G1-R1 |
-| 09:30 | 06:30 | G1-R2 |
-| 09:45 | 06:45 | G1-R3 |
-| 10:00 | 07:00 | G1-R4 |
-| 10:15 | 07:15 | G2-R1 |
-| 10:30 | 07:30 | G2-R2 |
-| 10:45 | 07:45 | G2-R3 |
-| 11:00 | 08:00 | G2-R4 |
-| 11:15 | 08:15 | G3-R1 |
-| 11:30 | 08:30 | G3-R2 |
-| 11:45 | 08:45 | G3-R3 |
-| 12:00 | 09:00 | G3-R4 |
-| 12:15 | 09:15 | G4-R1 |
-| 12:30 | 09:30 | G4-R2 |
-| 12:45 | 09:45 | G4-R3 |
-| 13:00 | 10:00 | G4-R4 |
-| 13:15 | 10:15 | G5-R1 |
-| 13:30 | 10:30 | G5-R2 |
-| 13:45 | 10:45 | G5-R3 |
-| 14:00 | 11:00 | G5-R4 |
-| 14:15 | 11:15 | G6-R1 |
-| 14:30 | 11:30 | G6-R2 |
-| 14:45 | 11:45 | G6-R3 |
-| 15:00 | 12:00 | G6-R4 |
-| 15:15 | 12:15 | G7-R1 |
-| 15:30 | 12:30 | G7-R2 |
-| 15:45 | 12:45 | G7-R3 |
-| 16:00 | 13:00 | G7-R4 |
-| 16:15 | 13:15 | G8-R1 |
-| 16:30 | 13:30 | G8-R2 |
-| 16:45 | 13:45 | G8-R3 |
-| 17:00 | 14:00 | G8-R4 |
+| 22:15 UTC | 19:15 ART (1 Oct) | G1-R1 |
+| 22:30 UTC | 19:30 ART (1 Oct) | G1-R2 |
+| 22:45 UTC | 19:45 ART (1 Oct) | G1-R3 |
+| 23:00 UTC | 20:00 ART (1 Oct) | G1-R4 |
+| 23:15 UTC | 20:15 ART (1 Oct) | G2-R1 |
+| 23:30 UTC | 20:30 ART (1 Oct) | G2-R2 |
+| 23:45 UTC | 20:45 ART (1 Oct) | G2-R3 |
+| 00:00 UTC | 21:00 ART (2 Oct) | G2-R4 |
+| 00:15 UTC | 21:15 ART (2 Oct) | G3-R1 |
+| 00:30 UTC | 21:30 ART (2 Oct) | G3-R2 |
+| 00:45 UTC | 21:45 ART (2 Oct) | G3-R3 |
+| 01:00 UTC | 22:00 ART (2 Oct) | G3-R4 |
+| 01:15 UTC | 22:15 ART (2 Oct) | G4-R1 |
+| 01:30 UTC | 22:30 ART (2 Oct) | G4-R2 |
+| 01:45 UTC | 22:45 ART (2 Oct) | G4-R3 |
+| 02:00 UTC | 23:00 ART (2 Oct) | G4-R4 |
+| 02:15 UTC | 23:15 ART (2 Oct) | G5-R1 |
+| 02:30 UTC | 23:30 ART (2 Oct) | G5-R2 |
+| 02:45 UTC | 23:45 ART (2 Oct) | G5-R3 |
+| 03:00 UTC | 00:00 ART (2 Oct) | G5-R4 |
+| 03:15 UTC | 00:15 ART (2 Oct) | G6-R1 |
+| 03:30 UTC | 00:30 ART (2 Oct) | G6-R2 |
+| 03:45 UTC | 00:45 ART (2 Oct) | G6-R3 |
+| 04:00 UTC | 01:00 ART (2 Oct) | G6-R4 |
+| 04:15 UTC | 01:15 ART (2 Oct) | G7-R1 |
+| 04:30 UTC | 01:30 ART (2 Oct) | G7-R2 |
+| 04:45 UTC | 01:45 ART (2 Oct) | G7-R3 |
+| 05:00 UTC | 02:00 ART (2 Oct) | G7-R4 |
+| 05:15 UTC | 02:15 ART (2 Oct) | G8-R1 |
+| 05:30 UTC | 02:30 ART (2 Oct) | G8-R2 |
+| 05:45 UTC | 02:45 ART (2 Oct) | G8-R3 |
+| 06:00 UTC | 03:00 ART (2 Oct) | G8-R4 |
 
 ## Integrity rules
 
