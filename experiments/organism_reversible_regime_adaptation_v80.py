@@ -312,23 +312,23 @@ def main() -> None:
         ),
         "base_return_adaptive_event_3_minus_event_1": float(
             np.mean(
-                grouped["base_return"]["adaptive_event_3"]
-                - grouped["base_return"]["adaptive_event_1"]
+                grouped["base_return"]["adaptive_event_3_gain"]
+                - grouped["base_return"]["adaptive_event_1_gain"]
             )
         ),
         "base_return_frozen_event_3_minus_event_1": float(
             np.mean(
-                grouped["base_return"]["frozen_event_3"]
-                - grouped["base_return"]["frozen_event_1"]
+                grouped["base_return"]["frozen_event_3_gain"]
+                - grouped["base_return"]["frozen_event_1_gain"]
             )
         ),
         "differential_return_recovery": float(
             np.mean(
-                (grouped["base_return"]["adaptive_event_3"]
-                 - grouped["base_return"]["adaptive_event_1"])
+                (grouped["base_return"]["adaptive_event_3_gain"]
+                 - grouped["base_return"]["adaptive_event_1_gain"])
                 - (
-                    grouped["base_return"]["frozen_event_3"]
-                    - grouped["base_return"]["frozen_event_1"]
+                    grouped["base_return"]["frozen_event_3_gain"]
+                    - grouped["base_return"]["frozen_event_1_gain"]
                 )
             )
         ),
