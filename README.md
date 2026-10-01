@@ -170,6 +170,7 @@ Los experimentos están organizados como protocolos numerados para que cada prop
 | V67 | Huella numérica generada durante el SUEÑO | **Nulo**: no hubo huella recuperable ni transferencia causal bajo la prueba corregida |
 | V68 | Persistencia temporal de la huella dinámica | **Huella inmediata** con rápida reducción de magnitud y persistencia débil/no monotónica |
 | V69 | Lectura del propio estado mediante modelo de sí | **Lectura numérica positiva; selección nula** bajo el protocolo actual |
+| V70 | Modelo de sí → acción | **Acción numérica distinta y efecto posterior sobre el estado** |
 | V69 | Lectura del estado propio y selección | **Efecto causal**: el estado leído cambia la decisión en 16/24 réplicas; control cegado 0/24 |
 | V70 | Persistencia del lector propio | **Sobrevive reinicio** con error de predicción 0.0 y mantiene efecto de decisión tras ablación |
 
@@ -248,7 +249,7 @@ No establecen por sí solos experiencia subjetiva, consciencia fenomenológica n
 
 **Investigación activa — organismo persistente, modelo de sí mismo, dinámica vigilia/sueño y experimentos de continuidad.**
 
-V67 produjo un resultado nulo bajo la prueba corregida. V68 mostró una huella dinámica inmediata pero atenuada. V69 mostró que un modelo de sí numérico congelado antes de SUEÑO puede leer diferencias del estado interno después de la ablación semántica, pero la política actual no convirtió esa lectura en una acción diferente. El siguiente paso es equilibrar las ramas de decisión.
+V67 produjo un resultado nulo bajo la prueba corregida. V68 mostró una huella dinámica inmediata pero atenuada. V69 mostró lectura numérica del estado sin cambio de acción bajo la política discreta. V70 dio el siguiente paso: la predicción del modelo de sí se convirtió en una acción continua y esa acción modificó el estado posterior incluso después de eliminar las superficies semánticas.
 
 ## Licencia
 
