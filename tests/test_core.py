@@ -50,6 +50,7 @@ def test_present_integrates_self_and_world(tmp_path):
             "self_model": {"uncertainty": {"task": 0.4}},
             "internal_state": {"energy": 0.8},
             "intention": "understand",
+            "attention": ["continuity", "self-state"],
             "memory": "The task requires continuity.",
         }
     )
@@ -61,6 +62,7 @@ def test_present_integrates_self_and_world(tmp_path):
     assert present["self_model"]["uncertainty"]["task"] == 0.4
     assert present["active_memory"] == ["The task requires continuity."]
     assert present["intention"] == "understand"
+    assert present["attention"] == ["continuity", "self-state"]
 
 
 def test_self_model_changes_trajectory_selection(tmp_path):
