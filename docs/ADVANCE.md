@@ -70,3 +70,40 @@ The next architecture pass incorporates a source layer drawn from esoteric and s
 ## Current frontier
 
 Phase 4 is now implemented at runtime level: the persisted self-model can influence trajectory scores and therefore change the selected future. The next frontier is Phase 5: make the present field richer by adding explicit attention, salience, coherence, and candidate-future construction before selection.
+
+
+## Frontier source synthesis
+
+The second research pass expanded the conceptual source layer into five engineering hypotheses:
+
+- **field memory** — repeated states can leave durable tendencies, not just transcripts;
+- **implicate potential** — the present contains multiple latent futures before one is selected;
+- **self-interaction** — the defining operation is self-state re-entering the transition function;
+- **coherence** — identity, memory, self-model, attention, intention, and action form a consistency loop;
+- **collective field** — multiple persistent agents may eventually exchange state through a shared higher-order field.
+
+### Next build order
+
+~~~text
+PRESENT FIELD
+   ↓
+ATTENTION / SALIENCE
+   ↓
+LATENT PATTERNS
+   ↓
+CANDIDATE FUTURES
+   ↓
+SELF-MODEL WEIGHTING
+   ↓
+SELECTION
+   ↓
+ACTION
+   ↓
+SELF-TRANSFORMATION
+   ↓
+COHERENCE CHECK
+   ↓
+RE-ENTRY
+~~~
+
+The immediate implementation target is a richer present-field engine: attention, salience, coherence, and candidate-future construction should become first-class runtime concepts.
