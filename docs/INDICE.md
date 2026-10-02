@@ -111,4 +111,5 @@ Los experimentos anteriores a V47 forman parte del historial científico y de in
 - [I1 — Autoevaluación interoceptiva](I1_INTEROCEPTIVE_SELF_ASSESSMENT.md)
 - [I2 — Regulación interoceptiva](I2_INTEROCEPTIVE_REGULATION.md)
 - [I3 — Recuperación interoceptiva repetida](I3_REPEATED_INTEROCEPTIVE_RECOVERY.md)
+- [I4 — Interocepción metacognitiva](I4_METACOGNITIVE_INTEROCEPTION.md)
 
