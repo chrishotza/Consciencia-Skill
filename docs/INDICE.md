@@ -272,3 +272,13 @@ The V47–V80 files retain their canonical identifiers and terminology for repro
 - AUC absolute specificity gap **+0.44740**, p=0.00010; future-action specificity gap **+0.04663**, p=0.00100; signed-AUC gap null.
 - Phase×specificity interaction significant for absolute AUC and future action.
 - Next: I5.22 cyclic semantic phase-shift control.
+
+
+## I5.22 — Cyclic semantic phase-shift control
+- Protocol: `docs/I5_22_CYCLIC_SEMANTIC_PHASE_SHIFT.md`
+- Experiment: `experiments/i5_22_cyclic_semantic_phase_shift.py`
+- Test: `tests/test_i5_22_cyclic_semantic_phase_shift.py`
+- Valid workflow: **37061263630**, artifact **11251161457**.
+- 24 replicates; t0, phase sequence, semantic content multiset and phase labels preserved at 100%.
+- All three endpoints were null; global lag×specificity interaction was non-significant for all three.
+- Next: I5.23 cyclic shift sweep.
