@@ -185,3 +185,33 @@ No permitir que nombres específicos del servidor se filtren al núcleo de inves
 La frontera estable es server operation → organism method.
 
 </details>
+
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# Contrato del servidor Skill-Conscious
+
+Este documento define el límite estable para un servidor HTTP o MCP futuro. El servidor es una capa de transporte alrededor del organismo y no debe contener lógica de investigación de src/ontto/ o research/.
+
+## Principio central
+Agent Skill → server / MCP → PersistentOrganism → storage + provider.
+El Agent Skill describe cuándo y cómo usar el organismo. El servidor expone operaciones controladas. El organismo sigue siendo la fuente del comportamiento.
+
+## Operaciones canónicas
+health; status; submit_input; wake; dream; recent_memory; recent_events; state_summary; self_observer_summary.
+Las operaciones de lectura son acotadas y las mutaciones explícitas.
+
+## Límites
+Sin acceso SQL arbitrario. Lecturas acotadas. Mutaciones explícitas. Auditoría de cambios. Los experimentos de investigación siguen siendo workflows del repositorio y no deben ser mutados silenciosamente por el servidor de producción.
+
+## Despliegue
+Local: Agent Skill + organismo Python local. Server: Agent Skill + API/MCP + organismo persistente. Hybrid: agente local y organismo/storage en servidor privado.
+
+## Seguridad
+El servidor futuro debe agregar autenticación, autorización, límites de requests, payloads acotados, aislamiento de secretos, logging estructurado y control explícito de operaciones mutables.
+
+## Compatibilidad
+No permitir que nombres específicos del servidor se filtren al núcleo de investigación. La frontera estable es operación de servidor → método del organismo.
+
+</details>
