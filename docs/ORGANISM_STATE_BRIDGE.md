@@ -119,3 +119,32 @@ autonomous_wake_cycle() is implemented and closes an earlier gap in PersistentOr
 </details>
 
 > Language convention: docs/LANGUAGE.md
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# Organism ↔ Dynamic-State Bridge
+
+## Purpose
+The persistent organism carries a small explicit numerical state alongside memory and textual events. This is an integration layer, not a claim that the numerical state models subjective experience.
+
+## State
+The persistent state includes dynamic_state, dynamic_prev_state, dynamic_memory, dynamic_pressure, dynamic_attractor_distance, dynamic_last_input, and dynamic_steps. Textual memory, event logs, self-model, and WAKE/SLEEP counters remain separate.
+
+## Transition
+The bridge uses the same transition function from src/ontto/dynamics.py used by research experiments. For explicit WAKE input u: x[t+1] = F(x[t], m[t], p[t], u[t]). The bridge advances dynamics from persisted state and writes the new state to SQLite.
+
+The deterministic trajectory seed derives from dynamic_seed + dynamic_steps + local_step_offset, so restart does not reset the noise sequence.
+
+## Signal policy
+Default: external WAKE interaction = +1.0; autonomous cycle = 0.0; SLEEP = 0.0. This is a controlled event/regime signal, not semantic language encoding. Changing it is a separate experiment.
+
+## 24/7
+autonomous_wake_cycle() is implemented. It closes the earlier runtime gap and records zero-input autonomous dynamics as an autonomous WAKE event.
+
+## Next experimental stage
+Measure history retention, recovery after perturbation, self-prediction, common-probe history effects, memory interventions, and WAKE/SLEEP differences on the real LLM-backed organism.
+
+</details>
+
+> Language convention: docs/LANGUAGE.md
