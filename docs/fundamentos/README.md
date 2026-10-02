@@ -64,6 +64,8 @@ Todo documento nuevo debe indicar explícitamente:
 GitHub conserva el desarrollo vivo. Zenodo se utiliza para versiones congeladas que deban recibir una referencia persistente.
 
 
+<a id="english"></a>
+
 <details>
 <summary>🇺🇸 English — open</summary>
 
