@@ -143,9 +143,9 @@ def run(*, seed: int, replicates: int, warmup_cycles: int, permutations: int, ou
                     "t0_self_model_match": matched_rows[0]["self_model"] == shifted_rows[0]["self_model"],
                     "t0_applied_action_match": float(matched_rows[0]["applied_signal"]) == float(shifted_rows[0]["applied_signal"]),
                     "post_t0_semantic_multiset_preserved": sorted(
-                        r["self_model"] for r in matched_rows[1:]
+                        r["self_model"].split(" — ", 1)[1] for r in matched_rows[1:]
                     ) == sorted(
-                        r["self_model"] for r in shifted_rows[1:]
+                        r["self_model"].split(" — ", 1)[1] for r in shifted_rows[1:]
                     ),
                     "phase_label_sequence_preserved": [
                         r["self_model"].split(" — ", 1)[0] for r in matched_rows[1:]
@@ -202,6 +202,10 @@ def run(*, seed: int, replicates: int, warmup_cycles: int, permutations: int, ou
         for rep in range(replicates)
         for lag in LAGS
     ]
+
+    for control in controls:
+        if not control["post_t0_semantic_multiset_preserved"]:
+            raise AssertionError("cyclic shift must preserve the post-t0 semantic content multiset")
 
     result = {
         "experiment": "i5_22_cyclic_semantic_phase_shift",
