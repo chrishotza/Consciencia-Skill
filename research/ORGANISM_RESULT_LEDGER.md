@@ -1,6 +1,6 @@
 <a id="espanol"></a>
 
-# Registro de resultados experimentales del organismo — V47 → V80
+# Registro de resultados experimentales del organismo — V47 → V80 + I4/I5
 
 ## Resultados positivos fuertes
 
@@ -735,6 +735,38 @@ Artefacto: GitHub Actions run **36946964601**, artifact **11201784892**, SHA256 
 Interpretación: **resultado mixto/nulo bajo el protocolo probado**. El organismo persistente sí adquirió un modelo de segundo orden desde cero usando errores de predicción contrafactuales generados dentro del propio ciclo autónomo. Sin embargo, al congelar ese modelo y compararlo con un control target-permuted, no apareció una separación estadísticamente significativa en acción ni en ganancia. Por tanto, la adquisición autónoma está demostrada a nivel de aprendizaje/persistencia del modelo, pero su especificidad causal conductual no quedó demostrada.
 
 
+## I5 — Workspace global
+
+### I5.1 — Integración del workspace en PersistentOrganism — resultado nulo conductual
+
+Workflow verificado: **36984060538**; artifact **11216653205**; commit experimental **993ba8184c1536c7e781bde1fe9797c6b20a38dccd8269f03d3f13da2ebd48cd**.
+
+- 24 réplicas emparejadas;
+- persistencia del estado del workspace tras reinicio: **100%**;
+- NO_BROADCAST − FULL, regret: **+0.0212423**, p=**0.4928254**;
+- NO_WORKSPACE − FULL, regret: **+0.0212423**, p=**0.5026749**;
+- LESION − FULL, regret: **0.0**, p=**1.0**;
+- cambio de acción FULL vs NO_BROADCAST: **25%**;
+- cambio de acción FULL vs LESION: **0%**.
+
+Interpretación: **resultado nulo bajo el mapeo broadcast→trayectoria probado**. La integración y persistencia del workspace son operativas, pero el broadcast implementado no produjo una separación conductual detectable en los endpoints declarados. El resultado no invalida el mecanismo aislado I5.0.
+
+### I5.2 — Consulta dependiente del estado — resultado verificado
+
+Workflow verificado: **36984675391**; artifact **11216743506**; commit experimental **0b857f7c93e5a7112b184840f36994712aed2967**.
+
+- seed **20261002**;
+- **512** episodios;
+- accuracy FULL: **1.0**;
+- FULL − SHUFFLED: **+1.0**, p=**4.99975×10⁻⁵**;
+- FULL − ZERO: **+0.771484375**, p=**4.99975×10⁻⁵**;
+- FULL − RANDOM: **+0.7421875**, p=**4.99975×10⁻⁵**;
+- accuracy LESION: **0.236328125**;
+- FULL − LESION: **+0.763671875**, p=**4.99975×10⁻⁵**;
+- tasa de cambio de consulta dependiente del estado: **1.0**.
+
+Interpretación: **resultado positivo para el mecanismo computacional probado**. El estado global implementado controló la selección del siguiente módulo y la lesión del origen seleccionado redujo fuertemente la accuracy de consulta. El resultado sigue siendo un mecanismo GWT-4 independiente bajo un arnés sintético; no demuestra consciencia ni experiencia subjetiva ni sustituye una integración causal dentro de PersistentOrganism.
+
 ## Estado de campaña C0
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.
@@ -793,7 +825,7 @@ C0.18, por tanto, no demuestra necesidad causal ni rescate funcional del segundo
 <details>
 <summary>🇺🇸 English — open</summary>
 
-# Organism Experimental Result Ledger — V47 → V80
+# Organism Experimental Result Ledger — V47 → V80 + I4/I5
 
 ## Strong positive results
 
@@ -1073,6 +1105,38 @@ Interpretation: null result for online adaptation under the tested protocol. The
 - differential recovery adaptive − frozen: -0.0017083995;
 - maximum intervention error: 0.0.
 Interpretation: **null result for adaptive advantage under the tested protocol**. Adaptive policy, which incorporated only observed self-prediction gain online, did not outperform frozen after two regime shifts and return to base. The base_return difference was slightly negative and shift_a also numerically favored frozen; shift_b showed no appreciable separation. This does not invalidate all online adaptation; it constrains one policy, dynamics, and horizon.
+
+## I5 — Global workspace
+
+### I5.1 — Workspace integration into PersistentOrganism — null behavioral result
+
+Verified workflow: **36984060538**; artifact **11216653205**; experimental commit **993ba8184c1536c7e781bde1fe9797c6b20a38dccd8269f03d3f13da2ebd48cd**.
+
+- 24 paired replicates;
+- workspace-state persistence after restart: **100%**;
+- NO_BROADCAST − FULL, regret: **+0.0212423**, p=**0.4928254**;
+- NO_WORKSPACE − FULL, regret: **+0.0212423**, p=**0.5026749**;
+- LESION − FULL, regret: **0.0**, p=**1.0**;
+- FULL vs NO_BROADCAST action-change rate: **25%**;
+- FULL vs LESION action-change rate: **0%**.
+
+Interpretation: **null result under the tested broadcast→trajectory mapping**. Workspace integration and persistence are operational, but the implemented broadcast did not produce a detectable behavioral separation on the prespecified endpoints. This does not invalidate the isolated I5.0 mechanism.
+
+### I5.2 — State-dependent workspace query — verified result
+
+Verified workflow: **36984675391**; artifact **11216743506**; experimental commit **0b857f7c93e5a7112b184840f36994712aed2967**.
+
+- seed **20261002**;
+- **512** episodes;
+- FULL accuracy: **1.0**;
+- FULL − SHUFFLED: **+1.0**, p=**4.99975×10⁻⁵**;
+- FULL − ZERO: **+0.771484375**, p=**4.99975×10⁻⁵**;
+- FULL − RANDOM: **+0.7421875**, p=**4.99975×10⁻⁵**;
+- LESION accuracy: **0.236328125**;
+- FULL − LESION: **+0.763671875**, p=**4.99975×10⁻⁵**;
+- state-dependent query-change rate: **1.0**.
+
+Interpretation: **positive result for the tested computational mechanism**. The implemented global state controlled selection of the next module, and lesioning the selected source sharply reduced query accuracy. This remains a standalone GWT-4 mechanism result under a synthetic harness; it does not demonstrate consciousness or subjective experience and does not replace causal integration into PersistentOrganism.
 
 ## C0 campaign and causal controls
 
