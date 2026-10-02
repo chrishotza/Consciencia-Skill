@@ -31,6 +31,8 @@ This is the first persistence abstraction, not yet a full remote replacement for
 
 The next infrastructure step is to make portable bundles and deterministic replay consume the same persistence boundary, followed by a second-node interoperability test.
 
+<a id="espanol"></a>
+
 <details>
 <summary>🇪🇸 Español — abrir</summary>
 
@@ -54,24 +56,4 @@ Es la primera abstracción de persistencia, no un reemplazo remoto completo de t
 </details>
 
 
-<details>
-<summary>🇪🇸 Español — abrir</summary>
 
-# Backend de persistencia compartida
-
-Fase 5 introduce un límite entre el loop del organismo y la implementación concreta de almacenamiento.
-
-## Implementación actual
-PersistenceBackend es el contrato de PersistentOrganism para operaciones críticas de continuidad.
-MemoryStore sigue siendo la implementación SQLite local y la fuente de verdad de ejecución para los artifacts cognitivos.
-ServerMirroredPersistenceBackend extiende el store local y espeja mutaciones de continuidad: estado persistido → STATE_SNAPSHOT; memoria nueva → MEMORY_UPDATE; evento → ORGANISM_EVENT.
-
-La transacción local confirma primero. El espejo es fail-open: una caída temporal del servidor no detiene ni revierte el loop local.
-
-## Runtime
-run_daemon.py selecciona backend mediante CONSCIOUSNESS_MODE: local → MemoryStore; server → ServerMirroredPersistenceBackend.
-
-## Límite
-No es todavía un reemplazo remoto completo de todas las tablas SQLite. Modelos cognitivos, snapshots, registros de sueño y colas de entrada permanecen locales hasta especificar y probar su transferencia.
-
-</details>
