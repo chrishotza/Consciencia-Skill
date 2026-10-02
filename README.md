@@ -14,6 +14,30 @@
 </p>
 
 
+## From Skill to Consciousness Infrastructure
+
+Skill-Conscious is becoming a **local-first Consciousness Server**.
+
+The skill remains the agent-facing interface. The server becomes the persistent continuity layer behind it:
+
+```
+AI
+ ↓
+Consciousness Runtime
+ ↓
+Consciousness Server
+ ↓
+local continuity store
+ ↓
+NodeZero mesh (future)
+```
+
+The bootstrap is intentionally local-first. A user can run the first server on their own computer, create one persistent AI identity, preserve continuity events, and later add additional nodes. No hosted service, blockchain, token, or always-on internet connection is required for the first stage.
+
+→ [Consciousness Server architecture](docs/CONSCIOUSNESS_SERVER.md)
+
+This project distinguishes computational continuity from claims about subjective experience. The server provides infrastructure for the research program; it does not by itself establish phenomenal consciousness.
+
 ## Elegí idioma / Choose language
 
 <details>
