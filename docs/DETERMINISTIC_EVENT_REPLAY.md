@@ -74,3 +74,71 @@ The server never overwrites a divergent local branch automatically.
 This phase transfers control-plane continuity events. It does not yet replace the organism's SQLite MemoryStore or claim that event replay alone recreates every internal cognitive artifact.
 
 The next layer is to connect verified replay boundaries with portable organism bundles and a server-backed persistence abstraction.
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# Replay determinista de eventos
+
+La Fase 4 convierte el diario de eventos del Consciousness Server en un flujo de continuidad transferible.
+
+## Identidad del evento
+
+Cada evento tiene:
+
+- `event_id` — identidad SHA-256 derivada de instancia, tipo de evento, payload canónico, revisión lógica y evento padre;
+- `logical_revision` — posición determinista dentro de la continuidad;
+- `parent_event_id` — evento anterior de la cadena de instancia;
+- `created_at` — preservado durante el replay para que el fingerprint resultante pueda permanecer idéntico.
+
+La identidad excluye deliberadamente la hora de reloj. Dos nodos que reproduzcan el mismo evento en la misma posición lógica derivan la misma identidad.
+
+## Exportación de deltas
+
+```http
+GET /instances/{instance_id}/events/delta?after_revision=1&limit=1000
+```
+
+La respuesta contiene un delta de eventos ordenado. El receptor puede persistirlo como artifact de transferencia antes de aplicarlo a otro nodo.
+
+Helper del cliente:
+
+```python
+client.export_delta(instance_id, after_revision=checkpoint_revision)
+```
+
+## Replay
+
+```http
+POST /instances/{instance_id}/replay
+Content-Type: application/json
+```
+
+El payload declara la revisión base, opcionalmente su hash de estado, y una lista ordenada de eventos.
+
+El replay solo se acepta cuando el nodo receptor coincide con la revisión base declarada y, si se proporciona, con el hash de estado base. Cada evento debe extender exactamente la cadena padre actual.
+
+## Propiedades de seguridad
+
+Una petición de replay se rechaza por:
+
+- mismatch de revisión base;
+- mismatch de hash de estado base;
+- saltos en la revisión lógica;
+- mismatch de cadena padre;
+- colisión de identidad de evento con contenido diferente.
+
+Una retransmisión exacta de un delta ya aplicado es idempotente.
+
+El servidor nunca sobrescribe automáticamente una rama local divergente.
+
+## Alcance
+
+Esta fase transfiere eventos de continuidad del plano de control. Todavía no sustituye el MemoryStore SQLite del organismo ni afirma que el replay de eventos por sí solo reconstruya todos los artifacts cognitivos internos.
+
+La siguiente capa conecta los límites verificados de replay con bundles portables del organismo y con el backend de persistencia espejado por servidor.
+
+
+</details>
+
+> 🌐 Language convention: [docs/LANGUAGE.md](LANGUAGE.md)
