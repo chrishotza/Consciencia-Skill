@@ -501,3 +501,13 @@ Usá el documento de protocolo para localizar la implementación exacta.
 - Absolute AUC and future-action change: five of six shifts survive max-T; +1 is null.
 - Global max-T over 36 shift×lag cells is significant for absolute AUC and future action.
 - Next: I5.24 formal global shift×lag interaction.
+
+
+### I5.24 — Global shift×lag interaction
+- docs/I5_24_GLOBAL_SHIFT_LAG_INTERACTION.md
+- experiments/i5_24_global_shift_lag_interaction.py
+- tests/test_i5_24_global_shift_lag_interaction.py
+- Frozen-data analysis of I5.23; no new trajectories.
+- Verified workflow 37063264401 / artifact 11252345042; tests 37063264520 and package 37063264454 successful.
+- Signed AUC: p=0.89461; absolute AUC and future-action interaction p=0.00005 each, Bonferroni 0.00015.
+- Next: I5.25 shift×lag orientation and symmetry control.
