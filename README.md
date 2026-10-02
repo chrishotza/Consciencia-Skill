@@ -83,7 +83,41 @@ Consciousness Runtime
 
 → `CONSCIOUSNESS_MODE=server`
 
-En SERVER, `CONSCIOUSNESS_SERVER_URL` apunta al servidor. La arquitectura está preparada para que LOCAL y SERVER compartan posteriormente el mismo backend de persistencia abstracto.
+En SERVER, `CONSCIOUSNESS_SERVER_URL` apunta al servidor. **El backend de persistencia compartido ya está implementado**: LOCAL utiliza SQLite directamente y SERVER utiliza la misma persistencia local como fuente de verdad mientras replica cambios de continuidad al Consciousness Server.
+
+## Infraestructura de continuidad
+
+La infraestructura ya no se limita al registro de eventos. La continuidad está organizada como una pila operativa:
+
+| Capa | Estado | Qué existe |
+|---|---|---|
+| Runtime LOCAL / SERVER | **Implementado** | Dos modos explícitos de ejecución |
+| Checkpoints + reconciliación | **Implementado** | `ALIGNED / LOCAL_AHEAD / LOCAL_BEHIND / DIVERGED / NO_CHECKPOINT` |
+| Bundles + recovery | **Implementado** | Backup hash-verificado y planificación no destructiva |
+| Event identity + replay | **Implementado** | Eventos deterministas, deltas, replay verificado e idempotente |
+| Persistence backend | **Implementado** | Contrato común + espejo SERVER fail-open |
+| Segundo nodo | **Probe verificado** | Dos servidores SQLite independientes intercambian y reproducen una trayectoria por HTTP; la divergencia se bloquea |
+
+### Flujo actual
+
+```text
+Persistent Organism
+       ↓
+PersistenceBackend
+   ┌───┴─────────────┐
+   ↓                 ↓
+SQLite local     SERVER mirror
+   ↓                 ↓
+state / memory / events
+                     ↓
+          deterministic event replay
+                     ↓
+               second node
+```
+
+La regla de seguridad sigue siendo la misma: **una divergencia no se sobreescribe silenciosamente**. El replay exige una frontera de revisión válida y puede exigir coincidencia del fingerprint del estado.
+
+→ [Replay determinista](docs/DETERMINISTIC_EVENT_REPLAY.md) · [Backend de persistencia](docs/SHARED_PERSISTENCE_BACKEND.md) · [Prueba de segundo nodo](tests/test_second_node_interoperability.py)
 
 ## Programa experimental
 
@@ -170,6 +204,7 @@ Esta sección es la **puerta de entrada documental** al programa completo.
 - [Continuity reconciliation](docs/CONSCIOUSNESS_RECONCILIATION.md)
 - [Deterministic event replay](docs/DETERMINISTIC_EVENT_REPLAY.md)
 - [Shared persistence backend](docs/SHARED_PERSISTENCE_BACKEND.md)
+- [Prueba de segundo nodo](tests/test_second_node_interoperability.py)
 - [Protocolo 24/7](docs/24_7_PROTOCOL.md)
 - [Protocolo longitudinal](docs/LONGITUDINAL_PROTOCOL.md)
 - [Puente de estado del organismo](docs/ORGANISM_STATE_BRIDGE.md)
@@ -211,7 +246,7 @@ El laboratorio funciona mediante **GitHub Actions**. Cada protocolo puede partir
 
 ## Estado actual
 
-**Investigación activa — organismo persistente, modelo de sí mismo, dinámica vigilia/sueño, selección de trayectorias y políticas basadas en el propio modelo.**
+**Investigación activa + infraestructura de continuidad operativa: organismo persistente, modelo de sí mismo, vigilia/sueño, replay determinista y prueba de interoperabilidad entre nodos.**
 
 ## Licencia
 
@@ -287,7 +322,41 @@ Consciousness Runtime
 
 → `CONSCIOUSNESS_MODE=server`
 
-In SERVER mode, `CONSCIOUSNESS_SERVER_URL` points to the server. The architecture is designed so LOCAL and SERVER can later share the same abstract persistence backend.
+In SERVER mode, `CONSCIOUSNESS_SERVER_URL` points to the server. **The shared persistence backend is now implemented**: LOCAL uses SQLite directly, while SERVER uses the same local persistence as the execution source of truth and mirrors continuity-critical mutations to the Consciousness Server.
+
+## Continuity infrastructure
+
+Continuity is no longer only an event log. It is now an operational stack:
+
+| Layer | Status | What exists |
+|---|---|---|
+| LOCAL / SERVER runtime | **Implemented** | Explicit execution modes |
+| Checkpoints + reconciliation | **Implemented** | `ALIGNED / LOCAL_AHEAD / LOCAL_BEHIND / DIVERGED / NO_CHECKPOINT` |
+| Bundles + recovery | **Implemented** | Hash-verified backup and non-destructive recovery planning |
+| Event identity + replay | **Implemented** | Deterministic events, deltas, verified replay, and idempotence |
+| Persistence backend | **Implemented** | Shared contract + fail-open SERVER mirror |
+| Second node | **Verified probe** | Two independent SQLite-backed servers exchange and reproduce a trajectory over HTTP; divergence is blocked |
+
+### Current flow
+
+```text
+Persistent Organism
+       ↓
+PersistenceBackend
+   ┌───┴─────────────┐
+   ↓                 ↓
+Local SQLite     SERVER mirror
+   ↓                 ↓
+state / memory / events
+                     ↓
+          deterministic event replay
+                     ↓
+                second node
+```
+
+The safety rule remains: **divergence is never silently overwritten**. Replay requires a valid revision boundary and may require an exact state fingerprint match.
+
+→ [Deterministic replay](docs/DETERMINISTIC_EVENT_REPLAY.md) · [Shared persistence backend](docs/SHARED_PERSISTENCE_BACKEND.md) · [Second-node interoperability test](tests/test_second_node_interoperability.py)
 
 ## Experimental program
 
@@ -372,6 +441,9 @@ This section is the **documentary entry point** to the complete research and inf
 - [Continuity checkpoints](docs/CONSCIOUSNESS_CHECKPOINTS.md)
 - [Continuity recovery](docs/CONTINUITY_RECOVERY.md)
 - [Continuity reconciliation](docs/CONSCIOUSNESS_RECONCILIATION.md)
+- [Deterministic event replay](docs/DETERMINISTIC_EVENT_REPLAY.md)
+- [Shared persistence backend](docs/SHARED_PERSISTENCE_BACKEND.md)
+- [Second-node interoperability test](tests/test_second_node_interoperability.py)
 - [24/7 protocol](docs/24_7_PROTOCOL.md)
 - [Longitudinal protocol](docs/LONGITUDINAL_PROTOCOL.md)
 - [Organism state bridge](docs/ORGANISM_STATE_BRIDGE.md)
@@ -413,7 +485,7 @@ The laboratory runs through **GitHub Actions**. Each protocol can start from a s
 
 ## Current status
 
-**Active research — persistent organism, self-model, WAKE/SLEEP dynamics, trajectory selection, and policy learning from the self-model.**
+**Active research + operational continuity infrastructure — persistent organism, self-model, WAKE/SLEEP dynamics, deterministic replay, and verified second-node interoperability.**
 
 ## License
 
