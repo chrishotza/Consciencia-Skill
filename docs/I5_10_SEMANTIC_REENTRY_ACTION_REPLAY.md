@@ -59,6 +59,60 @@ query → self-model → semantic bridge → state.
 - mismo seed por réplica;
 - 20.000 permutaciones sign-flip para los endpoints continuos.
 
+## Resultado verificado
+
+Workflow: **37038527924**; artifact: **11240619196**; seed **20261010**; **24** réplicas; **24** ciclos de warmup; **8** ciclos experimentales.
+
+- Coincidencia exacta de acciones aplicadas PULSE vs ACTION_REPLAY: **100%**.
+- Divergencia post-pulso de SELF_MODEL entre PULSE y ACTION_REPLAY: **45.83%** de media.
+- Δ estado PULSE vs ACTION_REPLAY en t+1: **0.09551** de media, p **4.99975×10⁻⁵**.
+- AUC de divergencia de estado PULSE vs ACTION_REPLAY: **0.93484**, p **4.99975×10⁻⁵**.
+- AUC de estado ACTION_REPLAY_BRIDGE_ON vs BRIDGE_OFF: **1.29205**, p **4.99975×10⁻⁵**.
+- Diferencia máxima media de versión del modelo de sí: **2.29**.
+
+### Interpretación
+
+Con la secuencia de acciones aplicada exactamente igual entre PULSE y ACTION_REPLAY, las ejecuciones desarrollaron modelos de sí diferentes en una media del **45.83%** de los ciclos posteriores.
+
+Además, con el semantic self-model bridge activo apareció una separación significativa del estado dinámico tanto frente al replay como frente al mismo replay con el bridge desactivado.
+
+El resultado es consistente con una ruta causal computacional adicional:
+
+**query → self-model → semantic self-model bridge → dinámica**
+
+Esto es diferente de I5.9: allí la trayectoria dinámica era idéntica cuando solo se fijaba la secuencia de acciones. I5.10 muestra que, cuando el estado semántico tiene permiso para entrar en la dinámica, una diferencia de query puede sobrevivir a la igualación de acciones.
+
+El resultado sigue estando limitado al proveedor determinista y al harness sintético. No demuestra consciencia ni experiencia subjetiva.
+
+La siguiente prueba es liberar la acción después del primer ciclo y comprobar si esta diferencia semántico-dinám## Verified result
+
+Workflow: **37038527924**; artifact: **11240619196**; seed **20261010**; **24** replicates; **24** warmup cycles; **8** experimental cycles.
+
+- Exact applied-action match between PULSE and ACTION_REPLAY: **100%**.
+- Post-pulse SELF_MODEL divergence between PULSE and ACTION_REPLAY: **45.83%** mean.
+- PULSE vs ACTION_REPLAY state delta at t+1: **0.09551** mean, p **4.99975×10⁻⁵**.
+- PULSE vs ACTION_REPLAY state-divergence AUC: **0.93484**, p **4.99975×10⁻⁵**.
+- ACTION_REPLAY_BRIDGE_ON vs BRIDGE_OFF state AUC: **1.29205**, p **4.99975×10⁻⁵**.
+- Mean maximum self-model-version difference: **2.29**.
+
+### Interpretation
+
+With the applied-action sequence held exactly equal between PULSE and ACTION_REPLAY, the runs developed different self-models in **45.83%** of later cycles on average.
+
+With the semantic self-model bridge enabled, the dynamic state also separated significantly both from replay and from the same replay with the bridge disabled.
+
+The result is consistent with an additional computational causal pathway:
+
+**query → self-model → semantic self-model bridge → dynamics**
+
+This differs from I5.9: there, the dynamic trajectory was identical when only the applied action sequence was fixed. I5.10 shows that when semantic state is allowed to enter dynamics, a query difference can survive action matching.
+
+The result remains bounded by the deterministic provider and synthetic harness. It does not demonstrate consciousness or subjective experience.
+
+The next test is to release action after the first cycle and ask whether this semantic-dynamic difference actually changes **future trajectory selection**.
+
+ica modifica realmente la **selección de trayectorias futuras**.
+
 ## Límites
 
 I5.10 estudia una ruta semántica causal computacional dentro del runtime probado. Un efecto semantic self-model → dinámica no demuestra consciencia ni experiencia subjetiva.
