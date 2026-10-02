@@ -101,6 +101,9 @@
 - `src/consciousness_server/client.py` — optional fail-open bridge for the organism runtime.
 - `src/consciousness_server/reconciliation.py` — checkpoint comparison and continuity status.
 - `src/consciousness_server/recovery.py` — non-destructive recovery planning.
+- `docs/DETERMINISTIC_EVENT_REPLAY.md` — deterministic event identity, delta export, replay boundaries and divergence guards.
+- `src/consciousness_server/core.py` — event identity, ordered deltas, and exact replay validation.
+- `src/consciousness_server/server.py` / `client.py` — replay and delta API surface.
 - `docs/CONSCIOUSNESS_SERVER.md` — architecture and roadmap.
 - `docs/CONSCIOUSNESS_CHECKPOINTS.md` — durable checkpoint protocol.
 - `docs/CONSCIOUSNESS_RECONCILIATION.md` — local-vs-server reconciliation.
