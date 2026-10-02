@@ -60,6 +60,52 @@ La prueba importante ya no es solo si cambia el estado: es si cambia la **acció
 - mismo seed y checkpoint;
 - 20.000 permutaciones sign-flip para endpoints continuos.
 
+## Resultado verificado
+
+Workflow: **37038961982**; artifact: **11241544037**; seed **20261011**; **24** réplicas; **24** ciclos de warmup; **8** ciclos experimentales.
+
+- Coincidencia de acción aplicada en t0 PULSE vs ACTION_MATCH: **100%**.
+- Cambio de acción seleccionada en ciclos 1–7: **55.95%** de media; p **4.99975×10⁻⁵**.
+- Δ estado en t+1: **0.49647** de media; p **4.99975×10⁻⁵**.
+- AUC de divergencia de estado post-pulso: **2.23957**; p **4.99975×10⁻⁵**.
+- AUC ACTION_MATCH_BRIDGE_ON vs BRIDGE_OFF: **2.63688**; p **4.99975×10⁻⁵**.
+- Divergencia post-pulso de SELF_MODEL: **50.0%** de media.
+
+### Interpretación
+
+Después de igualar exactamente la acción aplicada del primer ciclo, la perturbación de query produjo una separación significativa de estado y, más importante, cambió la **selección de acciones futuras** en una media del **55.95%** de los ciclos posteriores.
+
+La diferencia desapareció parcialmente cuando el semantic self-model bridge fue desactivado, con una diferencia de AUC ON-vs-OFF también significativa.
+
+Esto completa, bajo el harness determinista, una cadena computacional mucho más fuerte:
+
+query → self-model → semantic bridge → own state → future trajectory selection.
+
+El resultado no demuestra consciencia ni experiencia subjetiva. El siguiente control debe romper específicamente la correspondencia query → self-model manteniendo la distribución de modelos de sí, para comprobar que el efecto no pr## Verified result
+
+Workflow: **37038961982**; artifact: **11241544037**; seed **20261011**; **24** replicates; **24** warmup cycles; **8** experimental cycles.
+
+- t0 applied-action match PULSE vs ACTION_MATCH: **100%**.
+- Selected-action change across cycles 1–7: **55.95%** mean; p **4.99975×10⁻⁵**.
+- State delta at t+1: **0.49647** mean; p **4.99975×10⁻⁵**.
+- Post-pulse state-divergence AUC: **2.23957**; p **4.99975×10⁻⁵**.
+- ACTION_MATCH_BRIDGE_ON vs BRIDGE_OFF AUC: **2.63688**; p **4.99975×10⁻⁵**.
+- Post-pulse SELF_MODEL divergence: **50.0%** mean.
+
+### Interpretation
+
+After the first-cycle applied action was matched exactly, the query perturbation still produced significant state separation and, importantly, changed **future action selection** in a mean **55.95%** of later cycles.
+
+The difference was reduced when the semantic self-model bridge was disabled, with the ON-vs-OFF AUC contrast also significant.
+
+Under this deterministic harness, this completes a substantially stronger computational chain:
+
+query → self-model → semantic bridge → own state → future trajectory selection.
+
+This does not demonstrate consciousness or subjective experience. The next control should specifically break the query → self-model correspondence while preserving the self-model distribution, testing whether the effect is more than a consequence of varying semantic content.
+
+oviene solo de variar el contenido semántico.
+
 ## Límites
 
 I5.11 prueba reentrada causal computacional hacia selección de trayectorias dentro del harness sintético. Un efecto positivo no demostraría consciencia ni experiencia subjetiva.
