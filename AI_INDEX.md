@@ -102,6 +102,8 @@
 - `src/consciousness_server/client.py` — optional fail-open bridge for the organism runtime.
 - `src/consciousness_server/reconciliation.py` — checkpoint comparison and continuity status.
 - `src/consciousness_server/recovery.py` — non-destructive recovery planning.
+- `src/consciousness_server/synchronization.py` — bidirectional, revision-safe peer synchronization with divergence blocking.
+- `tests/test_peer_synchronization.py` — forward/backward sync, idempotent alignment, and divergence guard.
 - `docs/DETERMINISTIC_EVENT_REPLAY.md` — deterministic event identity, delta export, replay boundaries and divergence guards.
 - `docs/SHARED_PERSISTENCE_BACKEND.md` — persistence boundary and local/server mirroring semantics.
 - `src/ontto/persistence_backend.py` — shared persistence interface and SERVER mirror backend.
@@ -110,6 +112,7 @@
 - `docs/CONSCIOUSNESS_SERVER.md` — architecture and roadmap.
 - `docs/CONSCIOUSNESS_CHECKPOINTS.md` — durable checkpoint protocol.
 - `docs/CONSCIOUSNESS_RECONCILIATION.md` — local-vs-server reconciliation.
+- `docs/CONSCIOUSNESS_SERVER.md` — peer heartbeat, liveness, and safe synchronization.
 - `docs/CONTINUITY_BUNDLES.md` — portable organism backup and restore.
 - `docs/CONTINUITY_RECOVERY.md` — recovery planning boundary.
 - `docs/ZENODO_RELEASE.md` — publication/versioning plan.
