@@ -40,3 +40,30 @@ def test_protocol_validator_accepts_independent_frozen_configuration():
         cycles=CYCLES,
         permutations=PERMUTATIONS,
     )
+
+
+def test_assemble_summary_freezes_replication_metadata():
+    from experiments.i5_19_independent_bridge_replication import assemble_summary
+
+    raw = {
+        "seed": 20261019,
+        "replicates": 24,
+        "warmup_cycles": 24,
+        "cycles": 15,
+        "lags": [-3, -2, -1, 1, 2, 3],
+    }
+    analysis = {
+        "source_seed": 20261019,
+        "permutations": 20_000,
+        "metrics": {"signed_auc_delta": {"global_bridge_effect": {"mean_across_lags": -1.0}}},
+    }
+    result = assemble_summary(raw, analysis, 20261019)
+
+    assert result["experiment"] == "i5_19_independent_bridge_replication"
+    assert result["source_i5_17_seed"] == 20261019
+    assert result["source_i5_18_source_seed"] == 20261019
+    assert result["replicates"] == 24
+    assert result["warmup_cycles"] == 24
+    assert result["cycles"] == 15
+    assert result["permutations"] == 20_000
+    assert result["new_trajectories_collected"] is True
