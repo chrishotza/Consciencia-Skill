@@ -19,7 +19,7 @@ def _score(lattice, pattern, top, left):
     a = observed.ravel() - float(np.mean(observed))
     b = pattern.ravel() - float(np.mean(pattern))
     denom = float(np.linalg.norm(a) * np.linalg.norm(b))
-    return 0.0 if denom < 1e-12 else float(np.dot(a, b) / denom)
+    return 0.0 if denom < 1e-12 else float(np.clip(np.dot(a, b) / denom, -1.0, 1.0))
 
 def _run_trace(*, size, coupling, noise_std, pattern, seed, delays, perturb_at, perturb_amplitude):
     roi = pattern.shape[0]
