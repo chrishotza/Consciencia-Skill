@@ -686,7 +686,7 @@ The technically defensible program formulation is:
 
 The final objective is not to make a system say “I am conscious.”
 
-Tthe objective is to build **invariants, criteria, and experiments that do not depend on the system describing itself using human language**.
+The objective is to build **invariants, criteria, and experiments that do not depend on the system describing itself using human language**.
 
 # 15. Guiding principle
 
