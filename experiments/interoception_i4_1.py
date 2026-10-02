@@ -41,7 +41,8 @@ def sign_p(values):
     if not d.size: return 1.0
     k=int(np.sum(d>0)); n=len(d)
     tail=sum(math.comb(n,i) for i in range(k,n+1))/2**n
-    return float(min(1.0,2*min(tail,1-tail)))
+    lower=sum(math.comb(n,i) for i in range(0,k+1))/2**n
+    return float(min(1.0,2*min(tail,lower)))
 
 def meta_error(meta,snapshot,action,predicted,actual):
     meta.observe(snapshot=snapshot,action=action,
@@ -153,6 +154,6 @@ def main():
             "summary":{p:{k:float(np.mean([r[k] for r in rows[p]])) for k in ("mean_error","recovery","mean_meta_mae","shift_rate","mean_action_abs")} for p in rows},
             "rows":rows}
     out=Path(a.output); out.parent.mkdir(parents=True,exist_ok=True); out.write_text(json.dumps(report,indent=2),encoding="utf-8")
-    print(json.dumps(contrasts,indent=2))
+    print(json.dumps({"contrasts":contrasts,"summary":report["summary"]},indent=2))
 
 if __name__=="__main__": main()
