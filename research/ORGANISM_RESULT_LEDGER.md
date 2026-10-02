@@ -656,3 +656,12 @@ Artefacto: GitHub Actions run **36945659490**, artifact **11201664192**, SHA256 
 - mismatch máximo de ganancia: **0.0**.
 
 Interpretación: el primer modelo de sí y el segundo modelo condicionado por acción fueron serializados, recuperados y reutilizados después de reconstruir el contexto y un nuevo puente dinámico, produciendo la misma secuencia posterior de acciones y ganancias que el brazo continuo bajo el protocolo probado. Esto respalda persistencia computacional del segundo orden a través de un reinicio.
+
+
+### C0.15 — Lesión/rescate del selector de segundo orden persistente
+
+Protocolo implementado; **sin resultado experimental registrado todavía**.
+
+C0.15 mantiene el primer orden y la dinámica intactos y deshabilita únicamente el segundo selector en una fase de la misma trayectoria. Un tercer brazo restaura el modelo segundo orden desde el checkpoint serializado para probar rescate.
+
+Estado: **implementado; ejecución pendiente de verificación**.
