@@ -40,12 +40,12 @@ The project already has strong evidence for several functional building blocks, 
 | GWT-1 | PARTIAL | memory, self-observer, meta-observer, dynamics, policy components | no explicit parallel workspace architecture |
 | GWT-2 | PARTIAL / I5.0 VERIFIED PROTOTYPE | bounded K=2 workspace with competitive selection | not yet integrated into PersistentOrganism or coupled to a learned attention controller |
 | GWT-3 | PARTIAL / I5.0 VERIFIED PROTOTYPE | causal broadcast from selected workspace content to all modules | full-organism integration and module-specific broadcast ablation still pending |
-| GWT-4 | PARTIAL / I5.2 VERIFIED STANDALONE | state-dependent query mechanism selects a subsequent module from global state | not yet integrated into PersistentOrganism or coupled to a learned causal attention controller |
+| GWT-4 | PARTIAL / I5.2 + I5.5 VERIFIED STANDALONE | state-dependent query mechanism selects a subsequent module from global state; I5.5 shows causal action effects under query perturbations | not yet robustly integrated into PersistentOrganism; I5.4 query controls were null |
 | HOT-1 | PARTIAL | self-prediction is generative with respect to internal dynamics | not a generative perception module |
 | HOT-2 | PARTIAL / strongest current line | SelfObserver, MetaSelfObserver, prediction error, confidence, second-order models | reliability monitoring is not yet a general perception-level metacognitive loop |
 | HOT-3 | PARTIAL | self-model → action coupling, SelfPolicy, lesion/rescue | autonomous policy rule remains partly externally specified and several second-order tests are null/mixed |
 | HOT-4 | ABSENT | continuous numerical state exists | no demonstrated sparse/smooth quality-space representation |
-| AST-1 | PARTIAL / I5.3 VERIFIED STANDALONE | state-conditioned AttentionSchema predicts and controls a continuous attention distribution | not yet an organism-level predictive model of its own endogenous attention allocation |
+| AST-1 | PARTIAL / I5.3 + I5.5 VERIFIED STANDALONE | state-conditioned AttentionSchema predicts and controls attention; I5.5 shows action sensitivity to attention perturbation | not yet an organism-level predictive model of its own endogenous attention allocation |
 | PP-1 | PARTIAL | predictive coding of internal dynamics | no predictive-coding input architecture |
 | AE-1 | PARTIAL | V57, V70, V76–V78, C0.6 | goals and utility are still largely protocol-defined |
 | AE-2 | PARTIAL | C0.11 action → state → next action mediation | no external/physical embodiment; contingencies are currently simulated |
