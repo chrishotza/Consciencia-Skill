@@ -24,12 +24,13 @@
       "docs/C0_18_AUTONOMOUS_SECOND_ORDER_LESION_RESCUE.md",
       "docs/I5_6_PERSISTENT_QUERY_TASK.md",
       "docs/I5_7_RECURRENT_SELF_ACCESS.md",
-      "docs/I5_8_ACTION_CLAMP_REENTRY.md"
+      "docs/I5_8_ACTION_CLAMP_REENTRY.md",
+      "docs/I5_12_INFORMATION_MATCHED_SELF_MODEL_CONTROL.md",
+      "docs/I5_13_SEMANTIC_CORRESPONDENCE_CAUSAL_SPECIFICITY.md"
     ],
     "experimental_next": [
-      "I5.8 action-clamp mediation of recurrent self-access",
-      "test whether query perturbation propagates through query → action → state",
-      "compare pulse, action-clamped pulse, and persistent perturbation controls",
+      "I5.13 one-cycle-shift semantic correspondence control",
+      "test whether a one-cycle temporal displacement changes re-entry while preserving semantic-content distribution",
       "C0 campaign G2-G8"
     ]
   },
@@ -63,9 +64,8 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.8 action-clamp mediation of recurrent self-access",
-    "test whether query perturbation propagates through query → action → state",
-    "compare pulse, action-clamped pulse, and persistent perturbation controls",
+    "I5.13 one-cycle-shift semantic correspondence control",
+    "test whether a one-cycle temporal displacement changes re-entry while preserving semantic-content distribution",
     "C0 campaign G2-G8"
   ]
 }
