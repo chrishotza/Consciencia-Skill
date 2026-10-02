@@ -100,7 +100,7 @@ Los resultados positivos, nulos y negativos se conservan.
 | C0.12 | Segundo orden: modelo del error del propio modelo de sí | **Mixto: predice el error, pero sin especificidad TRUE vs permutado** |
 | C0.13 | Segundo orden condicionado por acción | **Resultado verificado** |
 | C0.14 | Persistencia del segundo orden tras reinicio | **Positivo: modelos y conducta sobreviven el reinicio** |
-| C0.15 | Lesión/rescate del selector de segundo orden persistente | **Resultado verificado** |
+| C0.15 | Lesión/rescate del selector de segundo orden persistente | **Mixto: necesidad en acción; rescate no confirmado** |
 | C0.16 | Integración del segundo orden dentro del organismo persistente | **Positivo: integración y persistencia tras reinicio** |
 | C0.17 | Adquisición autónoma del segundo orden | **Mixto: el modelo aprende, pero no muestra especificidad TRUE vs permutado** |
 | C0 Campaign | 32 ejecuciones en 8 grupos | **Ejecutada: 32 workflows; fallo técnico en el archivado de artifacts** |
@@ -236,7 +236,7 @@ Positive, null, and negative results are all kept.
 | C0.12 | Second-order self-monitoring | **Mixed: predicts first-order error, but no TRUE-vs-permuted specificity** |
 | C0.13 | Action-conditioned second-order self-model | **Verified result** |
 | C0.14 | Persistent second-order self-model | **Positive: models and behavior survive restart** |
-| C0.15 | Lesion/rescue of persistent second-order selector | **Verified result** |
+| C0.15 | Lesion/rescue of persistent second-order selector | **Mixed: action necessity; rescue not confirmed** |
 | C0.16 | Integrated second-order selector inside persistent organism | **Positive: integration and restart persistence** |
 | C0.17 | Autonomous acquisition of the second-order model | **Mixed: model learns, but no TRUE-vs-permuted specificity** |
 | C0 Campaign | 32 executions across 8 groups | **Executed: 32 workflows; technical artifact-archival failure** |
