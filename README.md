@@ -120,20 +120,20 @@ Los resultados positivos, nulos y negativos se conservan.
 | C0.3 | Control information-matched para C3 | **Nulo bajo el control de información emparejada** |
 | C0.4 | Control information-matched para C5 | **Nulo bajo el replay de acciones emparejado** |
 | C0.5 | Control information-matched para C7 | **Nulo bajo el control de cadena de acciones emparejada** |
-| C0.6 | Lesión causal y rescate de autoobservador/autopólítica | **En ejecución** |
+| C0.6 | Lesión causal y rescate de autoobservador/autopólítica | **Positivo: necesidad y rescate bajo el protocolo probado** |
 | C0.7 | Control de especificidad por permutación de targets del modelo de sí | **Positivo para ganancia y varianza; nulo para magnitud de acción** |
 | C0.8 | Acoplamiento cruzado observador/política | **Positivo: efectos de observador/política e interacción de acoplamiento** |
 | C0.9 | Interfaz causal observador → política | **Nulo: readout cambió, pero acción/ganancia no respondieron** |
 | C0.10 | Alineación temporal observador → política | **Nulo: brecha de readout sin efecto conductual** |
-| C0.11 | Mediación causal acción → estado → siguiente acción | **Positivo: intervención sobre acción cambia estado y siguiente acción** |
+| C0.11 | Mediación causal acción → estado → siguiente acción | **Positivo: la intervención sobre la acción cambió estado y siguiente acción** |
 | C0.12 | Segundo orden: modelo del error del propio modelo de sí | **Mixto: predice el error, pero sin especificidad TRUE vs permutado** |
 | C0.13 | Segundo orden condicionado por acción | **Resultado verificado** |
 | C0.14 | Persistencia del segundo orden tras reinicio | **Positivo: modelos y conducta sobreviven el reinicio** |
-| C0.15 | Lesión/rescate del selector de segundo orden persistente | **Mixto: necesidad en acción; rescate no confirmado** |
+| C0.15 | Lesión/rescate del selector de segundo orden persistente | **Mixto: necesidad a nivel de acción; rescate no confirmado** |
 | C0.16 | Integración del segundo orden dentro del organismo persistente | **Positivo: integración y persistencia tras reinicio** |
-| C0.17 | Adquisición autónoma del segundo orden | **Mixto: el modelo aprende, pero no muestra especificidad TRUE vs permutado** |
-| C0 Campaign | 32 ejecuciones en 8 grupos | **Ejecutada: 32 workflows; fallo técnico en el archivado de artifacts** |
-
+| C0.17 | Adquisición autónoma del segundo orden | **Mixto: el modelo aprende, pero sin especificidad TRUE vs permutado** |
+| C0.18 | Adquisición autónoma + lesión/rescate del segundo orden | **Ingeniería corregida; verificación de 24 réplicas pendiente** |
+| C0 Campaign | 32 ejecuciones en 8 grupos | **Campaña reiniciada con ejecución segura de artifacts; resultados científicos pendientes de validación** |
 ## Fundamentos
 
 Esta sección es la **puerta de entrada documental** al programa completo.
@@ -165,6 +165,8 @@ Esta sección es la **puerta de entrada documental** al programa completo.
 **Infraestructura principal**
 - [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md)
 - [Continuity bundles](docs/CONTINUITY_BUNDLES.md)
+- [Continuity checkpoints](docs/CONSCIOUSNESS_CHECKPOINTS.md)
+- [Continuity reconciliation](docs/CONSCIOUSNESS_RECONCILIATION.md)
 - [Protocolo 24/7](docs/24_7_PROTOCOL.md)
 - [Protocolo longitudinal](docs/LONGITUDINAL_PROTOCOL.md)
 - [Puente de estado del organismo](docs/ORGANISM_STATE_BRIDGE.md)
@@ -331,8 +333,8 @@ Positive, null, and negative results are all kept.
 | C0.15 | Lesion/rescue of persistent second-order selector | **Mixed: action necessity; rescue not confirmed** |
 | C0.16 | Integrated second-order selector inside persistent organism | **Positive: integration and restart persistence** |
 | C0.17 | Autonomous acquisition of the second-order model | **Mixed: model learns, but no TRUE-vs-permuted specificity** |
-| C0 Campaign | 32 executions across 8 groups | **Executed: 32 workflows; technical artifact-archival failure** |
-
+| C0.18 | Autonomous acquisition + second-order lesion/rescue | **Engineering fix applied; 24-replication verification pending** |
+| C0 Campaign | 32 executions across 8 groups | **Restarted with artifact-safe execution; scientific result validation pending** |
 ## Foundations
 
 This section is the **documentary entry point** to the complete research and infrastructure program.
@@ -364,6 +366,8 @@ This section is the **documentary entry point** to the complete research and inf
 **Core infrastructure**
 - [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md)
 - [Continuity bundles](docs/CONTINUITY_BUNDLES.md)
+- [Continuity checkpoints](docs/CONSCIOUSNESS_CHECKPOINTS.md)
+- [Continuity reconciliation](docs/CONSCIOUSNESS_RECONCILIATION.md)
 - [24/7 protocol](docs/24_7_PROTOCOL.md)
 - [Longitudinal protocol](docs/LONGITUDINAL_PROTOCOL.md)
 - [Organism state bridge](docs/ORGANISM_STATE_BRIDGE.md)
