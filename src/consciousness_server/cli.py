@@ -67,6 +67,16 @@ def main() -> None:
     recovery_parser.add_argument("--local-db", default="data/ontto.db")
     recovery_parser.add_argument("--timeout", type=float, default=2.5)
 
+    sync_parser = subparsers.add_parser(
+        "sync",
+        help="safely synchronize an instance with a peer server",
+    )
+    sync_parser.add_argument("--server", required=True, help="local/target server")
+    sync_parser.add_argument("--peer", required=True, help="peer server")
+    sync_parser.add_argument("--instance", required=True)
+    sync_parser.add_argument("--identity", default=None)
+    sync_parser.add_argument("--timeout", type=float, default=2.5)
+
     args = parser.parse_args()
 
     if args.command in (None, "serve"):
@@ -97,6 +107,15 @@ def main() -> None:
             local_db=args.local_db,
             timeout=args.timeout,
         )
+    elif args.command == "sync":
+        local = ConsciousnessClient(args.server, timeout=args.timeout)
+        peer = ConsciousnessClient(args.peer, timeout=args.timeout)
+        report = local.synchronize_with(
+            peer,
+            instance_id=args.instance,
+            identity=args.identity,
+        )
+        print(json.dumps(report, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
