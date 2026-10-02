@@ -1,3 +1,5 @@
+<a id="english"></a>
+
 # Installing Skill-Conscious
 
 Skill-Conscious is designed to have two separately installable layers.
@@ -59,6 +61,8 @@ One research core, multiple delivery surfaces:
 - portable Agent Skill;
 - local Python organism;
 - server/MCP deployment.
+
+<a id="espanol"></a>
 
 <details>
 <summary>🇪🇸 Español — abrir</summary>
