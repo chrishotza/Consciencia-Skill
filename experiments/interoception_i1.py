@@ -96,20 +96,20 @@ def main() -> None:
     x_id, y_id = make_dataset(id_seeds, TRAIN_MAGNITUDES)
     x_ood, y_ood = make_dataset(ood_seeds, OOD_MAGNITUDES)
     beta_full = ridge_fit(x_train, y_train)
-    beta_raw = ridge_fit(x_train[:, [0]], y_train)
+    beta_single = ridge_fit(x_train[:, [0]], y_train)
     rng = np.random.default_rng(7711)
     beta_permuted = ridge_fit(x_train, rng.permutation(y_train))
     constant = float(np.mean(y_train))
     full_id = evaluate_model(beta_full, x_id, y_id)
     full_ood = evaluate_model(beta_full, x_ood, y_ood)
-    raw_id = evaluate_model(beta_raw, x_id[:, [0]], y_id)
-    raw_ood = evaluate_model(beta_raw, x_ood[:, [0]], y_ood)
+    single_id = evaluate_model(beta_single, x_id[:, [0]], y_id)
+    single_ood = evaluate_model(beta_single, x_ood[:, [0]], y_ood)
     perm_id = evaluate_model(beta_permuted, x_id, y_id)
     perm_ood = evaluate_model(beta_permuted, x_ood, y_ood)
     constant_id_mae = float(np.mean(np.abs(constant - y_id)))
     constant_ood_mae = float(np.mean(np.abs(constant - y_ood)))
     full_ood_errors = np.abs(ridge_predict(beta_full, x_ood) - y_ood)
-    raw_ood_errors = np.abs(ridge_predict(beta_raw, x_ood[:, [0]]) - y_ood)
+    single_ood_errors = np.abs(ridge_predict(beta_single, x_ood[:, [0]]) - y_ood)
     perm_ood_errors = np.abs(ridge_predict(beta_permuted, x_ood) - y_ood)
     report = {
         'protocol': 'I1_interoceptive_self_assessment',
@@ -123,15 +123,15 @@ def main() -> None:
         'semantic_input_during_probe': False,
         'models': {
             'interoceptive': {'in_domain': full_id, 'ood': full_ood},
-            'raw_state': {'in_domain': raw_id, 'ood': raw_ood},
+            'single_signal': {'in_domain': single_id, 'ood': single_ood},
             'target_permuted': {'in_domain': perm_id, 'ood': perm_ood},
             'constant': {'in_domain_mae': constant_id_mae, 'ood_mae': constant_ood_mae},
         },
         'primary_contrasts': {
-            'raw_minus_intero_mae_ood': float(raw_ood['mae'] - full_ood['mae']),
+            'single_signal_minus_intero_mae_ood': float(single_ood['mae'] - full_ood['mae']),
             'permuted_minus_intero_mae_ood': float(perm_ood['mae'] - full_ood['mae']),
             'constant_minus_intero_mae_ood': float(constant_ood_mae - full_ood['mae']),
-            'paired_p_raw_ood': sign_test_pvalue(raw_ood_errors - full_ood_errors),
+            'paired_p_single_signal_ood': sign_test_pvalue(single_ood_errors - full_ood_errors),
             'paired_p_permuted_ood': sign_test_pvalue(perm_ood_errors - full_ood_errors),
         },
     }
