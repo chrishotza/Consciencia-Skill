@@ -1,3 +1,73 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# C0.17 — Adquisición autónoma del self-model de segundo orden condicionado por acción
+
+## Pregunta
+
+C0.16 integró y persistió el selector de segundo orden condicionado por acción, pero su modelo estaba presembrado.
+
+C0.17 elimina esa preseñalización.
+
+El self-observer de primer orden está disponible. El modelo de segundo orden condicionado por acción comienza **vacío** y es aprendido online por PersistentOrganism a partir de evaluaciones contrafactuales deterministas de cada acción candidata.
+
+La cadena es:
+
+first-order self-model → counterfactual prediction errors → second-order self-model → autonomous selection
+
+## Fase de entrenamiento
+
+En cada ciclo autónomo, el organismo:
+
+1. obtiene la predicción de primer orden para cada señal candidata;
+2. evalúa el estado siguiente determinista para cada candidata sin mutar el estado real;
+3. registra el error de predicción de primer orden resultante en el modelo de segundo orden condicionado por acción;
+4. selecciona mediante el modelo de segundo orden aprendido;
+5. ejecuta la acción seleccionada y continúa aprendiendo con la transición real.
+
+## Control de evaluación
+
+Después de la adquisición online, el modelo de segundo orden aprendido se congela.
+
+Se evalúan dos clones emparejados de la misma base:
+
+- **TRUE** — mapeo de segundo orden aprendido;
+- **TARGET-PERMUTED** — mismas features y mismo multiset de targets, pero asignaciones de target permutadas.
+
+No hay reentrenamiento externo ni entrada semántica durante la evaluación.
+
+## Outputs primarios
+
+- acción inicial TRUE − PERMUTED;
+- gain inicial TRUE − PERMUTED;
+- acción media de evaluación TRUE − PERMUTED;
+- gain medio de evaluación TRUE − PERMUTED.
+
+## Interpretación
+
+Una separación después de la adquisición autónoma respaldaría especificidad conductual de un mapeo de segundo orden aprendido dentro del organismo persistente.
+
+Sigue siendo evidencia computacional y no establece consciencia fenomenológica.
+
+## Resultado verificado
+
+GitHub Actions run **36946964601**; artifact **11201784892**; SHA256 **bf4aed2caaaff14e3aac2dca54e584cc0c10d38f9dde13c0f4720db8eacc9ea8**.
+
+- second-order model starts empty and reaches **48 samples per replica**;
+- exact model recovery at evaluation-pair construction: **100%**;
+- first TRUE − PERMUTED action: **+0.2916667**, p **0.3417829**
+- first TRUE − PERMUTED gain: **−0.0141513**, p **0.7728114**
+- mean TRUE − PERMUTED action: **+0.0833333**, p **0.6331683**
+- mean TRUE − PERMUTED gain: **+0.0256299**, p **0.4691765**
+
+Interpretation: el organismo persistente aprendió correctamente el modelo de segundo orden online a partir de errores de predicción contrafactuales, pero el mapeo aprendido no produjo una separación conductual TRUE-vs-PERMUTED estadísticamente significativa bajo este protocolo.
+
+</details>
+
+<a id="english"></a>
+
 # C0.17 — Autonomous Acquisition of the Action-Conditioned Second-Order Self-Model
 
 ## Question
