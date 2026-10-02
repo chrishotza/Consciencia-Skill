@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import shutil
 from pathlib import Path
 from types import MethodType
@@ -18,14 +19,31 @@ BASE_SELF_MODEL = "Mantengo una identidad persistente entre ciclos."
 
 
 class QueryConditionedProvider:
+    QUERY_RE = re.compile(r"query_module[^0-9-]*(-?\\d+)")
+
     def chat(self, messages, temperature=0.7):
+        context = "\n".join(
+            str(message.get("content", ""))
+            for message in messages
+            if isinstance(message, dict)
+        )
+        matches = self.QUERY_RE.findall(context)
+        query_module = int(matches[-1]) if matches else -1
+
+        if query_module < 0:
+            self_model = BASE_SELF_MODEL
+        elif query_module % 2 == 0:
+            self_model = "Mantengo continuidad estable y conservo el recorrido persistente."
+        else:
+            self_model = "Cambio de régimen y abro una ruta futura completamente nueva."
+
         return LLMResponse(
             text=(
                 "One-cycle correspondence probe.\n"
                 "MEMORY: retain dynamic continuity.\n"
-                f"SELF_MODEL: {BASE_SELF_MODEL}"
+                f"SELF_MODEL: {self_model}"
             ),
-            raw={"self_model": BASE_SELF_MODEL},
+            raw={"self_model": self_model, "query_module": query_module},
         )
 
 
