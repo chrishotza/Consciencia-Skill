@@ -92,6 +92,8 @@ Los resultados científicos no se escriben automáticamente en el ledger; se inc
 **C0.18: verificado, resultado nulo bajo el protocolo probado.**
 
 
+<a id="english"></a>
+
 <details>
 <summary>🇺🇸 English — open</summary>
 
