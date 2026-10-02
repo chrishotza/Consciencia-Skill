@@ -3,7 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import sqlite3
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -47,7 +47,7 @@ class OntologicalState:
     self_prediction_samples: int = 0
     # Bounded global-workspace runtime observables.
     workspace_last_selected_module: int = -1
-    workspace_last_broadcast: list[float] = None
+    workspace_last_broadcast: list[float] = field(default_factory=lambda: [0.0, 0.0])
     workspace_steps: int = 0
 
     def to_json(self) -> str:
@@ -491,6 +491,9 @@ class MemoryStore:
             "self_prediction_confidence": state.self_prediction_confidence,
             "self_prediction_samples": state.self_prediction_samples,
             "self_observer_snapshot_count": self.self_observer_snapshot_count(agent_id),
+            "workspace_last_selected_module": state.workspace_last_selected_module,
+            "workspace_last_broadcast": list(state.workspace_last_broadcast),
+            "workspace_steps": state.workspace_steps,
             "action_conditioned_meta_model_samples": (
                 len(
                     (self.load_action_conditioned_meta_observer_model(agent_id) or {})
