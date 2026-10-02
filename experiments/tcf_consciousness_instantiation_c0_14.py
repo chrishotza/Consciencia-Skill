@@ -20,6 +20,7 @@ from src.ontto.self_observer import SelfObserver
 
 from experiments.organism_repeated_active_continuity_v78 import (
     SIGNALS,
+    sign_p,
     train_self_observer,
     warmup_context,
 )
