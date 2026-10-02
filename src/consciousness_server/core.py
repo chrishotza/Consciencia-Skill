@@ -119,6 +119,43 @@ class ConsciousnessStore:
         self.conn.execute(
             "CREATE INDEX IF NOT EXISTS idx_events_instance_revision ON events(instance_id, logical_revision)"
         )
+
+        # Backfill deterministic identity and logical position for legacy event rows.
+        rows = self.conn.execute(
+            """
+            SELECT id,instance_id,event_type,payload_json,
+                   logical_revision,parent_event_id,event_id
+            FROM events
+            ORDER BY instance_id ASC, id ASC
+            """
+        ).fetchall()
+        revision_by_instance: dict[str, int] = {}
+        parent_by_instance: dict[str, str | None] = {}
+        for row in rows:
+            instance_id = str(row["instance_id"])
+            revision = revision_by_instance.get(instance_id, 1)
+            logical_revision = int(row["logical_revision"] or 0)
+            if logical_revision <= revision:
+                logical_revision = revision + 1
+            parent_event_id = row["parent_event_id"] or parent_by_instance.get(instance_id)
+            event_id = row["event_id"] or self.deterministic_event_id(
+                instance_id,
+                str(row["event_type"]),
+                json.loads(row["payload_json"]),
+                logical_revision,
+                parent_event_id,
+            )
+            self.conn.execute(
+                """
+                UPDATE events
+                SET event_id=?, logical_revision=?, parent_event_id=?
+                WHERE id=?
+                """,
+                (event_id, logical_revision, parent_event_id, int(row["id"])),
+            )
+            revision_by_instance[instance_id] = logical_revision
+            parent_by_instance[instance_id] = event_id
+
         self.conn.commit()
 
     @staticmethod
