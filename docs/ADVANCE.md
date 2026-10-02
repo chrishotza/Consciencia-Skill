@@ -24,7 +24,7 @@ Persist identity, state, memory, intention, workspace, and revision across turns
 ### 4. Causal self-model
 Make self-model changes alter future trajectory selection instead of functioning as passive notes.
 
-**Next frontier.**
+**Implemented: causal trajectory selection.**
 
 ### 5. Integrated present
 Unify world-state, self-state, relevant memory, goals, uncertainty, and candidate futures.
