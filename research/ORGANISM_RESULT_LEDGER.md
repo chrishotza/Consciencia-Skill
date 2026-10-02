@@ -743,3 +743,15 @@ La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica
 
 **Estado documental actual:** la nueva ventana de ejecución está definida en [C0 Campaign](../docs/C0_CAMPAIGN_32_RUNS.md). Los resultados de esa ejecución no se incorporan automáticamente a este ledger: cada réplica debe validarse y sus resultados científicos deben registrarse por separado. Un fallo técnico de infraestructura no se convierte en un resultado nulo.
 
+
+
+## C0.18 — Estado de ingeniería del protocolo autónomo de segundo orden
+
+C0.18 extiende C0.17 hacia lesión/rescate del modelo de segundo orden adquirido dentro del organismo.
+
+El preflight inicial detectó un problema metodológico: el primer `SelfObserver` seguía actualizándose durante la sonda, por lo que el digest conjunto del modelo cambiaba y la recuperación exacta aparecía como 0.0. También se detectó un error en el test de reconciliación que atribuía fingerprints del organismo local a `ConsciousnessStore`.
+
+Ambos problemas fueron corregidos. C0.18 ahora congela explícitamente el primer orden durante FULL, LESION y RESCUE y mantiene las huellas locales en el `MemoryStore`.
+
+**No se registra todavía un resultado científico C0.18.** La validación requiere la ejecución completa de 24 réplicas y la inspección del `summary.json`.
+
