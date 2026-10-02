@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # Registro de resultados experimentales del organismo — V47 → V80
 
 ## Resultados positivos fuertes
@@ -784,3 +786,516 @@ Interpretación: **resultado nulo bajo el protocolo probado**. El organismo adqu
 C0.18, por tanto, no demuestra necesidad causal ni rescate funcional del segundo orden adquirido bajo este arnés. La adquisición/persistencia de C0.17 permanece como resultado separado.
 
 
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# Organism Experimental Result Ledger — V47 → V80
+
+## Strong positive results
+
+### V51 — Self-Prediction
+104 post-warmup transitions: MAE 0.0424 versus persistence baseline 0.2211; mean prediction gain 0.1787; 84.6% positive-gain transitions; paired sign-flip p = 0.00005.
+
+### V57 — Self-Model-Guided Trajectory Selection
+24 paired replicates: self-model regret 0.0231 versus 0.1369 random; oracle-hit rate 70.83% versus 45.83%; paired sign-flip p = 0.00435.
+
+### V58 — Semantic → Dynamic Coupling
+Paired 2×2 intervention. Bridge OFF: A/B dynamic-state delta 0.0 and signal delta 0.0. Bridge ON: Omega A -1.52, Omega B +0.68, signal delta 1.5002170539, dynamic-state delta 0.4558697583.
+The deterministic harness supports causal transduction of the organism semantic-memory output into numerical internal dynamics when the bridge is enabled.
+
+### V60 — Self-Model Selection inside a Recurrent Semantic Loop
+24 paired replicates, 24 evaluation cycles.
+- self-model mean regret: -0.0842091465;
+- random-control mean regret: 0.3028308773;
+- mean regret advantage (random - self-model): 0.3870400237;
+- cumulative regret advantage: 9.2889605698;
+- median regret advantage: 0.3858317486;
+- paired sign-flip p for mean and cumulative advantage: 0.00005;
+- self-model oracle-hit rate: 96.1806%;
+- random oracle-hit rate: 45.3125%.
+Interpretation: the self-model retained strong functional selection advantage in the deterministic closed-loop protocol, under a provider whose next semantic memory depends on the previously selected action. However, the self-model arm selected +1 in all 24 replicates, so the within-run action-conditioned feedback endpoint never observed both action branches. The recurrent circuit was exercised, but branch coverage for action-conditioned feedback is incomplete and must not be presented as a fully demonstrated bidirectional feedback effect.
+
+### V62 — Causal Semantic Self-Model Bridge
+24 paired replicates crossing self-model content A/B with bridge OFF/ON.
+- mean state delta bridge OFF: 0.0;
+- mean signal delta bridge OFF: 0.0;
+- mean state delta bridge ON: 0.0567495528;
+- mean signal delta bridge ON: 0.1844584720;
+- bridge OFF isolated the textual intervention in every execution;
+- bridge ON transduced the self-model difference into signal and state in every execution;
+- persistence and versioning of the self-model were recorded in all ON executions.
+Interpretation: in this deterministic intervention, changing only the organism semantic self-model altered numerical internal state only when the explicit self-model bridge was enabled. This is computational causal coupling, not evidence of subjective experience.
+
+### V63 — Causal Self-Model Loop
+24 paired replicates × 32 evaluation cycles crossing self-model/random selection with self-model bridge OFF/ON.
+- mean regret bridge ON + self-model: 0.1422226601;
+- mean regret bridge ON + random: 0.2666042539;
+- random - self-model regret advantage: 0.1243815939;
+- paired sign-flip p: 0.00005;
+- self-model regret bridge OFF: 0.2876865581;
+- self-model regret bridge ON: 0.1422226601;
+- bridge OFF - ON regret improvement: 0.1454638980;
+- paired sign-flip p for bridge effect: 0.00005;
+- self-model oracle-hit rate: 10.0260% OFF → 60.6771% ON;
+- paired sign-flip p for hit-rate change: 0.00005;
+- regret difference-in-differences between self-model and random arms: 0.2837493367;
+- paired sign-flip p for interaction: 0.00005;
+- branch coverage bridge ON + self-model: 100%;
+- action-conditioned bridge signal difference in bridge ON + self-model: 0.7405 across 243 negative-branch and 501 positive-branch observations.
+Interpretation: the deterministic harness supports a recurrent computational loop in which prior trajectory conditions the next semantic self-model, that self-model is transduced into internal dynamics, and the resulting state participates in future trajectory selection. The action-conditioned signal comparison is an within-loop association, not an isolated causal estimate.
+
+### V65 — SLEEP Consolidation and Future Selection
+24 paired replicates × 24 evaluation cycles across no_dream, dream_no_bridge, and dream_bridge.
+- no_dream mean regret: 0.3258519211;
+- dream_no_bridge mean regret: 0.2109500171;
+- dream_bridge mean regret: 0.1779272005;
+- dream_bridge versus dream_no_bridge regret advantage: 0.0330228167;
+- paired sign-flip p: 0.00005;
+- dream_bridge oracle-hit rate: 25.3472%;
+- dream_no_bridge oracle-hit rate: 13.3681%;
+- hit-rate advantage: 0.1197916667;
+- paired sign-flip p for hit-rate advantage: 0.00005;
+- dream_no_bridge versus no_dream regret change: -0.1149019040;
+- paired sign-flip p for SLEEP versus no_dream: 0.00005.
+Interpretation: the deterministic harness supports a computational wake/sleep mechanism in which semantic consolidation generated during SLEEP changes internal state and produces a measurable later effect on trajectory selection. This does not establish subjective sleep or phenomenal consciousness.
+
+## Negative / null results / limitations
+
+### V53
+The original three-candidate selector chose the neutral signal in all 12 replicates and produced no causal divergence relative to zero-input control. Treated as a failed discriminative protocol, not positive evidence.
+
+### V54
+Self-forecast accuracy over 80 cycles with a fake provider was 43.75%, with 40 TOWARD and 40 AWAY transitions. Chance for the balanced binary task is 50%; V54 did not provide favorable evidence.
+
+### V55
+12 replicates × two perturbation signs × selection ON/OFF retained the identity trace in 100% of executions and recovered within horizon in 100%, mean recovery time 2.5 cycles. ON and OFF both recovered at 100%, so V55 demonstrates resilience under the tested harness but no selective self-model benefit.
+
+### V59 — Semantic Bridge × Self-Model Selection
+24 paired factorial replicates crossing semantic bridge OFF/ON with self-model/random policy.
+- self-model mean regret OFF: 0.0000;
+- random mean regret OFF: 0.23233;
+- self-model mean regret ON: 0.0000;
+- random mean regret ON: 0.24022;
+- self-model oracle-hit rate: 100% in both bridge conditions;
+- random oracle-hit rate: 50% in both;
+- bridge changed post-WAKE internal state by mean absolute 0.94273 and dynamic signal by 0.55376;
+- bridge × selection interaction: +0.00789;
+- interaction sign-flip p = 0.83941.
+Interpretation: the protocol reproduces prior self-model selection advantage and separately shows substantial semantic-to-dynamic transduction. The factorial interaction did not separate from zero in this deterministic harness; V59 therefore does not support a claim that the semantic bridge itself increases self-model selection utility. It remains a null interaction/compositionality result.
+
+### V61 — Metacognitive Self-Model
+24 paired replicates × 32 evaluation cycles.
+- metacognitive self-model mean regret: 0.0888081147;
+- first-order self-model mean regret: 0.0787785152;
+- random-control mean regret: 0.1929241942;
+- metacognitive oracle-hit rate: 41.2760%;
+- first-order oracle-hit rate: 45.3125%;
+- random oracle-hit rate: 46.4844%;
+- metacognitive regret advantage versus first order: -0.0100295995;
+- paired sign-flip p: 0.00005;
+- metacognitive hit-rate advantage versus first order: -0.0403645833;
+- paired sign-flip p: 0.0008999550;
+- metacognitive prediction MAE: 0.1277240710;
+- constant-baseline MAE: 0.0849867822;
+- metacognitive model outperformed constant baseline in 0% of replicates.
+Interpretation: the implemented second-order metacognitive model did not improve trajectory selection or predict first-order error better than a constant baseline under this harness. Preserved as a negative finding pointing to redesign.
+
+### V64 — Identity Persistence under Self-Model Perturbation
+24 paired replicates tested whether identity-specific dynamic signatures remained decodable after a common semantic self-model overwrite, explicit removal of self-model text, and autonomous continuation without semantic input.
+- post-ablation accuracy bridge OFF: 50.0%;
+- post-ablation accuracy bridge ON: 50.0%;
+- ON - OFF accuracy: 0.0;
+- paired sign-flip p: 1.0;
+- above-chance folds: 0% in both conditions.
+Interpretation: V64 produced a null result. Under the tested perturbation, feature set, classifier, and horizon, original identity was not decodable after semantic self-model overwrite and textual ablation. This is preserved as a real limitation, not evidence against all possible identity persistence.
+
+### V66 — SLEEP Consolidation after Episodic-Memory Ablation
+24 paired replicates tested whether keeping only the consolidated lesson after SLEEP was sufficient to change later trajectory selection once original episodic memories were removed.
+- retained_lesson mean regret: -0.1086777912;
+- ablated_lesson mean regret: -0.1086777912;
+- retained_lesson oracle-hit rate: 85.0694%;
+- ablated_lesson oracle-hit rate: 85.0694%;
+- regret difference (ablation - retained): 0.0;
+- paired sign-flip p for regret: 1.0;
+- hit-rate advantage (retained - ablated): 0.0;
+- paired sign-flip p for hit rate: 1.0;
+- all retained executions produced a recovery-bridge signal.
+Interpretation: V66 is a null result. The retained lesson was present and generated a semantic recovery signal, but preserving it produced no measurable behavioral difference in regret or oracle hit rate under this deterministic pathway.
+
+### V67 — Numerical Trace Generated During SLEEP after Total Semantic Ablation
+V67 underwent a methodological correction before interpretation. The first implementation mutated stable_state in the stable_swap arm and then reused that already-mutated object as the source for frontier_swap. That exchange was contaminated and is not treated as evidence.
+The corrected implementation captures both dynamic cores before any mutation and adds an integrity control.
+24 replicates, 12 continuation steps:
+- mean stable − frontier SLEEP signal difference: -0.3092749945;
+- mean stable − frontier dynamic-state difference: -0.0682840349;
+- post-ablation own-continuation classification accuracy: 50.0%;
+- paired sign-flip p: 1.0;
+- transferred-state tracking accuracy: 50.0%;
+- paired sign-flip p: 1.0;
+- exact source-core reproduction: 100%;
+- memories removed before probe: yes;
+- self-model removed before probe: yes;
+- textual input during probe: no.
+Interpretation: null result. SLEEP produced a measurable proximal state/signal difference, but that difference did not remain as a classifiable signature after semantic ablation and did not transfer causally by dynamic-core exchange.
+
+### V68 — Temporal Persistence of the SLEEP-Generated Dynamic Trace
+24 replicates, total semantic ablation, horizons 0, 1, 2, 4, 8, 16, 32.
+- proximal SLEEP signal difference: -0.3092749945;
+- proximal dynamic-state difference: -0.0675162088;
+- horizon 0 final mean delta: -0.0675162, p=0.00005;
+- horizon 1: -0.0003984, p=0.13279;
+- horizon 2: 0.0152969, p=0.14059;
+- horizon 4: -0.0336304, p=0.00070;
+- horizon 8: 0.0065469, p=0.00005;
+- horizon 16: 0.0095700, p=0.00005;
+- horizon 32: 0.0067923, p=0.00045;
+- mean trajectory RMSE: 0.06729 → 0.02006 between horizons 0 and 32;
+- causal exchange integrity: 100% exact source-core trajectory match.
+Interpretation: SLEEP writes an immediate numerical difference and transferred cores reproduce source trajectories causally, but separation from the original semantic condition falls sharply after the first step and remains small/non-monotonic. Evidence favors a transient/attenuated dynamic trace, not demonstrated persistent semantic memory.
+
+### V69 — Reading Own State after Semantic Ablation
+24 replicates and one shared SelfObserver trained on 512 generic dynamics transitions, independent of stable/frontier conditions.
+- mean stable vs frontier prediction difference: 0.04035657;
+- prediction difference after exchange: 0.0;
+- decision sensitivity with readable state: 66.6667% (16/24);
+- decision sensitivity with blinded state: 0.0%;
+- paired p for ON − OFF: 0.000099995;
+- decision change after state exchange with readout ON: 66.6667%;
+- decision change after exchange with readout OFF: 0.0%;
+- paired p for decision change ON − OFF: 0.000099995;
+- memory, events, snapshots, and self-model text removed before probe;
+- no semantic input during probe.
+Interpretation: V69 supports a computational **self-readout → prediction → selection** mechanism. The same dynamic state difference written during SLEEP is read by a learned dynamic model and used to select a signal. State exchange changes the decision in the same state-sensitive replicates. This is operationalized self-reference within the deterministic harness, not phenomenal consciousness.
+
+### V70 — Persistent Self-Reader across Restarts
+24 replicates and 256 generic training samples.
+- reader persisted separately from semantic memory: yes;
+- reader survived restart: yes;
+- samples before/after restart: 256 / 256;
+- maximum absolute prediction error before/after: 0.0;
+- exact model load: 100%;
+- decision sensitivity with readout ON: 29.1667%;
+- blinded-state sensitivity OFF: 0.0%;
+- paired ON − OFF p: 0.0143493;
+- decision change after dynamic-core exchange with readout ON: 29.1667%;
+- memories removed before probe: yes;
+- self-model text removed: yes;
+- no semantic input during probe.
+Interpretation: V70 shows that the numerical self-reader can persist in SQLite, survive restart, and be reused after semantic surfaces are removed. Decision sensitivity is lower than V69 but remains separated from blinded control.
+
+### V69 — Reading Own State through a Self-Model
+24 replicates, 48 identical calibration cycles before SLEEP, numerical self-model frozen before SLEEP, and total semantic ablation.
+- post-SLEEP state difference stable − frontier: -0.0963430681;
+- mean absolute self-model score difference: 0.0344099851, p=0.00005;
+- mean absolute prediction difference: 0.0365052134, p=0.00005;
+- identical numerical self-models between conditions: 100%;
+- action change from real versus control-state readout: 0%;
+- action diversity: one distinct action across all reads;
+- memories and self-model text removed before probe;
+- no textual input during probe.
+Interpretation: V69 separates state reading from behavioral use. Numerical self-state readout is positive, but action selection is null under the current selector because it collapsed to one action.
+
+### V70 — Self-Model → Action after Semantic Ablation
+24 replicates, 48 identical calibration cycles, numerical self-model frozen before intervention.
+- mean difference in self-model-derived action: 0.1224593696, p=0.00005;
+- state-prediction difference: 0.0257983935, p=0.00005;
+- mean difference between action from real readout and clamped state: 0.0456327609, p=0.00005;
+- clamped-control action difference: 0.0311938478;
+- post-exchange mean action error: 0.0;
+- mean absolute post-action state difference: 0.0136089447;
+- numerical self-models identical: 100%;
+- memories and self-model text removed;
+- no semantic input during probe.
+Interpretation: V70 extends V69 from reading to action. A self-model frozen before SLEEP turns the post-SLEEP internal state into a continuous action signal; actions differ between conditions and alter the next state after semantic ablation. This establishes computational self-model → action coupling, while the mapping from prediction to action was externally fixed by the protocol.
+
+### V77 — Generalization to unseen causal structures
+64 replicates per condition; training only on single_impulse; OOD split_impulse, reversal_pulse, delayed_impulse.
+- learned mean gain: 0.2377583;
+- blinded: -0.1917033;
+- fixed: -0.1566228;
+- random: 0.0632567;
+- learned − blinded p: 0.00005;
+- learned − fixed p: 0.00005;
+- learned − random p: 0.00005;
+- learned − random advantage in-domain: 0.1715437;
+- learned − random advantage OOD: 0.1754876;
+- OOD/in-domain retention: 1.0230;
+- learned continuity: 0.7926861 vs random 0.7950760, p=0.48033;
+- state-dependent first action under reversal_pulse: 100% vs 0% blinded;
+- maximum immediate intervention-target error: 0.0.
+Interpretation: V77 supports computational generalization of the self-prediction policy to unseen temporal/causal structures. Continuity, as a secondary endpoint, did not separate from random.
+
+### V78 — Active Continuity under Repeated Perturbations
+64 replicates per condition; training only on single_impulse; OOD double_same_sign, double_alternating, triple_alternating.
+- learned mean gain: 0.2422976;
+- blinded: -0.2408441;
+- fixed: -0.1844678;
+- random: 0.0518725;
+- learned − blinded p: 0.00005;
+- learned − fixed p: 0.00005;
+- learned − random p: 0.00005;
+- learned − random advantage in-domain: 0.1897230;
+- learned − random advantage OOD: 0.1906591;
+- OOD/in-domain retention: 1.0049;
+- OOD second-event change from first: -0.0173461;
+- learned continuity: 0.7905914 vs random 0.7922640, p=0.58767;
+- OOD state-dependent first action first event: 100% vs 0% blinded;
+- OOD state-dependent first action second event: 100% vs 0% blinded;
+- maximum target-match error after each intervention: 0.0.
+Interpretation: V78 supports temporal/compositional reuse of the self-prediction policy under repeated unseen perturbation sequences without retraining. A small degradation appears between the first and second event, but overall OOD advantage over random remains. Continuity did not separate from random.
+
+### V79 — Online Self-Policy Adaptation
+64 replicates per condition; single_impulse training; in-domain and modified-regime evaluation including OOD triple_alternating.
+- frozen in-domain gain: 0.2109118;
+- adaptive in-domain gain: 0.2109118;
+- shifted-single frozen: 0.3792665;
+- shifted-single adaptive: 0.3792665;
+- shifted-repeated frozen: 0.3799345;
+- shifted-repeated adaptive: 0.3798509;
+- adaptive advantage at third OOD event: -0.0002509;
+- paired p: 1.0;
+- adaptive − frozen difference-in-differences: -0.0002509, p=1.0;
+- OOD adaptive continuity: 0.7270149 vs frozen 0.7268716, p=1.0;
+- maximum target error: 0.0.
+Interpretation: null result for online adaptation under the tested protocol. The adaptive copy incorporated observed gains but did not separate from frozen. The dynamic shift did not degrade frozen enough to reveal an adaptive advantage.
+
+### V80 — Online Adaptation under Reversible Regime Changes
+64 replicates per condition; single_impulse training; evaluation base → shift_a → shift_b → base_return; matched policy snapshot.
+- primary base_return event 3 adaptive − frozen: -0.0103649267, p=0.0504475;
+- shift_a event 3 adaptive − frozen: -0.0062218940, p=0.00114994;
+- shift_b event 3 adaptive − frozen: +0.0000024599, p=0.9976001;
+- adaptive base_return event 3 − event 1: -0.0021765106;
+- frozen base_return event 3 − event 1: -0.0004681112;
+- differential recovery adaptive − frozen: -0.0017083995;
+- maximum intervention error: 0.0.
+Interpretation: **null result for adaptive advantage under the tested protocol**. Adaptive policy, which incorporated only observed self-prediction gain online, did not outperform frozen after two regime shifts and return to base. The base_return difference was slightly negative and shift_a also numerically favored frozen; shift_b showed no appreciable separation. This does not invalidate all online adaptation; it constrains one policy, dynamics, and horizon.
+
+## C0 campaign and causal controls
+
+### C0.2 — Operational instantiation of TCF candidate properties
+64 episodes per condition; 64 training episodes; 512 self-observation samples; 12 recovery steps; full/state_blind/no_persistence/open_loop; same policy snapshot; no semantic input or external retraining during the probe.
+Artifact: GitHub Actions run 36838186533, artifact 11149578956; experimental commit 78bf3000739b1711ce01873cc4ab058e334c5881.
+Predefined FULL − control contrasts:
+- C1 persistent own state: +0.716560, p=4.99975e-05;
+- C2 self/environment differentiation: +2.000000, p=4.99975e-05;
+- C3 causal self-reference: +1.000000, p=4.99975e-05;
+- C4 trajectory continuity: +0.287204, p=4.99975e-05;
+- C5 endogenous dynamics: +0.042818, p=4.99975e-05;
+- C6 reorganization: +0.468787, p=4.99975e-05;
+- C7 recurrent closure: +1.250000, p=4.99975e-05;
+- maximum intervention error: 0.0.
+Interpretation: C0.2 produced positive separation on all seven operational observables under the tested implementation. This documents computational properties under the tested conditions; **it does not demonstrate phenomenal consciousness or subjective experience**. C7 was corrected before this final record to measure action → own state → action rather than only action effect on next state.
+
+### C0.3 — Information-matched causal self-reference control
+64 episodes; 8 fixed-point-free permutations per episode; same policy snapshot; control states sampled from the empirical FULL trajectory distribution.
+Artifact: GitHub Actions run 36838675864, artifact 11150238362; commit 413e70499977d759e9effb50505c4db6174925c8.
+- own-state to mixed-state gap: 1.06640625;
+- gap between two mixed states: 1.00000000;
+- contrast: +0.06640625;
+- sign-permutation p: 0.3140343;
+- real-action versus mixed-state discrepancy: 0.5332031.
+Interpretation: null/inconclusive under the information-matched C3 specificity control. The FULL − STATE_BLIND difference from C0.2 did not separate from a control preserving the state distribution while breaking episode correspondence.
+
+### C0.4 — Information-matched action-replay control
+64 episodes; 8 replay sequences per episode; 64 training episodes; 512 self-observer samples; same initial context and dynamic seed; replay action sequence donated by another episode.
+Artifact: GitHub Actions run 36838953166; artifact 11150575990; commit 7e8adcfd8aed0df514662912ded4482c6bda7ad0.
+- FULL autonomous variance: 0.0531008831;
+- action-replay variance: 0.0543576360;
+- FULL − replay: -0.0012567529;
+- sign-permutation p: 0.4364282.
+Interpretation: null under the information-matched C5 control. FULL autonomous variance did not exceed replayed action sequences from the same organism when online state/action correspondence was broken. The C0.2 OPEN_LOOP separation is therefore interpretation-limited because that control fixed action to zero.
+
+### C0.5 — Information-matched recurrent-closure control
+64 episodes; 8 donor-action rearrangements per episode; same policy snapshot; donor actions drawn from the same empirical action distribution.
+Artifact: GitHub Actions run 36938229171; artifact 11199385083; SHA256 ee3d1260692ba7aa2ba683e7caefba46a0662ca3c887aea0ca0bf3e872e6adf8; commit ce62945a3ae2c1642a9450e30e81e6ef094b523e.
+- real action-chain gap: 0.99609375;
+- matched donor-action gap: 0.99218750;
+- contrast: +0.00390625;
+- p: 1.0;
+- no semantic input;
+- no external retraining.
+Interpretation: null under the information-matched C7 control. The action → own state → action chain did not separate from the chain constructed from donor actions drawn from the same empirical distribution. The positive C0.2 C7 contrast is therefore not confirmed under this stronger control.
+
+### C0.6 — Causal lesion/rescue of self-observer and self-policy
+64 episodes; 64 training episodes; 512 self-observer samples; one shared trained snapshot across conditions, followed by post-training lesions and rescue.
+Artifact: GitHub Actions run 36939000398; artifact 11198659986; SHA256 cf3442ec57c49b803ae1514aad6c5f4a727651f61dc45864cc803a1c4c35a198; commit 07943dd5ea979e6d78ed3cd01e0135e35e6de58c.
+- observer necessity FULL − OBSERVER_LESION gain: +0.2273943, p=0.00005;
+- policy necessity FULL − POLICY_LESION gain: +0.3555158, p=0.00005;
+- joint necessity FULL − BOTH_LESION: +0.2273943, p=0.00005;
+- observer lesion final-distance effect: +0.5125025, p=0.00005;
+- policy lesion final-distance effect: +0.1065877, p=0.00005;
+- observer rescue: +0.2076185, p=0.00005;
+- policy rescue: +0.2875335, p=0.00005;
+- maximum intervention error: 0.0;
+- no semantic input during probe;
+- no external retraining during probe.
+Interpretation: C0.6 shows causal dependence of the trained components under the tested lesion/rescue protocol. Post-training removal of learned self-observer or self-policy changes recovery/trajectory metrics, and restoring them in the same experimental trajectory produces significant rescue. This is evidence of computational component necessity/recovery under the test; it is not by itself evidence of phenomenal consciousness.
+
+### C0.7 — Target-permutation specificity control for the self-model
+64 episodes; 64 training episodes; 512 self-observer samples; fixed target permutation preserving feature matrix and target multiset; same evaluation dynamics/seeds between arms.
+Artifact: GitHub Actions run 36939278865; experimental commit 5e0e1f52eea76c73b5e9e8273b63bd3d810ed7ff.
+- FULL − target-permuted gain: +0.0286062, p=0.0019999;
+- target-permuted − FULL final distance: -0.0113629, p=0.7047648;
+- FULL − target-permuted state variance: +0.0198325, p=0.00005;
+- FULL − target-permuted mean action magnitude: 0.0, p=1.0;
+- FULL gain: 0.2128723;
+- target-permuted gain: 0.1842661;
+- FULL variance: 0.0811531;
+- target-permuted variance: 0.0613206;
+- maximum intervention error: 0.0.
+Interpretation: C0.7 shows specificity toward the feature → target assignment for self-prediction gain and internal variance under the tested control, while final distance and action magnitude do not separate. This supports a narrower interpretation that part of behavior depends on the learned mapping rather than only model size or marginal target distribution. It is not evidence of phenomenal consciousness.
+
+### C0.8 — Crossed observer/policy coupling — corrected statistics
+The initial execution completed four conditions with matched seeds, but the implementation incorrectly treated one scalar interaction contrast as 64 repeated pseudo-replicates for p-value calculation. Those p-values are not used as evidence.
+Descriptive first-execution means:
+- TT: gain 0.21888936; final distance 0.15996548; variance 0.06848248;
+- TP: gain -0.12484394; final distance 0.67765194; variance 0.07943683;
+- PT: gain -0.31516985; final distance 0.67765194; variance 0.07943683;
+- PP: gain 0.20488969; final distance 0.14799625; variance 0.06747759.
+The final-distance interaction initially used the opposite sign from the declared contrast. The implementation was corrected to compute TT − TP − PT + PP elementwise by shared episode seed, using the same sign convention for final distance.
+
+### C0.8 — Confirmatory verified result
+Artifact: GitHub Actions run 36946477790; artifact 11202930418; SHA256 e8ce5229e0f41a31a3923cc802b18a19c98c4d61ffa68eda601e18ac80c26987.
+- observer effect on gain TT − PT: +0.5340592, p=4.99975e-05;
+- policy effect on gain TT − TP: +0.3437333, p=4.99975e-05;
+- observer × policy interaction on gain: +0.8637928, p=4.99975e-05;
+- observer × policy interaction on variance: -0.0229136, p=0.0022999;
+- observer × policy interaction on final distance: -1.0473422, p=4.99975e-05;
+- maximum intervention error: 0.0;
+- no semantic input or external retraining during probe.
+Interpretation: the confirmatory execution supports separable observer, policy, and matched observer/policy coupling effects under the protocol. This is a computational organization result, not evidence of subjective experience.
+
+### C0.9 — Causal observer → policy interface
+Verified artifact run 36944916227, artifact 11200913836, SHA256 287f52b0074a8599be74ae0d36bfbbc930cdb892cb48d0cde96a5e649af5f3d6.
+- donor-shuffle readout gap: 0.1975998565;
+- NORMAL − DONOR action: 0.0, p=1.0;
+- NORMAL − DONOR gain: 0.0, p=1.0;
+- NORMAL − DONOR next state: 0.0, p=1.0;
+- maximum intervention error: 0.0.
+Interpretation: null for behavioral dependence on the observer → policy correspondence under the tested protocol. Observer readout changed, but policy behavior did not.
+
+### C0.10 — Temporal observer → policy alignment
+Verified artifact run 36944920225, artifact 11201258435, SHA256 7d24c622c02a331e2d3844037abccbd93365ea9de54149da77e68fc2ac631e75.
+- current-versus-lagged observer prediction gap: 0.1624331804;
+- NORMAL − LAG action: 0.0, p=1.0;
+- NORMAL − LAG gain: 0.0, p=1.0;
+- NORMAL − LAG next state: 0.0, p=1.0;
+- maximum intervention error: 0.0.
+Interpretation: null for behavioral sensitivity to temporal observer → policy alignment.
+
+### C0.11 — Causal action mediation
+Verified artifact run 36944924071, artifact 11200748887, SHA256 d6f496ebe49b494a8af30932a30c73880a26981da079932d9ff8a9348b2d56cd.
+- next action FACTUAL − FORCED: +1.78125, p=4.99975e-05;
+- next state FACTUAL − FORCED: -0.5770045054, p=4.99975e-05;
+- gain FACTUAL − FORCED: +0.5278692817, p=4.99975e-05;
+- mean absolute next-action discrepancy: 1.78125;
+- mean absolute state discrepancy: 0.5770045054;
+- maximum intervention error: 0.0.
+Interpretation: positive computational causal mediation under the tested protocol. Changing only the first action produced later state and next-action differences using the same self-observer and policy. This supports the operational action → internal state → readout/policy → next action chain. It does not establish subjective experience.
+
+### C0.12 — Second-order self-monitoring
+Verified artifact run 36945173829, artifact 11201243817, SHA256 6fa8bdf64401a96d79f1d47b03dc4ac242c6456fba9c8e6957e44d52aa2448f4.
+- TRUE − PERMUTED action: 0.0, p=1.0;
+- TRUE − PERMUTED gain: 0.0, p=1.0;
+- TRUE − BLIND action: -1.0, p=4.99975e-05;
+- TRUE − BLIND gain: +0.2733195, p=4.99975e-05;
+- held-out second-order MAE advantage over constant baseline: +0.00697175, p=0.00079996;
+- second-order MAE: 0.04131592;
+- constant-baseline MAE: 0.04828767;
+- maximum intervention error: 0.0.
+Interpretation: second-order model learned predictive information about first-order model error and changes action versus the blind baseline, but target permutation leaves action and gain unchanged. C0.12 therefore supports second-order prediction but not causal specificity of the second-order mapping into action.
+
+### C0.13 — Action-conditioned second-order self-model
+Verified artifact run 36945340705, artifact 11201464566, SHA256 971e0b39360eaa25828abc0162e1cf70b5c54ae4916611d7a8e06413165b7b56.
+- TRUE − PERMUTED action: -1.71875, p=4.99975e-05;
+- TRUE − PERMUTED gain: +0.4850290, p=4.99975e-05;
+- TRUE − BLIND action: -1.0, p=4.99975e-05;
+- TRUE − BLIND gain: +0.2590892, p=4.99975e-05;
+- held-out MAE advantage: +0.00740228, p=4.99975e-05;
+- meta MAE: 0.03489674;
+- constant-baseline MAE: 0.04229902;
+- intervention target error: 0.0.
+Interpretation: C0.13 produced separation between the trained action-conditioned second-order model and target-permuted control under the tested protocol. The model also predicts first-order error better than the constant baseline on held-out transitions. Computational result only.
+
+### C0.14 — Persistent second-order
+Verified artifact run 36945659490, artifact 11201664192, SHA256 8a01bef161939ba7d72f3d225a73e7e5f8b2fe014e5d7a4b82856e140d44a831.
+- post-restart action mismatch: 0.0, p=1.0;
+- post-restart gain mismatch: 0.0, p=1.0;
+- exact checkpoint model-digest recovery: 100%;
+- post-restart mean gain: 0.08710124;
+- maximum action mismatch: 0.0;
+- maximum gain mismatch: 0.0.
+Interpretation: first- and action-conditioned second-order models were serialized, restored, and reused after rebuilding dynamic context and bridge, matching the continuous arm under the tested protocol. This supports computational persistence across restart.
+
+### C0.15 — Persistent second-order lesion/rescue
+Verified artifact run 36945882211, artifact 11202160302, SHA256 5c297e25f01036b87f63ab0355555faf80dc4a2462199f5c7e115b62cbadcd6f.
+- FULL − LESION late action: +0.271484375, p=0.00064997;
+- FULL − LESION late gain: +0.03751679, p=0.08415;
+- FULL − RESCUE post-restore action: +0.02734375, p=0.68607;
+- FULL − RESCUE post-restore gain: -0.03525716, p=0.03860;
+- exact checkpoint fraction: 100%;
+- maximum absolute action difference FULL/LESION: 1.0.
+Interpretation: disabling only the second-order selector changes later action distribution, but the gain endpoint is not significant. Restoration brings action contrast near zero but does not reproduce FULL-arm gain; rescue is therefore not a clean functional rescue. C0.15 supports action-level dependence while leaving performance-level necessity/rescue unresolved.
+
+### C0.16 — Second-order integrated into PersistentOrganism
+Verified artifact run 36946260825, artifact 11201973015, SHA256 52e60a8bb92b0c4520e1f2cc94cd138daf81bceef9138e009b6dbee635d0833e.
+- post-restart action mismatch: 0.0, p=1.0;
+- post-restart gain mismatch: 0.0, p=1.0;
+- exact SQLite model-digest recovery: 100%;
+- pre-restart action match: 100%;
+- all post-restart selections reported action_conditioned_second_order;
+- maximum action mismatch: 0.0;
+- maximum gain mismatch: 0.0.
+Interpretation: C0.16 moves action-conditioned second order from isolated laboratory component into the real PersistentOrganism lifecycle. Both models are persisted in SQLite, automatically restored after restart, and continue autonomous selection without external input or retraining. This demonstrates computational integration/persistence, not subjective experience.
+
+### C0.17 — Autonomous second-order acquisition
+Verified artifact run 36946964601, artifact 11201784892, SHA256 bf4aed2caaaff14e3aac2dca54e584cc0c10d38f9dde13c0f4720db8eacc9ea8.
+- second-order model started empty;
+- 48 learned second-order samples per replicate;
+- exact model recovery at evaluation-pair construction: 100%;
+- first TRUE − PERMUTED action: +0.2916667, p=0.3417829;
+- first TRUE − PERMUTED gain: -0.0141513, p=0.7728114;
+- mean TRUE − PERMUTED action: +0.0833333, p=0.6331683;
+- mean TRUE − PERMUTED gain: +0.0256299, p=0.4691765;
+- no semantic input during acquisition/evaluation;
+- no external retraining during evaluation.
+Interpretation: mixed/null result. The organism did autonomously acquire a second-order model from counterfactual prediction errors, but frozen TRUE versus target-permuted comparisons did not produce significant action/gain separation. Autonomous model acquisition/persistence is demonstrated; causal behavioral specificity is not.
+
+## C0 campaign status
+The original 32-execution campaign is archived as historical evidence with an artifact-archival technical failure. The campaign was restarted with four-replicate waves and explicit file validation before artifact publication.
+**Current documented status:** the new execution window is defined in [C0 Campaign](../docs/C0_CAMPAIGN_32_RUNS.md). A first validated wave exists: **G1, 4/32 replicates**, workflow run **36955261246**. All four artifacts were produced correctly and their summary.json, policy_snapshot.json, and slot metadata were validated. G2–G8 have no scientific results recorded yet. Infrastructure failure is not converted into an experimental null.
+
+### C0 Campaign — G1 completed (4/32)
+GitHub Actions workflow: **36955261246** (run #33), commit **0587915bf90d44872fa950bdbd62ffaaae6d7ec7**.
+Criterion: **C3 causal self-reference**. Control: **information-matched state shuffle**.
+| Replicate | Artifact | Effect | p | Own gap | Matched gap |
+|---|---:|---:|---:|---:|---:|
+| G1-R1 | 11205791665 | 0.0625 | 0.38498075096 | 0.9921875 | 0.9296875 |
+| G1-R2 | 11205378393 | 0.046875 | 0.49912504375 | 0.9921875 | 0.9453125 |
+| G1-R3 | 11206041359 | 0.01953125 | 0.84995750212 | 0.94140625 | 0.921875 |
+| G1-R4 | 11205626944 | 0.08984375 | 0.13454327284 | 1.04296875 | 0.953125 |
+Descriptive G1 means: effect **0.0546875**, own gap **0.9921875**, matched gap **0.9375**. All four replicates have p > 0.05.
+Interpretation: G1 is a **validated partial wave**, not the result of the full campaign. No composite inference over 32 executions is recorded. G2–G8 remain pending.
+
+## C0.18 — Autonomous second-order acquisition and lesion/rescue — verified result
+GitHub Actions artifact:
+- workflow run: **36960952961**;
+- artifact: **11208100038**;
+- SHA-256: **a7aa0554a81a3449175e37363e6fcd95ec6d5bc7d1354198f047ef888c1dbf98**;
+- experimental commit: **434b3a02ab64c9294c8113171ccbac1745caa053**;
+- 24 replicates;
+- 12 autonomous acquisition cycles per replicate;
+- mean 48 learned second-order samples;
+- exact persisted-model recovery: **100%**.
+Primary contrasts:
+- FULL − LESION, action: **-0.2916667**, p=**0.1177441**;
+- FULL − LESION, gain: **+0.0114104**, p=**0.7404130**;
+- RESCUE − LESION, action: **-0.2916667**, p=**0.1183441**;
+- RESCUE − LESION, gain: **+0.0114104**, p=**0.7332633**.
+Interpretation: **null result under the tested protocol**. The organism acquired and persisted second order correctly, but lesion did not produce significant action/gain change and rescue did not produce significant recovery relative to LESION. C0.18 therefore does not demonstrate causal necessity or functional rescue of the acquired second-order mechanism under this harness. C0.17 acquisition/persistence remains a separate result.
+
+</details>
