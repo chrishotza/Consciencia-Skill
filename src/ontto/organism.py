@@ -40,6 +40,7 @@ class OrganismConfig:
     action_conditioned_meta_observer_enabled: bool = False
     action_conditioned_meta_observer_ridge: float = 1e-3
     action_conditioned_meta_observer_max_samples: int = 2048
+    action_conditioned_meta_observer_update_enabled: bool = True
     action_conditioned_meta_counterfactual_learning_enabled: bool = False
     self_selection_enabled: bool = True
     self_selection_attractor_weight: float = 0.70
@@ -227,7 +228,10 @@ class PersistentOrganism:
                     features=observer_features,
                     prediction_error=prediction_error,
                 )
-            if self.cfg.action_conditioned_meta_observer_enabled:
+            if (
+                self.cfg.action_conditioned_meta_observer_enabled
+                and self.cfg.action_conditioned_meta_observer_update_enabled
+            ):
                 action_meta_features = (
                     ActionConditionedMetaObserver.features_for(
                         previous_state=pre_previous_state,
