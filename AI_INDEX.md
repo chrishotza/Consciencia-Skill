@@ -61,7 +61,7 @@
 - `docs/C0_18_AUTONOMOUS_SECOND_ORDER_LESION_RESCUE.md`
 - `experiments/tcf_consciousness_instantiation_c0_18.py`
 - `tests/test_tcf_consciousness_instantiation_c0_18.py`
-- Engineering status: preflight correction applied; 24-replication scientific verification pending.
+- Verified: 24 replicates; null lesion/rescue effect under the tested protocol; artifact preserved in GitHub Actions.
 
 ### V69
 - `docs/V69_SELF_STATE_READOUT.md`
