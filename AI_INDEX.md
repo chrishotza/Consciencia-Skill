@@ -81,7 +81,13 @@
 - `docs/I5_11_SEMANTIC_REENTRY_TRAJECTORY_SELECTION.md`
 - `experiments/i5_11_semantic_reentry_trajectory_selection.py`
 - `tests/test_i5_11_semantic_reentry_trajectory_selection.py`
-- Protocol added; no I5.11 result is claimed yet.
+- Verified: 100% t0 action match; 55.95% future action-change rate, p=4.99975e-05; state AUC p=4.99975e-05; bridge ON-vs-OFF AUC p=4.99975e-05.
+
+### I5.12 — Information-matched semantic self-model control
+- `docs/I5_12_INFORMATION_MATCHED_SELF_MODEL_CONTROL.md`
+- `experiments/i5_12_information_matched_self_model_control.py`
+- `tests/test_i5_12_information_matched_self_model_control.py`
+- Protocol planned; no I5.12 result is claimed yet.
 
 
 ### I5.3 — Causal attention allocation
@@ -264,7 +270,13 @@ Use the protocol document to find the exact implementation.
 - `docs/I5_11_SEMANTIC_REENTRY_TRAJECTORY_SELECTION.md`
 - `experiments/i5_11_semantic_reentry_trajectory_selection.py`
 - `tests/test_i5_11_semantic_reentry_trajectory_selection.py`
-- Protocolo agregado; todavía no se reclama ningún resultado de I5.11.
+- Verificado: 100% de coincidencia de acción en t0; 55.95% de cambio de acción futura, p=4.99975e-05; AUC de estado p=4.99975e-05; AUC bridge ON-vs-OFF p=4.99975e-05.
+
+### I5.12 — Control de modelo de sí con información emparejada
+- `docs/I5_12_INFORMATION_MATCHED_SELF_MODEL_CONTROL.md`
+- `experiments/i5_12_information_matched_self_model_control.py`
+- `tests/test_i5_12_information_matched_self_model_control.py`
+- Protocolo planificado; todavía no se reclama ningún resultado de I5.12.
 
 
 
