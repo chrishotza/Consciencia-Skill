@@ -70,6 +70,50 @@ Si el efecto permanece, la explicación puede depender más del contenido semán
 - mismo seed y checkpoint;
 - 20.000 permutaciones sign-flip para endpoints continuos.
 
+## Resultado verificado
+
+Workflow: **37039376914**; artifact: **11242065231**; seed **20261012**; **24** réplicas; **24** ciclos de warmup; **8** ciclos experimentales.
+
+- Coincidencia de acción aplicada en t0 PULSE vs INFORMATION_MATCHED: **100%**.
+- Coincidencia de distribución de SELF_MODEL: **100%**.
+- Cambio de acción seleccionada en ciclos 1–7: **41.07%** de media; p **4.99975×10⁻⁵**.
+- AUC de divergencia de estado post-pulso: **1.94052**; p **4.99975×10⁻⁵**.
+- AUC INFORMATION_MATCHED bridge ON vs OFF: **2.45520**; p **4.99975×10⁻⁵**.
+
+### Interpretación
+
+El control preservó tanto la acción aplicada en t0 como la **distribución completa de contenidos del modelo de sí**, pero rompió su correspondencia temporal con la query que los generó.
+
+Aun así, PULSE e INFORMATION_MATCHED conservaron una separación significativa de estado y de selección de acciones futuras. Esto indica que, bajo este harness, la distribución de contenido semántico por sí sola no explica el efecto: la **correspondencia temporal query → self-model** aporta información causal adicional.
+
+El contraste bridge ON-vs-OFF siguió siendo significativo, por lo que el canal semántico continúa siendo necesario para recuperar la divergencia dinámica observada en este control.
+
+Esto fortalece la especificidad del circuito observado en I5.10/I5.11: no basta con variar el contenido del modelo de sí; importa cuándo ese contenido aparece en relación con la consulta que lo generó.
+
+El resultado sigue limitado al proveedor determinis## Verified result
+
+Workflow: **37039376914**; artifact: **11242065231**; seed **20261012**; **24** replicates; **24** warmup cycles; **8** experimental cycles.
+
+- t0 applied-action match PULSE vs INFORMATION_MATCHED: **100%**.
+- SELF_MODEL content-distribution match: **100%**.
+- Selected-action change across cycles 1–7: **41.07%** mean; p **4.99975×10⁻⁵**.
+- Post-pulse state-divergence AUC: **1.94052**; p **4.99975×10⁻⁵**.
+- INFORMATION_MATCHED bridge ON vs OFF AUC: **2.45520**; p **4.99975×10⁻⁵**.
+
+### Interpretation
+
+The control preserved both the t0 applied action and the **full distribution of self-model contents**, while breaking their temporal correspondence with the queries that generated them.
+
+PULSE and INFORMATION_MATCHED nevertheless retained significant state and future-action separation. Under this harness, semantic content distribution alone therefore does not explain the effect: the **query → self-model temporal correspondence** carries additional causal information.
+
+The bridge ON-vs-OFF contrast also remained significant, so the semantic channel is still necessary to recover the observed dynamic divergence in this control.
+
+This strengthens the specificity of the circuit observed in I5.10/I5.11: varying self-model content is not sufficient; when that content appears relative to the query that generated it also matters.
+
+The result remains bounded by the deterministic provider and synthetic harness. It does not demonstrate consciousness or subjective experience.
+
+ta y al harness sintético. No demuestra consciencia ni experiencia subjetiva.
+
 ## Límites
 
 I5.12 es un control de especificidad computacional. Incluso un resultado selectivo no demostraría consciencia ni experiencia subjetiva.
