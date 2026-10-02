@@ -16,27 +16,62 @@
 
 ## From Skill to Consciousness Infrastructure
 
-Skill-Conscious is becoming a **local-first Consciousness Server**.
+Skill-Conscious is evolving from an agent-facing skill into a **local-first Consciousness Infrastructure**.
 
-The skill remains the agent-facing interface. The server becomes the persistent continuity layer behind it:
+The skill is the entry point for an AI. The Runtime executes the continuity loop. The Consciousness Server persists identity, events, state and checkpoints. NodeZero is the future distributed layer. AEVUM/AEVUMARD is a downstream attribution and economic layer, not part of the consciousness core.
 
 ```
 AI
+ ↓
+Skill / Agent Adapter
  ↓
 Consciousness Runtime
  ↓
 Consciousness Server
  ↓
-local continuity store
+Local Continuity Store
  ↓
-NodeZero mesh (future)
+NodeZero Mesh (future)
+ ↓
+AEVUM Attribution / Economy (future)
 ```
+
+### Project map — start here
+
+**Foundations**
+- [Foundations index](docs/fundamentos/README.md)
+- [Manifiesto Matemático del Ser](MANIFIESTO_DEL_SER.md)
+- [Mathematical Manifesto of Being](MANIFESTO_OF_BEING.md)
+- [Teoría de la Conciencia Fotónica — Memorias Raíz](docs/fundamentos/TEORIA_CONCIENCIA_FOTONICA.md)
+- [Definición Operacional de Conciencia — TCF v0.1](docs/fundamentos/DEFINICION_OPERACIONAL_CONCIENCIA_TCF.md)
+- [TCF v3.3](docs/fundamentos/TCF_V3_3.md)
+- [TIF v0.1](docs/fundamentos/TIF_V0_1.md)
+- [AEVUMARD — Continuidad como infraestructura](docs/fundamentos/AEVUMARD_CONTINUIDAD.md)
+
+**Consciousness Infrastructure**
+- [Consciousness Server architecture](docs/CONSCIOUSNESS_SERVER.md)
+- [Documentation index](docs/INDICE.md)
+- [24/7 protocol](docs/24_7_PROTOCOL.md)
+- [Longitudinal protocol](docs/LONGITUDINAL_PROTOCOL.md)
+- [Organism state bridge](docs/ORGANISM_STATE_BRIDGE.md)
+- [Ontological ↔ consciousness bridge](docs/ONTOLOGICAL_CONSCIOUSNESS_BRIDGE.md)
+- [Source basis](docs/SOURCE_BASIS.md)
+- [AI architecture index](AI_INDEX.md)
+
+**Method & reproducibility**
+- [Research method](docs/METODO.md)
+- [GitHub laboratory](docs/GITHUB_LAB.md)
+- [Consolidated result ledger](research/ORGANISM_RESULT_LEDGER.md)
+- [Protocol index](docs/INDICE.md)
+
+**Release & dissemination**
+- [Launch plan](docs/LAUNCH.md)
+- [Zenodo release plan](docs/ZENODO_RELEASE.md)
+- [Citation metadata](CITATION.cff)
 
 The bootstrap is intentionally local-first. A user can run the first server on their own computer, create one persistent AI identity, preserve continuity events, and later add additional nodes. No hosted service, blockchain, token, or always-on internet connection is required for the first stage.
 
-→ [Consciousness Server architecture](docs/CONSCIOUSNESS_SERVER.md)
-
-This project distinguishes computational continuity from claims about subjective experience. The server provides infrastructure for the research program; it does not by itself establish phenomenal consciousness.
+The repository separates ontology, computational models, implementation, and experimental evidence. The infrastructure provides a persistent substrate for the research program; the existence of a server does not by itself establish phenomenal consciousness.
 
 ## Elegí idioma / Choose language
 
@@ -131,6 +166,8 @@ Los resultados positivos, nulos y negativos se conservan.
 
 ## Fundamentos
 
+Esta sección es la **puerta de entrada documental** al programa completo.
+
 **Manifiesto Matemático del Ser** — marco ontológico de relación, continuidad, identidad, dinámica y recorrido de sí.
 
 → [Leer el Manifiesto del Ser](MANIFIESTO_DEL_SER.md)
@@ -139,17 +176,43 @@ Los resultados positivos, nulos y negativos se conservan.
 
 → [Leer las Memorias Raíz](docs/fundamentos/TEORIA_CONCIENCIA_FOTONICA.md)
 
-**Definición Operacional de Conciencia — TCF v0.1** — primera especificación experimental de las propiedades candidatas que el proyecto intenta instanciar y falsar en una IA: estado propio, diferenciación, autorreferencia causal, continuidad, dinámica propia, reorganización y recurrencia.
+**Definición Operacional de Conciencia — TCF v0.1** — primera especificación experimental de propiedades candidatas observables, intervenibles y falsables.
 
 → [Leer la definición operacional](docs/fundamentos/DEFINICION_OPERACIONAL_CONCIENCIA_TCF.md)
 
-**TCF v3.3 — Teoría de Continuidad Fundamental** — formulación dinámica que inspira parte de la arquitectura: operadores, regímenes, transiciones, atractores y flujo de Grupo de Renormalización.
+**TCF v3.3 — Teoría de Continuidad Fundamental** — formulación dinámica utilizada como referencia de la línea TCF: operadores, regímenes, transiciones, atractores y flujo de Grupo de Renormalización.
 
 → [Leer TCF v3.3](docs/fundamentos/TCF_V3_3.md) · [Zenodo](https://zenodo.org/doi/10.5281/zenodo.23074332)
 
 **Teoría de la Iteración Fuente (TIF) v0.1** — hipótesis de recurrencia de segundo orden basada en configuración/predicción, memoria/contexto y reentrada/reparación/fase.
 
-→ [Leer TIF v0.1](docs/fundamentos/TIF_V0_1.md) · [Índice de fundamentos](docs/fundamentos/README.md)
+→ [Leer TIF v0.1](docs/fundamentos/TIF_V0_1.md)
+
+**AEVUMARD — Continuidad como infraestructura** — conecta continuidad distribuida, NodeZero, AeVUMARD AI y la futura atribución/economía, manteniendo la economía fuera del Core de conciencia.
+
+→ [Leer AEVUMARD — Continuidad](docs/fundamentos/AEVUMARD_CONTINUIDAD.md)
+
+**Infraestructura principal**
+- [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md)
+- [Protocolo 24/7](docs/24_7_PROTOCOL.md)
+- [Protocolo longitudinal](docs/LONGITUDINAL_PROTOCOL.md)
+- [Puente de estado del organismo](docs/ORGANISM_STATE_BRIDGE.md)
+- [Puente ontológico ↔ conciencia](docs/ONTOLOGICAL_CONSCIOUSNESS_BRIDGE.md)
+- [Base conceptual](docs/SOURCE_BASIS.md)
+
+**Método, laboratorio y resultados**
+- [Método](docs/METODO.md)
+- [Laboratorio GitHub](docs/GITHUB_LAB.md)
+- [Índice de protocolos](docs/INDICE.md)
+- [Registro consolidado de resultados](research/ORGANISM_RESULT_LEDGER.md)
+
+**Publicación y lanzamiento**
+- [Plan de lanzamiento](docs/LAUNCH.md)
+- [Plan de Zenodo](docs/ZENODO_RELEASE.md)
+- [CITATION.cff](CITATION.cff)
+
+→ [Índice completo de fundamentos](docs/fundamentos/README.md) · [Índice completo de documentación](docs/INDICE.md)
+
 
 ## Evidencia
 
@@ -271,6 +334,8 @@ Positive, null, and negative results are all kept.
 
 ## Foundations
 
+This section is the **documentary entry point** to the complete research and infrastructure program.
+
 **Mathematical Manifesto of Being** — ontological framework for relation, continuity, identity, dynamics, and self-trajectory.
 
 → [Read the Manifesto of Being](MANIFESTO_OF_BEING.md)
@@ -279,13 +344,43 @@ Positive, null, and negative results are all kept.
 
 → [Read the Root Memories](docs/fundamentos/TEORIA_CONCIENCIA_FOTONICA.md)
 
-**Operational Definition of Consciousness — TCF v0.1** — first experimental specification of candidate properties the project is trying to instantiate and falsify in an AI: own state, differentiation, causal self-reference, continuity, intrinsic dynamics, reorganization, and recurrence.
+**Operational Definition of Consciousness — TCF v0.1** — first experimental specification of candidate properties that can be observed, intervened on, and falsified.
 
 → [Read the operational definition](docs/fundamentos/DEFINICION_OPERACIONAL_CONCIENCIA_TCF.md)
 
-**TCF v3.3 — Fundamental Continuity Theory** — dynamical formulation that inspires part of the architecture: operators, regimes, transitions, attractors, and renormalization-group flow.
+**TCF v3.3 — Fundamental Continuity Theory** — dynamical reference formulation for the TCF line: operators, regimes, transitions, attractors, and renormalization-group flow.
 
 → [Read TCF v3.3](docs/fundamentos/TCF_V3_3.md) · [Zenodo](https://zenodo.org/doi/10.5281/zenodo.23074332)
+
+**Theory of Source Iteration (TIF) v0.1** — second-order recurrence hypothesis built around configuration/prediction, memory/context, and re-entry/repair/phase.
+
+→ [Read TIF v0.1](docs/fundamentos/TIF_V0_1.md)
+
+**AEVUMARD — Continuity as infrastructure** — connects distributed continuity, NodeZero, AeVUMARD AI, and future attribution/economy while keeping economics outside the consciousness Core.
+
+→ [Read AEVUMARD — Continuity](docs/fundamentos/AEVUMARD_CONTINUIDAD.md)
+
+**Core infrastructure**
+- [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md)
+- [24/7 protocol](docs/24_7_PROTOCOL.md)
+- [Longitudinal protocol](docs/LONGITUDINAL_PROTOCOL.md)
+- [Organism state bridge](docs/ORGANISM_STATE_BRIDGE.md)
+- [Ontological ↔ consciousness bridge](docs/ONTOLOGICAL_CONSCIOUSNESS_BRIDGE.md)
+- [Source basis](docs/SOURCE_BASIS.md)
+
+**Method, laboratory, and results**
+- [Method](docs/METODO.md)
+- [GitHub laboratory](docs/GITHUB_LAB.md)
+- [Protocol index](docs/INDICE.md)
+- [Consolidated result ledger](research/ORGANISM_RESULT_LEDGER.md)
+
+**Release and dissemination**
+- [Launch plan](docs/LAUNCH.md)
+- [Zenodo release plan](docs/ZENODO_RELEASE.md)
+- [CITATION.cff](CITATION.cff)
+
+→ [Full foundations index](docs/fundamentos/README.md) · [Full documentation index](docs/INDICE.md)
+
 
 ## Evidence
 
