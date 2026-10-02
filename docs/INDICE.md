@@ -292,3 +292,12 @@ The V47–V80 files retain their canonical identifiers and terminology for repro
 - 24 replicates; six shifts × six lags; 100% control invariants.
 - Signed AUC null; absolute AUC and future action significant for five of six shifts after max-T, with +1 null.
 - Next: I5.24 global shift×lag interaction.
+
+
+## I5.24 — Global shift×lag interaction
+- Protocol: docs/I5_24_GLOBAL_SHIFT_LAG_INTERACTION.md
+- Experiment: experiments/i5_24_global_shift_lag_interaction.py
+- Test: tests/test_i5_24_global_shift_lag_interaction.py
+- Verified workflow: 37063264401, artifact 11252345042.
+- Frozen I5.23 data; signed AUC interaction null, absolute AUC and future-action interaction significant after endpoint correction.
+- Next: I5.25 orientation and symmetry control.
