@@ -170,3 +170,39 @@ COHERENCE UPDATE
    ↓
 SELF-REENTRY
 ~~~
+
+
+## Latest consolidation
+
+The ontology now separates four concepts that were previously partially conflated:
+
+- **identity** — what persists across change;
+- **state** — the current values of the process;
+- **regime** — how the process is currently operating;
+- **layer** — which representational levels are currently active.
+
+The reference runtime now persists `regime` alongside identity, state, self-model, attention, memory, intention, and selected trajectory.
+
+### Next frontier
+
+The next build should make regime transitions causal:
+
+~~~text
+ATTENTION
+   +
+SELF-MODEL
+   +
+INTENTION
+   +
+UNCERTAINTY
+   +
+COHERENCE
+   ↓
+REGIME TRANSITION
+   ↓
+PRESENT RECONFIGURATION
+   ↓
+NEW TRAJECTORIES
+~~~
+
+After that, latent pattern extraction and autonomous candidate-future generation become the next major layers.
