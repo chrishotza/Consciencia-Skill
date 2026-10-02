@@ -52,11 +52,27 @@ Endpoints secundarios:
 
 Se usan 512 episodios y 20.000 permutaciones sign-flip.
 
+## Resultado verificado
+
+Workflow: **36987408988**; artifact: **11218415785**; commit experimental: **906f67544517add411f1c97176042a253a3caa19**; seed **20261005**; **512** episodios.
+
+Endpoints:
+
+- accuracy de acción FULL: **1.0**;
+- accuracy de consulta FULL: **1.0**;
+- masa de atención FULL sobre el objetivo: **0.98549**;
+- FULL−SHUFFLED_QUERY: **+1.0**, p **4.99975×10⁻⁵**;
+- FULL−ZERO_QUERY: **+0.7578125**, p **4.99975×10⁻⁵**;
+- FULL−RANDOM_QUERY: **+0.736328125**, p **4.99975×10⁻⁵**;
+- FULL−SHUFFLED_ATTENTION: **+1.0**, p **4.99975×10⁻⁵**;
+- FULL−LESION_TARGET: **+1.0**, p **4.99975×10⁻⁵**;
+- FULL−NO_BOTTLENECK: **0.0**, p **1.0**.
+
+Interpretación: **resultado positivo para el mecanismo combinado de consulta dependiente del estado y asignación de atención bajo este arnés sintético**. FULL seleccionó el módulo correcto y la acción correcta; perturbar la consulta, la atención o lesionar el contenido objetivo eliminó la accuracy. Sin embargo, el control NO_BOTTLENECK no difirió de FULL, por lo que este experimento no demuestra que el cuello de botella sea funcionalmente necesario cuando la atención ya concentra recursos sobre el objetivo.
+
 ## Límite científico
 
-Este protocolo prueba un mecanismo combinado de consulta dependiente del estado y cuello de botella atencional.
-
-No demuestra consciencia ni experiencia subjetiva.
+El resultado valida propiedades causales del mecanismo computacional probado. No demuestra consciencia, experiencia subjetiva ni necesidad de un bottleneck dentro de un organismo completo.
 
 </details>
 
@@ -112,10 +128,26 @@ Secondary endpoints:
 
 512 episodes and 20,000 sign-flip permutations are used.
 
+## Verified result
+
+Workflow: **36987408988**; artifact: **11218415785**; experimental commit: **906f67544517add411f1c97176042a253a3caa19**; seed **20261005**; **512** episodes.
+
+Endpoints:
+
+- FULL action accuracy: **1.0**;
+- FULL query accuracy: **1.0**;
+- FULL target attention mass: **0.98549**;
+- FULL−SHUFFLED_QUERY: **+1.0**, p **4.99975×10⁻⁵**;
+- FULL−ZERO_QUERY: **+0.7578125**, p **4.99975×10⁻⁵**;
+- FULL−RANDOM_QUERY: **+0.736328125**, p **4.99975×10⁻⁵**;
+- FULL−SHUFFLED_ATTENTION: **+1.0**, p **4.99975×10⁻⁵**;
+- FULL−LESION_TARGET: **+1.0**, p **4.99975×10⁻⁵**;
+- FULL−NO_BOTTLENECK: **0.0**, p **1.0**.
+
+Interpretation: **positive result for the combined state-dependent query and attention mechanism under this synthetic harness**. FULL selected the correct module and action; perturbing query, attention, or lesioning target content eliminated accuracy. However, NO_BOTTLENECK did not differ from FULL, so this experiment does not establish that the bottleneck itself is functionally necessary when attention already concentrates resources on the target.
+
 ## Scientific boundary
 
-This protocol tests a combined state-dependent query and attention-bottleneck mechanism.
-
-It does not demonstrate consciousness or subjective experience.
+The result validates causal properties of the tested computational mechanism. It does not demonstrate consciousness, subjective experience, or bottleneck necessity in a complete organism.
 
 </details>
