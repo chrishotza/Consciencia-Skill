@@ -57,17 +57,23 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
                 if state is None:
                     self._send(404, {"error": "instance_not_found"})
                     return
-                events = []
-                if len(parts) == 3 and parts[2] == "events":
-                    query = parse_qs(path.query)
-                    limit = int(query.get("limit", ["100"])[0])
-                    events = self.store.list_events(parts[1], limit=limit)
                 payload = {
                     "state": state.to_dict(),
                     "state_hash": self.store.state_hash(parts[1]),
                 }
-                if events:
-                    payload["events"] = events
+                if len(parts) == 3:
+                    query = parse_qs(path.query)
+                    limit = int(query.get("limit", ["100"])[0])
+                    if parts[2] == "events":
+                        payload["events"] = self.store.list_events(
+                            parts[1],
+                            limit=limit,
+                        )
+                    elif parts[2] == "checkpoints":
+                        payload["checkpoints"] = self.store.list_checkpoints(
+                            parts[1],
+                            limit=limit,
+                        )
                 self._send(200, payload)
                 return
 
@@ -132,6 +138,38 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
                 {
                     "state": state.to_dict(),
                     "state_hash": self.store.state_hash(state.instance_id),
+                },
+            )
+            return
+
+        if path.path.startswith("/instances/") and path.path.endswith("/checkpoints"):
+            parts = [p for p in path.path.split("/") if p]
+            if len(parts) != 3:
+                self._send(404, {"error": "not_found"})
+                return
+            try:
+                checkpoint = self.store.create_checkpoint(
+                    instance_id=parts[1],
+                    runtime_mode=str(data.get("runtime_mode", "local")),
+                    organism_mode=str(data.get("organism_mode", "WAKE")),
+                    payload=dict(data.get("payload", {})),
+                    checkpoint_id=data.get("checkpoint_id"),
+                )
+                state = self.store.get_state(parts[1])
+            except KeyError:
+                self._send(404, {"error": "instance_not_found"})
+                return
+            except Exception as exc:
+                if "UNIQUE constraint failed" in str(exc):
+                    self._send(409, {"error": "checkpoint_id_exists"})
+                    return
+                raise
+            self._send(
+                201,
+                {
+                    "checkpoint": checkpoint,
+                    "state": state.to_dict() if state is not None else None,
+                    "state_hash": self.store.state_hash(parts[1]),
                 },
             )
             return
