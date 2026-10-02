@@ -108,6 +108,12 @@
 - Verified: run 37044533566 / artifact 11243557588; 100% t0 action match and 100% SELF_MODEL distribution match across all lags; future-action change ranged from 11.31% (+1) to 58.93% (-2); absolute state AUC ranged from 0.262091 (+1) to 2.363792 (-2); +1 vs -1 absolute AUC symmetry difference -1.978122, p=4.99975e-05. Signed contrasts were significant only for -2 (p=0.04740) and +2 (p=0.04430); signed +k vs -k symmetry remained non-significant. The result motivates a pure-phase, longer-period counterbalanced control before stronger causal-specificity claims.
 
 
+### I5.16 — Counterbalanced pure-phase temporal control
+- `docs/I5_16_COUNTERBALANCED_PURE_PHASE_TEMPORAL_CONTROL.md`
+- `experiments/i5_16_counterbalanced_pure_phase_temporal_control.py`
+- `tests/test_i5_16_counterbalanced_pure_phase_temporal_control.py`
+- Protocol pending verification: 15-cycle, seven-phase periodic schedule; cycle 0 fixed at A; lags ±1, ±2, ±3; identical post-t0 SELF_MODEL distribution; seven cyclic semantic-label rotations across replicates; ±1 bridge-OFF controls.
+
 ### I5.3 — Causal attention allocation
 - `docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md`
 - `src/ontto/attention_controller.py`
@@ -309,6 +315,12 @@ Use the protocol document to find the exact implementation.
 - Verificado: run 37042551701 / artifact 11243190387; 100% de coincidencia de acción t0 y 100% de coincidencia de distribución de SELF_MODEL; cambio de acción futura SHIFT+1 11.90% y SHIFT-1 44.64%, ambos p=4.99975e-05; AUC BASE-vs-SHIFT+1 0.2414241371, BASE-vs-SHIFT-1 1.9526574097; AUC SHIFT+1 bridge ON-vs-OFF 2.1221765870, todos p=4.99975e-05.
 
 
+
+### I5.16 — Control temporal de fase pura contrabalanceado
+- `docs/I5_16_COUNTERBALANCED_PURE_PHASE_TEMPORAL_CONTROL.md`
+- `experiments/i5_16_counterbalanced_pure_phase_temporal_control.py`
+- `tests/test_i5_16_counterbalanced_pure_phase_temporal_control.py`
+- Protocolo pendiente de verificación: secuencia periódica de 15 ciclos y siete fases; ciclo 0 fijado en A; lags ±1, ±2, ±3; distribución de SELF_MODEL idéntica post-t0; siete rotaciones cíclicas de las etiquetas semánticas entre réplicas; controles bridge-OFF en ±1.
 
 ### Lattice Computer v0/v1
 - `docs/LATTICE_COMPUTER_V0.md`
