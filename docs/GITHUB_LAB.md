@@ -47,6 +47,14 @@ Workflow:
 
 Se utiliza como verificación de pull requests.
 
+## Protocolo C0.18 — segundo orden autónomo
+
+Workflow:
+
+`.github/workflows/organism-c0-18-autonomous-second-order.yml`
+
+Ejecuta el test de esquema y una campaña de 24 réplicas emparejadas. Publica `summary.json`, `replicates.json`, las bases SQLite de las réplicas y un manifiesto de ejecución. El ledger científico no se actualiza automáticamente: el artifact se valida primero.
+
 ## Prueba manual con proveedor en vivo
 
 Workflow:
