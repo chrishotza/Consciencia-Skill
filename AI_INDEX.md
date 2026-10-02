@@ -43,6 +43,10 @@
 - `docs/C0_14_PERSISTENT_SECOND_ORDER_SELF_MODEL.md` — persistence of first- and second-order self-models across a restart boundary.
 - `experiments/tcf_consciousness_instantiation_c0_14.py` — matched continuous vs. restart autonomous sequence.
 
+### C0.15
+- `docs/C0_15_SECOND_ORDER_LESION_RESCUE.md` — lesion/rescue of the persistent action-conditioned second-order selector.
+- `experiments/tcf_consciousness_instantiation_c0_15.py` — FULL/LESION/RESCUE matched protocol.
+
 ### V69
 - `docs/V69_SELF_STATE_READOUT.md` — numeric readout; discrete action endpoint is null.
 - `docs/V69_SELF_READ_STATE.md` — readout participates in trajectory selection; includes blinded control and state-swap intervention.
