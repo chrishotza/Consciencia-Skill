@@ -13,6 +13,7 @@ from src.ontto.provider import LLMResponse
 from src.ontto.storage import MemoryStore
 
 CYCLES = 8
+# CI validation marker for semantic correspondence specificity.
 BASE_SELF_MODEL = "Mantengo una identidad persistente entre ciclos."
 
 
