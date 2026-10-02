@@ -83,3 +83,26 @@ A drop after perturbation would show sensitivity of the trace to a local interve
 This characterizes the implemented computational model. It does not demonstrate consciousness, subjective experience, or the physical existence of the Lattice described by the sources.
 
 </details>
+ 
+## Verified run — GitHub Actions
+
+Run **36981980509** completed successfully.
+
+Artifact: **11215414278**  
+Artifact SHA-256: **804286dfdca5a3b2004c31a11c3534c2c6a44a1ce73568c061e355a458cdfc63**
+
+Configuration: 128 paired trials, 7×7 encoded ROI, delays 0/1/2/4/8/16, local +0.50 perturbation at step 4, coupling 0.22 versus coupling 0.0, noise_std 0.01.
+
+Primary endpoint:
+
+- mean retention at delay 8: **0.7486968980**
+- retention AUC: **0.7597552199**
+
+Secondary endpoints:
+
+- perturbation loss at delay 8: **0.0017212557** (SD 0.0049417100)
+- coupling-minus-decoupled retention at delay 8: **−0.2509315747** (SD 0.0578770592)
+
+Retention declined from 1.0 at delay 0 to 0.4839105412 at delay 16 under coupling, while the decoupled control remained near 1.0. The coupling result therefore reflects active temporal dynamics rather than simple static retention: coupling reduced raw pattern correlation while producing a time-evolving internal trace.
+
+The result is evidence about the implemented computational substrate only. It does not establish consciousness, subjective experience, or the physical validity of the source theory.

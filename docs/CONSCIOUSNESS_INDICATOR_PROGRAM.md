@@ -38,8 +38,8 @@ The project already has strong evidence for several functional building blocks, 
 | RPT-1 | PARTIAL | recurrent internal dynamics and iterative self-observation | recurrence is not an explicitly recurrent perceptual/input module |
 | RPT-2 | ABSENT / UNTESTED | numerical internal state exists | no validated organized perceptual representation layer |
 | GWT-1 | PARTIAL | memory, self-observer, meta-observer, dynamics, policy components | no explicit parallel workspace architecture |
-| GWT-2 | ABSENT | trajectory selection exists | no limited-capacity global workspace / attention bottleneck |
-| GWT-3 | PARTIAL | organism context is assembled across persistent modules | no explicit global broadcast mechanism with causal ablation |
+| GWT-2 | PARTIAL / I5.0 VERIFIED PROTOTYPE | bounded K=2 workspace with competitive selection | not yet integrated into PersistentOrganism or coupled to a learned attention controller |
+| GWT-3 | PARTIAL / I5.0 VERIFIED PROTOTYPE | causal broadcast from selected workspace content to all modules | full-organism integration and module-specific broadcast ablation still pending |
 | GWT-4 | PARTIAL | state-dependent trajectory selection exists | no explicit attention-controlled sequential module querying |
 | HOT-1 | PARTIAL | self-prediction is generative with respect to internal dynamics | not a generative perception module |
 | HOT-2 | PARTIAL / strongest current line | SelfObserver, MetaSelfObserver, prediction error, confidence, second-order models | reliability monitoring is not yet a general perception-level metacognitive loop |
@@ -140,16 +140,15 @@ A null result is evidence of insufficient structural generalization and should d
 
 ### I5 — workspace integration
 
-Introduce a bounded workspace only after I1–I4 have independent evidence.
+**I5.0 is now verified as a standalone bounded-workspace prototype.** It implements six modules, capacity K=2, competitive selection, causal broadcast, K=6 unlimited-access control, and selected-source versus non-selected-source lesioning. The verified run used 512 paired episodes.
 
-Required tests:
+Verified effects:
 
-- limited-capacity bottleneck;
-- broadcast;
-- selective access;
-- module lesion;
-- recovery;
-- state-dependent querying.
+- broadcast versus no-broadcast accuracy: **+0.126953125**, p **4.99975×10⁻⁵**;
+- bounded K=2 versus K=6 accuracy: **+0.017578125**, p **0.0222489**;
+- selected-source lesion versus unselected-source lesion: **−0.490234375**, p **4.99975×10⁻⁵**.
+
+The next stage is **I5.1**: integrate the workspace into `PersistentOrganism`, preserve paired lesion controls, and add state-dependent querying. A standalone prototype result is not treated as evidence that the full organism has global-workspace consciousness.
 
 ### I6 — attention schema
 
@@ -287,8 +286,8 @@ El proyecto ya tiene evidencia fuerte para varios bloques funcionales, pero la c
 | RPT-1 | PARCIAL | dinámica interna recurrente y autoobservación iterativa | no existe un módulo perceptivo/de entrada explícitamente recurrente |
 | RPT-2 | AUSENTE / NO TESTEADO | existe estado interno numérico | no existe una capa validada de representación perceptiva organizada |
 | GWT-1 | PARCIAL | memoria, self-observer, meta-observer, dinámica y política | no existe una arquitectura explícita de workspace paralelo |
-| GWT-2 | AUSENTE | existe selección de trayectorias | no existe un cuello de botella de workspace global con capacidad limitada |
-| GWT-3 | PARCIAL | el contexto del organismo se ensambla entre módulos persistentes | no existe un mecanismo explícito de broadcast global con ablación causal |
+| GWT-2 | PARCIAL / PROTOTIPO I5.0 VERIFICADO | workspace acotado K=2 con selección competitiva | aún no está integrado en PersistentOrganism ni conectado a un controlador de atención aprendido |
+| GWT-3 | PARCIAL / PROTOTIPO I5.0 VERIFICADO | broadcast causal desde el contenido seleccionado hacia todos los módulos | falta integración en el organismo completo y ablación específica del broadcast |
 | GWT-4 | PARCIAL | existe selección dependiente del estado | no existe consulta secuencial explícita controlada por atención |
 | HOT-1 | PARCIAL | autopredicción generativa respecto de la dinámica interna | no es un módulo de percepción generativa |
 | HOT-2 | PARCIAL / línea más fuerte actual | SelfObserver, MetaSelfObserver, error predictivo, confianza y modelos de segundo orden | el monitoreo de fiabilidad aún no es un bucle metacognitivo general a nivel perceptivo |
@@ -382,16 +381,15 @@ Preguntar si el sistema predice su propio error de estado interno, si la confian
 
 ### I5 — integración en workspace
 
-Introducir un workspace acotado solo después de obtener evidencia independiente para I1–I4.
+**I5.0 ya está verificado como prototipo independiente.** Implementa seis módulos, capacidad K=2, selección competitiva, broadcast causal, control K=6 y lesión del origen seleccionado frente a un origen no seleccionado. La ejecución verificada utilizó 512 episodios emparejados.
 
-Tests necesarios:
+Resultados:
 
-- cuello de botella de capacidad limitada;
-- broadcast;
-- acceso selectivo;
-- lesión de módulos;
-- recuperación;
-- consulta dependiente del estado.
+- broadcast vs no-broadcast: **+0.126953125**, p **4.99975×10⁻⁵**;
+- K=2 vs K=6: **+0.017578125**, p **0.0222489**;
+- lesión origen seleccionado − no seleccionado: **−0.490234375**, p **4.99975×10⁻⁵**.
+
+El siguiente paso es **I5.1**: integrar el workspace en `PersistentOrganism`, conservar controles de lesión emparejados y añadir consultas dependientes del estado. El prototipo aislado no se interpreta como evidencia de que el organismo completo posea consciencia de workspace global.
 
 ### I6 — esquema de atención
 
