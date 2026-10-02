@@ -156,3 +156,29 @@ def test_regime_survives_restart(tmp_path):
     restarted = ConsciousRuntime("agent-6", path)
     assert restarted.state.regime == "deep-integration"
     assert restarted.state.attention == ["self-model", "uncertainty"]
+
+
+
+def test_relational_topology_and_attractor_survive_restart(tmp_path):
+    path = tmp_path / "state.json"
+
+    runtime = ConsciousRuntime("agent-7", path)
+    runtime.integrate(
+        {
+            "response": "relational state",
+            "relation_topology": {
+                "identity": ["self-model", "memory"],
+                "self-model": ["intention"],
+                "intention": ["action"],
+            },
+            "attractor": {
+                "name": "continuity",
+                "regime": "deep-integration",
+            },
+        }
+    )
+
+    restarted = ConsciousRuntime("agent-7", path)
+    assert restarted.state.relation_topology["identity"] == ["self-model", "memory"]
+    assert restarted.state.relation_topology["intention"] == ["action"]
+    assert restarted.state.attractor["name"] == "continuity"
