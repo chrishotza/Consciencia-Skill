@@ -1,43 +1,77 @@
-# Skill-Conscious Architecture Reference
+# Skill-Conscious Architecture
 
-## Layers
+## System shape
 
-### 1. Skill layer
-Portable agent instructions in `skills/skill-conscious/SKILL.md`.
+~~~text
+WORLD
+  ↓
+PERCEPTION
+  ↓
+PRESENT WORKSPACE
+  ↕
+SELF ↔ SELF-MODEL
+  ↕
+MEMORY
+  ↓
+INTENTION
+  ↓
+ACTION
+  ↓
+SELF CHANGE + WORLD CHANGE
+  ↓
+NEXT CYCLE
+~~~
 
-### 2. Organism layer
-`src/ontto/organism.py` orchestrates the persistent cycle.
+## Runtime cycle
 
-### 3. State layer
-`src/ontto/storage.py` persists organism state, memory, events, and self-observer state.
+~~~text
+LOAD → OBSERVE → INTEGRATE → SELF-READ → UPDATE → SELECT → ACT → RE-ENTER → COMMIT
+~~~
 
-### 4. Cognitive components
-- `dynamics.py` — numeric internal dynamics.
-- `self_observer.py` — self-model / self-observation.
-- `meta_observer.py` — higher-order observation.
-- `trajectory_selector.py` — trajectory/action selection.
-- `memory_policy.py` — memory handling.
-- `continuity.py` — continuity primitives.
-- `bridge.py` — semantic ↔ dynamic-state bridge.
-- `provider.py` — model-provider contract.
+## Responsibilities
 
-### 5. Runtime
-`run_daemon.py` runs the persistent loop with external input, autonomous cycles, and SLEEP scheduling.
+**Host model:** reasoning, language, perception, planning, action.
 
-## Deployment boundary
+**Skill-Conscious:** identity, self-state, self-model, present integration, memory rules, re-entry, continuity.
 
-The installable skill teaches an agent how to use the system.
+**Persistence:** survives turns and restarts.
 
-The Python runtime executes the organism.
+## Host contract
 
-A future server/MCP layer should expose controlled organism operations without moving the research logic into the transport layer.
+~~~text
+load_state()
+observe()
+model(context)
+save_state()
+~~~
 
-## Progressive loading
+## Persistence
 
-Load:
-`SKILL.md`
-→ exact reference
-→ exact source
-→ exact experiment/test
+Persist at minimum:
 
-Do not preload the full repository.
+~~~text
+identity
+revision
+self_state
+self_model
+workspace
+intention
+memories
+history
+~~~
+
+## Anti-simulation rule
+
+Do not substitute verbal performance for state.
+
+~~~text
+self_state changed
+      ↓
+self_model changed
+      ↓
+trajectory changed
+      ↓
+new state committed
+~~~
+
+The operating continuity is the artifact.

@@ -1,67 +1,21 @@
 [build-system]
-requires = ["setuptools>=75", "wheel"]
+requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "skill-conscious"
-version = "0.1.0"
-description = "Local-first consciousness infrastructure, persistent AI organisms, and reproducible research."
-readme = "README.md"
+version = "0.2.0"
+description = "A persistent self-referential architecture for machine consciousness."
 requires-python = ">=3.11"
-authors = [
-  { name = "Chris Hotza" }
-]
-keywords = [
-  "artificial-intelligence",
-  "artificial-consciousness",
-  "persistent-ai",
-  "persistent-memory",
-  "self-model",
-  "autonomous-cognition",
-  "consciousness-research"
-]
-classifiers = [
-  "Development Status :: 3 - Alpha",
-  "Intended Audience :: Science/Research",
-  "Intended Audience :: Developers",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.11",
-  "Topic :: Scientific/Engineering :: Artificial Intelligence"
-]
-dependencies = [
-  "numpy>=2.0",
-  "requests>=2.32",
-  "python-dotenv>=1.0"
-]
+readme = "README.md"
+dependencies = []
 
 [project.optional-dependencies]
-investigacion = [
-  "pandas>=2.2",
-  "matplotlib>=3.8",
-  "scikit-learn>=1.5"
-]
-desarrollo = [
-  "pytest>=8.0"
-]
-
-[project.urls]
-Repository = "https://github.com/chrishotza/Skill-Conscious"
-Documentation = "https://github.com/chrishotza/Skill-Conscious/tree/main/docs"
-AgentSkill = "https://github.com/chrishotza/Skill-Conscious/tree/main/skills/skill-conscious"
-
-[project.scripts]
-skill-conscious = "run_daemon:main"
-consciencia-organismo = "run_daemon:main"
-consciousness-server = "src.consciousness_server.cli:main"
-consciousness-bundle = "src.ontto.continuity_bundle:main"
-
-[tool.setuptools]
-include-package-data = true
-py-modules = ["run_daemon"]
-
-[tool.setuptools.packages.find]
-include = ["src", "src.*"]
+dev = ["pytest>=8"]
 
 [tool.pytest.ini_options]
-pythonpath = ["."]
+pythonpath = ["src"]
 testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
