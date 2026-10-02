@@ -84,6 +84,97 @@ class ConsciousnessClient:
             },
         )
 
+    @staticmethod
+    def deterministic_event_id(
+        instance_id: str,
+        event_type: str,
+        payload: dict[str, Any],
+        logical_revision: int,
+        parent_event_id: str | None,
+    ) -> str:
+        from .core import ConsciousnessStore
+
+        return ConsciousnessStore.deterministic_event_id(
+            instance_id,
+            event_type,
+            payload,
+            logical_revision,
+            parent_event_id,
+        )
+
+    def emit(
+        self,
+        instance_id: str,
+        event_type: str,
+        payload: dict[str, Any] | None = None,
+        *,
+        expected_revision: int | None = None,
+        event_id: str | None = None,
+        logical_revision: int | None = None,
+        parent_event_id: str | None = None,
+        created_at: str | None = None,
+    ) -> dict[str, Any]:
+        body: dict[str, Any] = {
+            "event_type": event_type,
+            "payload": payload or {},
+        }
+        if expected_revision is not None:
+            body["expected_revision"] = int(expected_revision)
+        if event_id:
+            body["event_id"] = event_id
+        if logical_revision is not None:
+            body["logical_revision"] = int(logical_revision)
+        if parent_event_id is not None:
+            body["parent_event_id"] = parent_event_id
+        if created_at is not None:
+            body["created_at"] = created_at
+        return self._request(
+            "POST",
+            f"/instances/{instance_id}/events",
+            body,
+        )
+
+    def list_events(
+        self,
+        instance_id: str,
+        limit: int = 100,
+    ) -> dict[str, Any]:
+        return self._request(
+            "GET",
+            f"/instances/{instance_id}/events?limit={max(1, min(int(limit), 1000))}",
+        )
+
+    def export_delta(
+        self,
+        instance_id: str,
+        after_revision: int,
+        limit: int = 1000,
+    ) -> dict[str, Any]:
+        return self._request(
+            "GET",
+            f"/instances/{instance_id}/events/delta?after_revision={int(after_revision)}&limit={max(1, min(int(limit), 1000))}",
+        )
+
+    def replay_delta(
+        self,
+        instance_id: str,
+        *,
+        base_revision: int,
+        events: list[dict[str, Any]],
+        base_state_hash: str | None = None,
+    ) -> dict[str, Any]:
+        body: dict[str, Any] = {
+            "base_revision": int(base_revision),
+            "events": events,
+        }
+        if base_state_hash is not None:
+            body["base_state_hash"] = base_state_hash
+        return self._request(
+            "POST",
+            f"/instances/{instance_id}/replay",
+            body,
+        )
+
     def checkpoint(
         self,
         instance_id: str,
