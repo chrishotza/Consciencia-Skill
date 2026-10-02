@@ -57,6 +57,7 @@
 - `docs/C0_17_AUTONOMOUS_SECOND_ORDER_ACQUISITION.md`
 - `experiments/tcf_consciousness_instantiation_c0_17.py`
 
+- `tests/test_second_node_interoperability.py` — two-node HTTP replay and divergence guard.
 ### C0 Campaign
 - `docs/C0_CAMPAIGN_32_RUNS.md`
 - `research/c0_campaign/C0_CAMPAIGN_RESTARTED_G1_EVIDENCE.json`
