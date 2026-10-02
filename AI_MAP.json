@@ -33,8 +33,8 @@
       "docs/I5_17_PHASE_RESOLVED_BRIDGE_MEDIATION_MAP.md"
     ],
     "experimental_next": [
-      "verify I5.17 phase-resolved bridge mediation map",
-      "repeat the I5.16 pure-phase temporal construction with bridge ON/OFF at every ±1/±2/±3 lag and locate whether the +1 bridge effect is phase-specific or phase-general",
+      "I5.18 global phase-by-bridge interaction with multiplicity-controlled contrasts",
+      "test the I5.17 phase profile with a pre-registered global interaction and multiplicity correction before stronger mechanistic interpretation",
       "C0 campaign G2-G8"
     ]
   },
@@ -68,8 +68,8 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "verify I5.17 phase-resolved bridge mediation map",
-    "repeat the I5.16 pure-phase temporal construction with bridge ON/OFF at every ±1/±2/±3 lag and locate whether the +1 bridge effect is phase-specific or phase-general",
+    "I5.18 global phase-by-bridge interaction with multiplicity-controlled contrasts",
+    "test the I5.17 phase profile with a pre-registered global interaction and multiplicity correction before stronger mechanistic interpretation",
     "C0 campaign G2-G8"
   ]
 }
