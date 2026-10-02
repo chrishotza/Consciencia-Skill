@@ -1,3 +1,25 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V27 — Robustez al ruido de la geometría del estado
+
+V27 prueba si el efecto direccional del estado observado en V24–V26 sobrevive a incrementos controlados del ruido dinámico.
+
+Se conservan los seis puntos ciegos fijos, cuatro pares de historias, input futuro cero, memory/pressure comunes del receptor y la misma regla de transformación del estado.
+
+Se usan seeds independientes 20–29. La desviación estándar del ruido se barre en:
+0.0, 0.005, 0.01, 0.025, 0.05, 0.10.
+
+Se prueban dos radios (0.5 y 1.1) y tres orientaciones (0°, 90°, 180°). El objetivo es robustez, no optimización de parámetros.
+
+V27 no prueba consciencia; prueba si la geometría causal reproducible del estado es robusta frente a ruido dinámico.
+
+</details>
+
+<a id="english"></a>
+
 # V27 — Noise Robustness of State Geometry
 
 V27 tests whether the V24–V26 directional state effect survives controlled increases in dynamical noise.
