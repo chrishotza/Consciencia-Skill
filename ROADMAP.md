@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # Hoja de ruta
 
 ## Fase 1 — Base persistente
@@ -40,6 +42,8 @@
 
 Cada avance debe aumentar la capacidad del organismo para mantener y utilizar relaciones internas a través del tiempo, o debe producir evidencia útil para descartar una hipótesis.
 
+
+<a id="english"></a>
 
 <details>
 <summary>🇺🇸 English — open</summary>
