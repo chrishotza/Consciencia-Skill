@@ -119,6 +119,14 @@ jobs:
             --cycles 8 \
             --out results/i5_14_phase_matched_temporal_specificity_control
 
+      - name: Run I5.15 bidirectional temporal-lag response map
+        run: |
+          python experiments/i5_15_bidirectional_temporal_lag_response_map.py \
+            --replicates 24 \
+            --warmup 24 \
+            --cycles 8 \
+            --out results/i5_15_bidirectional_temporal_lag_response_map
+
       - name: Write run manifest
         run: |
           mkdir -p results
