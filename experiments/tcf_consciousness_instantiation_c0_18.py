@@ -147,6 +147,7 @@ def main() -> None:
     rescue_gain = []
     sample_counts = []
     digest_recovered = []
+    replicates = []
 
     for index in range(args.episodes):
         seed = 180010 + index
@@ -221,8 +222,32 @@ def main() -> None:
         full_gain.append(full_g)
         lesion_gain.append(lesion_g)
         rescue_gain.append(rescue_g)
+        recovered = restored_digest == digest
         sample_counts.append(samples)
-        digest_recovered.append(restored_digest == digest)
+        digest_recovered.append(recovered)
+        replicates.append(
+            {
+                "replicate": index,
+                "seed": seed,
+                "full": {
+                    "action": full_a,
+                    "gain": full_g,
+                    "policy": full_policy,
+                },
+                "lesion": {
+                    "action": lesion_a,
+                    "gain": lesion_g,
+                    "policy": lesion_policy,
+                },
+                "rescue": {
+                    "action": rescue_a,
+                    "gain": rescue_g,
+                    "policy": rescue_policy,
+                },
+                "learned_meta_samples": samples,
+                "exact_learned_model_recovery": recovered,
+            }
+        )
 
     full_action = np.asarray(full_action, dtype=float)
     lesion_action = np.asarray(lesion_action, dtype=float)
@@ -239,6 +264,10 @@ def main() -> None:
     summary = {
         "experiment": "tcf_consciousness_instantiation_c0_18",
         "protocol_version": PROTOCOL_VERSION,
+        "episodes": int(args.episodes),
+        "seed_start": 180010,
+        "training_cycles": TRAINING_CYCLES,
+        "replicates_file": "replicates.json",
         "question": (
             "After autonomous second-order acquisition, does removing the learned "
             "second-order model alter selection at the same state, and does restoring "
@@ -297,6 +326,10 @@ def main() -> None:
         ),
     }
 
+    (out / "replicates.json").write_text(
+        json.dumps(replicates, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
     (out / "summary.json").write_text(
         json.dumps(summary, indent=2, ensure_ascii=False),
         encoding="utf-8",
