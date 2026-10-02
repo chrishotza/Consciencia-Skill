@@ -633,3 +633,12 @@ Artifact: run **36945340705**, artifact **11201464566**, SHA256 **971e0b39360eaa
 - intervention target error: **0.0**.
 
 Interpretation: C0.13 produced a clear separation between the trained action-conditioned second-order model and the target-permuted control under the tested protocol. The model also predicted first-order prediction error better than the constant baseline on held-out transitions. This is a computational result; it does not establish subjective experience.
+
+
+### C0.14 — Persistencia del segundo orden
+
+Protocolo implementado; **sin resultado experimental registrado todavía**.
+
+C0.14 contrasta una secuencia autónoma continua con una secuencia emparejada que serializa el primer y segundo modelo de sí, reconstruye el contexto dinámico y crea un nuevo puente dinámico antes de continuar. La prueba busca coincidencia exacta de acciones y ganancias después del reinicio, además de recuperación exacta del digest de los modelos.
+
+Estado: **implementado; ejecución pendiente de verificación**.
