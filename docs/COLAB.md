@@ -73,3 +73,31 @@ Every live run should preserve:
 </details>
 
 > Language convention: docs/LANGUAGE.md
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# Colab
+
+## Experiment 01
+Open the continuity reference notebook. Clone the public repository and run the current relational engine.
+
+## Experiment 02
+The live API notebook uses a real LLM provider and persistent SQLite state.
+Colab is a laboratory, not a permanent 24/7 host. A continuous organism needs a persistent execution environment outside normal notebook session limits.
+
+## Secrets
+Store API credentials in Colab Secrets. Never upload keys to GitHub.
+Required:
+- ONTTO_API_KEY
+- ONTTO_MODEL
+Optional:
+- ONTTO_API_BASE_URL
+- ONTTO_AGENT_ID
+
+## Evidence
+Every live run should preserve seed/configuration, model/provider, WAKE cycles, SLEEP cycles, state snapshots, memories, and token/cost telemetry when exposed by the provider.
+
+</details>
+
+> Language convention: docs/LANGUAGE.md
