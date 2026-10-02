@@ -164,6 +164,11 @@ class PersistentOrganism:
             return None
 
         step_start = self.state.dynamic_steps
+        pre_previous_state = self.state.dynamic_prev_state
+        pre_state = self.state.dynamic_state
+        pre_memory = self.state.dynamic_memory
+        pre_pressure = self.state.dynamic_pressure
+        pre_attractor_distance = self.state.dynamic_attractor_distance
         observer_features = None
         prediction = None
         if self.cfg.self_observer_enabled:
@@ -224,16 +229,16 @@ class PersistentOrganism:
             if self.cfg.action_conditioned_meta_observer_enabled:
                 action_meta_features = (
                     ActionConditionedMetaObserver.features_for(
-                        previous_state=self.state.dynamic_prev_state,
-                        state=self.state.dynamic_state,
-                        memory=self.state.dynamic_memory,
-                        pressure=self.state.dynamic_pressure,
+                        previous_state=pre_previous_state,
+                        state=pre_state,
+                        memory=pre_memory,
+                        pressure=pre_pressure,
                         last_input=signal,
-                        attractor_distance=self.state.dynamic_attractor_distance,
+                        attractor_distance=pre_attractor_distance,
                         steps_delta=steps,
                         predicted_state=prediction.predicted_state,
                         predicted_displacement=abs(
-                            prediction.predicted_state - self.state.dynamic_state
+                            prediction.predicted_state - pre_state
                         ),
                     )
                 )
@@ -457,7 +462,7 @@ class PersistentOrganism:
                     else None
                 ),
             )
-            elif self.cfg.action_conditioned_meta_observer_enabled:
+            if self.cfg.action_conditioned_meta_observer_enabled:
                 scored = []
                 for candidate in candidates:
                     prediction_error = self.action_conditioned_meta_observer.predict_error(
