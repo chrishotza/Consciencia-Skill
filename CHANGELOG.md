@@ -1,3 +1,31 @@
+## 2026-10-02 — I5.19 verificado / I5.19 verified
+
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+- I5.19 repitió I5.17 con semilla independiente **20261019** y aplicó sin cambios el análisis I5.18: 24 réplicas, 24 warmup, 15 ciclos y 20.000 permutaciones.
+- Run **37056574657**, artifact **11247979913**; tests **37056574726** y paquete **37056574723** pasaron.
+- El efecto bridge ON−OFF medio se replicó en AUC firmada (**-1.39819**, p=0.00030), AUC absoluta (**-0.73065**, p=0.00190) y cambio de acción futura (**-0.11806**, p=0.00110).
+- La interacción global fase × bridge volvió a ser no significativa en los tres endpoints.
+- Siguiente control: I5.20, especificidad del bridge bajo permutación semántica.
+
+</details>
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+- I5.19 reran I5.17 with independent seed **20261019** and applied the I5.18 analysis unchanged: 24 replicates, 24 warmup cycles, 15 cycles, and 20,000 permutations.
+- Run **37056574657**, artifact **11247979913**; tests **37056574726** and package check **37056574723** passed.
+- The average bridge ON−OFF effect replicated for signed AUC (**-1.39819**, p=0.00030), absolute AUC (**-0.73065**, p=0.00190), and future-action change (**-0.11806**, p=0.00110).
+- The global phase × bridge interaction was again non-significant for all three endpoints.
+- Next control: I5.20, bridge specificity under semantic permutation.
+
+</details>
+
 ## 2026-10-02 — I5.18 verificado / I5.18 verified
 
 <a id="espanol"></a>
