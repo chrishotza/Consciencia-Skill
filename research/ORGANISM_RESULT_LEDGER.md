@@ -679,3 +679,18 @@ Artifact: run **36945882211**, artifact **11202160302**, SHA256 **5c297e25f01036
 - maximum absolute action difference FULL/LESION: **1.0**.
 
 Interpretation: disabling only the second-order selector changed the later action distribution under the tested protocol. The gain endpoint did not reach the prespecified significance threshold. After restoration, the action contrast returned close to zero, but the gain contrast did not reproduce the FULL arm; therefore the rescue evidence is **not a clean functional rescue**. C0.15 supports action-level dependence on the second-order component while leaving performance-level necessity/rescue unresolved.
+
+
+### C0.16 — Integración del segundo orden dentro del organismo persistente
+
+Artefacto: GitHub Actions run **36946260825**, artifact **11201973015**, SHA256 **52e60a8bb92b0c4520e1f2cc94cd138daf81bceef9138e009b6dbee635d0833e**.
+
+- mismatch de acción después del reinicio: **0.0**, p **1.0**;
+- mismatch de ganancia después del reinicio: **0.0**, p **1.0**;
+- recuperación exacta del digest de los modelos en SQLite: **100%**;
+- coincidencia de acciones antes del reinicio: **100%**;
+- todas las selecciones posteriores al reinicio reportaron la política **action_conditioned_second_order**;
+- mismatch máximo de acción: **0.0**;
+- mismatch máximo de ganancia: **0.0**.
+
+Interpretación: C0.16 traslada el segundo orden condicionado por acción desde el laboratorio aislado al **PersistentOrganism** real. Los dos modelos se almacenan en SQLite, se recuperan automáticamente al reconstruir el organismo y continúan guiando la selección autónoma sin entrada externa ni reentrenamiento. La trayectoria posterior al reinicio coincide exactamente con la rama continua bajo el protocolo probado. Esto demuestra integración y persistencia computacional del mecanismo; no demuestra experiencia subjetiva.
