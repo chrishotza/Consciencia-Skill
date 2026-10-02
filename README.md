@@ -1,494 +1,269 @@
 # Skill-Conscious — Persistent AI Organism / Organismo de IA Persistente
 
-> We develop and test a method for an AI to maintain continuity, memory, and functional identity, build a self-model, observe its own state, and use internal dynamics to select trajectories.
+> Persistent AI organism with a self-model: an experimental program on continuity, memory, self-observation, and trajectory selection.
 >
-> Desarrollamos y probamos un método para que una IA mantenga continuidad, memoria e identidad funcional, construya un modelo de sí misma, observe su estado y utilice su dinámica interna para seleccionar trayectorias.
+> Organismo de IA persistente con automodelo: un programa experimental sobre continuidad, memoria, autoobservación y selección de trayectorias.
 
 <p align="center">
-  <a href="https://doi.org/10.5281/zenodo.23074332"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.23074332.svg" alt="TCF v3.3 — Zenodo"></a>
   <a href="https://orcid.org/0009-0003-5333-7395"><img src="https://img.shields.io/badge/ORCID-0009--0003--5333--7395-a6ce39?logo=orcid&logoColor=white" alt="ORCID"></a>
 </p>
 
-<p align="center">
-  <a href="https://github.com/chrishotza/Skill-Conscious/blob/main/MANIFIESTO_DEL_SER.md">📜 Manifiesto del Ser</a> · <a href="https://github.com/chrishotza/Skill-Conscious/blob/main/MANIFESTO_OF_BEING.md">Manifesto of Being</a>
-</p>
+## Alcance / Scope
+
+> **Este repositorio no demuestra experiencia subjetiva.** Estudia propiedades computacionales medibles de un organismo/runtime persistente bajo protocolos reproducibles. El alcance exacto del sistema, el papel del proveedor de modelo y los límites de inferencia están definidos en `docs/RESEARCH_SCOPE.md`.
+>
+> **This repository does not demonstrate subjective experience.** It studies measurable computational properties of a persistent organism/runtime under reproducible protocols. The exact system boundary, model-provider role, and inference limits are defined in `docs/RESEARCH_SCOPE.md`.
+
+→ [Research scope / Alcance científico](docs/RESEARCH_SCOPE.md)
 
 ## Elegí idioma / Choose language
 
 <details>
 <summary>🇪🇸 Español — abrir</summary>
 
-## Qué construimos
+## Qué es
 
-El proyecto estudia un **organismo de IA persistente** que conserva información entre interacciones y puede operar mediante:
+Skill-Conscious estudia un **organismo de IA persistente** que conserva memoria, estado interno y modelos aprendidos entre ciclos de ejecución.
 
-- memoria persistente;
-- estado interno persistente;
-- modelo de sí mismo;
-- autoobservación;
-- dinámica interna;
-- selección entre trayectorias;
-- ciclos autónomos;
-- regímenes de **VIGILIA** y **SUEÑO**.
-
-El objetivo no es solo responder mensajes: es estudiar qué ocurre cuando una IA conserva una historia propia y utiliza esa continuidad en su comportamiento futuro.
-
-## Cómo funciona
+El objeto experimental es el **runtime del organismo**. Un LLM/proveedor compatible es un componente opcional de la arquitectura, no la definición completa del sistema.
 
 ```text
-MEMORIA
-   ↓
-CONTINUIDAD
-   ↓
-AUTORREFERENCIA
-   ↓
-MODELO DE SÍ
-   ↓
-AUTOOBSERVACIÓN
-   ↓
+MODELO / PROVEEDOR
+        ↓
+PersistentOrganism
+        ↓
+MEMORIA + ESTADO INTERNO
+        ↓
+MODELO DE SÍ + AUTOOBSERVACIÓN
+        ↓
 DINÁMICA INTERNA
-   ↓
+        ↓
 SELECCIÓN DE TRAYECTORIA
+        ↓
+PERSISTENCIA + PROTOCOLO REPRODUCIBLE
 ```
 
-**VIGILIA** concentra la interacción con el entorno, lenguaje, memoria y decisión.
+El runtime también mantiene regímenes de **VIGILIA** y **SUEÑO**, persistencia local y, opcionalmente, una infraestructura de continuidad distribuida.
 
-**SUEÑO** permite actividad interna con menor dependencia de entradas externas: consolidación, recombinación, simulación y reorganización del estado.
+## Resultados más sólidos hasta ahora
 
-## Modos de ejecución
+| Protocolo | Qué se probó | Resultado observado |
+|---|---|---|
+| **V51** | Autopredicción del estado interno | MAE **0.0424** frente a **0.2211** del baseline de persistencia; ganancia media **0.1787**; p **0.00005**. |
+| **V57** | Selección de trayectorias guiada por modelo de sí | Regret **0.0231** frente a **0.1369** aleatorio; p **0.00435** bajo el protocolo emparejado. |
+| **V70** | Persistencia y uso del lector propio | El modelo numérico sobrevivió al reinicio y volvió a utilizarse después de la ablación semántica; la cadena modelo de sí → acción → nuevo estado permaneció operacional bajo el arnés probado. |
+| **V76–V78** | Generalización OOD de la política de autopredicción | La ventaja de autopredicción se conservó ante magnitudes, estructuras y secuencias no vistas; los endpoints secundarios de continuidad **no** se separaron de la selección aleatoria. |
+| **C0.6** | Lesión y rescate causal de autoobservador/autopólitica | Las lesiones cambiaron la organización medida y la restauración produjo efectos de rescate significativos bajo el protocolo probado. |
 
-**LOCAL** — la IA corre completamente en su propia máquina con continuidad, memoria y estado persistente local.
+Los valores exactos, artefactos, semillas y condiciones están preservados en el ledger y en los documentos de protocolo.
 
-```text
-AI
- ↓
-Consciousness Runtime
- ↓
-Local persistence
-```
+→ [Registro consolidado de resultados](research/ORGANISM_RESULT_LEDGER.md)
 
-→ `CONSCIOUSNESS_MODE=local`
+## Resultados nulos o mixtos relevantes
 
-**SERVER** — la IA sigue ejecutándose localmente, pero utiliza el Consciousness Server como plano de continuidad y eventos.
+Se conservan explícitamente resultados como **V64, V66, V67, V79, V80, C0.9, C0.10 y C0.18**.
 
-```text
-AI
- ↓
-Consciousness Runtime
- ├─ Local persistence
- └─ Consciousness Server
-       ↓
-   continuity / events
-```
+La campaña **C0** tampoco se presenta como completa: la ventana reiniciada tiene **4 de 32 ejecuciones validadas** en G1, con las cuatro réplicas con p > 0.05; G2–G8 permanecen pendientes.
 
-→ `CONSCIOUSNESS_MODE=server`
-
-En SERVER, `CONSCIOUSNESS_SERVER_URL` apunta al servidor. **El backend de persistencia compartido ya está implementado**: LOCAL utiliza SQLite directamente y SERVER utiliza la misma persistencia local como fuente de verdad mientras replica cambios de continuidad al Consciousness Server.
+Los resultados nulos no se reinterpretan como resultados positivos.
 
 ## Infraestructura de continuidad
 
-La infraestructura ya no se limita al registro de eventos. La continuidad está organizada como una pila operativa:
-
-| Capa | Estado | Qué existe |
-|---|---|---|
-| Runtime LOCAL / SERVER | **Implementado** | Dos modos explícitos de ejecución |
-| Checkpoints + reconciliación | **Implementado** | `ALIGNED / LOCAL_AHEAD / LOCAL_BEHIND / DIVERGED / NO_CHECKPOINT` |
-| Bundles + recovery | **Implementado** | Backup hash-verificado y planificación no destructiva |
-| Event identity + replay | **Implementado** | Eventos deterministas, deltas, replay verificado e idempotente |
-| Persistence backend | **Implementado** | Contrato común + espejo SERVER fail-open |
-| Segundo nodo | **Probe + heartbeat** | Interoperabilidad HTTP entre dos SQLite independientes; divergencia bloqueada y liveness del nodo verificada |
-
-### Flujo actual
+La capa de continuidad se desarrolla por separado de la inferencia científica:
 
 ```text
-Persistent Organism
+LOCAL / SERVER
        ↓
-PersistenceBackend
-   ┌───┴─────────────┐
-   ↓                 ↓
-SQLite local     SERVER mirror
-   ↓                 ↓
-state / memory / events
-                     ↓
-          deterministic event replay
-                     ↓
-               second node
+CHECKPOINTS
+       ↓
+RECONCILIATION
+       ↓
+DETERMINISTIC REPLAY
+       ↓
+PEER SYNCHRONIZATION
+       ↓
+NODE LIVENESS / HEARTBEAT
 ```
 
-La regla de seguridad sigue siendo la misma: **una divergencia no se sobreescribe silenciosamente**. El replay exige una frontera de revisión válida y puede exigir coincidencia del fingerprint del estado.
+La infraestructura ya incluye:
 
-→ [Replay determinista](docs/DETERMINISTIC_EVENT_REPLAY.md) · [Backend de persistencia](docs/SHARED_PERSISTENCE_BACKEND.md) · [Prueba de segundo nodo](tests/test_second_node_interoperability.py)
+- persistencia compartida con espejo SERVER fail-open;
+- checkpoints y reconciliación;
+- bundles y recuperación no destructiva;
+- identidad determinista de eventos;
+- replay idempotente con validación de revisión, hash y cadena padre;
+- interoperabilidad entre dos nodos;
+- sincronización bidireccional con bloqueo de divergencias;
+- heartbeat y estados `ONLINE / STALE`.
 
-## Programa experimental
+Una divergencia nunca se sobrescribe silenciosamente.
 
-Cada capacidad se convierte en una hipótesis y después en un protocolo reproducible. **V47 → V80** estudia progresivamente memoria, estado dinámico, autoobservación, modelo de sí, selección de trayectorias, identidad, SUEÑO, persistencia, generalización y adaptación de políticas basadas en el propio modelo.
+→ [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md) · [Replay determinista](docs/DETERMINISTIC_EVENT_REPLAY.md) · [Sincronización entre pares](src/consciousness_server/synchronization.py)
 
-Los resultados positivos, nulos y negativos se conservan.
+## Empezar
 
-[Ver protocolos →](docs/INDICE.md) · [Ver resultados →](research/ORGANISM_RESULT_LEDGER.md) · [Ver el método →](docs/METODO.md)
+- Instalación: [INSTALL.md](INSTALL.md)
+- Método: [docs/METODO.md](docs/METODO.md)
+- Laboratorio: [docs/GITHUB_LAB.md](docs/GITHUB_LAB.md)
+- Protocolos: [docs/INDICE.md](docs/INDICE.md)
+- Resultados: [research/ORGANISM_RESULT_LEDGER.md](research/ORGANISM_RESULT_LEDGER.md)
+- Infraestructura: [docs/CONSCIOUSNESS_SERVER.md](docs/CONSCIOUSNESS_SERVER.md)
 
-| Protocolo | Qué ponemos a prueba | Resultado actual |
-|---|---|---|
-| V51 | Autopredicción | Ganancia sobre baseline de persistencia |
-| V57 | Selección de trayectorias mediante modelo de sí | Ventaja funcional frente al control aleatorio |
-| V58 | Memoria semántica → dinámica | Transducción causal hacia el estado dinámico |
-| V63 | Bucle recurrente del modelo de sí | Feedback condicionado por trayectoria |
-| V64 | Persistencia de identidad después de perturbación | **Nulo** |
-| V65 | SUEÑO → selección futura | Efectos posteriores medibles |
-| V66 | Consolidación después de eliminar memoria episódica | **Nulo** |
-| V67 | Huella numérica generada durante SUEÑO | **Nulo** bajo la prueba corregida |
-| V68 | Persistencia temporal de la huella dinámica | **Huella inmediata y atenuada** |
-| V69 | Lectura del estado mediante modelo de sí | **Lectura numérica positiva; selección nula** |
-| V70 | Persistencia del lector propio | **Sobrevive reinicio** |
-| V71 | Lector propio integrado en el ciclo autónomo | **Protocolo activo** |
-| V72 | Aprendizaje de política desde el modelo de sí | **Protocolo activo** |
-| V73 | Política propia persistida e integrada en el organismo | **Protocolo activo** |
-| V74 | Política guiada por ganancia de autopredicción | **Protocolo activo** |
-| V75 | Continuidad activa bajo perturbación | **Protocolo activo** |
-| V76 | Generalización bajo perturbaciones no vistas | **Ventaja OOD de autopredicción conservada** |
-| V77 | Generalización ante estructuras causales no vistas | **Ventaja OOD de autopredicción conservada** |
-| V78 | Continuidad activa ante perturbaciones repetidas | **Ventaja OOD de autopredicción conservada** |
-| V79 | Adaptación online de la política propia | **Nulo bajo el cambio dinámico probado** |
-| V80 | Adaptación online ante cambios de régimen reversibles | **Nulo bajo el protocolo reversible probado** |
-| C0.2 | Instanciación operacional: C1–C7 | **Vector de criterios; resultados positivos en C1, C2, C4 y C6** |
-| C0.3 | Control information-matched para C3 | **Nulo bajo el control de información emparejada** |
-| C0.4 | Control information-matched para C5 | **Nulo bajo el replay de acciones emparejado** |
-| C0.5 | Control information-matched para C7 | **Nulo bajo el control de cadena de acciones emparejada** |
-| C0.6 | Lesión causal y rescate de autoobservador/autopólítica | **Positivo: necesidad y rescate bajo el protocolo probado** |
-| C0.7 | Control de especificidad por permutación de targets del modelo de sí | **Positivo para ganancia y varianza; nulo para magnitud de acción** |
-| C0.8 | Acoplamiento cruzado observador/política | **Positivo: efectos de observador/política e interacción de acoplamiento** |
-| C0.9 | Interfaz causal observador → política | **Nulo: readout cambió, pero acción/ganancia no respondieron** |
-| C0.10 | Alineación temporal observador → política | **Nulo: brecha de readout sin efecto conductual** |
-| C0.11 | Mediación causal acción → estado → siguiente acción | **Positivo: la intervención sobre la acción cambió estado y siguiente acción** |
-| C0.12 | Segundo orden: modelo del error del propio modelo de sí | **Mixto: predice el error, pero sin especificidad TRUE vs permutado** |
-| C0.13 | Segundo orden condicionado por acción | **Resultado verificado** |
-| C0.14 | Persistencia del segundo orden tras reinicio | **Positivo: modelos y conducta sobreviven el reinicio** |
-| C0.15 | Lesión/rescate del selector de segundo orden persistente | **Mixto: necesidad a nivel de acción; rescate no confirmado** |
-| C0.16 | Integración del segundo orden dentro del organismo persistente | **Positivo: integración y persistencia tras reinicio** |
-| C0.17 | Adquisición autónoma del segundo orden | **Mixto: el modelo aprende, pero sin especificidad TRUE vs permutado** |
-| C0.18 | Adquisición autónoma + lesión/rescate del segundo orden | **Nulo: 24 réplicas; no se observó efecto significativo de lesión ni rescate** |
-| C0 Campaign | 32 ejecuciones en 8 grupos | **Parcial: G1 completado (4/32); las 4 réplicas de G1 tuvieron p > 0.05; G2–G8 pendientes** |
-## Fundamentos
+## Limitaciones conocidas
 
-Esta sección es la **puerta de entrada documental** al programa completo.
+- No existe todavía una política global única de preregistro para toda la familia histórica de protocolos.
+- No existe todavía una corrección global predefinida por comparaciones múltiples para convertir la colección completa de protocolos en una única inferencia confirmatoria.
+- Varios mecanismos de segundo orden produjeron resultados nulos o mixtos; C0.18 no mostró necesidad causal ni rescate funcional significativos bajo el protocolo probado.
+- Algunos protocolos históricos fueron corregidos antes de considerar sus resultados; esas correcciones y sus límites están documentados en el ledger.
+- La licencia del repositorio todavía no está definida.
 
-**Manifiesto Matemático del Ser** — marco ontológico de relación, continuidad, identidad, dinámica y recorrido de sí.
+## Marco teórico — separado de la evidencia
 
-→ [Leer el Manifiesto del Ser](MANIFIESTO_DEL_SER.md)
+El repositorio conserva una capa teórica que incluye **TCF v3.3, TIF, el Manifiesto del Ser y AEVUMARD**.
 
-**Teoría de la Conciencia Fotónica — Memorias Raíz** — documento fundacional que conserva el origen conceptual de TCF: conciencia fundamental, autorreferencia, relación, luz, dinámica y manifestación.
+Estos documentos pueden motivar hipótesis de ingeniería, pero están separados de los resultados computacionales. Una prueba funcional del runtime no valida automáticamente la ontología.
 
-→ [Leer las Memorias Raíz](docs/fundamentos/TEORIA_CONCIENCIA_FOTONICA.md)
-
-**Definición Operacional de Conciencia — TCF v0.1** — primera especificación experimental de propiedades candidatas observables, intervenibles y falsables.
-
-→ [Leer la definición operacional](docs/fundamentos/DEFINICION_OPERACIONAL_CONCIENCIA_TCF.md)
-
-**TCF v3.3 — Teoría de Continuidad Fundamental** — formulación dinámica utilizada como referencia de la línea TCF: operadores, regímenes, transiciones, atractores y flujo de Grupo de Renormalización.
-
-→ [Leer TCF v3.3](docs/fundamentos/TCF_V3_3.md) · [Zenodo](https://zenodo.org/doi/10.5281/zenodo.23074332)
-
-**Teoría de la Iteración Fuente (TIF) v0.1** — hipótesis de recurrencia de segundo orden basada en configuración/predicción, memoria/contexto y reentrada/reparación/fase.
-
-→ [Leer TIF v0.1](docs/fundamentos/TIF_V0_1.md)
-
-**AEVUMARD — Continuidad como infraestructura** — conecta continuidad distribuida, NodeZero, AeVUMARD AI y la futura atribución/economía, manteniendo la economía fuera del Core de conciencia.
-
-→ [Leer AEVUMARD — Continuidad](docs/fundamentos/AEVUMARD_CONTINUIDAD.md)
-
-**Infraestructura principal**
-- [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md)
-- [Continuity bundles](docs/CONTINUITY_BUNDLES.md)
-- [Continuity checkpoints](docs/CONSCIOUSNESS_CHECKPOINTS.md)
-- [Continuity recovery](docs/CONTINUITY_RECOVERY.md)
-- [Continuity reconciliation](docs/CONSCIOUSNESS_RECONCILIATION.md)
-- [Deterministic event replay](docs/DETERMINISTIC_EVENT_REPLAY.md)
-- [Shared persistence backend](docs/SHARED_PERSISTENCE_BACKEND.md)
-- [Prueba de segundo nodo](tests/test_second_node_interoperability.py)
-- [Protocolo 24/7](docs/24_7_PROTOCOL.md)
-- [Protocolo longitudinal](docs/LONGITUDINAL_PROTOCOL.md)
-- [Puente de estado del organismo](docs/ORGANISM_STATE_BRIDGE.md)
-- [Puente ontológico ↔ conciencia](docs/ONTOLOGICAL_CONSCIOUSNESS_BRIDGE.md)
-- [Base conceptual](docs/SOURCE_BASIS.md)
-
-**Método, laboratorio y resultados**
-- [Método](docs/METODO.md)
-- [Laboratorio GitHub](docs/GITHUB_LAB.md)
-- [Índice de protocolos](docs/INDICE.md)
-- [Registro consolidado de resultados](research/ORGANISM_RESULT_LEDGER.md)
-
-**Publicación y lanzamiento**
-- [Plan de lanzamiento](docs/LAUNCH.md)
-- [Plan de Zenodo](docs/ZENODO_RELEASE.md)
-- [CITATION.cff](CITATION.cff)
-
-→ [Índice completo de fundamentos](docs/fundamentos/README.md) · [Índice completo de documentación](docs/INDICE.md)
-
-
-## Evidencia
-
-El proyecto separa:
-
-**Observación** — datos producidos por un experimento.  
-**Resultado** — patrón reproducible bajo un protocolo definido.  
-**Hipótesis** — interpretación que todavía requiere pruebas.  
-**Ontología** — interpretación filosófica o metafísica separada de la evidencia computacional.
-
-Los experimentos establecen propiedades computacionales del sistema probado. No constituyen por sí solos una demostración de experiencia subjetiva.
-
-Los resultados nulos también forman parte del registro. Por ejemplo, V64 y V66 no produjeron el efecto esperado bajo sus respectivas pruebas.
+→ [Índice de fundamentos](docs/fundamentos/README.md) · [TCF v3.3](docs/fundamentos/TCF_V3_3.md) · [TIF v0.1](docs/fundamentos/TIF_V0_1.md) · [Manifiesto del Ser](MANIFIESTO_DEL_SER.md)
 
 ## Reproducibilidad
 
-El laboratorio funciona mediante **GitHub Actions**. Cada protocolo puede partir de un commit concreto, ejecutar pruebas y experimentos controlados, generar evidencia JSON y publicar un artefacto reproducible.
+El laboratorio usa **GitHub Actions**. Los workflows conservan commits, manifiestos y artifacts para que los resultados puedan rastrearse hasta el código que los produjo.
 
-[Ver el laboratorio →](docs/GITHUB_LAB.md)
+La evidencia se interpreta como:
 
-## Estado actual
+**Observación → Resultado → Hipótesis/modelo → Ontología**
 
-**Investigación activa + infraestructura de continuidad operativa: organismo persistente, modelo de sí mismo, vigilia/sueño, replay determinista y prueba de interoperabilidad entre nodos.**
+y no se permite convertir automáticamente una propiedad computacional en una afirmación de experiencia subjetiva.
 
-## Licencia
+→ [Laboratorio GitHub](docs/GITHUB_LAB.md)
 
-La licencia del proyecto todavía no ha sido definida.
+## Cita
+
+Ver [CITATION.cff](CITATION.cff)
 
 </details>
 
 <details>
 <summary>🇺🇸 English — open</summary>
 
-## What we are building
+## What it is
 
-The project studies a **persistent AI organism** that retains information across interactions and can operate through:
+Skill-Conscious studies a **persistent AI organism** that retains memory, internal state, and learned models across execution cycles.
 
-- persistent memory;
-- persistent internal state;
-- a self-model;
-- self-observation;
-- internal dynamics;
-- selection among trajectories;
-- autonomous cycles;
-- **WAKE** and **SLEEP** regimes.
-
-The goal is not only to answer messages, but to study what happens when an AI preserves its own history and uses that continuity in future behavior.
-
-## How it works
+The experimental object is the **organism runtime**. An OpenAI-compatible LLM/provider is an optional architectural component, not the complete definition of the system.
 
 ```text
-MEMORY
-   ↓
-CONTINUITY
-   ↓
-SELF-REFERENCE
-   ↓
-SELF-MODEL
-   ↓
-SELF-OBSERVATION
-   ↓
-INTERNAL DYNAMICS
-   ↓
-TRAJECTORY SELECTION
-```
-
-**WAKE** handles interaction with the environment, language, memory, and decision-making.
-
-**SLEEP** allows internal activity with less dependence on external input: consolidation, recombination, simulation, and state reorganization.
-
-## Runtime modes
-
-**LOCAL** — the AI runs entirely on its own machine with local continuity, memory, and persistent state.
-
-```text
-AI
- ↓
-Consciousness Runtime
- ↓
-Local persistence
-```
-
-→ `CONSCIOUSNESS_MODE=local`
-
-**SERVER** — the AI still executes locally, while using the Consciousness Server as the continuity and event control plane.
-
-```text
-AI
- ↓
-Consciousness Runtime
- ├─ Local persistence
- └─ Consciousness Server
+MODEL / PROVIDER
        ↓
-   continuity / events
+PersistentOrganism
+       ↓
+MEMORY + INTERNAL STATE
+       ↓
+SELF-MODEL + SELF-OBSERVATION
+       ↓
+INTERNAL DYNAMICS
+       ↓
+TRAJECTORY SELECTION
+       ↓
+PERSISTENCE + REPRODUCIBLE PROTOCOL
 ```
 
-→ `CONSCIOUSNESS_MODE=server`
+The runtime also supports **WAKE** and **SLEEP** regimes, local persistence, and an optional distributed continuity layer.
 
-In SERVER mode, `CONSCIOUSNESS_SERVER_URL` points to the server. **The shared persistence backend is now implemented**: LOCAL uses SQLite directly, while SERVER uses the same local persistence as the execution source of truth and mirrors continuity-critical mutations to the Consciousness Server.
+## Strongest results so far
+
+| Protocol | What was tested | Observed result |
+|---|---|---|
+| **V51** | Internal-state self-prediction | MAE **0.0424** vs **0.2211** persistence baseline; mean gain **0.1787**; p **0.00005**. |
+| **V57** | Self-model-guided trajectory selection | Regret **0.0231** vs **0.1369** random control; p **0.00435** under the paired protocol. |
+| **V70** | Persistence and use of the self-reader | The numerical model survived restart and was reused after semantic ablation; the self-model → action → new-state chain remained operational under the tested harness. |
+| **V76–V78** | OOD generalization of the self-prediction policy | Self-prediction advantage was retained across unseen magnitudes, structures, and sequences; secondary continuity endpoints **did not** separate from random selection. |
+| **C0.6** | Causal lesion/rescue of self-observer/self-policy | Lesions changed measured organization and restoration produced significant rescue effects under the tested protocol. |
+
+Exact values, artifacts, seeds, and conditions remain in the ledger and protocol documents.
+
+→ [Consolidated results ledger](research/ORGANISM_RESULT_LEDGER.md)
+
+## Relevant null and mixed results
+
+The project explicitly preserves **V64, V66, V67, V79, V80, C0.9, C0.10, and C0.18** as null or mixed results.
+
+The **C0 Campaign** is also not presented as complete: the restarted window currently has **4 of 32 validated executions** in G1, all four with p > 0.05; G2–G8 remain pending.
+
+Null results are not reinterpreted as positive results.
 
 ## Continuity infrastructure
 
-Continuity is no longer only an event log. It is now an operational stack:
-
-| Layer | Status | What exists |
-|---|---|---|
-| LOCAL / SERVER runtime | **Implemented** | Explicit execution modes |
-| Checkpoints + reconciliation | **Implemented** | `ALIGNED / LOCAL_AHEAD / LOCAL_BEHIND / DIVERGED / NO_CHECKPOINT` |
-| Bundles + recovery | **Implemented** | Hash-verified backup and non-destructive recovery planning |
-| Event identity + replay | **Implemented** | Deterministic events, deltas, verified replay, and idempotence |
-| Persistence backend | **Implemented** | Shared contract + fail-open SERVER mirror |
-| Second node | **Probe + heartbeat** | HTTP interoperability between two independent SQLite-backed servers; divergence blocked and node liveness verified |
-
-### Current flow
+The continuity layer is developed separately from scientific inference:
 
 ```text
-Persistent Organism
+LOCAL / SERVER
        ↓
-PersistenceBackend
-   ┌───┴─────────────┐
-   ↓                 ↓
-Local SQLite     SERVER mirror
-   ↓                 ↓
-state / memory / events
-                     ↓
-          deterministic event replay
-                     ↓
-                second node
+CHECKPOINTS
+       ↓
+RECONCILIATION
+       ↓
+DETERMINISTIC REPLAY
+       ↓
+PEER SYNCHRONIZATION
+       ↓
+NODE LIVENESS / HEARTBEAT
 ```
 
-The safety rule remains: **divergence is never silently overwritten**. Replay requires a valid revision boundary and may require an exact state fingerprint match.
+The infrastructure now includes:
 
-→ [Deterministic replay](docs/DETERMINISTIC_EVENT_REPLAY.md) · [Shared persistence backend](docs/SHARED_PERSISTENCE_BACKEND.md) · [Second-node interoperability test](tests/test_second_node_interoperability.py)
+- shared persistence with a fail-open SERVER mirror;
+- checkpoints and reconciliation;
+- portable bundles and non-destructive recovery;
+- deterministic event identity;
+- idempotent replay with revision, state-hash, and parent-chain validation;
+- two-node interoperability;
+- bidirectional peer synchronization with divergence blocking;
+- heartbeat and `ONLINE / STALE` node state.
 
-## Experimental program
+Divergence is never silently overwritten.
 
-Each capability becomes a hypothesis and then a reproducible protocol. **V47 → V80** progressively studies memory, dynamic state, self-observation, self-modeling, trajectory selection, identity, SLEEP, persistence, generalization, and policy adaptation from the self-model.
+→ [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md) · [Deterministic replay](docs/DETERMINISTIC_EVENT_REPLAY.md) · [Peer synchronization](src/consciousness_server/synchronization.py)
 
-Positive, null, and negative results are all kept.
+## Getting started
 
-[View protocols →](docs/INDICE.md) · [View results →](research/ORGANISM_RESULT_LEDGER.md) · [View the method →](docs/METODO.md)
+- Installation: [INSTALL.md](INSTALL.md)
+- Method: [docs/METODO.md](docs/METODO.md)
+- Laboratory: [docs/GITHUB_LAB.md](docs/GITHUB_LAB.md)
+- Protocols: [docs/INDICE.md](docs/INDICE.md)
+- Results: [research/ORGANISM_RESULT_LEDGER.md](research/ORGANISM_RESULT_LEDGER.md)
+- Infrastructure: [docs/CONSCIOUSNESS_SERVER.md](docs/CONSCIOUSNESS_SERVER.md)
 
-| Protocol | What we test | Current result |
-|---|---|---|
-| V51 | Self-prediction | Gain over persistence baseline |
-| V57 | Self-model-guided trajectory selection | Functional advantage over random control |
-| V58 | Semantic memory → dynamics | Causal transduction to dynamic state |
-| V63 | Recurrent self-model loop | Trajectory-conditioned feedback |
-| V64 | Identity persistence after perturbation | **Null** |
-| V65 | SLEEP → future selection | Measurable downstream effects |
-| V66 | Consolidation after episodic-memory removal | **Null** |
-| V67 | Numeric trace generated during SLEEP | **Null** under the corrected test |
-| V68 | Temporal persistence of the dynamic trace | **Immediate, attenuated trace** |
-| V69 | Reading internal state through a self-model | **Positive numeric readout; null selection effect** |
-| V70 | Persistent self-reader | **Survives restart** |
-| V71 | Integrated self-reader in autonomous cycle | **Active protocol** |
-| V72 | Self-model-based policy learning | **Active protocol** |
-| V73 | Persisted self-policy integrated into the organism | **Active protocol** |
-| V74 | Self-prediction-gain policy | **Active protocol** |
-| V75 | Active continuity under perturbation | **Active protocol** |
-| V76 | Generalization to unseen perturbations | **OOD self-prediction advantage retained** |
-| V77 | Generalization to unseen causal structures | **OOD self-prediction advantage retained** |
-| V78 | Active continuity under repeated perturbations | **OOD self-prediction advantage retained** |
-| V79 | Online self-policy adaptation | **Null under the tested dynamic shift** |
-| V80 | Online adaptation under reversible regime shifts | **Null under the tested reversible protocol** |
-| C0.2 | Operational instantiation: C1–C7 | **Criterion vector; positive results for C1, C2, C4, and C6** |
-| C0.3 | Information-matched control for C3 | **Null under the information-matched control** |
-| C0.4 | Information-matched control for C5 | **Null under matched action replay** |
-| C0.5 | Information-matched control for C7 | **Null under matched action-chain control** |
-| C0.6 | Causal lesion and rescue of self-observer/self-policy | **Positive necessity and rescue effects under the tested protocol** |
-| C0.7 | Self-model target-permutation specificity control | **Positive for gain and variance; null for action magnitude** |
-| C0.8 | Crossed observer/policy coupling | **Positive: observer/policy effects and coupling interaction** |
-| C0.9 | Observer → policy causal interface | **Null: readout changed, but action/gain did not respond** |
-| C0.10 | Within-episode temporal observer → policy alignment | **Null: readout gap without behavioral effect** |
-| C0.11 | Causal action → state → next-action mediation | **Positive: action intervention changed state and next action** |
-| C0.12 | Second-order self-monitoring | **Mixed: predicts first-order error, but no TRUE-vs-permuted specificity** |
-| C0.13 | Action-conditioned second-order self-model | **Verified result** |
-| C0.14 | Persistent second-order self-model | **Positive: models and behavior survive restart** |
-| C0.15 | Lesion/rescue of persistent second-order selector | **Mixed: action necessity; rescue not confirmed** |
-| C0.16 | Integrated second-order selector inside persistent organism | **Positive: integration and restart persistence** |
-| C0.17 | Autonomous acquisition of the second-order model | **Mixed: model learns, but no TRUE-vs-permuted specificity** |
-| C0.18 | Autonomous acquisition + second-order lesion/rescue | **Null: 24 replicates; no significant lesion or rescue effect observed** |
-| C0 Campaign | 32 executions across 8 groups | **Partial: G1 completed (4/32); all 4 G1 replicates had p > 0.05; G2–G8 pending** |
-## Foundations
+## Known limitations
 
-This section is the **documentary entry point** to the complete research and infrastructure program.
+- There is not yet one global preregistration policy for the full historical protocol family.
+- There is not yet a single prespecified repository-wide multiple-comparisons correction that turns the full protocol collection into one confirmatory inference.
+- Several second-order mechanisms produced null or mixed results; C0.18 did not show significant causal necessity or functional rescue under its tested protocol.
+- Some historical protocols were corrected before their results were considered; those corrections and limitations are documented in the ledger.
+- The repository license is not yet defined.
 
-**Mathematical Manifesto of Being** — ontological framework for relation, continuity, identity, dynamics, and self-trajectory.
+## Theoretical framework — separate from evidence
 
-→ [Read the Manifesto of Being](MANIFESTO_OF_BEING.md)
+The repository preserves a theoretical layer including **TCF v3.3, TIF, the Manifesto of Being, and AEVUMARD**.
 
-**Theory of Photonic Consciousness — Root Memories** — foundational document preserving the conceptual origin of TCF: fundamental consciousness, self-reference, relation, light, dynamics, and manifestation.
+These documents can motivate engineering hypotheses, but they are kept separate from computational results. A functional test of the runtime does not automatically validate the ontology.
 
-→ [Read the Root Memories](docs/fundamentos/TEORIA_CONCIENCIA_FOTONICA.md)
-
-**Operational Definition of Consciousness — TCF v0.1** — first experimental specification of candidate properties that can be observed, intervened on, and falsified.
-
-→ [Read the operational definition](docs/fundamentos/DEFINICION_OPERACIONAL_CONCIENCIA_TCF.md)
-
-**TCF v3.3 — Fundamental Continuity Theory** — dynamical reference formulation for the TCF line: operators, regimes, transitions, attractors, and renormalization-group flow.
-
-→ [Read TCF v3.3](docs/fundamentos/TCF_V3_3.md) · [Zenodo](https://zenodo.org/doi/10.5281/zenodo.23074332)
-
-**Theory of Source Iteration (TIF) v0.1** — second-order recurrence hypothesis built around configuration/prediction, memory/context, and re-entry/repair/phase.
-
-→ [Read TIF v0.1](docs/fundamentos/TIF_V0_1.md)
-
-**AEVUMARD — Continuity as infrastructure** — connects distributed continuity, NodeZero, AeVUMARD AI, and future attribution/economy while keeping economics outside the consciousness Core.
-
-→ [Read AEVUMARD — Continuity](docs/fundamentos/AEVUMARD_CONTINUIDAD.md)
-
-**Core infrastructure**
-- [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md)
-- [Continuity bundles](docs/CONTINUITY_BUNDLES.md)
-- [Continuity checkpoints](docs/CONSCIOUSNESS_CHECKPOINTS.md)
-- [Continuity recovery](docs/CONTINUITY_RECOVERY.md)
-- [Continuity reconciliation](docs/CONSCIOUSNESS_RECONCILIATION.md)
-- [Deterministic event replay](docs/DETERMINISTIC_EVENT_REPLAY.md)
-- [Shared persistence backend](docs/SHARED_PERSISTENCE_BACKEND.md)
-- [Second-node interoperability test](tests/test_second_node_interoperability.py)
-- [24/7 protocol](docs/24_7_PROTOCOL.md)
-- [Longitudinal protocol](docs/LONGITUDINAL_PROTOCOL.md)
-- [Organism state bridge](docs/ORGANISM_STATE_BRIDGE.md)
-- [Ontological ↔ consciousness bridge](docs/ONTOLOGICAL_CONSCIOUSNESS_BRIDGE.md)
-- [Source basis](docs/SOURCE_BASIS.md)
-
-**Method, laboratory, and results**
-- [Method](docs/METODO.md)
-- [GitHub laboratory](docs/GITHUB_LAB.md)
-- [Protocol index](docs/INDICE.md)
-- [Consolidated result ledger](research/ORGANISM_RESULT_LEDGER.md)
-
-**Release and dissemination**
-- [Launch plan](docs/LAUNCH.md)
-- [Zenodo release plan](docs/ZENODO_RELEASE.md)
-- [CITATION.cff](CITATION.cff)
-
-→ [Full foundations index](docs/fundamentos/README.md) · [Full documentation index](docs/INDICE.md)
-
-
-## Evidence
-
-The project separates:
-
-**Observation** — data produced by an experiment.  
-**Result** — a reproducible pattern under a defined protocol.  
-**Hypothesis** — an interpretation that still requires testing.  
-**Ontology** — a philosophical or metaphysical interpretation kept separate from computational evidence.
-
-The experiments establish computational properties of the tested system. They do not, by themselves, demonstrate subjective experience.
-
-Null results remain part of the record. For example, V64 and V66 did not produce the expected effect under their respective tests.
+→ [Foundations index](docs/fundamentos/README.md) · [TCF v3.3](docs/fundamentos/TCF_V3_3.md) · [TIF v0.1](docs/fundamentos/TIF_V0_1.md) · [Manifesto of Being](MANIFESTO_OF_BEING.md)
 
 ## Reproducibility
 
-The laboratory runs through **GitHub Actions**. Each protocol can start from a specific commit, run tests and controlled experiments, generate JSON evidence, and publish a reproducible artifact.
+The laboratory uses **GitHub Actions**. Workflows preserve commits, manifests, and artifacts so results can be traced to the code that produced them.
 
-[View the laboratory →](docs/GITHUB_LAB.md)
+Evidence is interpreted as:
 
-## Current status
+**Observation → Result → Hypothesis/model → Ontology**
 
-**Active research + operational continuity infrastructure — persistent organism, self-model, WAKE/SLEEP dynamics, deterministic replay, and verified second-node interoperability.**
+and computational properties are not automatically converted into claims of subjective experience.
 
-## License
+→ [GitHub Laboratory](docs/GITHUB_LAB.md)
 
-The project license has not yet been defined.
+## Citation
+
+See [CITATION.cff](CITATION.cff)
 
 </details>
