@@ -45,9 +45,16 @@ class OntologicalState:
     self_prediction_gain: float = 0.0
     self_prediction_confidence: float = 0.0
     self_prediction_samples: int = 0
+    # Bounded global-workspace runtime observables.
+    workspace_last_selected_module: int = -1
+    workspace_last_broadcast: list[float] = None
+    workspace_steps: int = 0
 
     def to_json(self) -> str:
-        return json.dumps(asdict(self), ensure_ascii=False)
+        payload = asdict(self)
+        if payload.get('workspace_last_broadcast') is None:
+            payload['workspace_last_broadcast'] = [0.0, 0.0]
+        return json.dumps(payload, ensure_ascii=False)
 
     @classmethod
     def from_json(cls, value: str) -> "OntologicalState":
