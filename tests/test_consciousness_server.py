@@ -77,3 +77,46 @@ def test_checkpoints_persist_and_capture_local_state(tmp_path):
     assert rows[0]["state_hash"] == checkpoint["state_hash"]
     assert rows[0]["payload"]["state_fingerprint"] == "abc"
     reopened.close()
+
+
+def test_reconciliation_statuses(tmp_path):
+    from src.consciousness_server.reconciliation import (
+        ReconciliationStatus,
+        reconcile,
+    )
+
+    store = ConsciousnessStore(tmp_path / "continuity.db")
+    state = store.create_instance("reconcile-ai", "ci_reconcile")
+    store.append_event(state.instance_id, "WAKE", {"cycle": 1})
+    store.create_checkpoint(
+        state.instance_id,
+        runtime_mode="server",
+        organism_mode="WAKE",
+        payload={
+            "state_fingerprint": store.state_fingerprint(state.instance_id),
+            "trajectory_fingerprint": store.trajectory_fingerprint(state.instance_id),
+            "event_count": store.event_count(state.instance_id),
+            "memory_count": store.memory_count(state.instance_id),
+        },
+        checkpoint_id="cp-reconcile-001",
+    )
+
+    aligned = reconcile(
+        local_state_fingerprint=store.state_fingerprint(state.instance_id),
+        local_trajectory_fingerprint=store.trajectory_fingerprint(state.instance_id),
+        local_event_count=store.event_count(state.instance_id),
+        local_memory_count=store.memory_count(state.instance_id),
+        checkpoints=store.list_checkpoints(state.instance_id),
+    )
+    assert aligned.status is ReconciliationStatus.ALIGNED
+
+    store.add_event(state.instance_id, "DYNAMIC_UPDATE", {"delta": 1.0})
+    ahead = reconcile(
+        local_state_fingerprint=store.state_fingerprint(state.instance_id),
+        local_trajectory_fingerprint=store.trajectory_fingerprint(state.instance_id),
+        local_event_count=store.event_count(state.instance_id),
+        local_memory_count=store.memory_count(state.instance_id),
+        checkpoints=store.list_checkpoints(state.instance_id),
+    )
+    assert ahead.status is ReconciliationStatus.LOCAL_AHEAD
+    store.close()
