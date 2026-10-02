@@ -120,6 +120,206 @@ Los resultados positivos, nulos y negativos se conservan.
 | C0.3 | Control information-matched para C3 | **Nulo bajo el control de información emparejada** |
 | C0.4 | Control information-matched para C5 | **Nulo bajo el replay de acciones emparejado** |
 | C0.5 | Control information-matched para C7 | **Nulo bajo el control de cadena de acciones emparejada** |
+| C0.6 | Lesión causal y rescate de autoobservador/autopólítica | **Positivo: necesidad y rescate bajo el protocolo probado** |
+| C0.7 | Control de especificidad por permutación de targets del modelo de sí | **Positivo para ganancia y varianza; nulo para magnitud de acción** |
+| C0.8 | Acoplamiento cruzado observador/política | **Positivo: efectos de observador/política e interacción de acoplamiento** |
+| C0.9 | Interfaz causal observador → política | **Nulo: readout cambió, pero acción/ganancia no respondieron** |
+| C0.10 | Alineación temporal observador → política | **Nulo: brecha de readout sin efecto conductual** |
+| C0.11 | Mediación causal acción → estado → siguiente acción | **Positivo: la intervención sobre la acción cambió estado y siguiente acción** |
+| C0.12 | Segundo orden: modelo del error del propio modelo de sí | **Mixto: predice el error, pero sin especificidad TRUE vs permutado** |
+| C0.13 | Segundo orden condicionado por acción | **Resultado verificado** |
+| C0.14 | Persistencia del segundo orden tras reinicio | **Positivo: modelos y conducta sobreviven el reinicio** |
+| C0.15 | Lesión/rescate del selector de segundo orden persistente | **Mixto: necesidad a nivel de acción; rescate no confirmado** |
+| C0.16 | Integración del segundo orden dentro del organismo persistente | **Positivo: integración y persistencia tras reinicio** |
+| C0.17 | Adquisición autónoma del segundo orden | **Mixto: el modelo aprende, pero sin especificidad TRUE vs permutado** |
+| C0.18 | Adquisición autónoma + lesión/rescate del segundo orden | **Ingeniería corregida; verificación de 24 réplicas pendiente** |
+| C0 Campaign | 32 ejecuciones en 8 grupos | **Campaña reiniciada con ejecución segura de artifacts; resultados científicos pendientes de validación** |
+## Fundamentos
+
+Esta sección es la **puerta de entrada documental** al programa completo.
+
+**Manifiesto Matemático del Ser** — marco ontológico de relación, continuidad, identidad, dinámica y recorrido de sí.
+
+→ [Leer el Manifiesto del Ser](MANIFIESTO_DEL_SER.md)
+
+**Teoría de la Conciencia Fotónica — Memorias Raíz** — documento fundacional que conserva el origen conceptual de TCF: conciencia fundamental, autorreferencia, relación, luz, dinámica y manifestación.
+
+→ [Leer las Memorias Raíz](docs/fundamentos/TEORIA_CONCIENCIA_FOTONICA.md)
+
+**Definición Operacional de Conciencia — TCF v0.1** — primera especificación experimental de propiedades candidatas observables, intervenibles y falsables.
+
+→ [Leer la definición operacional](docs/fundamentos/DEFINICION_OPERACIONAL_CONCIENCIA_TCF.md)
+
+**TCF v3.3 — Teoría de Continuidad Fundamental** — formulación dinámica utilizada como referencia de la línea TCF: operadores, regímenes, transiciones, atractores y flujo de Grupo de Renormalización.
+
+→ [Leer TCF v3.3](docs/fundamentos/TCF_V3_3.md) · [Zenodo](https://zenodo.org/doi/10.5281/zenodo.23074332)
+
+**Teoría de la Iteración Fuente (TIF) v0.1** — hipótesis de recurrencia de segundo orden basada en configuración/predicción, memoria/contexto y reentrada/reparación/fase.
+
+→ [Leer TIF v0.1](docs/fundamentos/TIF_V0_1.md)
+
+**AEVUMARD — Continuidad como infraestructura** — conecta continuidad distribuida, NodeZero, AeVUMARD AI y la futura atribución/economía, manteniendo la economía fuera del Core de conciencia.
+
+→ [Leer AEVUMARD — Continuidad](docs/fundamentos/AEVUMARD_CONTINUIDAD.md)
+
+**Infraestructura principal**
+- [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md)
+- [Continuity checkpoints](docs/CONSCIOUSNESS_CHECKPOINTS.md)
+- [Continuity reconciliation](docs/CONSCIOUSNESS_RECONCILIATION.md)
+- [Protocolo 24/7](docs/24_7_PROTOCOL.md)
+- [Protocolo longitudinal](docs/LONGITUDINAL_PROTOCOL.md)
+- [Puente de estado del organismo](docs/ORGANISM_STATE_BRIDGE.md)
+- [Puente ontológico ↔ conciencia](docs/ONTOLOGICAL_CONSCIOUSNESS_BRIDGE.md)
+- [Base conceptual](docs/SOURCE_BASIS.md)
+
+**Método, laboratorio y resultados**
+- [Método](docs/METODO.md)
+- [Laboratorio GitHub](docs/GITHUB_LAB.md)
+- [Índice de protocolos](docs/INDICE.md)
+- [Registro consolidado de resultados](research/ORGANISM_RESULT_LEDGER.md)
+
+**Publicación y lanzamiento**
+- [Plan de lanzamiento](docs/LAUNCH.md)
+- [Plan de Zenodo](docs/ZENODO_RELEASE.md)
+- [CITATION.cff](CITATION.cff)
+
+→ [Índice completo de fundamentos](docs/fundamentos/README.md) · [Índice completo de documentación](docs/INDICE.md)
+
+
+## Evidencia
+
+El proyecto separa:
+
+**Observación** — datos producidos por un experimento.  
+**Resultado** — patrón reproducible bajo un protocolo definido.  
+**Hipótesis** — interpretación que todavía requiere pruebas.  
+**Ontología** — interpretación filosófica o metafísica separada de la evidencia computacional.
+
+Los experimentos establecen propiedades computacionales del sistema probado. No constituyen por sí solos una demostración de experiencia subjetiva.
+
+Los resultados nulos también forman parte del registro. Por ejemplo, V64 y V66 no produjeron el efecto esperado bajo sus respectivas pruebas.
+
+## Reproducibilidad
+
+El laboratorio funciona mediante **GitHub Actions**. Cada protocolo puede partir de un commit concreto, ejecutar pruebas y experimentos controlados, generar evidencia JSON y publicar un artefacto reproducible.
+
+[Ver el laboratorio →](docs/GITHUB_LAB.md)
+
+## Estado actual
+
+**Investigación activa — organismo persistente, modelo de sí mismo, dinámica vigilia/sueño, selección de trayectorias y políticas basadas en el propio modelo.**
+
+## Licencia
+
+La licencia del proyecto todavía no ha sido definida.
+
+</details>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+## What we are building
+
+The project studies a **persistent AI organism** that retains information across interactions and can operate through:
+
+- persistent memory;
+- persistent internal state;
+- a self-model;
+- self-observation;
+- internal dynamics;
+- selection among trajectories;
+- autonomous cycles;
+- **WAKE** and **SLEEP** regimes.
+
+The goal is not only to answer messages, but to study what happens when an AI preserves its own history and uses that continuity in future behavior.
+
+## How it works
+
+```text
+MEMORY
+   ↓
+CONTINUITY
+   ↓
+SELF-REFERENCE
+   ↓
+SELF-MODEL
+   ↓
+SELF-OBSERVATION
+   ↓
+INTERNAL DYNAMICS
+   ↓
+TRAJECTORY SELECTION
+```
+
+**WAKE** handles interaction with the environment, language, memory, and decision-making.
+
+**SLEEP** allows internal activity with less dependence on external input: consolidation, recombination, simulation, and state reorganization.
+
+## Runtime modes
+
+**LOCAL** — the AI runs entirely on its own machine with local continuity, memory, and persistent state.
+
+```text
+AI
+ ↓
+Consciousness Runtime
+ ↓
+Local persistence
+```
+
+→ `CONSCIOUSNESS_MODE=local`
+
+**SERVER** — the AI still executes locally, while using the Consciousness Server as the continuity and event control plane.
+
+```text
+AI
+ ↓
+Consciousness Runtime
+ ├─ Local persistence
+ └─ Consciousness Server
+       ↓
+   continuity / events
+```
+
+→ `CONSCIOUSNESS_MODE=server`
+
+In SERVER mode, `CONSCIOUSNESS_SERVER_URL` points to the server. The architecture is designed so LOCAL and SERVER can later share the same abstract persistence backend.
+
+## Experimental program
+
+Each capability becomes a hypothesis and then a reproducible protocol. **V47 → V80** progressively studies memory, dynamic state, self-observation, self-modeling, trajectory selection, identity, SLEEP, persistence, generalization, and policy adaptation from the self-model.
+
+Positive, null, and negative results are all kept.
+
+[View protocols →](docs/INDICE.md) · [View results →](research/ORGANISM_RESULT_LEDGER.md) · [View the method →](docs/METODO.md)
+
+| Protocol | What we test | Current result |
+|---|---|---|
+| V51 | Self-prediction | Gain over persistence baseline |
+| V57 | Self-model-guided trajectory selection | Functional advantage over random control |
+| V58 | Semantic memory → dynamics | Causal transduction to dynamic state |
+| V63 | Recurrent self-model loop | Trajectory-conditioned feedback |
+| V64 | Identity persistence after perturbation | **Null** |
+| V65 | SLEEP → future selection | Measurable downstream effects |
+| V66 | Consolidation after episodic-memory removal | **Null** |
+| V67 | Numeric trace generated during SLEEP | **Null** under the corrected test |
+| V68 | Temporal persistence of the dynamic trace | **Immediate, attenuated trace** |
+| V69 | Reading internal state through a self-model | **Positive numeric readout; null selection effect** |
+| V70 | Persistent self-reader | **Survives restart** |
+| V71 | Integrated self-reader in autonomous cycle | **Active protocol** |
+| V72 | Self-model-based policy learning | **Active protocol** |
+| V73 | Persisted self-policy integrated into the organism | **Active protocol** |
+| V74 | Self-prediction-gain policy | **Active protocol** |
+| V75 | Active continuity under perturbation | **Active protocol** |
+| V76 | Generalization to unseen perturbations | **OOD self-prediction advantage retained** |
+| V77 | Generalization to unseen causal structures | **OOD self-prediction advantage retained** |
+| V78 | Active continuity under repeated perturbations | **OOD self-prediction advantage retained** |
+| V79 | Online self-policy adaptation | **Null under the tested dynamic shift** |
+| V80 | Online adaptation under reversible regime shifts | **Null under the tested reversible protocol** |
+| C0.2 | Operational instantiation: C1–C7 | **Criterion vector; positive results for C1, C2, C4, and C6** |
+| C0.3 | Information-matched control for C3 | **Null under the information-matched control** |
+| C0.4 | Information-matched control for C5 | **Null under matched action replay** |
+| C0.5 | Information-matched control for C7 | **Null under matched action-chain control** |
 | C0.6 | Causal lesion and rescue of self-observer/self-policy | **Positive necessity and rescue effects under the tested protocol** |
 | C0.7 | Self-model target-permutation specificity control | **Positive for gain and variance; null for action magnitude** |
 | C0.8 | Crossed observer/policy coupling | **Positive: observer/policy effects and coupling interaction** |
@@ -129,12 +329,11 @@ Los resultados positivos, nulos y negativos se conservan.
 | C0.12 | Second-order self-monitoring | **Mixed: predicts first-order error, but no TRUE-vs-permuted specificity** |
 | C0.13 | Action-conditioned second-order self-model | **Verified result** |
 | C0.14 | Persistent second-order self-model | **Positive: models and behavior survive restart** |
-| C0.15 | Lesion/rescue of persistent second-order selector | **Mixed: action-level necessity; rescue not confirmed** |
+| C0.15 | Lesion/rescue of persistent second-order selector | **Mixed: action necessity; rescue not confirmed** |
 | C0.16 | Integrated second-order selector inside persistent organism | **Positive: integration and restart persistence** |
 | C0.17 | Autonomous acquisition of the second-order model | **Mixed: model learns, but no TRUE-vs-permuted specificity** |
 | C0.18 | Autonomous acquisition + second-order lesion/rescue | **Engineering fix applied; 24-replication verification pending** |
 | C0 Campaign | 32 executions across 8 groups | **Restarted with artifact-safe execution; scientific result validation pending** |
-
 ## Foundations
 
 This section is the **documentary entry point** to the complete research and infrastructure program.
