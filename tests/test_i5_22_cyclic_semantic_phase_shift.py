@@ -39,8 +39,9 @@ def test_cyclic_shift_preserves_t0_multiset_and_phase_sequence():
 
     assert matched_labels == shifted_labels
     assert shifted_labels[0] == "A"
-    assert shifted_labels[1:] == list("BCDEFGABCDEFG")
+    assert shifted_labels[1:] == list("BCDEFGABCDEFGA")
     assert matched_content == shifted_content
+    assert matched[1].split(" — ", 1)[1] != shifted[1].split(" — ", 1)[1]
 
 
 def test_pair_specificity_is_matched_minus_shifted():
