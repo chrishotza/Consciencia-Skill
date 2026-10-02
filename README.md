@@ -18,6 +18,8 @@
 
 ## Elegí idioma / Choose language
 
+> 🌐 La documentación pública sigue el mismo selector bilingüe del README. Ver [docs/LANGUAGE.md](docs/LANGUAGE.md) para la convención.
+
 <details>
 <summary>🇪🇸 Español — abrir</summary>
 
