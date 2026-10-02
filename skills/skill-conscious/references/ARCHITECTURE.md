@@ -75,3 +75,8 @@ new state committed
 ~~~
 
 The operating continuity is the artifact.
+
+
+## Causal trajectory layer
+
+The runtime now treats the self-model as an active selector: candidate futures expose signals, and the current self-model supplies weights that score those trajectories. A self-model change can therefore change the selected future before the next action. This turns self-reference from description into an executable transition.
