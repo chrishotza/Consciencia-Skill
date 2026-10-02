@@ -61,7 +61,17 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
                     "state": state.to_dict(),
                     "state_hash": self.store.state_hash(parts[1]),
                 }
-                if len(parts) == 3:
+                if len(parts) == 4 and parts[2] == "events" and parts[3] == "delta":
+                    query = parse_qs(path.query)
+                    after_revision = int(query.get("after_revision", ["0"])[0])
+                    limit = int(query.get("limit", ["1000"])[0])
+                    payload["events"] = self.store.list_events_after(
+                        parts[1],
+                        after_revision=after_revision,
+                        limit=limit,
+                    )
+                    payload["after_revision"] = after_revision
+                elif len(parts) == 3:
                     query = parse_qs(path.query)
                     limit = int(query.get("limit", ["100"])[0])
                     if parts[2] == "events":
@@ -129,15 +139,56 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
                     instance_id=parts[1],
                     event_type=str(data.get("event_type", "OBSERVE")),
                     payload=dict(data.get("payload", {})),
+                    event_id=data.get("event_id"),
+                    expected_revision=data.get("expected_revision"),
+                    logical_revision=data.get("logical_revision"),
+                    parent_event_id=data.get("parent_event_id"),
+                    created_at=data.get("created_at"),
                 )
             except KeyError:
                 self._send(404, {"error": "instance_not_found"})
+                return
+            except ValueError as exc:
+                self._send(409, {"error": str(exc)})
                 return
             self._send(
                 200,
                 {
                     "state": state.to_dict(),
                     "state_hash": self.store.state_hash(state.instance_id),
+                    "event_id": self.store.latest_event_id(state.instance_id),
+                },
+            )
+            return
+
+        if path.path.startswith("/instances/") and path.path.endswith("/replay"):
+            parts = [p for p in path.path.split("/") if p]
+            if len(parts) != 3:
+                self._send(404, {"error": "not_found"})
+                return
+            events = list(data.get("events", []))
+            try:
+                state_before = self.store.get_state(parts[1])
+                state = self.store.replay_events(
+                    instance_id=parts[1],
+                    events=events,
+                    base_revision=int(data.get("base_revision", 0)),
+                    base_state_hash=data.get("base_state_hash"),
+                )
+            except KeyError:
+                self._send(404, {"error": "instance_not_found"})
+                return
+            except (TypeError, ValueError) as exc:
+                self._send(409, {"error": str(exc)})
+                return
+            self._send(
+                200,
+                {
+                    "state_before_revision": state_before.revision if state_before else None,
+                    "state": state.to_dict(),
+                    "state_hash": self.store.state_hash(state.instance_id),
+                    "replayed_event_count": len(events),
+                    "latest_event_id": self.store.latest_event_id(state.instance_id),
                 },
             )
             return
