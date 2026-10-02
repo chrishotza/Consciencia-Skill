@@ -230,6 +230,7 @@ Positive, null, and negative results are all kept.
 | C0.10 | Within-episode temporal observer → policy alignment | **Null: readout gap without behavioral effect** |
 | C0.11 | Causal action → state → next-action mediation | **Positive: action intervention changed state and next action** |
 | C0.12 | Second-order self-monitoring | **Mixed: predicts first-order error, but no TRUE-vs-permuted specificity** |
+| C0.13 | Action-conditioned second-order self-model | **Verified result** |
 | C0 Campaign | 32 executions across 8 groups | **Executed: 32 workflows; technical artifact-archival failure** |
 
 ## Foundations
