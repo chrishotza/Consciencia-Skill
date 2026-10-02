@@ -83,3 +83,8 @@ action(t)
       ↓
 state(t+1)
 ~~~
+
+
+## Attention
+
+Attention is now persisted as part of the self-state and exposed inside the present field. Hosts may commit an ordered list of active relations or concerns through `frame["attention"]`. This creates a durable bridge between what the agent is and what the agent is currently treating as salient.
