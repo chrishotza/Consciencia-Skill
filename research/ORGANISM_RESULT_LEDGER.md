@@ -578,3 +578,17 @@ Artefacto: GitHub Actions run **36944924071**, artifact **11200748887**, SHA256 
 - error máximo de intervención: **0.0**.
 
 Interpretación: **resultado positivo para mediación causal computacional bajo el protocolo probado**. Alterar únicamente la primera acción produjo una diferencia posterior de estado y una diferencia de la siguiente acción usando el mismo autoobservador y la misma autopólitica. Esto respalda la cadena operacional acción → estado interno → lectura/política → siguiente acción. No constituye evidencia de experiencia subjetiva.
+
+
+### C0.12 — Segundo orden: modelo del error del propio modelo de sí
+
+Protocolo implementado; **sin resultado experimental registrado todavía**.
+
+El primer orden predice el siguiente estado propio. C0.12 añade un segundo modelo que aprende exclusivamente el error de predicción del primer modelo. Durante la sonda, la selección puede usar:
+- el segundo modelo verdadero;
+- el mismo segundo modelo con targets permutados conservando el multiconjunto;
+- un baseline constante de error.
+
+La inferencia primaria es emparejada por episodio y prueba si el segundo orden verdadero cambia la acción y la ganancia de autopredicción frente a ambos controles. También se evalúa la capacidad del segundo orden para predecir el error del primer orden en muestras reservadas.
+
+Estado: **implementado; ejecución pendiente de verificación**.
