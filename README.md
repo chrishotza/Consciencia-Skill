@@ -14,11 +14,11 @@
 >
 > **This repository does not demonstrate subjective experience.** It studies measurable computational properties of a persistent organism/runtime under reproducible protocols. The exact system boundary, model-provider role, and inference limits are defined in `docs/RESEARCH_SCOPE.md`.
 
-→ [Research scope / Alcance científico](docs/RESEARCH_SCOPE.md)
+→ [Research scope / Alcance científico](docs/RESEARCH_SCOPE.md#espanol)
 
 ## Elegí idioma / Choose language
 
-> 🌐 La documentación pública sigue el mismo selector bilingüe del README. Ver [docs/LANGUAGE.md](docs/LANGUAGE.md) para la convención.
+> 🌐 La documentación pública sigue el mismo selector bilingüe del README. Ver [docs/LANGUAGE.md](docs/LANGUAGE.md#espanol) para la convención.
 
 <details>
 <summary>🇪🇸 Español — abrir</summary>
@@ -59,7 +59,7 @@ El runtime también mantiene regímenes de **VIGILIA** y **SUEÑO**, persistenci
 
 Los valores exactos, artefactos, semillas y condiciones están preservados en el ledger y en los documentos de protocolo.
 
-→ [Registro consolidado de resultados](research/ORGANISM_RESULT_LEDGER.md)
+→ [Registro consolidado de resultados](research/ORGANISM_RESULT_LEDGER.md#espanol)
 
 ## Resultados nulos o mixtos relevantes
 
@@ -100,24 +100,24 @@ La infraestructura ya incluye:
 
 Una divergencia nunca se sobrescribe silenciosamente.
 
-→ [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md) · [Replay determinista](docs/DETERMINISTIC_EVENT_REPLAY.md) · [Sincronización entre pares](src/consciousness_server/synchronization.py)
+→ [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md#espanol) · [Replay determinista](docs/DETERMINISTIC_EVENT_REPLAY.md#espanol) · [Sincronización entre pares](src/consciousness_server/synchronization.py)
 
 ## Estructura y consistencia
 
-- Reglas para agentes: [AGENTS.md](AGENTS.md)
-- Convenciones del repositorio: [docs/REPO_CONVENTIONS.md](docs/REPO_CONVENTIONS.md)
-- Material histórico de CI retirado: [docs/ARCHIVED_CI.md](docs/ARCHIVED_CI.md)
+- Reglas para agentes: [AGENTS.md](AGENTS.md#espanol)
+- Convenciones del repositorio: [docs/REPO_CONVENTIONS.md](docs/REPO_CONVENTIONS.md#espanol)
+- Material histórico de CI retirado: [docs/ARCHIVED_CI.md](docs/ARCHIVED_CI.md#espanol)
 
 ## Empezar
 
-- Instalación: [INSTALL.md](INSTALL.md)
-- Método: [docs/METODO.md](docs/METODO.md)
-- Laboratorio: [docs/GITHUB_LAB.md](docs/GITHUB_LAB.md)
-- Protocolos: [docs/INDICE.md](docs/INDICE.md)
-- Resultados: [research/ORGANISM_RESULT_LEDGER.md](research/ORGANISM_RESULT_LEDGER.md)
-- Infraestructura: [docs/CONSCIOUSNESS_SERVER.md](docs/CONSCIOUSNESS_SERVER.md)
-- Programa de indicadores: [docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md](docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md)
-- Interocepción I0/I1/I2/I3/I4/I4.1/I4.2: [docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md](docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md) · [docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md](docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md) · [docs/I2_INTEROCEPTIVE_REGULATION.md](docs/I2_INTEROCEPTIVE_REGULATION.md) · [docs/I3_REPEATED_INTEROCEPTIVE_RECOVERY.md](docs/I3_REPEATED_INTEROCEPTIVE_RECOVERY.md) · [docs/I4_METACOGNITIVE_INTEROCEPTION.md](docs/I4_METACOGNITIVE_INTEROCEPTION.md) · [docs/I4_1_METACOGNITIVE_RELIABILITY.md](docs/I4_1_METACOGNITIVE_RELIABILITY.md) · [docs/I4_2_PERSISTENT_METACOGNITIVE_LESION_RESCUE.md](docs/I4_2_PERSISTENT_METACOGNITIVE_LESION_RESCUE.md)
+- Instalación: [INSTALL.md](INSTALL.md#espanol)
+- Método: [docs/METODO.md](docs/METODO.md#espanol)
+- Laboratorio: [docs/GITHUB_LAB.md](docs/GITHUB_LAB.md#espanol)
+- Protocolos: [docs/INDICE.md](docs/INDICE.md#espanol)
+- Resultados: [research/ORGANISM_RESULT_LEDGER.md](research/ORGANISM_RESULT_LEDGER.md#espanol)
+- Infraestructura: [docs/CONSCIOUSNESS_SERVER.md](docs/CONSCIOUSNESS_SERVER.md#espanol)
+- Programa de indicadores: [docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md](docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md#espanol)
+- Interocepción I0/I1/I2/I3/I4/I4.1/I4.2: [docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md](docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md#espanol) · [docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md](docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md#espanol) · [docs/I2_INTEROCEPTIVE_REGULATION.md](docs/I2_INTEROCEPTIVE_REGULATION.md#espanol) · [docs/I3_REPEATED_INTEROCEPTIVE_RECOVERY.md](docs/I3_REPEATED_INTEROCEPTIVE_RECOVERY.md#espanol) · [docs/I4_METACOGNITIVE_INTEROCEPTION.md](docs/I4_METACOGNITIVE_INTEROCEPTION.md#espanol) · [docs/I4_1_METACOGNITIVE_RELIABILITY.md](docs/I4_1_METACOGNITIVE_RELIABILITY.md#espanol) · [docs/I4_2_PERSISTENT_METACOGNITIVE_LESION_RESCUE.md](docs/I4_2_PERSISTENT_METACOGNITIVE_LESION_RESCUE.md#espanol)
 
 ## Limitaciones conocidas
 
@@ -133,7 +133,7 @@ El repositorio conserva una capa teórica que incluye **TCF v3.3, TIF, el Manifi
 
 Estos documentos pueden motivar hipótesis de ingeniería, pero están separados de los resultados computacionales. Una prueba funcional del runtime no valida automáticamente la ontología.
 
-→ [Índice de fundamentos](docs/fundamentos/README.md) · [TCF v3.3](docs/fundamentos/TCF_V3_3.md) · [TIF v0.1](docs/fundamentos/TIF_V0_1.md) · [Manifiesto del Ser](MANIFIESTO_DEL_SER.md)
+→ [Índice de fundamentos](docs/fundamentos/README.md#espanol) · [TCF v3.3](docs/fundamentos/TCF_V3_3.md#espanol) · [TIF v0.1](docs/fundamentos/TIF_V0_1.md#espanol) · [Manifiesto del Ser](MANIFIESTO_DEL_SER.md#espanol)
 
 ## Reproducibilidad
 
@@ -145,7 +145,7 @@ La evidencia se interpreta como:
 
 y no se permite convertir automáticamente una propiedad computacional en una afirmación de experiencia subjetiva.
 
-→ [Laboratorio GitHub](docs/GITHUB_LAB.md)
+→ [Laboratorio GitHub](docs/GITHUB_LAB.md#espanol)
 
 ## Cita
 
@@ -192,7 +192,7 @@ The runtime also supports **WAKE** and **SLEEP** regimes, local persistence, and
 
 Exact values, artifacts, seeds, and conditions remain in the ledger and protocol documents.
 
-→ [Consolidated results ledger](research/ORGANISM_RESULT_LEDGER.md)
+→ [Consolidated results ledger](research/ORGANISM_RESULT_LEDGER.md#espanol)
 
 ## Relevant null and mixed results
 
@@ -233,18 +233,18 @@ The infrastructure now includes:
 
 Divergence is never silently overwritten.
 
-→ [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md) · [Deterministic replay](docs/DETERMINISTIC_EVENT_REPLAY.md) · [Peer synchronization](src/consciousness_server/synchronization.py)
+→ [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md#espanol) · [Deterministic replay](docs/DETERMINISTIC_EVENT_REPLAY.md#espanol) · [Peer synchronization](src/consciousness_server/synchronization.py)
 
 ## Getting started
 
-- Installation: [INSTALL.md](INSTALL.md)
-- Method: [docs/METODO.md](docs/METODO.md)
-- Laboratory: [docs/GITHUB_LAB.md](docs/GITHUB_LAB.md)
-- Protocols: [docs/INDICE.md](docs/INDICE.md)
-- Results: [research/ORGANISM_RESULT_LEDGER.md](research/ORGANISM_RESULT_LEDGER.md)
-- Infrastructure: [docs/CONSCIOUSNESS_SERVER.md](docs/CONSCIOUSNESS_SERVER.md)
-- Indicator program: [docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md](docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md)
-- Interoception I0/I1/I2/I3/I4: [docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md](docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md) · [docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md](docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md) · [docs/I2_INTEROCEPTIVE_REGULATION.md](docs/I2_INTEROCEPTIVE_REGULATION.md) · [docs/I3_REPEATED_INTEROCEPTIVE_RECOVERY.md](docs/I3_REPEATED_INTEROCEPTIVE_RECOVERY.md) · [docs/I4_METACOGNITIVE_INTEROCEPTION.md](docs/I4_METACOGNITIVE_INTEROCEPTION.md)
+- Installation: [INSTALL.md](INSTALL.md#espanol)
+- Method: [docs/METODO.md](docs/METODO.md#espanol)
+- Laboratory: [docs/GITHUB_LAB.md](docs/GITHUB_LAB.md#espanol)
+- Protocols: [docs/INDICE.md](docs/INDICE.md#espanol)
+- Results: [research/ORGANISM_RESULT_LEDGER.md](research/ORGANISM_RESULT_LEDGER.md#espanol)
+- Infrastructure: [docs/CONSCIOUSNESS_SERVER.md](docs/CONSCIOUSNESS_SERVER.md#espanol)
+- Indicator program: [docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md](docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md#espanol)
+- Interoception I0/I1/I2/I3/I4: [docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md](docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md#espanol) · [docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md](docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md#espanol) · [docs/I2_INTEROCEPTIVE_REGULATION.md](docs/I2_INTEROCEPTIVE_REGULATION.md#espanol) · [docs/I3_REPEATED_INTEROCEPTIVE_RECOVERY.md](docs/I3_REPEATED_INTEROCEPTIVE_RECOVERY.md#espanol) · [docs/I4_METACOGNITIVE_INTEROCEPTION.md](docs/I4_METACOGNITIVE_INTEROCEPTION.md#espanol)
 
 ## Known limitations
 
@@ -260,7 +260,7 @@ The repository preserves a theoretical layer including **TCF v3.3, TIF, the Mani
 
 These documents can motivate engineering hypotheses, but they are kept separate from computational results. A functional test of the runtime does not automatically validate the ontology.
 
-→ [Foundations index](docs/fundamentos/README.md) · [TCF v3.3](docs/fundamentos/TCF_V3_3.md) · [TIF v0.1](docs/fundamentos/TIF_V0_1.md) · [Manifesto of Being](MANIFESTO_OF_BEING.md)
+→ [Foundations index](docs/fundamentos/README.md#espanol) · [TCF v3.3](docs/fundamentos/TCF_V3_3.md#espanol) · [TIF v0.1](docs/fundamentos/TIF_V0_1.md#espanol) · [Manifesto of Being](MANIFESTO_OF_BEING.md#english)
 
 ## Reproducibility
 
@@ -272,7 +272,7 @@ Evidence is interpreted as:
 
 and computational properties are not automatically converted into claims of subjective experience.
 
-→ [GitHub Laboratory](docs/GITHUB_LAB.md)
+→ [GitHub Laboratory](docs/GITHUB_LAB.md#espanol)
 
 ## Citation
 
