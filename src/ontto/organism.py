@@ -16,6 +16,8 @@ from .memory_policy import ContinuityMemoryPolicy
 from .self_policy import SelfPolicy
 from .meta_observer import MetaSelfObserver
 from .action_conditioned_meta_observer import ActionConditionedMetaObserver
+from .interoception import InteroceptiveProbe
+from .interoception_controller import InteroceptiveController
 
 
 @dataclass
@@ -52,6 +54,9 @@ class OrganismConfig:
     self_selection_signals: tuple[float, ...] = (-1.0, 0.0, 1.0)
     self_policy_enabled: bool = False
     self_policy_ridge: float = 1e-3
+    interoceptive_control_enabled: bool = False
+    interoceptive_control_mode: str = "full"
+    interoceptive_control_memory_count: int = 0
     semantic_dynamic_bridge_enabled: bool = False
     semantic_dynamic_scale: float = 1.0
     semantic_dynamic_importance: float = 0.65
@@ -115,6 +120,10 @@ class PersistentOrganism:
             else SelfPolicy(ridge=cfg.self_policy_ridge)
         )
         self.memory_policy = ContinuityMemoryPolicy()
+        self.interoceptive_controller = InteroceptiveController(
+            InteroceptiveProbe(memory_limit=cfg.memory_limit),
+            memory_count=cfg.interoceptive_control_memory_count,
+        )
         if cfg.self_observer_enabled and persisted_self_model is None:
             for row in store.self_observer_trajectory(cfg.agent_id):
                 features = np.asarray(row["features"], dtype=float)
