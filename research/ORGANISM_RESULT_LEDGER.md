@@ -1739,3 +1739,22 @@ Primary contrasts:
 Interpretation: **null result under the tested protocol**. The organism acquired and persisted second order correctly, but lesion did not produce significant action/gain change and rescue did not produce significant recovery relative to LESION. C0.18 therefore does not demonstrate causal necessity or functional rescue of the acquired second-order mechanism under this harness. C0.17 acquisition/persistence remains a separate result.
 
 </details>
+
+### I5.18 — Interacción global fase × bridge y control de multiplicidad
+
+24 réplicas, 15 ciclos experimentales, 20.000 permutaciones por análisis, sobre los efectos por réplica congelados de I5.17. No se recogieron nuevas trayectorias.
+
+- AUC firmada bridge ON−OFF: media global a través de los seis lags **-1.3801345781**, p de sign-flip a nivel de réplica **0.00005**.
+- AUC absoluta bridge ON−OFF: media global **-0.5258866231**, p **0.00290**.
+- cambio de acción futura bridge ON−OFF: media global **-0.0868055556**, p **0.00090**.
+- La prueba global de interacción fase × bridge no fue significativa para ninguno de los tres endpoints: AUC firmada **p=0.49323**, AUC absoluta **p=0.46618**, cambio de acción futura **p=0.26739**.
+- Con control max-T entre los seis lags, la evidencia lag-específica sobrevivió en algunos contrastes, pero no se interpreta como una interacción temporal global.
+- El resultado principal de I5.18 es, por tanto, un **efecto medio del bridge a través de los lags sin evidencia de modulación global por fase** bajo este protocolo.
+
+Interpretación: I5.18 no respalda una afirmación más fuerte de especificidad temporal fase × bridge. Sí confirma que, en el arnés probado, la intervención bridge ON−OFF mantiene un efecto promedio distinto de cero a través del conjunto de lags. Esto sigue siendo una propiedad computacional del protocolo y no evidencia de consciencia o experiencia subjetiva.
+
+Verificación: GitHub Actions research-lab **37052907187**, artifact **11246744569**; tests **37052907473** y comprobación de paquete **37052907326**, todos exitosos.
+
+### I5.19 — Independent replication of the global bridge effect
+
+Freeze the I5.17 protocol and the I5.18 global analysis before collecting any new trajectories. Run an independent-seed replication to test whether the average bridge ON−OFF effect across lags reproduces without changing the endpoint or multiplicity procedure.
