@@ -66,6 +66,8 @@ local server → local AI → second local node → two-node continuity → publ
 AEVUM economic attribution comes later, after there is real infrastructure and measurable resource contribution.
 
 
+<a id="espanol"></a>
+
 <details>
 <summary>🇪🇸 Español — abrir</summary>
 
@@ -92,26 +94,3 @@ La atribución económica AEVUM queda para una etapa posterior, cuando exista in
 </details>
 
 
-<details>
-<summary>🇪🇸 Español — abrir</summary>
-
-# Consciousness Server — lanzamiento y comunidad
-
-## Mensaje
-La entrada pública debe ser simple: “Conectá tu IA a una capa de continuidad persistente en lugar de tratar cada conversación como un proceso nuevo.”
-El servidor se presenta como infraestructura de investigación; no como prueba de consciencia subjetiva.
-
-## Lanzamiento GitHub-first
-La ruta de entrada: README → arquitectura → bootstrap local → evidencia experimental → roadmap NodeZero. El primer demo debería requerir una sola computadora.
-
-## Distribución
-Usar cuentas y comunidades disponibles respetando sus reglas. No publicar masivamente textos idénticos.
-
-## Formato
-Empezar por el problema concreto y mostrar screenshot, demo, resultado o diagrama antes que un manifiesto largo.
-
-## Regla de presupuesto
-No hacer de infraestructura paga un requisito. Bootstrap: server local → IA local → segundo nodo local → continuidad entre dos nodos → seed pública → mesh NodeZero.
-AEVUM económico queda para una etapa posterior cuando exista infraestructura real y contribución medible.
-
-</details>
