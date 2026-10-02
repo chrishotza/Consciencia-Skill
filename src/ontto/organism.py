@@ -40,6 +40,7 @@ class OrganismConfig:
     action_conditioned_meta_observer_enabled: bool = False
     action_conditioned_meta_observer_ridge: float = 1e-3
     action_conditioned_meta_observer_max_samples: int = 2048
+    action_conditioned_meta_counterfactual_learning_enabled: bool = False
     self_selection_enabled: bool = True
     self_selection_attractor_weight: float = 0.70
     self_selection_coherence_weight: float = 0.30
@@ -440,6 +441,57 @@ class PersistentOrganism:
                 importance=self.cfg.semantic_dynamic_importance,
             )
 
+    def _calibrate_action_conditioned_meta_candidates(
+        self,
+        candidates: tuple,
+    ) -> int:
+        if not (
+            self.cfg.action_conditioned_meta_observer_enabled
+            and self.cfg.action_conditioned_meta_counterfactual_learning_enabled
+        ):
+            return 0
+
+        step_start = self.state.dynamic_steps
+        bridge = DynamicStateBridge(
+            self.dynamic_bridge.cfg,
+            seed=self.dynamic_bridge.seed,
+        )
+        for candidate in candidates:
+            predicted_state = float(candidate.prediction.predicted_state)
+            snapshot = bridge.advance(
+                previous_state=self.state.dynamic_prev_state,
+                state=self.state.dynamic_state,
+                memory=self.state.dynamic_memory,
+                pressure=self.state.dynamic_pressure,
+                signal=float(candidate.signal),
+                steps=self.cfg.dynamic_autonomous_steps,
+                step_index=step_start,
+            )
+            prediction_error = abs(
+                float(snapshot.state) - predicted_state
+            )
+            features = ActionConditionedMetaObserver.features_for(
+                previous_state=self.state.dynamic_prev_state,
+                state=self.state.dynamic_state,
+                memory=self.state.dynamic_memory,
+                pressure=self.state.dynamic_pressure,
+                last_input=float(candidate.signal),
+                attractor_distance=self.state.dynamic_attractor_distance,
+                steps_delta=self.cfg.dynamic_autonomous_steps,
+                predicted_state=predicted_state,
+                predicted_displacement=float(candidate.displacement),
+            )
+            self.action_conditioned_meta_observer.observe(
+                features=features,
+                prediction_error=prediction_error,
+            )
+
+        self.store.save_action_conditioned_meta_observer_model(
+            self.cfg.agent_id,
+            self.action_conditioned_meta_observer.to_dict(),
+        )
+        return len(candidates)
+
     def autonomous_wake_cycle(self) -> dict[str, float | int] | None:
         self.state.mode = "WAKE"
         self.state.lifetime_wake_cycles += 1
@@ -461,6 +513,9 @@ class PersistentOrganism:
                     if self.cfg.meta_self_observer_enabled
                     else None
                 ),
+            )
+            counterfactual_meta_samples_added = (
+                self._calibrate_action_conditioned_meta_candidates(candidates)
             )
             if self.cfg.action_conditioned_meta_observer_enabled:
                 scored = []
