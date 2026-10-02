@@ -220,6 +220,16 @@ jobs:
             --permutations 20000 \
             --out results/i5_26_matched_magnitude_sign_coupling
 
+      - name: Run I6.1 causal self-model loop
+        run: |
+          python experiments/i6_1_causal_self_model_loop.py \
+            --seed 20261027 \
+            --replicates 24 \
+            --warmup 24 \
+            --evaluation-cycles 48 \
+            --permutations 20000 \
+            --out results/i6_1_causal_self_model_loop
+
       - name: Write run manifest
         run: |
           mkdir -p results
