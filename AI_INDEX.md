@@ -113,6 +113,12 @@
 - `experiments/i5_16_counterbalanced_pure_phase_temporal_control.py`
 - `tests/test_i5_16_counterbalanced_pure_phase_temporal_control.py`
 - Verified: run 37046361416 / artifact 11245200134; 100% t0 action match and 100% SELF_MODEL distribution match; +1 vs -1 absolute-AUC symmetry difference -1.138780, p=0.000300; +2 vs -2 and +3 vs -3 absolute symmetry were non-significant; all signed BASE-vs-lag contrasts were non-significant. The -1/+1 magnitude asymmetry therefore survives the pure-phase and semantic-counterbalancing control, motivating phase-resolved bridge mapping.
+### I5.17 — Phase-resolved bridge mediation map
+- `docs/I5_17_PHASE_RESOLVED_BRIDGE_MEDIATION_MAP.md`
+- `experiments/i5_17_phase_resolved_bridge_mediation_map.py`
+- `tests/test_i5_17_phase_resolved_bridge_mediation_map.py`
+- Protocol pending verification: same 15-cycle, seven-phase pure-phase construction as I5.16, with bridge ON and OFF for every lag ±1, ±2, ±3; phase-resolved bridge-effect and +k/-k symmetry endpoints.
+
 ### I5.3 — Causal attention allocation
 - `docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md`
 - `src/ontto/attention_controller.py`
