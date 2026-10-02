@@ -84,6 +84,7 @@
 - `docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md` — 14-indicator research map and gap analysis.
 - `docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md` — read-only internal-state instrumentation.
 - `docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md` — preregistered structure for internal-state prediction.
+- `docs/I2_INTEROCEPTIVE_REGULATION.md` — default-off causal interoceptive controller and lesion/rescue design.
 - `src/ontto/interoception.py` — bounded interoceptive readout.
 - `experiments/interoception_i1.py` — reproducible I1 experiment.
 - `tests/test_interoception_i1.py` — I1 harness tests.
