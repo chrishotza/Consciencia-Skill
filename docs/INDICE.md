@@ -108,6 +108,7 @@
 - [I5.2 — State-dependent workspace query](I5_2_STATE_DEPENDENT_QUERY.md) — GWT-4 verificado como mecanismo independiente sobre 512 episodios.
 - [I5.3 — Causal attention allocation](I5_3_CAUSAL_ATTENTION_ALLOCATION.md) — mecanismo de asignación causal de atención verificado sobre 512 episodios.
 - [I5.4 — Persistent selective access integration](I5_4_PERSISTENT_SELECTIVE_ACCESS.md) — integración en PersistentOrganism; resultado conductual nulo/mixto y persistencia 100%.
+- [I5.5 — Causal query bottleneck](I5_5_CAUSAL_QUERY_BOTTLENECK.md) — mecanismo combinado query+atención; positivo para perturbaciones de query/atención, bottleneck necessity aún nula.
 - [I5.0](I5_GLOBAL_WORKSPACE.md) — workspace acotado, broadcast causal y controles de lesión; verificado sobre 512 episodios.
 
 ### Lattice Computer

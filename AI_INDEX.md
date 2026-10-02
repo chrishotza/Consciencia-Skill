@@ -38,6 +38,14 @@
 - Verified standalone GWT-4 mechanism over 512 episodes.
 - FULL−SHUFFLED query accuracy: +1.0, p=4.99975e-05; FULL−LESION: +0.763671875, p=4.99975e-05.
 
+### I5.5 — Causal query bottleneck
+- `docs/I5_5_CAUSAL_QUERY_BOTTLENECK.md`
+- `src/ontto/causal_query_bottleneck.py`
+- `experiments/i5_5_causal_query_bottleneck.py`
+- Verified combined query + attention action mechanism over 512 episodes.
+- FULL−SHUFFLED_QUERY: +1.0 accuracy, p=4.99975e-05; FULL−SHUFFLED_ATTENTION: +1.0, p=4.99975e-05.
+- NO_BOTTLENECK was null, so bottleneck necessity is not established.
+
 ### I5.3 — Causal attention allocation
 - `docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md`
 - `src/ontto/attention_controller.py`
