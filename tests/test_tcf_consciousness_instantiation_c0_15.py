@@ -22,6 +22,7 @@ def test_c0_15_schema(tmp_path):
     summary = json.loads(result.stdout)
     assert summary["experiment"] == "tcf_consciousness_instantiation_c0_15"
     assert summary["protocol_version"] == "C0.15"
+    assert summary["analysis_note"].startswith("Contrasts are paired")
     assert summary["matched_design"]["lesion_only_targets_second_order_model"] is True
     assert summary["phenomenal_consciousness_claimed"] is False
     assert summary["analysis_note"].startswith("Contrasts are paired")
