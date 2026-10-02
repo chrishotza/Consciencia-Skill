@@ -111,6 +111,14 @@ jobs:
             --cycles 8 \
             --out results/i5_13_one_cycle_shift_semantic_correspondence_control
 
+      - name: Run I5.14 phase-matched temporal specificity control
+        run: |
+          python experiments/i5_14_phase_matched_temporal_specificity_control.py \
+            --replicates 24 \
+            --warmup 24 \
+            --cycles 8 \
+            --out results/i5_14_phase_matched_temporal_specificity_control
+
       - name: Write run manifest
         run: |
           mkdir -p results
