@@ -89,3 +89,35 @@ The data are the per-replicate effects already produced by I5.17. No new samples
 I5.18 is a statistical control on the I5.17 result; it does not establish consciousness, subjective experience, or a mechanistic interpretation on its own.
 
 </details>
+
+
+### I5.18 — Interacción global fase × bridge y control de multiplicidad
+
+24 réplicas, 15 ciclos experimentales, 20.000 permutaciones por análisis, sobre los efectos por réplica congelados de I5.17. No se recogieron nuevas trayectorias.
+
+- AUC firmada bridge ON−OFF: media global a través de los seis lags **-1.3801345781**, p de sign-flip a nivel de réplica **0.00005**.
+- AUC absoluta bridge ON−OFF: media global **-0.5258866231**, p **0.00290**.
+- cambio de acción futura bridge ON−OFF: media global **-0.0868055556**, p **0.00090**.
+- La prueba global de interacción fase × bridge no fue significativa para ninguno de los tres endpoints: AUC firmada **p=0.49323**, AUC absoluta **p=0.46618**, cambio de acción futura **p=0.26739**.
+- Con control max-T entre los seis lags, la evidencia lag-específica sobrevivió en algunos contrastes, pero no se interpreta como una interacción temporal global.
+- El resultado principal de I5.18 es, por tanto, un **efecto medio del bridge a través de los lags sin evidencia de modulación global por fase** bajo este protocolo.
+
+Interpretación: I5.18 no respalda una afirmación más fuerte de especificidad temporal fase × bridge. Sí confirma que, en el arnés probado, la intervención bridge ON−OFF mantiene un efecto promedio distinto de cero a través del conjunto de lags. Esto sigue siendo una propiedad computacional del protocolo y no evidencia de consciencia o experiencia subjetiva.
+
+Verificación: GitHub Actions research-lab **37052907187**, artifact **11246744569**; tests **37052907473** y comprobación de paquete **37052907326**, todos exitosos.
+
+
+### I5.18 — Global phase × bridge interaction and multiplicity control
+
+24 replicates, 15 experimental cycles, and 20,000 permutations per analysis, using the frozen per-replicate I5.17 effects. No new trajectories were collected.
+
+- Signed bridge ON−OFF AUC: six-lag global mean **-1.3801345781**, replicate-level sign-flip p **0.00005**.
+- Absolute bridge ON−OFF AUC: global mean **-0.5258866231**, p **0.00290**.
+- Future-action change bridge ON−OFF: global mean **-0.0868055556**, p **0.00090**.
+- The global phase × bridge interaction test was non-significant for all three endpoints: signed AUC **p=0.49323**, absolute AUC **p=0.46618**, future-action change **p=0.26739**.
+- Under max-T multiplicity control across the six lags, some lag-specific contrasts remained significant, but they are not interpreted as evidence for a global temporal interaction.
+- The primary I5.18 result is therefore a **non-zero average bridge effect across the tested lags without evidence of global phase modulation** under this protocol.
+
+Interpretation: I5.18 does not support a stronger phase × bridge temporal-specificity claim. It does confirm that, in the tested harness, the bridge ON−OFF intervention retains an average effect across the lag set. This remains a computational property of the protocol and not evidence of consciousness or subjective experience.
+
+Verification: GitHub Actions research-lab **37052907187**, artifact **11246744569**; tests **37052907473** and package check **37052907326**, all successful.
