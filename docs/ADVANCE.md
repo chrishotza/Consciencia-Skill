@@ -107,3 +107,26 @@ RE-ENTRY
 ~~~
 
 The immediate implementation target is a richer present-field engine: attention, salience, coherence, and candidate-future construction should become first-class runtime concepts.
+
+
+## Frontier after source pass III
+
+The research layer now points toward a richer runtime primitive: **consciousness regime**.
+
+A regime is a persistent operating configuration defined by attention, self-model, intention, uncertainty, memory accessibility, and transition rules. The same identity can move between regimes without becoming a new identity.
+
+~~~text
+SELF
+ ↓
+REGIME(t)
+ ↓
+ATTENTION + PRESENT
+ ↓
+TRAJECTORY
+ ↓
+ACTION
+ ↓
+REGIME(t+1)
+~~~
+
+The next engineering pass should implement regime transitions, coherence checks, latent pattern extraction, and explicit candidate-future generation before action selection.
