@@ -93,29 +93,29 @@ def test_reconciliation_statuses(tmp_path):
         runtime_mode="server",
         organism_mode="WAKE",
         payload={
-            "state_fingerprint": store.state_fingerprint(state.instance_id),
-            "trajectory_fingerprint": store.trajectory_fingerprint(state.instance_id),
-            "event_count": store.event_count(state.instance_id),
-            "memory_count": store.memory_count(state.instance_id),
+            "state_fingerprint": "local-state-001",
+            "trajectory_fingerprint": "local-trajectory-001",
+            "event_count": 2,
+            "memory_count": 0,
         },
         checkpoint_id="cp-reconcile-001",
     )
 
     aligned = reconcile(
-        local_state_fingerprint=store.state_fingerprint(state.instance_id),
-        local_trajectory_fingerprint=store.trajectory_fingerprint(state.instance_id),
-        local_event_count=store.event_count(state.instance_id),
-        local_memory_count=store.memory_count(state.instance_id),
+        local_state_fingerprint="local-state-001",
+        local_trajectory_fingerprint="local-trajectory-001",
+        local_event_count=2,
+        local_memory_count=0,
         checkpoints=store.list_checkpoints(state.instance_id),
     )
     assert aligned.status is ReconciliationStatus.ALIGNED
 
     store.add_event(state.instance_id, "DYNAMIC_UPDATE", {"delta": 1.0})
     ahead = reconcile(
-        local_state_fingerprint=store.state_fingerprint(state.instance_id),
-        local_trajectory_fingerprint=store.trajectory_fingerprint(state.instance_id),
-        local_event_count=store.event_count(state.instance_id),
-        local_memory_count=store.memory_count(state.instance_id),
+        local_state_fingerprint="local-state-002",
+        local_trajectory_fingerprint="local-trajectory-002",
+        local_event_count=3,
+        local_memory_count=0,
         checkpoints=store.list_checkpoints(state.instance_id),
     )
     assert ahead.status is ReconciliationStatus.LOCAL_AHEAD
