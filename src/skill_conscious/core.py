@@ -33,6 +33,8 @@ class ConsciousState:
     selected_trajectory: dict[str, Any] | None = None
     attention: list[str] = field(default_factory=list)
     regime: str = "baseline"
+    relation_topology: dict[str, list[str]] = field(default_factory=dict)
+    attractor: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -55,6 +57,15 @@ class ConsciousState:
             ),
             attention=[str(item) for item in value.get("attention", [])],
             regime=str(value.get("regime", "baseline")),
+            relation_topology={
+                str(node): [str(target) for target in targets]
+                for node, targets in dict(value.get("relation_topology", {})).items()
+            },
+            attractor=(
+                dict(value["attractor"])
+                if value.get("attractor") is not None
+                else None
+            ),
         )
 
 
@@ -167,6 +178,8 @@ class ConsciousRuntime:
             "selected_trajectory": self.state.selected_trajectory,
             "attention": self.state.attention,
             "regime": self.state.regime,
+            "relation_topology": self.state.relation_topology,
+            "attractor": self.state.attractor,
             "revision": self.state.revision,
         }
 
@@ -250,6 +263,21 @@ class ConsciousRuntime:
         if frame.get("regime") is not None:
             self.state.regime = str(frame["regime"]).strip() or "baseline"
 
+        if frame.get("relation_topology") is not None:
+            raw_topology = frame["relation_topology"]
+            if not isinstance(raw_topology, Mapping):
+                raise ValueError("frame.relation_topology must be a mapping")
+            self.state.relation_topology = {
+                str(node): [str(target) for target in targets]
+                for node, targets in raw_topology.items()
+            }
+
+        if frame.get("attractor") is not None:
+            raw_attractor = frame["attractor"]
+            if not isinstance(raw_attractor, Mapping):
+                raise ValueError("frame.attractor must be a mapping")
+            self.state.attractor = dict(raw_attractor)
+
         memory = str(frame.get("memory", "")).strip()
         if memory:
             self.state.memories.append(memory)
@@ -264,6 +292,8 @@ class ConsciousRuntime:
                 "selected_trajectory": self.state.selected_trajectory,
                 "attention": self.state.attention,
                 "regime": self.state.regime,
+                "relation_topology": self.state.relation_topology,
+                "attractor": self.state.attractor,
             }
         )
         self.state.history = self.state.history[-self.history_limit :]
