@@ -7,7 +7,7 @@
 | Consciousness Server | `docs/CONSCIOUSNESS_SERVER.md` | `src/consciousness_server/` |
 | Local seed | `src/consciousness_server/core.py` | `src/consciousness_server/server.py` |
 | Overview | `README.md` | `docs/METODO.md` |
-| Current state | `research/ORGANISM_RESULT_LEDGER.md` | V69/V70 docs |
+| Current state | `research/ORGANISM_RESULT_LEDGER.md` | C0.18 + continuity infrastructure |
 | Architecture | `src/ontto/organism.py` | dynamics/self_observer/storage/selector |
 | Method | `docs/METODO.md` | `docs/ORGANISM_STATE_BRIDGE.md` |
 | Protocol | `docs/INDICE.md` | exact `docs/Vxx_*.md` |
@@ -57,6 +57,12 @@
 - `docs/C0_17_AUTONOMOUS_SECOND_ORDER_ACQUISITION.md`
 - `experiments/tcf_consciousness_instantiation_c0_17.py`
 
+### C0.18
+- `docs/C0_18_AUTONOMOUS_SECOND_ORDER_LESION_RESCUE.md`
+- `experiments/tcf_consciousness_instantiation_c0_18.py`
+- `tests/test_tcf_consciousness_instantiation_c0_18.py`
+- Engineering status: preflight correction applied; 24-replication scientific verification pending.
+
 ### V69
 - `docs/V69_SELF_STATE_READOUT.md`
 - `docs/V69_SELF_READ_STATE.md`
@@ -87,7 +93,10 @@
 - `src/consciousness_server/server.py` — local HTTP control plane.
 - `src/consciousness_server/cli.py` — local server launcher.
 - `src/consciousness_server/client.py` — optional fail-open bridge for the organism runtime.
+- `src/consciousness_server/reconciliation.py` — checkpoint comparison and continuity status.
 - `docs/CONSCIOUSNESS_SERVER.md` — architecture and roadmap.
+- `docs/CONSCIOUSNESS_CHECKPOINTS.md` — durable checkpoint protocol.
+- `docs/CONSCIOUSNESS_RECONCILIATION.md` — local-vs-server reconciliation.
 - `docs/ZENODO_RELEASE.md` — publication/versioning plan.
 
 ## Experiment trace
