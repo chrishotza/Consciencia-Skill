@@ -101,6 +101,12 @@
 - `tests/test_i5_14_phase_matched_temporal_specificity.py`
 - Verified: run 37042551701 / artifact 11243190387; 100% t0 action match and 100% SELF_MODEL distribution match; SHIFT+1 future action change 11.90%, SHIFT-1 44.64%, both p=4.99975e-05; BASE-vs-SHIFT+1 AUC 0.2414241371, BASE-vs-SHIFT-1 AUC 1.9526574097; SHIFT+1 bridge ON-vs-OFF AUC 2.1221765870, all p=4.99975e-05.
 
+### I5.15 — Bidirectional temporal-lag response map
+- `docs/I5_15_BIDIRECTIONAL_TEMPORAL_LAG_RESPONSE_MAP.md`
+- `experiments/i5_15_bidirectional_temporal_lag_response_map.py`
+- `tests/test_i5_15_bidirectional_temporal_lag_response_map.py`
+- Verified: run 37044533566 / artifact 11243557588; 100% t0 action match and 100% SELF_MODEL distribution match across all lags; future-action change ranged from 11.31% (+1) to 58.93% (-2); absolute state AUC ranged from 0.262091 (+1) to 2.363792 (-2); +1 vs -1 absolute AUC symmetry difference -1.978122, p=4.99975e-05. Signed contrasts were significant only for -2 (p=0.04740) and +2 (p=0.04430); signed +k vs -k symmetry remained non-significant. The result motivates a pure-phase, longer-period counterbalanced control before stronger causal-specificity claims.
+
 
 ### I5.3 — Causal attention allocation
 - `docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md`

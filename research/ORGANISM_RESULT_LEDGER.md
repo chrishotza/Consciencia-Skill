@@ -948,6 +948,21 @@ Workflow: **37042551701** (run **778**); artifact **11243190387**; commit verifi
 
 Interpretación: ambos corrimientos preservaron t0 y la distribución completa de SELF_MODEL, pero produjeron efectos posteriores muy distintos. El arnés muestra sensibilidad dependiente de la dirección del orden temporal y debilita una explicación genérica basada en cualquier reordenamiento semántico. No demuestra consciencia ni experiencia subjetiva.
 
+### I5.15 — Mapa bidireccional de respuesta a lag temporal — resultado verificado
+
+Workflow: **37044533566** (run **784**); artifact **11243557588**; commit **09e57c8a9592a300f8ed0f7f2590ab55f57fe10c**; seed **20261015**; **24** réplicas; **24** ciclos de warmup; **8** ciclos experimentales.
+
+- coincidencia de acción aplicada en t0: **100%** en todos los lags;
+- coincidencia de distribución de SELF_MODEL: **100%** en todos los lags;
+- cambio medio de acción futura: **32.74%** (-3), **58.93%** (-2), **51.19%** (-1), **11.31%** (+1), **55.36%** (+2), **30.36%** (+3);
+- AUC absoluta media: **1.383681** (-3), **2.363792** (-2), **2.240213** (-1), **0.262091** (+1), **2.129393** (+2), **1.200861** (+3);
+- contrastes firmados BASE → lag: p=**0.04740** para -2 y p=**0.04430** para +2; los demás no fueron significativos;
+- simetría firmada +k vs -k: p=**0.84616** (+1), **0.80236** (+2), **0.63342** (+3);
+- simetría por magnitud: +1 vs -1, diferencia **-1.978122**, p=**4.99975×10⁻⁵**; +2 vs -2 p=**0.11349**; +3 vs -3 p=**0.12099**;
+- bridge +1 ON vs OFF: **-1.757430**, p=**4.99975×10⁻⁵**; bridge -1 ON vs OFF: **+0.220692**, p=**0.24834**.
+
+Interpretación: I5.15 muestra una respuesta claramente dependiente del desplazamiento temporal en métricas de magnitud, con una asimetría particularmente fuerte entre -1 y +1. Sin embargo, los contrastes firmados no sostienen una separación direccional robusta y el protocolo de rotación finita todavía mezcla fase con efectos de frontera/reordenamiento local. El siguiente control debe aislar una **fase temporal pura** mediante una secuencia periódica más larga y contrabalanceada, conservando t0 y la distribución de SELF_MODEL sin la frontera artificial de rotar una cola de siete posiciones. No demuestra consciencia ni experiencia subjetiva.
+
 ## Estado de campaña C0
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.
