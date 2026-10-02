@@ -14,6 +14,11 @@ TEORIA_CONCIENCIA_FOTONICA.md
 
 Conserva la genealogía conceptual de la hipótesis de conciencia fundamental y su transición hacia TCF. El documento distingue explícitamente postulado ontológico, modelo y evidencia.
 
+### Base sintérgica de Lattice Computer
+`BASE_SINTERGICA_LATTICE_COMPUTER.md`
+
+Preserva la motivación documental de la Lattice Computer v0 y separa la fuente de Grinberg de su traducción computacional falsable.
+
 ## Dinámica
 
 ### TCF v3.3
