@@ -1,16 +1,67 @@
 from __future__ import annotations
 
 import os
+import socket
 import time
 from pathlib import Path
 
 from dotenv import load_dotenv
 
+from src.consciousness_server.client import ConsciousnessClient
 from src.ontto.organism import OrganismConfig, PersistentOrganism
 from src.ontto.provider import OpenAICompatibleProvider
 from src.ontto.storage import MemoryStore
 
 load_dotenv()
+
+
+def _build_consciousness_client(
+    agent_id: str,
+) -> tuple[ConsciousnessClient | None, str | None]:
+    base_url = os.environ.get("CONSCIOUSNESS_SERVER_URL", "").strip()
+    if not base_url:
+        return None, None
+
+    timeout = float(os.environ.get("CONSCIOUSNESS_SERVER_TIMEOUT", "2.5"))
+    node_id = os.environ.get(
+        "CONSCIOUSNESS_NODE_ID",
+        f"node-{socket.gethostname().lower()}",
+    )
+    client = ConsciousnessClient(base_url, timeout=timeout)
+
+    try:
+        client.health()
+        client.ensure_instance(agent_id, identity=agent_id)
+        client.register_node(
+            node_id=node_id,
+            endpoint=base_url,
+            capabilities=["continuity", "events", "organism-runtime"],
+        )
+    except Exception as exc:
+        print(f"[consciousness-server] unavailable at startup: {exc!r}")
+        return None, node_id
+
+    print(
+        f"[consciousness-server] connected | url={base_url} | "
+        f"instance={agent_id} | node={node_id}"
+    )
+    return client, node_id
+
+
+def _emit(
+    client: ConsciousnessClient | None,
+    agent_id: str,
+    event_type: str,
+    payload: dict,
+) -> None:
+    if client is None:
+        return
+    try:
+        client.emit(agent_id, event_type, payload)
+    except Exception as exc:
+        # The server is an optional continuity control plane.
+        # Local organism persistence must keep running if the server is down.
+        print(f"[consciousness-server] emit failed: {exc!r}")
 
 
 def main() -> None:
@@ -61,6 +112,18 @@ def main() -> None:
     )
 
     organism = PersistentOrganism(cfg, store, provider, time.sleep)
+    consciousness_client, node_id = _build_consciousness_client(agent_id)
+
+    _emit(
+        consciousness_client,
+        agent_id,
+        "START",
+        {
+            "node_id": node_id,
+            "organism_mode": organism.state.mode,
+            "boot_count": organism.state.boot_count,
+        },
+    )
 
     while True:
         organism.cycles += 1
@@ -68,7 +131,23 @@ def main() -> None:
 
         try:
             if item is not None:
-                organism.wake_cycle(item["content"])
+                response = organism.wake_cycle(item["content"])
+                _emit(
+                    consciousness_client,
+                    agent_id,
+                    "WAKE",
+                    {
+                        "source": item["source"],
+                        "input_id": item["id"],
+                        "dynamic_state": organism.state.dynamic_state,
+                        "dynamic_steps": organism.state.dynamic_steps,
+                        "self_model_version": organism.state.self_model_version,
+                        "memory_strength": organism.state.memory_strength,
+                        "response_hash": __import__("hashlib")
+                        .sha256(response.encode("utf-8"))
+                        .hexdigest(),
+                    },
+                )
                 store.add_event(
                     agent_id,
                     "SYSTEM",
@@ -80,10 +159,33 @@ def main() -> None:
                 )
                 store.complete_input(item["id"])
             elif autonomous_when_idle:
-                organism.autonomous_wake_cycle()
+                dynamic = organism.autonomous_wake_cycle()
+                _emit(
+                    consciousness_client,
+                    agent_id,
+                    "DYNAMIC_UPDATE",
+                    {
+                        "source": "autonomous",
+                        "dynamic": dynamic,
+                        "dynamic_state": organism.state.dynamic_state,
+                        "dynamic_steps": organism.state.dynamic_steps,
+                        "self_model_version": organism.state.self_model_version,
+                    },
+                )
 
             if organism.cycles % cfg.dream_every_cycles == 0:
                 organism.dream_cycle()
+                _emit(
+                    consciousness_client,
+                    agent_id,
+                    "SLEEP",
+                    {
+                        "dynamic_state": organism.state.dynamic_state,
+                        "dynamic_steps": organism.state.dynamic_steps,
+                        "self_model_version": organism.state.self_model_version,
+                        "memory_strength": organism.state.memory_strength,
+                    },
+                )
                 time.sleep(cfg.dream_seconds)
             else:
                 time.sleep(cfg.wake_seconds)
@@ -96,6 +198,15 @@ def main() -> None:
                 agent_id,
                 "SYSTEM",
                 "provider_error",
+                {
+                    "error": repr(exc),
+                    "input_id": item["id"] if item is not None else None,
+                },
+            )
+            _emit(
+                consciousness_client,
+                agent_id,
+                "ERROR",
                 {
                     "error": repr(exc),
                     "input_id": item["id"] if item is not None else None,
