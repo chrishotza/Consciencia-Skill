@@ -68,9 +68,22 @@ A client may keep local cognition and temporary context locally, then publish st
 
 One computer. SQLite. One organism. One continuity stream.
 
-### Phase 1 — runtime adapter
+### Phase 1 — runtime adapter — implemented
 
-Connect PersistentOrganism to the server so the existing Skill-Conscious organism uses the server as its durable control plane.
+`run_daemon.py` can connect the existing PersistentOrganism to the server through `CONSCIOUSNESS_SERVER_URL`.
+
+The bridge is fail-open:
+
+- local organism persistence remains authoritative;
+- the server receives identity, node registration and continuity events;
+- a server outage does not stop the local organism;
+- response bodies are not mirrored to the server; the bridge emits compact state/event metadata instead.
+
+Useful environment variables:
+
+    CONSCIOUSNESS_SERVER_URL=http://127.0.0.1:8787
+    CONSCIOUSNESS_SERVER_TIMEOUT=2.5
+    CONSCIOUSNESS_NODE_ID=node-local-01
 
 ### Phase 2 — second node
 
