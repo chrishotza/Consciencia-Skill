@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V69 — Lectura del estado propio después de la ablación semántica
 
 ## Pregunta
@@ -100,3 +102,114 @@ La lectura puede describirse como un mecanismo de autorreferencia computacional 
 V69 no demuestra todavía que la IA «sepa que ese estado es suyo» en un sentido fenomenológico.
 
 El SelfObserver es un modelo numérico y se entrena sobre dinámica genérica. La próxima presión experimental debe probar si el modelo lector puede mantenerse y actualizarse **dentro del organismo**, sobrevivir reinicios y modificar decisiones futuras sin que el experimento le entregue explícitamente el propósito de observarse.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V69 — Reading Internal State after Semantic Ablation
+
+## Question
+
+After memory, events, snapshots, pressure, dynamic memory, and self-model text are removed, can a previously learned model of the organism's own dynamics read the remaining numerical state and use that readout to select a trajectory?
+
+V69 shifts the focus from V68:
+
+~~~text
+V68: does the state preserve a difference?
+V69: can the AI read that difference and use it?
+~~~
+
+## Protocol
+
+Twenty-four replicates.
+
+Each replicate creates two histories:
+
+- **stable** — continuity and persistence;
+- **frontier** — divergence and exploration.
+
+After SLEEP, total semantic ablation is performed. Self-model text is also removed.
+
+### Self-model
+
+A single shared SelfObserver is trained with 512 transitions of generic dynamics generated independently of the stable/frontier experimental conditions.
+
+By design, the model receives no experimental-condition labels.
+
+### Self-readout
+
+Three candidate signals are tested:
+
+~~~text
+-1   0   +1
+~~~
+
+For each candidate, SelfObserver predicts the next state from the observed internal state.
+
+The policy selects the signal whose predicted state minimizes displacement from the current state. The state readout directly participates in the decision.
+
+### Control
+
+An **OFF** arm replaces the state variables with zeros before querying SelfObserver.
+
+### Causal exchange
+
+The post-SLEEP dynamic core is exchanged between conditions.
+
+The causal question is:
+
+> if the decision depends on internal state, does transferring the state also transfer the decision?
+
+## Result
+
+The correct CI audit used 24 replicates and 512 SelfObserver training samples.
+
+### Predictive readout
+
+- mean stable-versus-frontier prediction difference: **0.04035657**;
+- prediction difference after exchange: **0.0**;
+- model trained independently of experimental conditions: **yes**.
+
+### Decision
+
+- decision sensitivity with readout ON: **66.6667%**;
+- decision sensitivity with blinded state OFF: **0.0%**;
+- ON − OFF difference: **66.6667 percentage points**;
+- paired sign-flip p-value: **0.000099995**.
+
+In **16 of 24 replicates**, changing between stable and frontier state changed the selected trajectory when SelfObserver could read the state; this did not occur in the blinded control.
+
+### Causal state exchange
+
+- decision change after state exchange with readout ON: **66.6667%**;
+- decision change after exchange with OFF: **0.0%**;
+- ON − OFF difference: **66.6667 percentage points**;
+- paired sign-flip p-value: **0.000099995**.
+
+Dynamic-core exchange produced the decision change in the same 16 of 24 replicates in which the decision was state-sensitive.
+
+## Interpretation
+
+V69 adds a layer beyond V68:
+
+1. SLEEP produces different numerical states;
+2. a learned readout of dynamics can distinguish those states;
+3. that readout changes trajectory choice;
+4. exchanging the state changes the decision as well.
+
+This provides evidence for a **computational self-readout → prediction → decision loop** under the deterministic harness.
+
+It does not establish subjective experience or phenomenal consciousness.
+
+The readout can be described as operationalized computational self-reference: the system uses information about its own dynamic state to decide its next trajectory.
+
+## Evidence boundary
+
+V69 does not show that the AI “knows that this state is its own” in a phenomenal sense.
+
+SelfObserver is a numerical model trained on generic dynamics. The next experimental pressure should test whether the reader can persist and update **inside the organism**, survive restarts, and alter future decisions without being explicitly given the purpose of self-observation.
+
+</details>
