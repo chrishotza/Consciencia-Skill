@@ -301,3 +301,12 @@ The V47–V80 files retain their canonical identifiers and terminology for repro
 - Verified workflow: 37063264401, artifact 11252345042.
 - Frozen I5.23 data; signed AUC interaction null, absolute AUC and future-action interaction significant after endpoint correction.
 - Next: I5.25 orientation and symmetry control.
+
+
+## I5.25 — Shift×lag orientation and symmetry control
+- Protocol: docs/I5_25_SHIFT_LAG_ORIENTATION_SYMMETRY.md
+- Experiment: experiments/i5_25_shift_lag_orientation_symmetry.py
+- Test: tests/test_i5_25_shift_lag_orientation_symmetry.py
+- Verified workflow **37065168288**, artifact **11251708654**.
+- Absolute AUC and future action show both orientation asymmetry and compensatory diagonal enrichment; signed AUC is null.
+- Next: I5.26 matched-magnitude sign-coupling control.

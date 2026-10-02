@@ -1,3 +1,11 @@
+## 2026-10-02 — I5.25 verificado / I5.25 verified
+
+- Frozen I5.23 analysis; no new trajectories.
+- Workflow **37065168288**, artifact **11251708654**; package **37065168296** and tests **37065168323** passed.
+- Signed AUC orientation p=0.30128 and diagonal p=0.62617.
+- Absolute AUC and future-action orientation/diagonal p=0.00005; Bonferroni 0.00030.
+- Next: I5.26 matched-magnitude sign-coupling control.
+
 ## 2026-10-02 — I5.24 verificado / I5.24 verified
 
 - Frozen I5.23 analysis; no new trajectories.

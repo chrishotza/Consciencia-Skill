@@ -511,3 +511,15 @@ Usá el documento de protocolo para localizar la implementación exacta.
 - Verified workflow 37063264401 / artifact 11252345042; tests 37063264520 and package 37063264454 successful.
 - Signed AUC: p=0.89461; absolute AUC and future-action interaction p=0.00005 each, Bonferroni 0.00015.
 - Next: I5.25 shift×lag orientation and symmetry control.
+
+
+### I5.25 — Shift×lag orientation and symmetry control
+- docs/I5_25_SHIFT_LAG_ORIENTATION_SYMMETRY.md
+- experiments/i5_25_shift_lag_orientation_symmetry.py
+- tests/test_i5_25_shift_lag_orientation_symmetry.py
+- Frozen I5.23 analysis; no new trajectories.
+- Verified workflow **37065168288** / artifact **11251708654**; package **37065168296**, tests **37065168323** successful.
+- Signed AUC: orientation p=0.30128; diagonal p=0.62617.
+- Absolute AUC: orientation and diagonal p=0.00005 each; Bonferroni 0.00030.
+- Future action: orientation and diagonal p=0.00005 each; Bonferroni 0.00030.
+- Next: I5.26 matched-magnitude sign-coupling control.
