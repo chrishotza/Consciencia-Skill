@@ -422,7 +422,7 @@ Estos resultados establecen propiedades computacionales cada vez más específic
 
 No establecen consciencia fenomenológica ni experiencia subjetiva.
 
-El siguiente experimento en curso es C0.7: probar si los efectos organizacionales dependen de la **asignación específica feature → target** aprendida por el modelo de sí y no simplemente de la presencia de un modelo con el mismo volumen de memoria.
+C0.7 fue completado como control de especificidad; su resultado verificado aparece en la sección correspondiente más abajo.
 
 
 ### C0.5 — Control información-matcheado de cierre recurrente
@@ -658,13 +658,9 @@ Artefacto: GitHub Actions run **36945659490**, artifact **11201664192**, SHA256 
 Interpretación: el primer modelo de sí y el segundo modelo condicionado por acción fueron serializados, recuperados y reutilizados después de reconstruir el contexto y un nuevo puente dinámico, produciendo la misma secuencia posterior de acciones y ganancias que el brazo continuo bajo el protocolo probado. Esto respalda persistencia computacional del segundo orden a través de un reinicio.
 
 
-### C0.15 — Lesión/rescate del selector de segundo orden persistente
+### C0.15 — Nota de protocolo histórica
 
-Protocolo implementado; **sin resultado experimental registrado todavía**.
-
-C0.15 mantiene el primer orden y la dinámica intactos y deshabilita únicamente el segundo selector en una fase de la misma trayectoria. Un tercer brazo restaura el modelo segundo orden desde el checkpoint serializado para probar rescate.
-
-Estado: **implementado; ejecución pendiente de verificación**.
+Esta subsección conserva la descripción de implementación previa a la ejecución verificada. El resultado experimental final de C0.15 aparece inmediatamente después y es la referencia vigente.
 
 
 ### C0.15 — Resultado verificado
