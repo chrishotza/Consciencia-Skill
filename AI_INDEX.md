@@ -63,7 +63,13 @@
 - `docs/I5_8_ACTION_CLAMP_REENTRY.md`
 - `experiments/i5_8_action_clamp_reentry.py`
 - `tests/test_i5_8_action_clamp_reentry.py`
-- Protocol added; no I5.8 result is claimed yet.
+- Verified: action-clamp removed the pulse state divergence; pulse vs clamp t+1 and AUC contrasts both p=4.99975e-05.
+
+### I5.9 — Action-replay sufficiency
+- `docs/I5_9_ACTION_REPLAY_SUFFICIENCY.md`
+- `experiments/i5_9_action_replay_sufficiency.py`
+- `tests/test_i5_9_action_replay_sufficiency.py`
+- Protocol added; no I5.9 result is claimed yet.
 
 
 ### I5.3 — Causal attention allocation
@@ -228,7 +234,13 @@ Use the protocol document to find the exact implementation.
 - `docs/I5_8_ACTION_CLAMP_REENTRY.md`
 - `experiments/i5_8_action_clamp_reentry.py`
 - `tests/test_i5_8_action_clamp_reentry.py`
-- Protocolo agregado; todavía no se reclama ningún resultado de I5.8.
+- Verificado: el action-clamp eliminó la divergencia de estado del pulso; los contrastes pulse vs clamp en t+1 y AUC dieron p=4.99975e-05.
+
+### I5.9 — Suficiencia por action-replay
+- `docs/I5_9_ACTION_REPLAY_SUFFICIENCY.md`
+- `experiments/i5_9_action_replay_sufficiency.py`
+- `tests/test_i5_9_action_replay_sufficiency.py`
+- Protocolo agregado; todavía no se reclama ningún resultado de I5.9.
 
 
 
