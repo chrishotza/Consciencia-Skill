@@ -65,3 +65,22 @@ Inference uses paired sign-flip with 20,000 permutations.
 A positive result would demonstrate a computational property of the implemented workspace. It would not demonstrate subjective experience or sufficiency of a global-workspace architecture for consciousness.
 
 </details>
+ 
+## Verified result
+
+GitHub Actions run **36982788159** completed successfully.
+
+Artifact: **11216003264**  
+Artifact SHA-256: **de542f6a858eacfc67f88bf138a8fe9c94dcf34bf89d85446b69015ef51ec799**
+
+Configuration: 6 modules, 2-dimensional vectors, bounded capacity **K=2**, unlimited-capacity control **K=6**, 512 paired episodes.
+
+| Endpoint | Result |
+|---|---:|
+| Broadcast accuracy advantage (FULL − NO_BROADCAST) | **+0.126953125**, p **4.99975×10⁻⁵** |
+| Bounded − unbounded accuracy | **+0.017578125**, p **0.0222489** |
+| Selected-source lesion − unselected-source lesion | **−0.490234375**, p **4.99975×10⁻⁵** |
+
+The result verifies the intended computational properties of the prototype under the synthetic task: global broadcast adds measurable information, the bounded K=2 configuration differs from unrestricted access, and lesioning the selected source has a larger directional effect than lesioning an unselected source.
+
+The experiment remains a **synthetic architecture test**. It does not establish consciousness or subjective experience, and it does not yet demonstrate that these mechanisms causally organize the full PersistentOrganism runtime.
