@@ -642,3 +642,17 @@ Protocolo implementado; **sin resultado experimental registrado todavía**.
 C0.14 contrasta una secuencia autónoma continua con una secuencia emparejada que serializa el primer y segundo modelo de sí, reconstruye el contexto dinámico y crea un nuevo puente dinámico antes de continuar. La prueba busca coincidencia exacta de acciones y ganancias después del reinicio, además de recuperación exacta del digest de los modelos.
 
 Estado: **implementado; ejecución pendiente de verificación**.
+
+
+### C0.14 — Resultado verificado
+
+Artefacto: GitHub Actions run **36945659490**, artifact **11201664192**, SHA256 **8a01bef161939ba7d72f3d225a73e7e5f8b2fe014e5d7a4b82856e140d44a831**.
+
+- mismatch de acciones después del reinicio: **0.0**, p **1.0**;
+- mismatch de ganancia después del reinicio: **0.0**, p **1.0**;
+- recuperación exacta del digest del modelo en el checkpoint: **100%**;
+- ganancia media después del reinicio: **0.08710124**;
+- mismatch máximo de acción: **0.0**;
+- mismatch máximo de ganancia: **0.0**.
+
+Interpretación: el primer modelo de sí y el segundo modelo condicionado por acción fueron serializados, recuperados y reutilizados después de reconstruir el contexto y un nuevo puente dinámico, produciendo la misma secuencia posterior de acciones y ganancias que el brazo continuo bajo el protocolo probado. Esto respalda persistencia computacional del segundo orden a través de un reinicio.
