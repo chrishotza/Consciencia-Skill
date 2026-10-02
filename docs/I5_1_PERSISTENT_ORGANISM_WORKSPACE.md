@@ -121,3 +121,31 @@ A broadcast or lesion effect in this runtime would demonstrate a causal property
 It would not by itself demonstrate subjective experience or that the PersistentOrganism is conscious.
 
 </details>
+
+## Verified result
+
+GitHub Actions run **36984060538** completed successfully.
+
+Artifact: **11216653205**  
+SHA-256: **993ba8184c1536c7e781bde1fe9797c6b20a38dccd8269f03d3f13da2ebd48cd**
+
+Configuration: 24 paired replicates, 24 warmup cycles, candidate signals `(-1, +1)`, workspace influence weight 0.35.
+
+| Endpoint | Result |
+|---|---:|
+| NO_BROADCAST regret − FULL regret | **+0.0212423**, p **0.4928254** |
+| NO_WORKSPACE regret − FULL regret | **+0.0212423**, p **0.5026749** |
+| LESION regret − FULL regret | **0.0000000**, p **1.0000000** |
+| FULL vs NO_BROADCAST action-change rate | **25%** |
+| FULL vs LESION action-change rate | **0%** |
+| Workspace persistence after restart | **100%** |
+
+## Interpretation
+
+I5.1 is a **null result for the tested behavioral endpoints**. The workspace state persisted correctly and did participate in runtime selection, but the integrated workspace did not produce a statistically detectable regret advantage over either no-broadcast or historical no-workspace selection.
+
+The lesion arm also produced no action change under this particular mapping, so this version does not establish causal necessity of workspace source selection.
+
+This does not invalidate the I5.0 standalone mechanism. It constrains the current integration: the chosen broadcast-to-trajectory mapping is not sufficient, under this protocol, to yield a measurable behavioral benefit inside PersistentOrganism.
+
+The next protocol therefore targets **state-dependent querying** rather than another copy of broadcast-to-action coupling.
