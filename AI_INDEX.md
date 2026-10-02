@@ -523,3 +523,15 @@ Usá el documento de protocolo para localizar la implementación exacta.
 - Absolute AUC: orientation and diagonal p=0.00005 each; Bonferroni 0.00030.
 - Future action: orientation and diagonal p=0.00005 each; Bonferroni 0.00030.
 - Next: I5.26 matched-magnitude sign-coupling control.
+
+
+### I5.26 — Matched-magnitude sign-coupling control
+- docs/I5_26_MATCHED_MAGNITUDE_SIGN_COUPLING.md
+- experiments/i5_26_matched_magnitude_sign_coupling.py
+- tests/test_i5_26_matched_magnitude_sign_coupling.py
+- Frozen I5.23 analysis; no new trajectories.
+- Verified workflow **37066787603** / artifact **11253435918**; tests **37066787571** and package **37066787624** passed.
+- Signed AUC null: global p=0.43118.
+- Absolute AUC: matched-magnitude sign-coupling global p<0.00005.
+- Future action: matched-magnitude sign-coupling global p<0.00005.
+- Next: I6.1 causal closure of the self-model.

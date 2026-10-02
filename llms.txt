@@ -152,3 +152,12 @@ Result ledger: research/ORGANISM_RESULT_LEDGER.md
 Status: verified on frozen I5.23 data; workflow 37065168288 / artifact 11251708654.
 Result: signed AUC orientation/diagonal null; absolute AUC and future action both orientation-asymmetric and diagonally enriched, p=0.00005 each; Bonferroni 0.00030.
 Next: I5.26 matched-magnitude sign-coupling control.
+
+
+## I5.26 verified
+Protocol: docs/I5_26_MATCHED_MAGNITUDE_SIGN_COUPLING.md
+Experiment: experiments/i5_26_matched_magnitude_sign_coupling.py
+Result ledger: research/ORGANISM_RESULT_LEDGER.md
+Status: verified on frozen I5.23 data; workflow 37066787603 / artifact 11253435918.
+Result: matched-magnitude sign-coupling was null for signed AUC (p=0.43118) and highly significant for absolute AUC and future action (both p<0.00005).
+Next: I6.1 causal closure of the self-model.

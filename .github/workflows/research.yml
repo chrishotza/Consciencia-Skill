@@ -212,6 +212,14 @@ jobs:
             --permutations 20000 \
             --out results/i5_25_shift_lag_orientation_symmetry
 
+      - name: Run I5.26 matched magnitude sign coupling
+        run: |
+          python experiments/i5_26_matched_magnitude_sign_coupling.py \
+            --input results/i5_23_cyclic_shift_sweep/summary.json \
+            --seed 20261026 \
+            --permutations 20000 \
+            --out results/i5_26_matched_magnitude_sign_coupling
+
       - name: Write run manifest
         run: |
           mkdir -p results
