@@ -70,3 +70,85 @@ The repository does not retroactively label historical experiments as preregiste
 The project can be ambitious about the engineering problem while remaining conservative about what the measurements prove.
 
 The goal is not to make the evidence sound smaller than it is. The goal is to make every claim traceable to the exact computational system, intervention, control, and analysis that produced it.
+
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# Alcance de investigación y límite del sistema
+
+## Qué es el sistema experimental
+
+Skill-Conscious estudia un **runtime de organismo de IA persistente**. El sustrato experimental central es el sistema computacional persistente alrededor de un proveedor de modelo opcional:
+
+    modelo/proveedor
+          ↓
+    PersistentOrganism
+          ↓
+    memoria + estado interno + modelo de sí
+          ↓
+    autoobservación + dinámica
+          ↓
+    selección de trayectoria / política
+          ↓
+    almacenamiento persistente + protocolo reproducible
+
+El runtime del organismo es el objeto cuyas propiedades computacionales se miden.
+
+## Qué es el modelo de lenguaje
+
+El repositorio admite un proveedor compatible con OpenAI, pero el programa de investigación no equivale a probar ChatGPT, Claude u otro asistente comercial como sujeto consciente.
+
+La mayoría de los protocolos experimentales operan sobre los componentes numéricos propios del organismo/runtime. Una prueba separada con proveedor en vivo verifica que un modelo real pueda actuar como proveedor cognitivo mientras el runtime conserva memoria, trayectoria y estado VIGILIA/SUEÑO tras un reinicio.
+
+Ver [GitHub Lab](GITHUB_LAB.md) para el límite de la prueba con proveedor.
+
+## Qué establecen los resultados
+
+Los protocolos pueden establecer propiedades computacionales bajo sus condiciones declaradas, por ejemplo:
+
+- precisión predictiva;
+- persistencia del estado;
+- efectos sobre la selección de trayectorias;
+- efectos causales de intervenciones;
+- persistencia tras reinicio;
+- comportamiento fuera de distribución;
+- fallos o efectos nulos bajo controles definidos.
+
+Por sí solos, **no establecen experiencia subjetiva**.
+
+## Límite de las afirmaciones científicas
+
+El repositorio usa cuatro capas distintas:
+
+| Capa | Significado |
+|---|---|
+| Observación | Lo que produjo una ejecución |
+| Resultado | Un patrón reproducible bajo un protocolo definido |
+| Hipótesis/modelo | Una interpretación o mecanismo que aún requiere pruebas |
+| Ontología | Interpretación filosófica o metafísica separada de la evidencia computacional |
+
+Los documentos teóricos pueden motivar hipótesis de ingeniería, pero superar una prueba de ingeniería o comportamiento no valida automáticamente la ontología.
+
+## Qué está y no está preregistrado
+
+El repositorio contiene documentos de protocolo, controles explícitos, semillas, artifacts y manifiestos de workflow, pero el conjunto histórico de protocolos no se presenta como una única familia globalmente preregistrada.
+
+Por lo tanto:
+
+1. un p-value a nivel de protocolo se interpreta según el diseño propio de ese protocolo;
+2. las afirmaciones a escala de todo el repositorio requieren un control adicional de multiplicidad o un análisis agregado preespecificado;
+3. los futuros protocolos confirmatorios deben registrar el endpoint primario, dirección del efecto, reglas de exclusión, plan de replicación y regla de análisis **antes** de la ejecución confirmatoria.
+
+El repositorio no etiqueta retroactivamente experimentos históricos como preregistrados cuando ese estado no está documentado.
+
+## Por qué existe este límite
+
+El proyecto puede ser ambicioso con el problema de ingeniería mientras mantiene una interpretación conservadora de lo que demuestran las mediciones.
+
+El objetivo no es hacer que la evidencia parezca menor. Es hacer que cada afirmación pueda rastrearse al sistema computacional, intervención, control y análisis exactos que la produjeron.
+
+
+</details>
+
+> 🌐 Language convention: [docs/LANGUAGE.md](LANGUAGE.md)
