@@ -978,6 +978,18 @@ Workflow: **37046361416** (run **793**); artifact **11245200134**; commit verifi
 
 Interpretación: la asimetría de magnitud entre +1 y -1 de I5.15 sobrevivió al control de fase pura con periodo siete, horizonte de 15 ciclos y contrabalanceo semántico. Esto reduce la plausibilidad de que la diferencia sea solamente un artefacto de la rotación finita de la cola. La dirección firmada, sin embargo, no se separó robustamente. El siguiente experimento debe cartografiar el efecto del bridge a través de todas las fases antes de atribuirlo a un mecanismo específico. No demuestra consciencia ni experiencia subjetiva.
 
+### I5.17 — Mapa de mediación del bridge resuelto por fase — resultado verificado
+
+Workflow: **37047719727** (run **801**); artifact **11244733803**; commit **578802962b4f37066db95d46567245dcbb9ac83b**; seed **20261017**; **24** réplicas; **24** ciclos de warmup; **15** ciclos experimentales; **180 tests** pasaron.
+
+- coincidencia de acción aplicada en t0: **100%**;
+- coincidencia de distribución de SELF_MODEL: **100%**;
+- efecto bridge ON−OFF en AUC firmada: -3 **-1.218683 (p=0.002000)**; -2 **-1.506611 (p=0.000600)**; -1 **-1.761724 (p<0.00005)**; +1 **-1.456679 (p=0.001500)**; +2 **-1.220088 (p=0.002050)**; +3 **-1.117023 (p=0.003450)**;
+- efectos bridge ON−OFF en AUC absoluta: -3 **-0.715123 (p=0.000900)**; -2 **-0.613587 (p=0.069047)**; -1 **-0.182950 (p=0.529124)**; +1 **-0.722811 (p=0.003450)**; +2 **-0.376779 (p=0.099395)**; +3 **-0.544069 (p=0.057997)**;
+- simetría absoluta +k vs -k: k=1 **p=0.129994**, k=2 **p=0.565822**, k=3 **p=0.440678**.
+
+Interpretación: el bridge muestra un perfil dependiente de la fase temporal bajo el arnés I5.16 y no queda restringido a +1. La simetría absoluta +k/-k no se separó significativamente. Los contrastes son tests por lag con 20.000 permutaciones sign-flip y no se presenta una afirmación global sin corrección por multiplicidad. No demuestra consciencia ni experiencia subjetiva.
+
 ## Estado de campaña C0
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.

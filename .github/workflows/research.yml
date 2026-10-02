@@ -135,6 +135,14 @@ jobs:
             --cycles 15 \
             --out results/i5_16_counterbalanced_pure_phase_temporal_control
 
+      - name: Run I5.17 phase-resolved bridge mediation map
+        run: |
+          python experiments/i5_17_phase_resolved_bridge_mediation_map.py \
+            --replicates 24 \
+            --warmup 24 \
+            --cycles 15 \
+            --out results/i5_17_phase_resolved_bridge_mediation_map
+
       - name: Write run manifest
         run: |
           mkdir -p results
