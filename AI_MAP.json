@@ -17,15 +17,16 @@
       "docs/I5_2_STATE_DEPENDENT_QUERY.md",
       "docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md",
       "docs/I5_4_PERSISTENT_SELECTIVE_ACCESS.md",
+      "docs/I5_5_CAUSAL_QUERY_BOTTLENECK.md",
       "docs/LATTICE_COMPUTER_V1.md",
       "docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md",
       "research/ORGANISM_RESULT_LEDGER.md",
       "docs/C0_18_AUTONOMOUS_SECOND_ORDER_LESION_RESCUE.md"
     ],
     "experimental_next": [
-      "I5.4 mechanism redesign: functionally necessary selective access",
-      "cross-mechanism interaction with recurrent/re-entry dynamics",
-      "Lattice-2 causal influence map",
+      "I5.5 integration into PersistentOrganism with task-level bottleneck",
+      "force bottleneck necessity by information-matched distractor controls",
+      "cross-mechanism interaction with recurrence/re-entry",
       "C0 campaign G2-G8"
     ]
   },
@@ -59,9 +60,9 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.4 mechanism redesign: functionally necessary selective access",
-    "cross-mechanism interaction with recurrent/re-entry dynamics",
-    "Lattice-2 causal influence map",
+    "I5.5 integration into PersistentOrganism with task-level bottleneck",
+    "force bottleneck necessity by information-matched distractor controls",
+    "cross-mechanism interaction with recurrence/re-entry",
     "C0 campaign G2-G8"
   ]
 }
