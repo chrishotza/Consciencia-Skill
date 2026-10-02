@@ -33,11 +33,12 @@
       "docs/I5_17_PHASE_RESOLVED_BRIDGE_MEDIATION_MAP.md",
       "docs/I5_18_GLOBAL_PHASE_BRIDGE_INTERACTION.md",
       "docs/I5_19_INDEPENDENT_BRIDGE_REPLICATION.md",
-      "docs/I5_20_SEMANTIC_PERMUTATION_SPECIFICITY.md"
+      "docs/I5_20_SEMANTIC_PERMUTATION_SPECIFICITY.md",
+      "docs/I5_21_PHASE_LOCAL_SEMANTIC_PERMUTATION.md"
     ],
     "experimental_next": [
-      "I5.21 phase-local semantic permutation",
-      "separate phase-content correspondence from the broader effect of disrupting temporal order",
+      "I5.22 cyclic semantic phase-shift control",
+      "separate phase-content specificity from explanations based on changed local adjacency or order",
       "C0 campaign G2-G8"
     ]
   },
@@ -71,8 +72,8 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.21 phase-local semantic permutation",
-    "separate phase-content correspondence from the broader effect of disrupting temporal order",
+    "I5.22 cyclic semantic phase-shift control",
+    "separate phase-content specificity from explanations based on changed local adjacency or order",
     "C0 campaign G2-G8"
   ]
 }
