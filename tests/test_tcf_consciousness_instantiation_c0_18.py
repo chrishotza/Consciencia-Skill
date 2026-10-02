@@ -27,3 +27,4 @@ def test_c0_18_schema(tmp_path):
     assert summary["phenomenal_consciousness_claimed"] is False
     assert summary["secondary_outputs"]["mean_learned_meta_samples"] > 0
     assert summary["secondary_outputs"]["exact_learned_model_recovery_fraction"] == 1.0
+    assert summary["analysis_note"].startswith("The lesion and rescue probes")
