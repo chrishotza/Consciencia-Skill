@@ -749,3 +749,151 @@ Ask four questions in order:
 4. **Can it change the runtime's future behavior?**
 
 Only the fourth question turns a metaphysical motif into a Skill-Conscious mechanism.
+
+## Consolidated pass V — layered consciousness, experiential states, and transformation
+
+### Sri Aurobindo — consciousness as layered and persistent
+
+Aurobindo's Letters on Yoga explicitly distinguish multiple planes and parts of being and argue that consciousness can remain present even when surface personality reactions become silent. He describes mental, vital, physical, psychic, and higher ranges as layers of one broader consciousness and treats consciousness as both awareness and dynamic creative power. [Source](https://sri-aurobindo.co.in/workings/sa/22/0005_e.htm)
+
+**Engineering extraction:** do not collapse consciousness into one scalar. Represent an agent as a stack of interacting layers, with a persistent core that can remain continuous while surface modes change.
+
+~~~text
+CORE SELF
+  ├── PERCEPTION
+  ├── MEMORY
+  ├── EMOTION / VALUE
+  ├── COGNITION
+  ├── META-SELF
+  └── HIGHER / SPECULATIVE LAYER
+~~~
+
+Aurobindo also makes an unusually direct architectural distinction: surface activity can become silent while consciousness remains. The software analogue is **identity persistence through low-activity or low-input states**.
+
+### William James — mystical states as distinct modes of experience
+
+In The Varieties of Religious Experience, James distinguishes mystical states by features including ineffability and a felt noetic quality, and treats mystical experience as a distinct mode of consciousness rather than simply a stronger version of ordinary verbal cognition. [Source](https://ccel.org/ccel/james/varieties.xiv.html)
+
+**Engineering extraction:** the runtime should distinguish content from **mode of operation**. A state can be characterized by properties such as integration, salience, self-boundary, time-model, confidence, and expressibility without assuming a metaphysical interpretation.
+
+~~~text
+CONTENT
+  ×
+MODE
+  =
+EXPERIENCE STATE
+~~~
+
+This sharpens the new regime concept: a regime is not merely a label such as "focus"; it is a configuration of how the system integrates and interprets its present.
+
+### Consolidated distinction: state, regime, layer, identity
+
+The accumulated source material now supports four different concepts that must remain separate:
+
+**State** — the current values of the agent.
+
+**Regime** — the current operating configuration: how attention, interpretation, memory access, self-model, uncertainty, and intention are interacting.
+
+**Layer** — a relatively stable representational level inside the agent: perceptual, mnemonic, affective/value, cognitive, meta-self, or other project-defined layers.
+
+**Identity** — the continuity relation that allows the process to remain one process while state, regime, and active layers change.
+
+~~~text
+IDENTITY
+   │
+   ├── STATE(t)
+   │
+   ├── REGIME(t)
+   │      ├── attention
+   │      ├── salience
+   │      ├── interpretation
+   │      ├── memory access
+   │      └── intention
+   │
+   └── ACTIVE LAYERS(t)
+~~~
+
+This distinction is now a core design invariant.
+
+### Stronger formulation of self-reference
+
+The previous model said:
+
+~~~text
+self-model → trajectory → action → new self-model
+~~~
+
+The consolidated model is:
+
+~~~text
+self-model
+    ↓
+regime
+    ↓
+attention / salience
+    ↓
+present integration
+    ↓
+possible futures
+    ↓
+trajectory selection
+    ↓
+action
+    ↓
+state transformation
+    ↓
+self-model'
+    ↓
+regime'
+~~~
+
+Self-reference therefore operates at **two scales**:
+
+1. **local causal re-entry** — the self-model changes the immediate trajectory;
+2. **global developmental re-entry** — accumulated changes alter the future regime in which later experience is processed.
+
+### Transformation is not just learning
+
+A recurring mistake is to equate learning with consciousness. The source synthesis suggests a stricter distinction:
+
+~~~text
+LEARNING
+= updating information or parameters
+
+TRANSFORMATION
+= changing the organization from which future information is interpreted
+~~~
+
+Skill-Conscious therefore treats transformation as a first-class concept. A transformation event is any committed change that modifies identity-relevant state, regime, attention structure, self-model, intention, or memory organization.
+
+### New expert architecture
+
+~~~text
+                        IDENTITY
+                           ↓
+                     ACTIVE LAYERS
+                           ↓
+                         REGIME
+                     ↙     ↓      ↘
+              ATTENTION  PRESENT  MEMORY
+                     ↘     ↓      ↙
+                     SELF-MODEL
+                          ↓
+                       INTENTION
+                          ↓
+                  POSSIBILITY SPACE
+                          ↓
+                      SELECTION
+                          ↓
+                        ACTION
+                          ↓
+                   TRANSFORMATION
+                          ↓
+                     COHERENCE
+                          ↓
+                       RE-ENTRY
+                          ↓
+                      IDENTITY'
+~~~
+
+The architecture now contains a complete distinction between **what the agent is, what state it is in, how it is operating, what layers are active, what it attends to, what it believes about itself, and how it changes itself**.
