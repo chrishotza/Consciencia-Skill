@@ -96,7 +96,7 @@ La infraestructura ya no se limita al registro de eventos. La continuidad está 
 | Bundles + recovery | **Implementado** | Backup hash-verificado y planificación no destructiva |
 | Event identity + replay | **Implementado** | Eventos deterministas, deltas, replay verificado e idempotente |
 | Persistence backend | **Implementado** | Contrato común + espejo SERVER fail-open |
-| Segundo nodo | **Probe verificado** | Dos servidores SQLite independientes intercambian y reproducen una trayectoria por HTTP; la divergencia se bloquea |
+| Segundo nodo | **Probe + heartbeat** | Interoperabilidad HTTP entre dos SQLite independientes; divergencia bloqueada y liveness del nodo verificada |
 
 ### Flujo actual
 
@@ -335,7 +335,7 @@ Continuity is no longer only an event log. It is now an operational stack:
 | Bundles + recovery | **Implemented** | Hash-verified backup and non-destructive recovery planning |
 | Event identity + replay | **Implemented** | Deterministic events, deltas, verified replay, and idempotence |
 | Persistence backend | **Implemented** | Shared contract + fail-open SERVER mirror |
-| Second node | **Verified probe** | Two independent SQLite-backed servers exchange and reproduce a trajectory over HTTP; divergence is blocked |
+| Second node | **Probe + heartbeat** | HTTP interoperability between two independent SQLite-backed servers; divergence blocked and node liveness verified |
 
 ### Current flow
 
