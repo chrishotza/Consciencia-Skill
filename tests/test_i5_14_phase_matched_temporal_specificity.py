@@ -26,16 +26,31 @@ def test_phase_matched_metrics_detect_temporal_change():
         row(0, 0.0, 1.0, "A"),
         row(1, 0.2, 1.0, "B"),
         row(2, 0.4, -1.0, "C"),
+        row(3, 0.6, 1.0, "A"),
+        row(4, 0.8, -1.0, "B"),
+        row(5, 1.0, 1.0, "C"),
+        row(6, 1.2, -1.0, "A"),
+        row(7, 1.4, 1.0, "B"),
     ]
     plus = [
         row(0, 0.0, 1.0, "A"),
         row(1, 0.3, -1.0, "C"),
         row(2, 0.2, 1.0, "A"),
+        row(3, 0.4, -1.0, "B"),
+        row(4, 0.5, 1.0, "C"),
+        row(5, 0.7, -1.0, "A"),
+        row(6, 0.9, 1.0, "B"),
+        row(7, 1.0, -1.0, "B"),
     ]
     minus = [
         row(0, 0.0, 1.0, "A"),
         row(1, 0.1, 1.0, "B"),
-        row(2, 0.3, -1.0, "C"),
+        row(2, 0.3, -1.0, "B"),
+        row(3, 0.5, 1.0, "C"),
+        row(4, 0.7, -1.0, "A"),
+        row(5, 0.8, 1.0, "B"),
+        row(6, 1.0, -1.0, "C"),
+        row(7, 1.1, 1.0, "A"),
     ]
     plus_off = plus
     out = paired_metrics(base, plus, minus, plus_off)
