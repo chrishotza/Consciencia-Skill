@@ -47,8 +47,23 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
             return
 
         if path.path == "/nodes":
-            self._send(200, {"nodes": self.store.list_nodes()})
+            query = parse_qs(path.query)
+            stale_after = float(query.get("stale_after_seconds", ["30"])[0])
+            self._send(
+                200,
+                {"nodes": self.store.list_nodes(stale_after_seconds=stale_after)},
+            )
             return
+
+        if path.path.startswith("/nodes/"):
+            parts = [p for p in path.path.split("/") if p]
+            if len(parts) == 2:
+                node = self.store.get_node(parts[1])
+                if node is None:
+                    self._send(404, {"error": "node_not_found"})
+                    return
+                self._send(200, node)
+                return
 
         if path.path.startswith("/instances/"):
             parts = [p for p in path.path.split("/") if p]
@@ -125,6 +140,27 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
                 node_id=node_id,
                 endpoint=data.get("endpoint"),
                 capabilities=list(data.get("capabilities", [])),
+            )
+            self._send(200, node)
+            return
+
+        if path.path.startswith("/nodes/") and path.path.endswith("/heartbeat"):
+            parts = [p for p in path.path.split("/") if p]
+            if len(parts) != 3:
+                self._send(404, {"error": "not_found"})
+                return
+            node_id = parts[1].strip()
+            if not node_id:
+                self._send(400, {"error": "node_id_required"})
+                return
+            node = self.store.heartbeat_node(
+                node_id=node_id,
+                endpoint=data.get("endpoint"),
+                capabilities=(
+                    list(data["capabilities"])
+                    if data.get("capabilities") is not None
+                    else None
+                ),
             )
             self._send(200, node)
             return
