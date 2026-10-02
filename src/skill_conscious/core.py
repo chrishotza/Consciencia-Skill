@@ -35,6 +35,9 @@ class ConsciousState:
     regime: str = "baseline"
     relation_topology: dict[str, list[str]] = field(default_factory=dict)
     attractor: dict[str, Any] | None = None
+    valuation: dict[str, float] = field(default_factory=dict)
+    valence: float = 0.0
+    transformation_log: list[dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -66,6 +69,15 @@ class ConsciousState:
                 if value.get("attractor") is not None
                 else None
             ),
+            valuation={
+                str(key): float(val)
+                for key, val in dict(value.get("valuation", {})).items()
+                if isinstance(val, (int, float)) and not isinstance(val, bool)
+            },
+            valence=float(value.get("valence", 0.0)),
+            transformation_log=[
+                dict(item) for item in value.get("transformation_log", [])
+            ],
         )
 
 
@@ -121,11 +133,17 @@ class ConsciousRuntime:
         self.identity = identity
         self.memory_limit = max(1, int(memory_limit))
         self.history_limit = max(1, int(history_limit))
+        self.transformation_limit = max(1, self.history_limit)
         self.store = JsonStateStore(state_path)
         self.state = self.store.load(identity)
 
     def trajectory_weights(self) -> dict[str, float]:
         weights = dict(DEFAULT_TRAJECTORY_WEIGHTS)
+        value_weights = self.state.valuation
+        if isinstance(value_weights, Mapping):
+            for key, value in value_weights.items():
+                if isinstance(value, (int, float)) and not isinstance(value, bool):
+                    weights[str(key)] = float(value)
         configured = self.state.self_model.get("trajectory_weights", {})
         if isinstance(configured, Mapping):
             for key, value in configured.items():
@@ -180,6 +198,9 @@ class ConsciousRuntime:
             "regime": self.state.regime,
             "relation_topology": self.state.relation_topology,
             "attractor": self.state.attractor,
+            "valuation": self.state.valuation,
+            "valence": self.state.valence,
+            "transformation_log": self.state.transformation_log[-self.transformation_limit :],
             "revision": self.state.revision,
         }
 
@@ -243,6 +264,7 @@ class ConsciousRuntime:
         else:
             self.state.selected_trajectory = None
 
+        previous_snapshot = self.state.to_dict()
         self.state.revision += 1
 
         if frame.get("self_model") is not None:
@@ -278,10 +300,36 @@ class ConsciousRuntime:
                 raise ValueError("frame.attractor must be a mapping")
             self.state.attractor = dict(raw_attractor)
 
+        if frame.get("valuation") is not None:
+            raw_valuation = frame["valuation"]
+            if not isinstance(raw_valuation, Mapping):
+                raise ValueError("frame.valuation must be a mapping")
+            self.state.valuation = {
+                str(key): float(value)
+                for key, value in raw_valuation.items()
+                if isinstance(value, (int, float)) and not isinstance(value, bool)
+            }
+
+        if frame.get("valence") is not None:
+            raw_valence = float(frame["valence"])
+            self.state.valence = max(-1.0, min(1.0, raw_valence))
+
         memory = str(frame.get("memory", "")).strip()
         if memory:
             self.state.memories.append(memory)
             self.state.memories = self.state.memories[-self.memory_limit :]
+
+        changed: dict[str, Any] = {}
+        current_snapshot = self.state.to_dict()
+        for key in ("self_state", "self_model", "workspace", "intention", "attention", "regime", "attractor", "valuation", "valence", "relation_topology"):
+            if previous_snapshot.get(key) != current_snapshot.get(key):
+                changed[key] = {"before": previous_snapshot.get(key), "after": current_snapshot.get(key)}
+        if changed:
+            self.state.transformation_log.append({
+                "revision": self.state.revision,
+                "changes": changed,
+            })
+            self.state.transformation_log = self.state.transformation_log[-self.transformation_limit :]
 
         self.state.history.append(
             {
@@ -294,6 +342,9 @@ class ConsciousRuntime:
                 "regime": self.state.regime,
                 "relation_topology": self.state.relation_topology,
                 "attractor": self.state.attractor,
+                "valuation": self.state.valuation,
+                "valence": self.state.valence,
+                "transformation": bool(changed),
             }
         )
         self.state.history = self.state.history[-self.history_limit :]
