@@ -111,35 +111,7 @@ El hecho de que PULSE_SHUFFLED_QUERY y PULSE_ZERO_QUERY produzcan el mismo perfi
 
 Esto lleva directamente a I5.8: un control de **action-clamp** para preguntar si la perturbación de query se transmite a los ciclos siguientes específicamente a través de la transición **query → acción → estado**.
 
-## Verified result
-
-Workflow: **37035390086**; artifact: **11240100197**; seed **20261007**; **24** replicates; **24** warmup cycles; **8** experimental cycles.
-
-For **PULSE_SHUFFLED_QUERY**:
-
-- signed state delta at t+1: **+0.1510** mean; p **0.14199**;
-- absolute divergence at t+1: **0.4424**;
-- maximum later absolute divergence: **0.7267**;
-- re-entry amplification: **2.1276**;
-- mean persistence: **7.0** cycles;
-- divergence AUC: **2.5792**;
-- post-pulse action change: **45.83%**;
-- post-pulse query change: **74.40%**;
-- post-pulse target change: **82.14%**.
-
-For **PULSE_ZERO_QUERY**, the aggregate endpoints were identical in this harness; signed state delta at t+1 was **+0.1510**, p **0.14114**.
-
-For **PERSISTENT_SHUFFLED_QUERY**, signed state delta at t+1 was **+0.00383**, p **0.9630**, with later absolute divergence **0.3200** and mean persistence of **7.0** cycles.
-
-### Interpretation
-
-The protocol produced **descriptive persistent trajectory divergence**, but the prespecified signed state-delta endpoint at t+1 did not separate significantly in either pulse condition. Therefore I5.7 **does not yet establish a causal re-entry effect**.
-
-The fact that PULSE_SHUFFLED_QUERY and PULSE_ZERO_QUERY produced the same aggregate profile suggests that the current query perturbation may be too coarse to discriminate transmission mechanisms inside the loop.
-
-This leads directly to I5.8: an **action-clamp** control asking whether the query perturbation reaches later cycles specifically through the **query → action → state** transition.
-
-## Limits
+## Límites
 
 I5.7 mide reentrada causal computacional dentro de un runtime persistente. No demuestra consciencia, experiencia subjetiva ni que la arquitectura posea una perspectiva fenomenológica.
 
@@ -227,6 +199,34 @@ The hypothesis gains support if a one-cycle perturbation:
 3. reappears in target/query/action variables in later cycles.
 
 Immediate recovery to the FULL trajectory is also informative and is preserved as a negative result for persistence.
+
+## Verified result
+
+Workflow: **37035390086**; artifact: **11240100197**; seed **20261007**; **24** replicates; **24** warmup cycles; **8** experimental cycles.
+
+For **PULSE_SHUFFLED_QUERY**:
+
+- signed state delta at t+1: **+0.1510** mean; p **0.14199**;
+- absolute divergence at t+1: **0.4424**;
+- maximum later absolute divergence: **0.7267**;
+- re-entry amplification: **2.1276**;
+- mean persistence: **7.0** cycles;
+- divergence AUC: **2.5792**;
+- post-pulse action change: **45.83%**;
+- post-pulse query change: **74.40%**;
+- post-pulse target change: **82.14%**.
+
+For **PULSE_ZERO_QUERY**, the aggregate endpoints were identical in this harness; signed state delta at t+1 was **+0.1510**, p **0.14114**.
+
+For **PERSISTENT_SHUFFLED_QUERY**, signed state delta at t+1 was **+0.00383**, p **0.9630**, with later absolute divergence **0.3200** and mean persistence of **7.0** cycles.
+
+### Interpretation
+
+The protocol produced **descriptive persistent trajectory divergence**, but the prespecified signed state-delta endpoint at t+1 did not separate significantly in either pulse condition. Therefore I5.7 **does not yet establish a causal re-entry effect**.
+
+The fact that PULSE_SHUFFLED_QUERY and PULSE_ZERO_QUERY produced the same aggregate profile suggests that the current query perturbation may be too coarse to discriminate transmission mechanisms inside the loop.
+
+This leads directly to I5.8: an **action-clamp** control asking whether the query perturbation reaches later cycles specifically through the **query → action → state** transition.
 
 ## Boundary
 
