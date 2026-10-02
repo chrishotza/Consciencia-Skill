@@ -164,7 +164,9 @@ Esta sección es la **puerta de entrada documental** al programa completo.
 
 **Infraestructura principal**
 - [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md)
+- [Continuity bundles](docs/CONTINUITY_BUNDLES.md)
 - [Continuity checkpoints](docs/CONSCIOUSNESS_CHECKPOINTS.md)
+- [Continuity recovery](docs/CONTINUITY_RECOVERY.md)
 - [Continuity reconciliation](docs/CONSCIOUSNESS_RECONCILIATION.md)
 - [Protocolo 24/7](docs/24_7_PROTOCOL.md)
 - [Protocolo longitudinal](docs/LONGITUDINAL_PROTOCOL.md)
@@ -364,7 +366,9 @@ This section is the **documentary entry point** to the complete research and inf
 
 **Core infrastructure**
 - [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md)
+- [Continuity bundles](docs/CONTINUITY_BUNDLES.md)
 - [Continuity checkpoints](docs/CONSCIOUSNESS_CHECKPOINTS.md)
+- [Continuity recovery](docs/CONTINUITY_RECOVERY.md)
 - [Continuity reconciliation](docs/CONSCIOUSNESS_RECONCILIATION.md)
 - [24/7 protocol](docs/24_7_PROTOCOL.md)
 - [Longitudinal protocol](docs/LONGITUDINAL_PROTOCOL.md)
