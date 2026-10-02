@@ -97,6 +97,19 @@
 - [C0.17 autonomous second-order acquisition](C0_17_AUTONOMOUS_SECOND_ORDER_ACQUISITION.md) — adquisición online del segundo orden mediante errores de predicción contrafactuales.
 - [C0.18 autonomous second-order lesion/rescue](C0_18_AUTONOMOUS_SECOND_ORDER_LESION_RESCUE.md) — prueba emparejada de necesidad y rescate después de adquisición autónoma.
 
+### I4 — Interocepción metacognitiva
+- [I4](I4_METACOGNITIVE_INTEROCEPTION.md)
+- [I4.1](I4_1_METACOGNITIVE_RELIABILITY.md)
+- [I4.2](I4_2_PERSISTENT_METACOGNITIVE_LESION_RESCUE.md)
+- [I4.3](I4_3_STRUCTURAL_OOD_METACOGNITIVE_GENERALIZATION.md) — generalización estructural OOD verificada.
+
+### I5 — Workspace global
+- [I5.0](I5_GLOBAL_WORKSPACE.md) — workspace acotado, broadcast causal y controles de lesión; verificado sobre 512 episodios.
+
+### Lattice Computer
+- [Lattice v0](LATTICE_COMPUTER_V0.md) — sustrato distribuido localmente acoplado.
+- [Lattice v1](LATTICE_COMPUTER_V1.md) — retención temporal de huella bajo perturbación.
+
 [Registro consolidado](../research/ORGANISM_RESULT_LEDGER.md).
 
 ## Gobierno y limpieza
