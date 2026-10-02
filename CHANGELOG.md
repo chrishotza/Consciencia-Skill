@@ -1,3 +1,11 @@
+## 2026-10-02 — I6.1 verificado / I6.1 verified
+
+- Workflow **37068670875**, artifact **11253574021**; tests **37068670840** and package **37068670844** passed.
+- Intact self-model selection regret 0.04512 vs prediction lesion 0.20278.
+- Primary causal contrast −0.15766, p<0.00005; frozen-update contrast −0.06372, p<0.00005.
+- Interpretation: self-model use is a causal operational component of trajectory selection in the deterministic harness.
+- Next: I6.2 persistent self-model and continuity loop.
+
 ## 2026-10-02 — I5.26 verificado / I5.26 verified
 
 - Frozen I5.23 analysis; no new trajectories.
