@@ -206,6 +206,13 @@ def main() -> None:
             "boot_count": organism.state.boot_count,
         },
     )
+    reconciliation = _reconcile(consciousness_client, agent_id, store)
+    _emit(
+        consciousness_client,
+        agent_id,
+        "RECONCILE",
+        reconciliation,
+    )
     _checkpoint(
         consciousness_client,
         agent_id,
@@ -213,13 +220,6 @@ def main() -> None:
         node_id,
         store,
         organism,
-    )
-    reconciliation = _reconcile(consciousness_client, agent_id, store)
-    _emit(
-        consciousness_client,
-        agent_id,
-        "RECONCILE",
-        reconciliation,
     )
 
     while True:
@@ -243,14 +243,6 @@ def main() -> None:
                         "response_hash": hashlib.sha256(response.encode("utf-8")).hexdigest(),
                     },
                 )
-                _checkpoint(
-                    consciousness_client,
-                    agent_id,
-                    runtime,
-                    node_id,
-                    store,
-                    organism,
-                )
                 store.add_event(
                     agent_id,
                     "SYSTEM",
@@ -261,6 +253,14 @@ def main() -> None:
                     },
                 )
                 store.complete_input(item["id"])
+                _checkpoint(
+                    consciousness_client,
+                    agent_id,
+                    runtime,
+                    node_id,
+                    store,
+                    organism,
+                )
             elif autonomous_when_idle:
                 dynamic = organism.autonomous_wake_cycle()
                 _emit(
