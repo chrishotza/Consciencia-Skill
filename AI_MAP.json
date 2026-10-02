@@ -36,11 +36,12 @@
       "docs/I5_20_SEMANTIC_PERMUTATION_SPECIFICITY.md",
       "docs/I5_21_PHASE_LOCAL_SEMANTIC_PERMUTATION.md",
       "docs/I5_22_CYCLIC_SEMANTIC_PHASE_SHIFT.md",
-      "docs/I5_23_CYCLIC_SHIFT_SWEEP.md"
+      "docs/I5_23_CYCLIC_SHIFT_SWEEP.md",
+      "docs/I5_24_GLOBAL_SHIFT_LAG_INTERACTION.md"
     ],
     "experimental_next": [
-      "I5.24 global shift×lag interaction",
-      "formalize the two-dimensional shift×lag interaction before mechanistic interpretation of the sweep surface",
+      "I5.25 shift×lag orientation and symmetry control",
+      "formalize whether the compensatory shift-vs-lag surface is invariant under axis orientation and sign reversal",
       "C0 campaign G2-G8"
     ]
   },
@@ -74,8 +75,8 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.24 global shift×lag interaction",
-    "formalize the two-dimensional shift×lag interaction before mechanistic interpretation of the sweep surface",
+    "I5.25 shift×lag orientation and symmetry control",
+    "formalize whether the compensatory shift-vs-lag surface is invariant under axis orientation and sign reversal",
     "C0 campaign G2-G8"
   ]
 }

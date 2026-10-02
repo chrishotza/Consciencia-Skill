@@ -1,3 +1,11 @@
+## 2026-10-02 — I5.24 verificado / I5.24 verified
+
+- Frozen I5.23 analysis; no new trajectories.
+- Workflow 37063264401, artifact 11252345042; tests 37063264520 and package check 37063264454 passed.
+- Global shift×lag interaction: signed AUC p=0.89461; absolute AUC p=0.00005; future-action change p=0.00005.
+- Bonferroni-adjusted p across three endpoints: 1.0, 0.00015, 0.00015 respectively.
+- Next: I5.25 shift×lag orientation and symmetry control.
+
 ## 2026-10-02 — I5.23 verificado / I5.23 verified
 
 - 24 replicates; seed **20261023**; 24 warmup; 15 cycles; six shifts; six lags; 20,000 permutations.
