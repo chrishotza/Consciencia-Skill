@@ -133,9 +133,13 @@ Events now carry deterministic SHA-256 identities, logical revisions and parent-
 
 See [Deterministic event replay](DETERMINISTIC_EVENT_REPLAY.md).
 
-### Phase 5 — shared persistence backend
+### Phase 5 — shared persistence backend — implemented (boundary layer)
 
-Introduce a PersistenceBackend interface so the organism can use a local backend or server-backed backend without changing its cognitive loop.
+`PersistenceBackend` is now the persistence contract consumed by the persistent organism. LOCAL uses `MemoryStore`; SERVER uses `ServerMirroredPersistenceBackend`, which commits locally first and mirrors continuity-critical state, memories and organism events to the Consciousness Server. Mirror failures remain fail-open.
+
+See [Shared Persistence Backend](SHARED_PERSISTENCE_BACKEND.md).
+
+The abstraction intentionally does not pretend that every cognitive SQLite table is remotely replicated yet; model artifacts, dream records and input queues remain local until their transfer semantics are validated.
 
 ### Phase 6 — second node
 
