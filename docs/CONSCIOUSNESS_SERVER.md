@@ -165,9 +165,29 @@ Node liveness is now explicit:
 
 This is still a liveness/control-plane primitive, not automatic multi-node convergence. Deterministic synchronization remains guarded by revision, state-hash, event-identity, and parent-chain checks.
 
-### Phase 7 — NodeZero mesh
+### Phase 7 — NodeZero mesh — synchronization layer implemented
 
-Introduce replicated node state and deterministic multi-node event identity.
+The first safe peer-synchronization layer is now operational.
+
+- peers can exchange deterministic event deltas in either direction;
+- the side with the higher revision can transfer its delta to the lower-revision side;
+- equal revisions with different state hashes are classified as **DIVERGED** and are never overwritten;
+- post-replay revision is verified against the expected boundary;
+- synchronization is idempotent once both sides are aligned.
+
+Manual synchronization:
+
+    python -m src.consciousness_server.cli sync ^
+      --server http://127.0.0.1:8787 ^
+      --peer http://127.0.0.1:8788 ^
+      --instance consciencia-001
+
+For the daemon, configure periodic peer synchronization with:
+
+    CONSCIOUSNESS_PEERS=http://127.0.0.1:8788,http://127.0.0.1:8789
+    CONSCIOUSNESS_SYNC_SECONDS=60
+
+The daemon performs synchronization in both directions according to revision. It does not auto-resolve divergence.
 
 ### Phase 8 — shared continuity
 
