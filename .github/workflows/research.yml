@@ -78,6 +78,14 @@ jobs:
             --task-weight 0.35 \
             --out results/i5_9_action_replay_sufficiency
 
+      - name: Run I5.10 semantic re-entry under action replay
+        run: |
+          python experiments/i5_10_semantic_reentry_under_action_replay.py \
+            --replicates 24 \
+            --warmup 24 \
+            --cycles 8 \
+            --out results/i5_10_semantic_reentry_under_action_replay
+
       - name: Write run manifest
         run: |
           mkdir -p results
