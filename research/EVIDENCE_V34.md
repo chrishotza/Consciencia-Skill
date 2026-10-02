@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V34 — Cluster-Level Angular Null
 
 ## Estado
@@ -70,3 +72,85 @@ Archivos generados:
 - `paired_context_cells.csv`
 - `raw.csv`
 - `summary.json`
+
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V34 — Cluster-Level Angular Null
+
+## Status
+
+**Confirmed at block level.**
+
+V34 independently replicates V33 with history-seeds 90–99. Primary inference does not treat repeated simulated cells as independent observations: it first collapses to **40 history blocks** (4 history pairs × 10 seeds).
+
+The experiment preserves six blind parameter points, four history pairs, nine synthetic memory/pressure contexts, and angular directions 30°, 60°, 90°, 120°, and 150°. Future input is exactly zero. Reference and test continuations use disjoint seeds.
+
+## Primary result
+
+| Metric | V34 |
+|---|---:|
+| Observed 30° − 150° contrast | **0.365469** |
+| Stratified null mean | -0.000285 |
+| Null 95th percentile | 0.097126 |
+| Stratified sign-flip p | **0.00005** |
+| Bootstrap 95% CI | **[0.346320, 0.382444]** |
+| History blocks | 40 |
+| History strata | 4 |
+| Permutations | 20,000 |
+| Bootstraps | 10,000 |
+
+The scale difference from V33 is expected: V33 aggregated thousands of cells, whereas V34 requires the effect to survive collapsing repetition within each history block. The contrast remains positive and the stratified null remains centered close to zero.
+
+## Context dependence
+
+Mean 30° − 150° contrast by context:
+
+| Memory | Pressure 0 | Pressure 1 | Pressure 2 |
+|---:|---:|---:|---:|
+| -0.8 | 0.205669 | 0.161440 | 0.137969 |
+| 0.0 | 0.564260 | 0.665326 | 0.524137 |
+| 0.8 | 0.355185 | 0.337622 | 0.337612 |
+
+The effect does not depend on a single context cell; all nine contexts show positive contrast.
+
+## Interpretation
+
+V34 provides an important methodological check: the angular signal observed in V33 **does not disappear** when aggregation is moved from repeated simulation cells to history-seed blocks.
+
+This strengthens the interpretation that a **reproducible geometric/dynamic structure** exists in the implemented system under these protocols.
+
+It does not demonstrate consciousness, subjective experience, sentience, or equivalence to a mental state. The result is strictly computational and depends on the model, parameters, and protocol defined in the repository.
+
+## Limitations
+
+- The 40 blocks still belong to one computational model; they are not an external population of independent systems.
+- The inference tests robustness to history-seed dependence, not universal generalization.
+- The 30° − 150° contrast is a protocol-defined angular statistic and should be interpreted within this experiment family.
+- Memory and pressure contexts are synthetic internal-state manipulations.
+
+## Reproducibility
+
+GitHub Actions run: **36789998870**
+
+Artifact: **state-geometry-cluster-null-v34** (artifact id 11131896313)
+
+Code commit: **cf4fa686df6f9b861492a6a84d904027f61671a7**
+
+Workflow: **153281c79f98aec70735ef11a250847418dacc4e**
+
+Protocol: **4f16477251a39129995eb58463cd4e93d6448072**
+
+Generated files:
+
+- cluster_summary.csv
+- context_summary.csv
+- paired_context_cells.csv
+- raw.csv
+- summary.json
+
+</details>
