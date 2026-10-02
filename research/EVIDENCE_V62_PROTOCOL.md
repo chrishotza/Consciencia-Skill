@@ -1,3 +1,45 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# Evidencia V62 — Puente causal del self-model semántico
+
+## Hipótesis
+
+El self-model semántico de un organismo persistente debería volverse causalmente relevante para su dinámica interna cuando se habilita un bridge explícito del self-model, mientras que la misma diferencia de self-model debería quedar aislada cuando el bridge está deshabilitado.
+
+## Diseño
+
+Cada réplica:
+
+1. construye un estado base persistido;
+2. clona ese estado exacto en cuatro brazos;
+3. emite el mismo contenido MEMORY en todos los brazos;
+4. emite self-model A o B;
+5. conmuta el semantic self-model bridge OFF u ON;
+6. registra el estado interno resultante y la señal del semantic bridge.
+
+## Endpoints primarios
+
+- state delta A/B con bridge OFF;
+- state delta A/B con bridge ON;
+- signal delta A/B con bridge OFF;
+- signal delta A/B con bridge ON;
+- persistencia de la nueva versión del self-model.
+
+## Interpretación
+
+El aislamiento con bridge OFF más la divergencia con bridge ON constituye evidencia de que el self-model semántico se está transduciendo explícitamente hacia la dinámica interna bajo este arnés.
+
+## Limitaciones
+
+El bridge es un adaptador operacional basado en el continuity gate del repositorio y el provider es determinista. El resultado es una propiedad computacional causal, no fenomenología.
+
+</details>
+
+<a id="english"></a>
+
 # Evidence V62 — Semantic self-model causal bridge
 
 ## Hypothesis
