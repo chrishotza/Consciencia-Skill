@@ -218,4 +218,4 @@ Antes de terminar, verificá persistencia, comportamiento tras reinicio y reprod
 
 </details>
 
-> 🌐 Language convention: [docs/LANGUAGE.md](docs/LANGUAGE.md)
+> 🌐 Language convention: [docs/LANGUAGE.md](../../docs/LANGUAGE.md)
