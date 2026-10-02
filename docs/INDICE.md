@@ -205,3 +205,5 @@ The V47–V80 files retain their canonical identifiers and terminology for repro
 </details>
 
 > 🌐 Language convention: [docs/LANGUAGE.md](LANGUAGE.md)
+
+- [I5 — Global Workspace](I5_GLOBAL_WORKSPACE.md) — workspace acotado, selección competitiva y broadcast causal.
