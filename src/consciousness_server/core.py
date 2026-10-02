@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import sqlite3
+import threading
 import uuid
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
@@ -12,6 +13,16 @@ from typing import Any
 
 def now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def _synchronized(method):
+    def wrapper(self, *args, **kwargs):
+        with self._lock:
+            return method(self, *args, **kwargs)
+
+    wrapper.__name__ = method.__name__
+    wrapper.__doc__ = method.__doc__
+    return wrapper
 
 
 @dataclass
@@ -40,14 +51,17 @@ class ConsciousnessStore:
     """
 
     def __init__(self, path: str | Path):
+        self._lock = threading.RLock()
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.conn = sqlite3.connect(self.path, check_same_thread=False)
         self.conn.row_factory = sqlite3.Row
         self.conn.execute("PRAGMA journal_mode=WAL")
         self.conn.execute("PRAGMA synchronous=NORMAL")
+        self.conn.execute("PRAGMA busy_timeout=5000")
         self._init_schema()
 
+    @_synchronized
     def _init_schema(self) -> None:
         self.conn.executescript(
             """
@@ -168,6 +182,7 @@ class ConsciousnessStore:
         ).encode("utf-8")
         return hashlib.sha256(payload).hexdigest()
 
+    @_synchronized
     def create_instance(
         self,
         identity: str,
@@ -200,6 +215,7 @@ class ConsciousnessStore:
         self.conn.commit()
         return state
 
+    @_synchronized
     def get_state(self, instance_id: str) -> ConsciousnessState | None:
         row = self.conn.execute(
             "SELECT state_json FROM instances WHERE instance_id=?",
@@ -231,6 +247,7 @@ class ConsciousnessStore:
         ).encode("utf-8")
         return hashlib.sha256(canonical).hexdigest()
 
+    @_synchronized
     def latest_event_id(self, instance_id: str) -> str | None:
         row = self.conn.execute(
             """
@@ -243,6 +260,7 @@ class ConsciousnessStore:
         ).fetchone()
         return str(row["event_id"]) if row and row["event_id"] else None
 
+    @_synchronized
     def _append_event(
         self,
         instance_id: str,
@@ -254,6 +272,7 @@ class ConsciousnessStore:
         logical_revision: int | None = None,
         parent_event_id: str | None = None,
         created_at: str | None = None,
+        commit: bool = True,
     ) -> ConsciousnessState:
         state = self.get_state(instance_id)
         if state is None:
@@ -339,9 +358,11 @@ class ConsciousnessStore:
                 instance_id,
             ),
         )
-        self.conn.commit()
+        if commit:
+            self.conn.commit()
         return state
 
+    @_synchronized
     def append_event(
         self,
         instance_id: str,
@@ -365,6 +386,7 @@ class ConsciousnessStore:
             created_at=created_at,
         )
 
+    @_synchronized
     def list_events(self, instance_id: str, limit: int = 100) -> list[dict[str, Any]]:
         rows = self.conn.execute(
             """
@@ -389,6 +411,7 @@ class ConsciousnessStore:
             for row in reversed(rows)
         ]
 
+    @_synchronized
     def list_events_after(
         self,
         instance_id: str,
@@ -418,6 +441,7 @@ class ConsciousnessStore:
             for row in rows
         ]
 
+    @_synchronized
     def replay_events(
         self,
         instance_id: str,
@@ -433,6 +457,9 @@ class ConsciousnessStore:
             return state
 
         ids = [str(event.get("event_id", "")) for event in events]
+        if len(ids) != len(set(ids)):
+            raise ValueError("replay_duplicate_event_id")
+
         existing = {
             row["event_id"]
             for row in self.conn.execute(
@@ -442,7 +469,7 @@ class ConsciousnessStore:
             ).fetchall()
             if row["event_id"]
         }
-        if ids and len(existing) == len(ids) and len(set(ids)) == len(ids):
+        if len(existing) == len(ids):
             return state
 
         if state.revision != int(base_revision):
@@ -461,19 +488,27 @@ class ConsciousnessStore:
             expected_revision = logical_revision
             expected_parent = str(event["event_id"])
 
-        for event in events:
-            state = self._append_event(
-                instance_id,
-                str(event["event_type"]),
-                dict(event.get("payload", {})),
-                event_id=str(event["event_id"]),
-                expected_revision=state.revision,
-                logical_revision=int(event["logical_revision"]),
-                parent_event_id=event.get("parent_event_id"),
-                created_at=str(event["created_at"]),
-            )
-        return state
+        self.conn.execute("BEGIN IMMEDIATE")
+        try:
+            for event in events:
+                state = self._append_event(
+                    instance_id,
+                    str(event["event_type"]),
+                    dict(event.get("payload", {})),
+                    event_id=str(event["event_id"]),
+                    expected_revision=state.revision,
+                    logical_revision=int(event["logical_revision"]),
+                    parent_event_id=event.get("parent_event_id"),
+                    created_at=str(event["created_at"]),
+                    commit=False,
+                )
+            self.conn.commit()
+            return state
+        except Exception:
+            self.conn.rollback()
+            raise
 
+    @_synchronized
     def state_hash(self, instance_id: str) -> str | None:
         row = self.conn.execute(
             "SELECT state_hash FROM instances WHERE instance_id=?",
@@ -481,6 +516,7 @@ class ConsciousnessStore:
         ).fetchone()
         return str(row["state_hash"]) if row else None
 
+    @_synchronized
     def create_checkpoint(
         self,
         instance_id: str,
@@ -530,6 +566,7 @@ class ConsciousnessStore:
             "created_at": now,
         }
 
+    @_synchronized
     def list_checkpoints(
         self,
         instance_id: str,
@@ -563,6 +600,7 @@ class ConsciousnessStore:
             for row in reversed(rows)
         ]
 
+    @_synchronized
     def register_node(
         self,
         node_id: str,
@@ -597,6 +635,7 @@ class ConsciousnessStore:
             "last_seen_at": now,
         }
 
+    @_synchronized
     def get_node(self, node_id: str) -> dict[str, Any] | None:
         row = self.conn.execute(
             "SELECT node_id,endpoint,capabilities_json,status,last_seen_at FROM nodes WHERE node_id=?",
@@ -612,6 +651,7 @@ class ConsciousnessStore:
             "last_seen_at": row["last_seen_at"],
         }
 
+    @_synchronized
     def heartbeat_node(self, node_id: str, endpoint: str | None = None, capabilities: list[str] | None = None) -> dict[str, Any]:
         existing = self.get_node(node_id)
         if existing is None:
@@ -629,6 +669,7 @@ class ConsciousnessStore:
             "status": "ONLINE", "last_seen_at": now,
         }
 
+    @_synchronized
     def mark_stale_nodes(self, stale_after_seconds: float = 30.0) -> int:
         threshold = datetime.now(timezone.utc).timestamp() - max(0.0, float(stale_after_seconds))
         rows = self.conn.execute("SELECT node_id,last_seen_at FROM nodes WHERE status='ONLINE'").fetchall()
@@ -650,6 +691,7 @@ class ConsciousnessStore:
         self.conn.commit()
         return len(stale_ids)
 
+    @_synchronized
     def list_nodes(self, stale_after_seconds: float | None = 30.0) -> list[dict[str, Any]]:
         if stale_after_seconds is not None:
             self.mark_stale_nodes(stale_after_seconds)
@@ -667,5 +709,6 @@ class ConsciousnessStore:
             for row in rows
         ]
 
+    @_synchronized
     def close(self) -> None:
         self.conn.close()
