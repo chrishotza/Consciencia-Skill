@@ -60,3 +60,14 @@ That separation is intentional:
 `replay/recovery` = future transfer/merge protocol
 
 The next distributed layer can use bundle manifests and checkpoint hashes to verify that a recovered database corresponds to a known continuity point before replaying or exchanging events.
+
+
+## Relation to distributed continuity
+
+A bundle can be created immediately before or after a server checkpoint.
+
+The intended sequence is:
+
+`checkpoint → bundle → disconnect/migrate → verify bundle → restore → reconcile`
+
+The bundle is the portable state artifact; the checkpoint is the server-observed continuity boundary; reconciliation verifies whether the restored local organism still corresponds to the known boundary.
