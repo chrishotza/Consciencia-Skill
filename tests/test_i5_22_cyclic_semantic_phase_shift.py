@@ -32,9 +32,15 @@ def test_cyclic_shift_preserves_t0_multiset_and_phase_sequence():
     shifted = shifted_schedule(0, 0)
 
     assert matched[0] == shifted[0]
-    labels = [row.split(" — ", 1)[0] for row in shifted]
-    assert labels[0] == "A"
-    assert labels[1:] == list("BCDEFGABCDEFG")
+    matched_labels = [row.split(" — ", 1)[0] for row in matched]
+    shifted_labels = [row.split(" — ", 1)[0] for row in shifted]
+    matched_content = sorted(row.split(" — ", 1)[1] for row in matched[1:])
+    shifted_content = sorted(row.split(" — ", 1)[1] for row in shifted[1:])
+
+    assert matched_labels == shifted_labels
+    assert shifted_labels[0] == "A"
+    assert shifted_labels[1:] == list("BCDEFGABCDEFG")
+    assert matched_content == shifted_content
 
 
 def test_pair_specificity_is_matched_minus_shifted():
