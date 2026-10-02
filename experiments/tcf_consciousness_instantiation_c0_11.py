@@ -228,6 +228,8 @@ def main() -> None:
             "semantic_input_during_probe": False,
         },
         "phenomenal_consciousness_claimed": False,
+        "semantic_input_during_probe": False,
+        "external_retraining_during_probe": False,
         "primary_outputs": {
             "next_action_difference_factual_minus_forced": {
                 "mean": float(np.mean(arrays["next_action_difference"])),
