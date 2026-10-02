@@ -14,7 +14,6 @@ from src.ontto.runtime_mode import ConsciousnessMode, ConsciousnessRuntimeConfig
 from src.ontto.organism import OrganismConfig, PersistentOrganism
 from src.ontto.persistence_backend import build_persistence_backend
 from src.ontto.provider import OpenAICompatibleProvider
-from src.ontto.storage import MemoryStore
 
 load_dotenv()
 
