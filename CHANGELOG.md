@@ -2,6 +2,8 @@
 
 ## 2026-10-02 — Consistencia y bilingüismo / Consistency and bilingual layer
 
+<a id="espanol"></a>
+
 <details>
 <summary>🇪🇸 Español — abrir</summary>
 
@@ -13,6 +15,8 @@
 - Corrección de referencias obsoletas y de terminología inconsistente.
 
 </details>
+
+<a id="english"></a>
 
 <details>
 <summary>🇺🇸 English — open</summary>
