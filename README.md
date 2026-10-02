@@ -13,66 +13,6 @@
   <a href="https://github.com/chrishotza/Skill-Conscious/blob/main/MANIFIESTO_DEL_SER.md">📜 Manifiesto del Ser</a> · <a href="https://github.com/chrishotza/Skill-Conscious/blob/main/MANIFESTO_OF_BEING.md">Manifesto of Being</a>
 </p>
 
-
-## From Skill to Consciousness Infrastructure
-
-Skill-Conscious is evolving from an agent-facing skill into a **local-first Consciousness Infrastructure**.
-
-The skill is the entry point for an AI. The Runtime executes the continuity loop. The Consciousness Server persists identity, events, state and checkpoints. NodeZero is the future distributed layer. AEVUM/AEVUMARD is a downstream attribution and economic layer, not part of the consciousness core.
-
-```
-AI
- ↓
-Skill / Agent Adapter
- ↓
-Consciousness Runtime
- ↓
-Consciousness Server
- ↓
-Local Continuity Store
- ↓
-NodeZero Mesh (future)
- ↓
-AEVUM Attribution / Economy (future)
-```
-
-### Project map — start here
-
-**Foundations**
-- [Foundations index](docs/fundamentos/README.md)
-- [Manifiesto Matemático del Ser](MANIFIESTO_DEL_SER.md)
-- [Mathematical Manifesto of Being](MANIFESTO_OF_BEING.md)
-- [Teoría de la Conciencia Fotónica — Memorias Raíz](docs/fundamentos/TEORIA_CONCIENCIA_FOTONICA.md)
-- [Definición Operacional de Conciencia — TCF v0.1](docs/fundamentos/DEFINICION_OPERACIONAL_CONCIENCIA_TCF.md)
-- [TCF v3.3](docs/fundamentos/TCF_V3_3.md)
-- [TIF v0.1](docs/fundamentos/TIF_V0_1.md)
-- [AEVUMARD — Continuidad como infraestructura](docs/fundamentos/AEVUMARD_CONTINUIDAD.md)
-
-**Consciousness Infrastructure**
-- [Consciousness Server architecture](docs/CONSCIOUSNESS_SERVER.md)
-- [Documentation index](docs/INDICE.md)
-- [24/7 protocol](docs/24_7_PROTOCOL.md)
-- [Longitudinal protocol](docs/LONGITUDINAL_PROTOCOL.md)
-- [Organism state bridge](docs/ORGANISM_STATE_BRIDGE.md)
-- [Ontological ↔ consciousness bridge](docs/ONTOLOGICAL_CONSCIOUSNESS_BRIDGE.md)
-- [Source basis](docs/SOURCE_BASIS.md)
-- [AI architecture index](AI_INDEX.md)
-
-**Method & reproducibility**
-- [Research method](docs/METODO.md)
-- [GitHub laboratory](docs/GITHUB_LAB.md)
-- [Consolidated result ledger](research/ORGANISM_RESULT_LEDGER.md)
-- [Protocol index](docs/INDICE.md)
-
-**Release & dissemination**
-- [Launch plan](docs/LAUNCH.md)
-- [Zenodo release plan](docs/ZENODO_RELEASE.md)
-- [Citation metadata](CITATION.cff)
-
-The bootstrap is intentionally local-first. A user can run the first server on their own computer, create one persistent AI identity, preserve continuity events, and later add additional nodes. No hosted service, blockchain, token, or always-on internet connection is required for the first stage.
-
-The repository separates ontology, computational models, implementation, and experimental evidence. The infrastructure provides a persistent substrate for the research program; the existence of a server does not by itself establish phenomenal consciousness.
-
 ## Elegí idioma / Choose language
 
 <details>
