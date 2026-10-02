@@ -164,6 +164,7 @@ Esta sección es la **puerta de entrada documental** al programa completo.
 
 **Infraestructura principal**
 - [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md)
+- [Continuity bundles](docs/CONTINUITY_BUNDLES.md)
 - [Protocolo 24/7](docs/24_7_PROTOCOL.md)
 - [Protocolo longitudinal](docs/LONGITUDINAL_PROTOCOL.md)
 - [Puente de estado del organismo](docs/ORGANISM_STATE_BRIDGE.md)
@@ -362,6 +363,7 @@ This section is the **documentary entry point** to the complete research and inf
 
 **Core infrastructure**
 - [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md)
+- [Continuity bundles](docs/CONTINUITY_BUNDLES.md)
 - [24/7 protocol](docs/24_7_PROTOCOL.md)
 - [Longitudinal protocol](docs/LONGITUDINAL_PROTOCOL.md)
 - [Organism state bridge](docs/ORGANISM_STATE_BRIDGE.md)
