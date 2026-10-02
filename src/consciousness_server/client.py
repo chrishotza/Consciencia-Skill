@@ -236,3 +236,21 @@ class ConsciousnessClient:
         payload = self.list_checkpoints(instance_id, limit=1)
         checkpoints = payload.get("checkpoints", [])
         return checkpoints[-1] if checkpoints else None
+
+    def synchronize_with(
+        self,
+        peer: "ConsciousnessClient",
+        *,
+        instance_id: str,
+        identity: str | None = None,
+        limit: int = 1000,
+    ) -> dict[str, Any]:
+        from .synchronization import synchronize_pair
+
+        return synchronize_pair(
+            self,
+            peer,
+            instance_id=instance_id,
+            identity=identity,
+            limit=limit,
+        ).to_dict()
