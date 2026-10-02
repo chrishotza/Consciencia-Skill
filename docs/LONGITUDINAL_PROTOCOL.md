@@ -85,6 +85,8 @@ Esto proporciona una primera ejecución longitudinal acotada antes de compromete
 Una ejecución de jornada completa debe conservar la misma configuración del protocolo y modificar únicamente el horizonte de observación.
 
 
+<a id="english"></a>
+
 <details>
 <summary>🇺🇸 English — open</summary>
 
@@ -137,35 +139,6 @@ This gives a bounded longitudinal run before committing to a full-day observatio
 
 > Language convention: docs/LANGUAGE.md
 
-<details>
-<summary>🇺🇸 English — open</summary>
 
-# Longitudinal Organism Protocol v1
-
-## Objective
-Measure whether a real LLM-backed organism with persistent state maintains an observable trajectory through repeated WAKE, SLEEP, autonomous cycles, and a process restart.
-This protocol measures engineering observables. Persistence, memory, or self-reference are not treated as sufficient evidence of subjective consciousness.
-
-## Core sequence
-The bounded protocol repeats: stimulus → WAKE → dynamic-state update → SLEEP or autonomous cycle → SQLite persistence → next cycle.
-After the requested cycles, SQLite is closed and reopened. One additional WAKE cycle then runs from recovered state.
-
-## Recorded observables
-Each dynamic step writes dynamic_snapshots with regime, step interval, input signal, previous state, state, dynamic memory, pressure, attractor distance, and timestamp.
-It also records persistent events, textual memories, self-model version, boot count, cumulative WAKE/SLEEP counters, and trajectory/state fingerprints.
-
-## Modes
-fake = deterministic provider for CI and instrumentation audits.
-live = configured OpenAI-compatible provider using ONTTO_API_KEY, ONTTO_MODEL, and optional ONTTO_API_BASE_URL.
-Live is the real-organism execution; fake checks protocol instrumentation and persistence only.
-
-## 24-hour execution
-The script is bounded by cycle count and inter-cycle duration rather than a hard-coded wall-clock loop. For a real 24-hour observation, choose the study period, run with the corresponding --sleep-seconds value, and preserve the full SQLite database plus JSON evidence.
-GitHub Actions should not host a wall-clock 24-hour run. Use a local or persistent server host.
-
-## Recommended first live run
-python experiments/longitudinal_organism_v1.py --mode live --cycles 40 --dream-every 10
-
-</details>
 
 > Language convention: docs/LANGUAGE.md
