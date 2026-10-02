@@ -61,3 +61,21 @@ Endpoints, contrast criteria, and multiplicity correction are not changed after 
 I5.19 tests computational reproducibility under the same harness. It does not establish consciousness, subjective experience, or a mechanistic interpretation on its own.
 
 </details>
+
+## Resultado verificado / Verified result
+
+### I5.19 — Independent bridge replication
+
+24 replicates with independent seed **20261019**, 24 warmup cycles, 15 experimental cycles, six lags, and 20,000 permutations for the I5.18 analysis stage. Endpoints and multiplicity procedure were unchanged.
+
+- Signed bridge ON−OFF AUC: global mean **-1.3981897076**, replicate-level sign-flip p **0.00030**.
+- Absolute bridge ON−OFF AUC: global mean **-0.7306513110**, p **0.00190**.
+- Future-action change bridge ON−OFF: global mean **-0.1180555556**, p **0.00110**.
+- Global phase × bridge interaction remained non-significant: signed AUC **p=0.16174**, absolute AUC **p=0.24414**, future-action change **p=0.43353**.
+- The direction of the average bridge effect therefore reproduced across an independent seed without changing endpoints or multiplicity control.
+
+Interpretation: I5.19 provides an independent computational replication of the average bridge ON−OFF effect under the frozen protocol. It does not establish temporal phase specificity, consciousness, subjective experience, or a mechanistic interpretation.
+
+Verification: research-lab **37056574657**, artifact **11247979913**; tests **37056574726** and package check **37056574723**, all successful.
+
+The independent seed reproduced the direction of all three global bridge effects while leaving the global phase × bridge interaction non-significant for all endpoints.
