@@ -83,6 +83,7 @@
 - [C0.13 action-conditioned second-order self-model](C0_13_ACTION_CONDITIONED_META_MODEL.md) — segundo orden condicionado por la acción candidata y su predicción de primer orden.
 - [C0.14 persistent second-order self-model](C0_14_PERSISTENT_SECOND_ORDER_SELF_MODEL.md) — prueba de continuidad del segundo orden después de serialización y reinicio.
 - [C0.15 lesion/rescue of persistent second-order selector](C0_15_SECOND_ORDER_LESION_RESCUE.md) — lesión y restauración del segundo orden persistente.
+- [C0.16 integrated second-order organism](C0_16_INTEGRATED_SECOND_ORDER_ORGANISM.md) — integración del segundo selector dentro de PersistentOrganism y persistencia real en SQLite.
 
 [Registro consolidado](../research/ORGANISM_RESULT_LEDGER.md).
 
