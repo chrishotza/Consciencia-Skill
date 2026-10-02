@@ -24,13 +24,17 @@
     "storage": "src/ontto/storage.py",
     "continuity": "src/ontto/continuity.py",
     "bridge": "src/ontto/bridge.py",
-    "provider": "src/ontto/provider.py"
+    "provider": "src/ontto/provider.py",
+    "consciousness_server": "src/consciousness_server",
+    "consciousness_server_core": "src/consciousness_server/core.py",
+    "consciousness_server_api": "src/consciousness_server/server.py"
   },
   "routing": {
     "method": "docs/METODO.md",
     "protocols": "docs/INDICE.md",
     "reproducibility": "docs/GITHUB_LAB.md",
-    "research": "research/README.md"
+    "research": "research/README.md",
+    "consciousness_server": "docs/CONSCIOUSNESS_SERVER.md"
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively"
 }
