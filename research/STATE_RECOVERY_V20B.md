@@ -1,3 +1,34 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V20b — Restauración demorada del estado, corregida
+
+## Corrección
+
+V20 evaluaba inicialmente los primeros 60 pasos de la continuación completa incluso cuando la restauración ocurría después. Eso mezclaba la fase pre-restauración con la métrica de identidad.
+
+V20b reemplaza esa métrica por una ventana post-restauración: los primeros 60 pasos futuros estrictamente posteriores a restaurar el state donante.
+
+## Diseño
+
+Seis puntos ciegos V12 más baseline, cuatro pares de historias, diez seeds de ruido emparejados por par e input futuro exactamente cero.
+
+En la frontera histórica el receptor comienza con state, memory y pressure comunes. Después de un delay de 0, 5, 10, 20, 40 u 80 pasos, se restaura el state recurrente del donante. Memory y pressure del receptor permanecen como los generados durante la fase borrada/común.
+
+La identidad se evalúa solo después de la restauración, frente a los segmentos correspondientes post-delay de las trayectorias de referencia del donante intacto/opuesto.
+
+## Interpretación
+
+Una curva de restauración que supere el baseline erased proporcionaría una prueba directa de recuperación causal complementaria a V15. La ventana post-restauración corregida evita contaminación por la fase pre-restauración.
+
+Es un resultado dinámico computacional y no establece experiencia subjetiva.
+
+</details>
+
+<a id="english"></a>
+
 # V20b — Corrected Delayed State Restoration
 
 ## Correction

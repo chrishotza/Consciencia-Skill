@@ -1,3 +1,49 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# Evidencia V61 — Self-model metacognitivo
+
+## Hipótesis
+
+Un organismo persistente con self-model de primer orden debería poder aprender un modelo de segundo orden del error de predicción de ese modelo y utilizar la fiabilidad estimada de sus propias predicciones como parte de la selección de trayectoria.
+
+## Diseño experimental
+
+Cada réplica:
+
+1. construye una trayectoria warmup emparejada;
+2. persiste snapshots del self-observer de primer orden;
+3. inicializa un MetaSelfObserver de segundo orden a partir de errores históricos de predicción de primer orden;
+4. clona el mismo estado en tres brazos;
+5. selecciona entre {-1, +1} usando meta-self-model, self-model de primer orden o control random;
+6. puntúa la trayectoria elegida contra un oracle post hoc;
+7. reconstruye los errores reales de predicción de primer orden para ambas trayectorias candidatas;
+8. compara esos errores con los errores predichos por el modelo de segundo orden.
+
+## Comparación primaria
+
+regret_self_model - regret_meta_self_model
+
+es la ventaja emparejada del meta-self-model.
+
+## Comparación metacognitiva secundaria
+
+Para cada candidato:
+
+abs(predicted_error - actual_prediction_error)
+
+se compara con el error de un baseline de error medio constante.
+
+## Limitaciones
+
+El simulador es determinista salvo por su proceso de ruido seedado y el provider es sintético. El protocolo mide comportamiento computacional de modelo-de-modelo, no fenomenología.
+
+</details>
+
+<a id="english"></a>
+
 # Evidence V61 — Metacognitive self-model
 
 ## Hypothesis

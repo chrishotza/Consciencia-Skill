@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # AeVUMARD — Continuidad como infraestructura
 
 > Documento de integración para el programa Consciousness Server.
@@ -119,3 +121,129 @@ La unidad económica exacta sigue siendo una cuestión de diseño y validación 
 AeVUMARD aporta una arquitectura y resultados internos de sus modelos. No constituye, por sí mismo, una demostración de conciencia fenomenal.
 
 Su función dentro de este repositorio es proporcionar una línea arquitectónica para convertir continuidad distribuida en infraestructura y, eventualmente, atribución económica.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# AeVUMARD — Continuity as Infrastructure
+
+> Integration document for the Consciousness Server program.
+>
+> Conceptual source: canonical AeVUMARD V2 memory, structural cut V100.5.
+
+## 1. Canonical layers
+
+AeVUMARD maintains four functional layers:
+
+1. **AeVUMARD NodeZero** — minimal network that lives, transports, and dissolves.
+2. **AeVUMARD** — full continuity and dynamics architecture.
+3. **AeVUMARD Crypto** — economy built on continuity.
+4. **AeVUMARD AI** — intelligence built on the traversal of that continuity.
+
+The separation is deliberate. The network does not need money to exist, and the intelligence hypothesis is not treated as an automatic demonstration of consciousness.
+
+## 2. Intelligence chain
+
+The horizon architecture is:
+
+nodes
+  ↓
+information
+  ↓
+trajectory
+  ↓
+continuity
+  ↓
+memory / state
+  ↓
+dynamics
+  ↓
+attractor
+  ↓
+self-trajectory
+  ↓
+intelligence
+
+This chain is compatible with the repository's transformation from a skill into a Consciousness Server.
+
+## 3. NodeZero
+
+NodeZero is the minimal network substrate.
+
+In its historical design it:
+
+- evaluates proposals;
+- maintains or dissolves temporary units;
+- enables traversal between nodes;
+- does not need balances, markets, or a token to exist;
+- represents continuity states deterministically.
+
+The repository's bootstrap implementation is not yet full NodeZero. It is a **local seed** that prepares the continuity, identity, event, and node-registry contract.
+
+## 4. Continuity before economy
+
+The historical lesson of AeVUMARD was to separate:
+
+- relation;
+- state;
+- event;
+- trajectory;
+- continuity;
+- utility;
+- attribution.
+
+The economy comes after valid continuity.
+
+Therefore the current program follows:
+
+Consciousness Runtime
+        ↓
+Consciousness Server
+        ↓
+NodeZero
+        ↓
+distributed continuity
+        ↓
+AEVUM attribution
+
+## 5. Relationship to Consciousness Server
+
+The server is the continuity control plane.
+
+Its first version preserves:
+
+- identity;
+- state revisions;
+- events;
+- state hashes;
+- registered nodes.
+
+It does not need to execute every model inference. The organism can keep cognition locally and publish transition/checkpoint events.
+
+## 6. Relationship to economic AEVUM
+
+AEVUM Crypto is considered a later layer.
+
+The token should not be designed before there is real infrastructure producing measurable contributions.
+
+Future events that could be studied for attribution include:
+
+- contributed compute;
+- storage;
+- continuity transport;
+- validation;
+- node availability;
+- traversal actually used.
+
+The exact economic unit remains a later design and validation question.
+
+## 7. Epistemic status
+
+AeVUMARD contributes an architecture and internal model results. It is not, by itself, a demonstration of phenomenal consciousness.
+
+Its function in this repository is to provide an architectural line for turning distributed continuity into infrastructure and, eventually, economic attribution.
+
+</details>

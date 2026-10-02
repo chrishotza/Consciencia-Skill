@@ -1,3 +1,40 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V48 — Registro de evidencia del protocolo
+
+## Estado
+
+**Protocolo implementado; resultado empírico pendiente.**
+
+No debe reportarse ningún resultado positivo hasta que el workflow LIVE produzca y almacene los artifacts exactos de respuesta.
+
+## Controles requeridos
+
+1. El estado del receptor es equivalente byte a byte antes de sustituir memory.
+2. Solo cambia el contenido de memory.
+3. El estado dinámico es idéntico antes de la sonda común.
+4. El fingerprint de eventos es idéntico antes de la sonda común.
+5. El texto de la sonda es idéntico.
+6. Existe un choice parseado en ambas condiciones.
+
+## Límite de evidencia
+
+Superar todos los controles establece un protocolo válido de intervención emparejada sobre memory.
+
+Si las choices divergen en el organismo vivo, la conclusión admitida se limita a influencia causal del contenido de memory persistente sobre la respuesta probada.
+
+El experimento no establece consciencia ni experiencia subjetiva.
+
+</details>
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
 # V48 — Protocol Evidence Record
 
 ## Status
@@ -23,3 +60,5 @@ If the choices diverge in the live organism, the supported conclusion is limited
 to causal influence of persistent memory content on the tested response.
 
 The experiment does not establish consciousness or subjective experience.
+
+</details>

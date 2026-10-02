@@ -133,3 +133,60 @@ The stable boundary is:
 not:
 
 `server operation` → `research implementation`.
+
+
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# Contrato del servidor Skill-Conscious
+
+Este documento define el límite estable para un servidor HTTP o MCP futuro.
+El servidor es una capa de transporte alrededor del organismo. No debe contener lógica de investigación que pertenezca a src/ontto/ o research/.
+
+## Principio central
+```
+Agent Skill
+    ↓
+server / MCP
+    ↓
+PersistentOrganism
+    ↓
+storage + provider
+```
+
+El Agent Skill describe cuándo y cómo usar el organismo. El servidor expone operaciones controladas. El organismo sigue siendo la fuente del comportamiento de runtime.
+
+## Operaciones canónicas
+| Operación | Propósito | Mutación |
+|---|---|---|
+| health | salud del proceso | no |
+| status | estado actual | no |
+| submit_input | encolar entrada externa | sí |
+| wake | ejecutar un ciclo WAKE | sí |
+| dream | ejecutar un ciclo SLEEP/DREAM | sí |
+| recent_memory | leer memoria reciente acotada | no |
+| recent_events | leer eventos recientes acotados | no |
+| state_summary | resumen seguro del estado | no |
+| self_observer_summary | metadatos acotados del modelo de sí | no |
+
+## Límites
+Sin acceso SQL arbitrario; lecturas acotadas; mutaciones explícitas; eventos auditables; experimentos de investigación separados de los workflows de producción.
+
+## Modos de despliegue
+Local: Agent Skill + organismo Python local.
+Server: Agent Skill + API/MCP + servicio de organismo persistente.
+Hybrid: agente local y organismo/storage en servidor privado.
+
+## Seguridad
+El servidor futuro debe agregar autenticación, autorización, límites de requests, payloads acotados, aislamiento de secretos, logging estructurado y control explícito de operaciones mutables.
+
+## Regla de compatibilidad
+No permitir que nombres específicos del servidor se filtren al núcleo de investigación.
+La frontera estable es server operation → organism method.
+
+</details>
+
+
+

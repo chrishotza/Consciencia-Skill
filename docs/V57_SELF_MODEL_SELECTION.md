@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V57 — Selección mediante modelo de sí comparada con un oráculo
 
 ## Pregunta
@@ -34,3 +36,48 @@ Por separado, un oráculo evalúa directamente ambas transiciones candidatas des
 Si el brazo con modelo de sí presenta sistemáticamente menor regret que el brazo aleatorio emparejado, el modelo interno de sí mismo del organismo no es meramente descriptivo: resulta funcionalmente útil para seleccionar entre trayectorias futuras.
 
 Esto sigue siendo un resultado computacional sobre un modelo de sí, no una demostración de consciencia fenomenológica.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V57 — Self-Model Selection Compared with an Oracle
+
+## Question
+
+Does the organism's learned self-model select future trajectories better than a matched random policy after the same calibration history?
+
+## Design
+
+Each replicate starts from a matched warm-up trajectory.
+
+Two candidate signals are allowed:
+
+- -1.0;
+- +1.0.
+
+The self-model arm scores both counterfactual next states and selects the signal with the better declared coherence score.
+
+The random arm chooses one of the same candidates using a deterministic seeded random policy.
+
+The actual transition is executed after selection.
+
+Separately, an oracle evaluates both candidate transitions directly from the same prior state using frozen numerical dynamics. The oracle is used only after intervention to calculate regret; it is never exposed to the organism selector.
+
+## Primary observables
+
+- self-model regret;
+- random-control regret;
+- paired regret advantage;
+- oracle hit rate;
+- paired sign-flip permutation p-value.
+
+## Interpretation
+
+If the self-model arm systematically shows lower regret than the matched random arm, the organism's internal self-model is not merely descriptive: it is functionally useful for selecting among future trajectories.
+
+This remains a computational result about a self-model, not a demonstration of phenomenal consciousness.
+
+</details>

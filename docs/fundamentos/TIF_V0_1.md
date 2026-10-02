@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # TIF v0.1 — Teoría de la Iteración Fuente
 
 > Estado: hipótesis teórico-computacional / documento de trabajo.
@@ -219,3 +221,222 @@ predicción prospectiva
 ~~~
 
 Si la triada sobrevive ahí, gana peso. Si falla, debe degradarse o reformularse.
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# TIF v0.1 — Source Iteration Theory
+
+> Status: theoretical-computational hypothesis / working document.
+>
+> It is not a final proof, not a claim of universal consciousness, and does not depend on the golden ratio as a foundation.
+
+Conceptual author: Christian Marcelo Mendoza / Chris Hotza  
+Working version: v0.1  
+Source document date: 2026-07-05
+
+## 1. Central thesis
+
+Source Iteration Theory (TIF) proposes that persistent systems do not merely preserve a form: they update a present configuration using memory/context and reparative re-entry.
+
+configuration / prediction
+          +
+memory / context
+          +
+re-entry / repair / phase
+          ↓
+new stabilized configuration
+
+The central idea is that the system does not copy the past: it updates it.
+
+Candidate source operation:
+
+C(n+1) = Stabilize[ C(n), M(n), R(n) ]
+
+where C is configuration/prediction, M is memory/context, and R is reparative re-entry/phase. The expression is not proposed as a closed equation of everything, but as an organization of the hypothesis for future tests.
+
+## 2. Change of framework
+
+TIF changes the question from searching for an absolute ratio toward identifying the operation that allows a form to update without losing continuity.
+
+Under this reading, ratios can be secondary projections of recursive dynamics and a stable form can be the result of iteration.
+
+The theory seeks the mechanism by which a system can re-form, repair, remember, and update.
+
+## 3. The six process organs
+
+| Axis | Name | Function | Approx. weight |
+|---|---|---|---:|
+| A1 | Stabilize configuration | feedback, action, morphology, dissipation, and state landscape | 0.168 |
+| A2 | Adaptive plasticity | adaptation, resilience, plasticity, perturbation, and state | 0.175 |
+| A3 | Repair / recovery | perturbation response, recovery, stability, and coupling | 0.164 |
+| A4 | Memory / transition | hysteresis, bifurcation, state memory, and thresholds | 0.129 |
+| A5 | Prediction / update | information, prediction, action, transition, and landscape | 0.231 |
+| A6 | Phase / propagation | phase, propagation, coupling, and energy | 0.133 |
+
+Functional reading: stabilize, adapt, repair, remember, predict, and re-enter phase.
+
+## 4. Binary projection
+
+The six axes are recompressed into two poles:
+
+| Pole | Axes | Reconstructed weight | Interpretation |
+|---|---|---:|---|
+| Configuration / prediction | A1 + A5 | 0.399241 | current operating state |
+| Adaptive re-entry field | A2 + A3 + A4 + A6 | 0.600759 | plasticity, repair, memory, and phase |
+
+## 5. Second-order triad
+
+| Component | Axes | Weight | Reading |
+|---|---|---:|---|
+| C — Current configuration | A1 + A5 | 0.399241 | stabilized form/prediction |
+| M — Memory / context | A2 + A4 | 0.303607 | history, plasticity, and thresholds |
+| R — Re-entry | A3 + A6 | 0.297152 | repair, phase, and propagation |
+
+Working ratio: C : M : R ≈ 40 : 30 : 30.
+
+The complete hypothesis is C + M + R → next C.
+
+## 6. Exploratory progress E1–E5
+
+| Stage | Question | Summary result | Reading |
+|---|---|---|---|
+| E1 | Is there a strong form-time signature? | score 0.936; controls summarized at 0.0 | a visible signature, not necessarily a source |
+| E2 | Does a source appear without inherited vocabulary? | inconclusive decision; six stable axes; bootstrap mean 0.951893 | process organs appear |
+| E3 | Do the six axes compress into cycle or poles? | compression 0.880168; cycle p=0.315533 | strong binary compression; directional cycle remains open |
+| E4 | Does the second-order triad help? | binary supported; triad open; phi unsupported at that cut | 40/30/30 hypothesis formulated |
+| E5 | Does the triad hold across partitions? | triad rank #1; score 0.989251; not fragile in summary | strong working hypothesis, not locked |
+
+The experiments were reorganized to avoid forcing a two-axis structure or particular ratio from the outset.
+
+## 7. The golden ratio is not the foundation
+
+The document records a secondary proximity to the golden ratio, but the explicit methodological interpretation is that Phi should not be treated as the foundation of TIF.
+
+The core is the C + M + R → next C structure.
+
+## 8. Falsifiers and current limits
+
+TIF is useful as a hypothesis only if it can be attacked.
+
+Main falsifiers:
+
+1. A new corpus does not recover the six organs.
+2. The triad ceases to rank first on raw data.
+3. A role shuffle systematically outperforms the real grouping.
+4. Removing memory or repair does not change expected behavior.
+5. Phi appears only after summarization and not in raw data.
+6. A binary explanation reproduces everything equally well or better than the triad.
+
+Explicit limitation: v0.1 evidence is summary-driven and requires independent reanalysis of the raw corpus. The correct status is working hypothesis.
+
+TIF does not claim that every system is conscious or that there is an absolute ratio of life.
+
+## 9. What TIF contributes
+
+The proposal does not aim to discover that cycles, memory, or feedback exist. It seeks to integrate them as a falsifiable triadic source operation derived from computational audits.
+
+It avoids:
+
+- searching for a total equation from the beginning;
+- reducing everything to Phi;
+- forcing a cycle where the data do not show one;
+- depending on a single scale;
+- supporting the hypothesis only through visual analogies.
+
+## 10. Roadmap
+
+### R1 — Ratio reconciliation
+Resolve differences between activation views, axis mass, and raw corpus.
+
+### R2 — Raw-data validation
+Repeat binary and triadic comparisons on original matrices.
+
+### R3 — New orthogonal corpus
+Use different vocabulary and domains to control semantic overfitting.
+
+### R4 — Ablation falsifiers
+Remove memory, repair, prediction, and phase and measure which structure disappears.
+
+### R5 — Mathematization
+Formalize C, M, and R as reproducible and preregisterable state operators.
+
+### R6 — Applications
+Explore morphogenesis, ecology, cognition, adaptive systems, and AI.
+
+## 11. Declared maturity
+
+| Layer | Status |
+|---|---|
+| Conceptual theory | TRL 2–3: organized hypothesis with falsifiers |
+| Computational method | TRL 3–4: exploratory pipeline with internal controls; independent replication still needed |
+| Technology application | high TRL should not yet be attributed |
+
+## 12. Relevance to artificial consciousness
+
+TIF provides a recurrent operation compatible with a persistent architecture:
+
+present state
+    ↓
+memory/context
+    ↓
+re-entry/reorganization
+    ↓
+new state
+    ↺
+
+This can be implemented over persistent memory, dynamic state, self-observation, self-model, trajectory selection, SLEEP, and recovery after perturbations.
+
+TIF does not demonstrate consciousness by itself. It provides a hypothesis about how a persistent organization can update without losing continuity.
+
+## 13. Integration with Skill-Conscious
+
+MANIFESTO OF BEING
+        ↓
+relation / continuity / trajectory
+        ↓
+TCF
+        ↓
+regimes / transition / attractors
+        ↓
+TIF
+        ↓
+configuration + memory + re-entry
+        ↓
+CONSCIOUSNESS SERVER
+        ↓
+persistent organism
+        ↓
+NodeZero (future)
+
+This integration is an engineering hypothesis and must preserve the separation between ontology, model, implementation, and experimental result.
+
+## 14. Internal reference
+
+Mendoza, Christian Marcelo / Chris Hotza. Source Iteration Theory (TIF) — a new hypothesis about recurrence, memory, and re-entry, v0.1. Internal working document, 2026.
+
+Publication status: not published on Zenodo at the time of this integration.
+
+## 15. Methodological rule
+
+The next TIF step is not to generate a larger version by accumulating narrative. It must return to data:
+
+hypothesis
+ ↓
+raw data
+ ↓
+operationalization
+ ↓
+control
+ ↓
+ablation
+ ↓
+replication
+ ↓
+prospective prediction
+
+If the triad survives there, it gains evidentiary weight. If it fails, it must be downgraded or reformulated.
+
+</details>

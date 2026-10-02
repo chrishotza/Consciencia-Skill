@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V62 — Puente causal semántico del modelo de sí
 
 ## Pregunta
@@ -48,3 +50,62 @@ Es un resultado causal computacional. No constituye evidencia de consciencia sub
 ## Próximo punto de presión
 
 El siguiente experimento útil no es repetir la misma intervención emparejada, sino introducir este puente causal del modelo de sí en un bucle recurrente condicionado por acciones y medir si los cambios del modelo de sí alteran posteriormente la selección de trayectorias futuras y se recuperan después de perturbaciones que preserven identidad.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V62 — Causal Semantic Self-Model Bridge
+
+## Question
+
+Can a self-model maintained by the organism become a causally active component of its internal dynamics instead of remaining only descriptive text?
+
+## Result
+
+Twenty-four paired replicates crossed self-model content A/B with bridge OFF/ON while persistent state and base memory remained constant.
+
+- mean state delta with bridge OFF: **0.0**;
+- mean signal delta with bridge OFF: **0.0**;
+- mean state delta with bridge ON: **0.0567495528**;
+- mean signal delta with bridge ON: **0.1844584720**;
+- bridge OFF isolated the self-model intervention in every execution;
+- bridge ON transduced the self-model difference into signal and state in every execution;
+- self-model persistence was verified in every ON execution;
+- self-model versioning was recorded in every ON execution.
+
+## Expected causal chain
+
+~~~text
+organism-generated self-model
+          │
+          ▼
+continuity evaluation
+          │
+          ▼
+self-model semantic signal
+          │
+          ▼
+internal dynamics
+          │
+          ▼
+new persistent state
+~~~
+
+Bridge OFF is the isolation control: changing only the self-model text should not alter dynamic state.
+
+Bridge ON tests whether the self-model difference is transduced into the internal numerical state.
+
+## Meaning
+
+V62 goes beyond a self-model that only predicts numerical state. In this deterministic intervention, semantic self-representation entered the causal numerical loop when the bridge was explicitly enabled.
+
+This is a computational causal result. It is not evidence of subjective consciousness.
+
+## Next pressure point
+
+The next useful experiment is an action-conditioned recurrent loop measuring whether self-model changes later alter trajectory selection and recover after identity-preserving perturbations.
+
+</details>

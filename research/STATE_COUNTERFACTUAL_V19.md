@@ -1,3 +1,39 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V19 — Inversión contrafáctica del estado
+
+## Pregunta
+
+V18 mostró que la clasificación sigue la fuente del estado transferido y no la etiqueta nominal del receptor. V19 prueba un contrafactual más fuerte: reflejar el estado donante alrededor del estado común A/B manteniendo memory y pressure comunes e input futuro cero.
+
+## Protocolo
+
+Se usan seis puntos ciegos V12, cuatro pares históricos y diez seeds de ruido emparejados por par.
+
+Para cada donante:
+
+- intact: conservar el state donante;
+- erase: reemplazar state por el midpoint común A/B;
+- invert: reflejar ambos slots temporales alrededor del midpoint común;
+- invert_quantized: realizar la misma reflexión y luego cuantizar ambos slots a 3 bits.
+
+Memory y pressure del receptor son siempre comunes, por lo que la identidad específica del donante entra solo por state.
+
+## Predicción
+
+Si state codifica identidad histórica de manera direccional, el state invertido debería mover preferentemente la continuación hacia la referencia del donante opuesto. El readout informa tanto accuracy del donante original como accuracy del donante invertido.
+
+## Límites
+
+Es un test causal contrafactual del encoding de state en el modelo dinámico implementado. Incluso una inversión exitosa demostraría transporte de información dependiente del estado, no consciencia subjetiva.
+
+</details>
+
+<a id="english"></a>
+
 # V19 — State Counterfactual Inversion
 
 ## Question

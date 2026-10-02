@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V35 — Metric Robustness Pre-validation
 
 ## Estado
@@ -40,3 +42,56 @@ Código V35: `df03be07ad8b6f792b76a9fb6aedf4af677d97a9`
 Workflow V35: `f977887a710b988b4187f5cbb3e2d50e52f7f024`
 
 Fuente de la pre-validación: ejecución local del commit, con ruido pre-generado mediante `numpy.random.default_rng(seed)` y el mismo índice temporal de la implementación de `simulate`.
+
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V35 — Metric Robustness Pre-validation
+
+## Status
+
+**LOCAL PRE-VALIDATION OF THE COMMIT.**
+
+This document does not replace a GitHub Actions artifact. The values below come from a local mirror of the V35 code executed with the same repository equations, seeds, and NumPy noise scheme. The result must be checked against the official Actions artifact when that run is accessible.
+
+## Result
+
+The replication uses history-seeds 100–109, six parameter points, four history pairs, nine memory×pressure contexts, angles 30° and 150°, radius 1.1, exactly zero future input, five independent reference seeds, and five independent test seeds.
+
+Inference is performed over 40 history-seed blocks using stratified sign-flip (20,000 permutations) and stratified bootstrap (10,000 replicates).
+
+| Metric | 30°−150° contrast | Null 95% | p | Bootstrap 95% CI |
+|---|---:|---:|---:|---:|
+| signed_affinity | **0.222068** | 0.064359 | **0.00005** | **[0.206720, 0.236939]** |
+| distance_margin | **1.013096** | 0.292202 | **0.00005** | **[0.936911, 1.086535]** |
+| cosine_delta | **0.580340** | 0.166926 | **0.00005** | **[0.530877, 0.628016]** |
+
+All three metrics retain the same directional contrast. At pooled cell level, the fraction of positive contrasts was approximately 87% for all three readouts.
+
+The three measurements are related but not identical: correlations between cell-level contrasts were 0.973 for signed-affinity vs distance-margin, 0.964 for distance-margin vs cosine-delta, and 0.886 for signed-affinity vs cosine-delta.
+
+## Interpretation
+
+This pre-validation indicates that the angular separation does not depend exclusively on the normalized signed-affinity formula. An unnormalized distance difference and a cosine-similarity difference reproduce the same aggregate sign over the 40 history blocks.
+
+This reinforces an interpretation of **reproducible computational geometric/dynamic structure** under the protocol.
+
+It does not demonstrate consciousness, subjective experience, sentience, or any property outside the simulator.
+
+## Next control
+
+The next logical step is V36: **leave-one-history-pair-out**, checking that the aggregate effect is not dominated by any one of the four history types.
+
+## Reproducibility
+
+V35 code: df03be07ad8b6f792b76a9fb6aedf4af677d97a9
+
+V35 workflow: f977887a710b988b4187f5cbb3e2d50e52f7f024
+
+Pre-validation source: local execution of the commit, with noise pre-generated through numpy.random.default_rng(seed) and the same temporal index used by simulate.
+
+</details>

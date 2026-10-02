@@ -6,12 +6,19 @@
     "llms.txt"
   ],
   "overview": "README.md",
+  "language": "docs/LANGUAGE.md",
+  "conventions": "docs/REPO_CONVENTIONS.md",
   "current": {
     "ledger": "research/ORGANISM_RESULT_LEDGER.md",
     "frontier": [
-      "docs/V69_SELF_READ_STATE.md",
-      "docs/V70_SELF_MODEL_ACTION.md",
-      "docs/V70_PERSISTENT_SELF_READER.md"
+      "docs/I4_2_PERSISTENT_METACOGNITIVE_LESION_RESCUE.md",
+      "research/ORGANISM_RESULT_LEDGER.md",
+      "docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md",
+      "docs/CONSCIOUSNESS_SERVER.md"
+    ],
+    "experimental_next": [
+      "I4.3 structural OOD metacognitive generalization",
+      "I5 global-workspace integration design"
     ]
   },
   "architecture": {
@@ -34,7 +41,13 @@
     "protocols": "docs/INDICE.md",
     "reproducibility": "docs/GITHUB_LAB.md",
     "research": "research/README.md",
-    "consciousness_server": "docs/CONSCIOUSNESS_SERVER.md"
+    "consciousness_server": "docs/CONSCIOUSNESS_SERVER.md",
+    "cleanup": "docs/REPO_CONVENTIONS.md"
+  },
+  "content_policy": {
+    "active": "src/ + active tests/experiments/workflows + current docs",
+    "historical": "research/ + V47-V80 + C0.x records",
+    "archived": "one-shot CI/bootstrap material documented in docs/ARCHIVED_CI.md"
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively"
 }

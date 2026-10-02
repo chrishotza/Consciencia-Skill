@@ -1,3 +1,36 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V31 — Descomposición emparejada de efectos de contexto
+
+## Estado
+
+La primera ejecución V31 (36787649896) se **descarta por invalidez metodológica**, no como resultado científico. La implementación generaba las continuaciones A/B de referencia usando el mismo ángulo que la condición de prueba, haciendo tautológico el score de identidad.
+
+La implementación corregida usa geometría A/B sin rotar (0°) como referencia local y geometría rotada (30°, 90°, 150°) como prueba, con state, memory y pressure del receptor idénticos entre referencia y prueba.
+
+## Diseño corregido
+
+- seis puntos ciegos V12;
+- cuatro pares de historias;
+- seeds independientes 60–69;
+- state del receptor en midpoint A/B;
+- memory y pressure sintéticos e independientes del donante;
+- radio 1.1;
+- ángulos de prueba 30°, 90°, 150°;
+- input futuro exactamente cero;
+- endpoint continuo primario: affinity firmada respecto de la **referencia local A/B sin rotar**.
+
+El push corregido lanza una nueva ejecución V31.
+
+Este experimento es mecanístico y no establece consciencia ni experiencia subjetiva.
+
+</details>
+
+<a id="english"></a>
+
 # V31 — Paired Context Effect Decomposition
 
 ## Status

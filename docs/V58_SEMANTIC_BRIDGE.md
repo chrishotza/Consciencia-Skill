@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V58 — Memoria semántica → dinámica numérica
 
 ## Pregunta
@@ -36,3 +38,50 @@ Un resultado positivo de V58 cierra un bucle arquitectónico importante:
 Esto es más fuerte que almacenar texto junto a un estado numérico, porque la salida semántica queda conectada causalmente con la dinámica interna del organismo.
 
 No establece consciencia fenomenológica.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V58 — Semantic Memory → Numerical Dynamics
+
+## Question
+
+Can a semantic relation emitted by the organism itself influence its internal numerical dynamics through an explicit source-inspired transduction rule?
+
+## Mechanism
+
+The organism extracts the MEMORY relation produced by the provider.
+
+The optional bridge computes novelty, coupling with recent memories, persistence importance, and an AEVUM-inspired Omega.
+
+The numerical input is signal = tanh(scale * Omega), with scale 1.0 in the experiment.
+
+## Matched intervention
+
+Four matched receivers are created from the same database:
+
+- bridge OFF + MEMORY_A;
+- bridge OFF + MEMORY_B;
+- bridge ON + MEMORY_A;
+- bridge ON + MEMORY_B.
+
+The probe, numerical seed, prior state, prior memory, and configuration remain matched.
+
+With the bridge OFF, changing only memory text should not change the numerical transition.
+
+With the bridge ON, the semantic difference should be transformed into a different numerical signal and therefore a different subsequent state.
+
+## Interpretation
+
+A positive V58 result closes an important architectural loop:
+
+LLM relation → continuity evaluation → internal dynamics
+
+This is stronger than merely storing text next to a numerical state because the semantic output becomes causally connected to the organism's internal dynamics.
+
+It does not establish phenomenal consciousness.
+
+</details>

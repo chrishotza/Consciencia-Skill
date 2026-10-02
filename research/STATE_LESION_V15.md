@@ -1,3 +1,48 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V15 — Lesión del estado / necesidad causal
+
+## Pregunta
+
+V14 mostró que el estado recurrente agrega información predictiva en los regímenes critical, holdout-critical y persistence bajo dimensionalidad de features emparejada. V15 formula la pregunta causal más fuerte:
+
+> Cuando existe identidad histórica, ¿borrar selectivamente el estado recurrente degrada la identidad más que borrar memory o pressure explícitos?
+
+## Diseño experimental
+
+Se prueban cuatro regímenes: critical, holdout_critical, persistence y baseline.
+
+Cada régimen utiliza cuatro protocolos de pares de historias y 20 seeds de ruido emparejados por protocolo. El input de continuación es exactamente cero.
+
+En la frontera de historia, A y B generan contextos donantes distintos. Su midpoint aritmético es el contexto común.
+
+Para cada donante, un componente de contexto se lesiona selectivamente hacia el contexto común con dosis 0, .05, .10, .20, .40, .60, .80 y 1.0.
+
+- Lesión state: ambos slots recurrentes (state_prev y state) se interpolan hacia el state común.
+- Lesión memory: solo memory explícita se interpola.
+- Lesión pressure: solo pressure se interpola.
+
+Todos los demás componentes permanecen específicos del donante y se usa el mismo seed de continuación en cada intervención.
+
+## Readouts
+
+La identidad se mide mediante affinity respecto de las trayectorias de referencia A y B intactas durante los primeros 60 pasos futuros. La accuracy de identidad es la fracción clasificada como el donante correcto.
+
+El MAE de predicción mide la divergencia respecto de la continuación intacta del donante en la misma ventana.
+
+## Regla de interpretación
+
+Una respuesta dosis-efecto específica del state, replicada, mayor que los controles memory/pressure y presente en el régimen holdout, respaldaría que el estado recurrente es un portador causalmente importante de información histórica en este modelo.
+
+Es un resultado dinámico computacional. No establece consciencia ni experiencia subjetiva.
+
+</details>
+
+<a id="english"></a>
+
 # V15 — State Lesion / Causal Necessity
 
 ## Question

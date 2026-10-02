@@ -1,35 +1,65 @@
-# Skill-Conscious
+# Skill-Conscious / Mapa compacto para agentes
 
-> Research repository for persistent AI cognition, self-modeling, internal dynamics, and reproducible consciousness-related experiments.
+<details>
+<summary>🇪🇸 Español — abrir</summary>
 
-## Start here
-- [AI instructions](AGENTS.md)
-- [AI index](AI_INDEX.md)
-- [Compact machine map](AI_MAP.json)
-- [README](README.md)
+## Inicio
+- AGENTS.md — reglas de trabajo del repositorio.
+- AI_INDEX.md — mapa semántico.
+- AI_MAP.json — rutas canónicas.
+- README.md — visión general.
+- docs/LANGUAGE.md — convención bilingüe.
+- docs/REPO_CONVENTIONS.md — consistencia y limpieza.
+
+## Evidencia actual
+- research/ORGANISM_RESULT_LEDGER.md
+- docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md
+- docs/GITHUB_LAB.md
+
+## Arquitectura
+- src/ontto/organism.py
+- src/ontto/dynamics.py
+- src/ontto/self_observer.py
+- src/ontto/meta_observer.py
+- src/ontto/trajectory_selector.py
+- src/ontto/storage.py
+- src/ontto/continuity.py
+- src/consciousness_server/
+
+## Recuperación
+Preferí leer solamente el conjunto mínimo necesario: ledger → protocolo → experimento → test → workflow.
+No recorras recursivamente research/, experiments/, tests/ ni .github/workflows/.
+
+</details>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+## Start
+- AGENTS.md — repository working rules.
+- AI_INDEX.md — semantic map.
+- AI_MAP.json — canonical routes.
+- README.md — overview.
+- docs/LANGUAGE.md — bilingual convention.
+- docs/REPO_CONVENTIONS.md — consistency and cleanup rules.
 
 ## Current evidence
-- [Result ledger](research/ORGANISM_RESULT_LEDGER.md)
-- [V69 self-read state](docs/V69_SELF_READ_STATE.md)
-- [V70 self-model action](docs/V70_SELF_MODEL_ACTION.md)
-- [V70 persistent self-reader](docs/V70_PERSISTENT_SELF_READER.md)
+- research/ORGANISM_RESULT_LEDGER.md
+- docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md
+- docs/GITHUB_LAB.md
 
 ## Architecture
-- [Method](docs/METODO.md)
-- [Organism](src/ontto/organism.py)
-- [Dynamics](src/ontto/dynamics.py)
-- [Self observer](src/ontto/self_observer.py)
-- [Trajectory selector](src/ontto/trajectory_selector.py)
-- [Storage](src/ontto/storage.py)
-- [Memory policy](src/ontto/memory_policy.py)
-- [Continuity](src/ontto/continuity.py)
-- [Bridge](src/ontto/bridge.py)
+- src/ontto/organism.py
+- src/ontto/dynamics.py
+- src/ontto/self_observer.py
+- src/ontto/meta_observer.py
+- src/ontto/trajectory_selector.py
+- src/ontto/storage.py
+- src/ontto/continuity.py
+- src/consciousness_server/
 
-## Research navigation
-- [Protocol index](docs/INDICE.md)
-- [GitHub laboratory](docs/GITHUB_LAB.md)
-- [Research index](research/README.md)
-- [Roadmap](ROADMAP.md)
+## Retrieval
+Read only the smallest relevant set: ledger → protocol → experiment → test → workflow.
+Do not recursively crawl research/, experiments/, tests/, or .github/workflows/.
 
-## Retrieval policy
-Read only the smallest set of files needed. Do not crawl historical evidence, all experiments, all tests, or all workflows.
+</details>

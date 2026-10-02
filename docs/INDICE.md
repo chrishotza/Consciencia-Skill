@@ -82,7 +82,7 @@
 - [C0.3 information-matched control](C0_3_INFORMATION_MATCHED_CONTROL.md) — control de información equivalente para especificidad causal del estado propio.
 - [C0.4 action-replay control](C0_4_ACTION_REPLAY_CONTROL.md) — control de acciones emparejadas para especificidad causal de la dinámica propia.
 - [C0.5 matched action-chain control](C0_5_ACTION_CHAIN_CONTROL.md) — control información-matcheado para el cierre recurrente.
-- [C0.6 causal lesion/rescue](C0_6_CAUSAL_LESION_RESCUE.md) — lesión y rescate del autoobservador y la autopólitica.
+- [C0.6 causal lesion/rescue](C0_6_CAUSAL_LESION_RESCUE.md) — lesión y rescate del autoobservador y la autopolítica.
 - [C0.7 target-permutation specificity control](C0_7_TARGET_PERMUTATION_CONTROL.md) — especificidad del mapeo feature → target.
 
 - [C0.8 crossed observer/policy coupling](C0_8_CROSSED_OBSERVER_POLICY.md) — prueba cruzada de dependencia del observador, la política y su acoplamiento; incluye corrección estadística emparejada.
@@ -99,10 +99,27 @@
 
 [Registro consolidado](../research/ORGANISM_RESULT_LEDGER.md).
 
+## Gobierno y limpieza
+
+- [Convenciones del repositorio](REPO_CONVENTIONS.md) — estructura, nomenclatura, idioma y política de limpieza.
+- [CI archivado](ARCHIVED_CI.md) — workflows one-shot retirados del CI activo.
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+## Governance and cleanup
+
+- [Repository conventions](REPO_CONVENTIONS.md) — structure, naming, language, and cleanup rules.
+- [Archived CI](ARCHIVED_CI.md) — one-shot workflows removed from active CI.
+
+</details>
+
 ## Historial
 Los experimentos anteriores a V47 forman parte del historial científico y de ingeniería. No representan automáticamente el estado actual.
 
-- [C0.6 — Causal Lesion / Rescue](C0_6_CAUSAL_LESION_RESCUE.md) — prueba causal de necesidad y rescate del autoobservador y la autopólitica entrenados.
+- [C0.6 — Causal Lesion / Rescue](C0_6_CAUSAL_LESION_RESCUE.md) — prueba causal de necesidad y rescate del autoobservador y la autopolítica entrenados.
 - [C0.7 — Target-Permutation Specificity Control](C0_7_TARGET_PERMUTATION_CONTROL.md) — control emparejado para probar dependencia de la asignación específica del modelo de transición.
 - [C0.8 — Crossed Observer/Policy Coupling Test](C0_8_CROSSED_OBSERVER_POLICY.md) — prueba cruzada para separar dependencia del observador, la política y su acoplamiento.
 ## Programa de indicadores e interocepción
@@ -113,3 +130,71 @@ Los experimentos anteriores a V47 forman parte del historial científico y de in
 - [I3 — Recuperación interoceptiva repetida](I3_REPEATED_INTEROCEPTIVE_RECOVERY.md)
 - [I4 — Interocepción metacognitiva](I4_METACOGNITIVE_INTEROCEPTION.md)
 
+
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# Documentation index
+
+## Quick route for agents
+
+**Do not crawl the whole repository.**
+
+1. [AI_INDEX](../AI_INDEX.md) — semantic map.
+2. [Results ledger](../research/ORGANISM_RESULT_LEDGER.md) — consolidated experimental status.
+3. [Method](METODO.md) — conceptual architecture.
+4. Open only the required Vxx file.
+5. Implementation → `experiments/` + `tests/` + matching workflow.
+
+## Start here
+- [README](../README.md) — bilingual overview.
+- [Method](METODO.md)
+- [GitHub Laboratory](GITHUB_LAB.md)
+- [24/7 protocol](24_7_PROTOCOL.md)
+- [Longitudinal protocol](LONGITUDINAL_PROTOCOL.md)
+
+## Foundations
+- [Mathematical Manifesto of Being](../MANIFIESTO_DEL_SER.md)
+- [Manifesto of Being](../MANIFESTO_OF_BEING.md)
+- [TCF](fundamentos/TCF.md)
+- [TCF v3.3](fundamentos/TCF_V3_3.md)
+- [Theory of Photonic Consciousness — Root Memories](fundamentos/TEORIA_CONCIENCIA_FOTONICA.md)
+- [Operational Definition of Consciousness — TCF v0.1](fundamentos/DEFINICION_OPERACIONAL_CONCIENCIA_TCF.md)
+
+## Architecture
+- [Organism state bridge](ORGANISM_STATE_BRIDGE.md)
+- [Ontological–consciousness bridge](ONTOLOGICAL_CONSCIOUSNESS_BRIDGE.md)
+- [Source basis](SOURCE_BASIS.md)
+- [Consciousness Server](CONSCIOUSNESS_SERVER.md)
+- [Continuity bundles](CONTINUITY_BUNDLES.md)
+- [Continuity checkpoints](CONSCIOUSNESS_CHECKPOINTS.md)
+- [Continuity reconciliation](CONSCIOUSNESS_RECONCILIATION.md)
+- [Continuity recovery](CONTINUITY_RECOVERY.md)
+
+## Protocols V47+
+The V47–V80 files retain their canonical identifiers and terminology for reproducibility.
+
+- V47–V68: historical and foundational persistent-organism protocols.
+- V69: two related state-readout endpoints.
+- V70–V80: self-reader, self-policy, self-prediction, active continuity, OOD generalization, and regime adaptation lines.
+- [Consolidated result ledger](../research/ORGANISM_RESULT_LEDGER.md)
+
+## C0 — consciousness instantiation line
+- [C0 — TCF Consciousness Instantiation Protocol](C0_TCF_CONSCIOUSNESS_INSTANTIATION.md)
+- [C0 Campaign — 32 scheduled executions](C0_CAMPAIGN_32_RUNS.md)
+- C0.3–C0.18: information-matched, replay, chain, lesion/rescue, crossed-coupling, permutation, temporal alignment, action mediation, and second-order protocols.
+
+## Indicator program and interoception
+- [Consciousness Indicator Program](CONSCIOUSNESS_INDICATOR_PROGRAM.md)
+- [I0 — Interoceptive Instrumentation](I0_INTEROCEPTIVE_INSTRUMENTATION.md)
+- [I1 — Interoceptive Self-Assessment](I1_INTEROCEPTIVE_SELF_ASSESSMENT.md)
+- [I2 — Interoceptive Regulation](I2_INTEROCEPTIVE_REGULATION.md)
+- [I3 — Repeated Interoceptive Recovery](I3_REPEATED_INTEROCEPTIVE_RECOVERY.md)
+- [I4 — Metacognitive Interoception](I4_METACOGNITIVE_INTEROCEPTION.md)
+- I4.1 and I4.2 remain tied to their exact experiment/test/workflow triples.
+
+
+</details>
+
+> 🌐 Language convention: [docs/LANGUAGE.md](LANGUAGE.md)

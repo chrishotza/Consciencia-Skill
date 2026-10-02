@@ -1,3 +1,50 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# Evidencia V60 — Feedback semántico en bucle cerrado
+
+## Hipótesis
+
+El organismo debería poder mantener un loop recurrente en el que su trayectoria seleccionada se persiste como estado, influye en la siguiente memory semántica y esa memory semántica se convierte nuevamente en dinámica interna antes de la siguiente selección de trayectoria.
+
+## Diseño
+
+Cada réplica:
+
+1. construye una historia warmup emparejada con semantic bridge habilitado y self-selection deshabilitada;
+2. clona el mismo estado persistente en un brazo self-model y uno random;
+3. ejecuta ciclos repetidos wake → semantic bridge → selección autónoma;
+4. utiliza el mismo seed y conjunto candidato {-1, +1} en ambos brazos;
+5. evalúa cada trayectoria seleccionada contra un oracle post hoc que nunca participa de la selección.
+
+El provider sintético lee la última acción autónoma persistida y emite una memory semántica determinista asociada a esa acción. La memory entra luego en ContinuityMemoryPolicy y en el semantic dynamic bridge.
+
+## Medida primaria
+
+Regret inmediato medio:
+
+actual_distance - oracle_distance
+
+y ventaja emparejada del self-model:
+
+regret_random - regret_self_model.
+
+## Medida secundaria
+
+Diferencia del feedback signal dentro de la ejecución entre ciclos posteriores a acciones negativas y positivas.
+
+No es un efecto causal aislado formal porque historia de acciones y estado interno coevolucionan dentro del loop cerrado.
+
+## Limitaciones
+
+El provider es determinista y sintético. El protocolo no prueba fenomenología, autoinformes subjetivos ni comportamiento de un LLM externo real.
+
+</details>
+
+<a id="english"></a>
+
 # Evidence V60 — Closed-loop semantic feedback
 
 ## Hypothesis

@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # C0.5 — Information-Matched Action-Chain Control
 
 ## Objetivo
@@ -25,3 +27,39 @@ Una media positiva indica una separación mayor de la cadena causada por la acci
 ## Estado
 
 Protocolo preparado para ejecución mediante GitHub Actions.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# C0.5 — Information-Matched Action-Chain Control
+
+## Objective
+
+C0.5 strengthens C7. C0.2 showed a recurrence effect against OPEN_LOOP, but that control did not match the distribution of selected actions.
+
+## Design
+
+For each FULL episode, obtain the final own state of an autonomous trajectory and the action selected from that state.
+
+Compare three chains from the same context and dynamic seed:
+
+- current-episode action → next state → next action;
+- donor-episode action → next state → next action;
+- second donor action → next state → next action.
+
+Per-replicate contrast:
+
+Delta_i = |a_current' - a_donor1'| - |a_donor1' - a_donor2'|.
+
+Donor actions are selected with two fixed-point-free permutations over the same empirical action distribution.
+
+A positive mean indicates greater separation caused by the current action than by two information-matched donor actions.
+
+## Status
+
+Protocol prepared for execution through GitHub Actions.
+
+</details>

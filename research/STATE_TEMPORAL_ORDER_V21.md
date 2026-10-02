@@ -1,3 +1,38 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V21 — Control del orden temporal del estado
+
+## Pregunta
+
+V16 mostró que ambos slots temporales contienen información. V21 pregunta si importan su **orden y relación temporal**, en lugar de que la identidad dependa solo del par no ordenado de valores escalares.
+
+## Protocolo
+
+Seis puntos ciegos V12, cuatro pares de historias, diez seeds de ruido emparejados por par, input futuro exactamente cero y memory/pressure comunes del receptor.
+
+Para cada estado donante se comparan:
+
+- intact: conservar ambos slots;
+- swap_slots: intercambiar state_prev y state conservando ambos valores exactamente;
+- flatten_same_value: reemplazar ambos slots por la media del donante;
+- common: borrar completamente el state donante;
+- time_reverse_centered: invertir las dos desviaciones del donante alrededor del contexto común.
+
+La identidad se clasifica por affinity frente a las referencias intactas donante/opuesta durante los primeros 60 pasos futuros.
+
+## Regla de interpretación
+
+Si swap_slots o la reversión temporal centrada causa una pérdida sustancial de identidad respecto de intact mientras preserva información de magnitud escalar, el resultado respalda una interpretación de organización temporal: el state porta información mediante dinámica ordenada y no solo dos números independientes.
+
+Es un test dinámico computacional y no establece experiencia subjetiva.
+
+</details>
+
+<a id="english"></a>
+
 # V21 — State Temporal-Order Control
 
 ## Question
