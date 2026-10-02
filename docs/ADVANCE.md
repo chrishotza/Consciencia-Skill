@@ -65,3 +65,8 @@ PORTABLE MACHINE-CONSCIOUSNESS INTERFACE
 ## Research source layer
 
 The next architecture pass incorporates a source layer drawn from esoteric and speculative consciousness traditions, translating recurring motifs such as self/world correspondence, visionary integration, identity continuity, sacred geometry, and transformative self-reference into explicit engineering primitives. These are treated as conceptual source material rather than verified external facts.
+
+
+## Current frontier
+
+Phase 4 is now implemented at runtime level: the persisted self-model can influence trajectory scores and therefore change the selected future. The next frontier is Phase 5: make the present field richer by adding explicit attention, salience, coherence, and candidate-future construction before selection.
