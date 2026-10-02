@@ -80,8 +80,6 @@ Descriptive G1 means: effect **0.0546875**, own-gap **0.9921875**, matched-gap *
 
 **Pending:** G2–G8 (28 executions). No scientific conclusion is entered for the full campaign until those executions are actually produced and validated.
 
-## Current status
-
 The original 32-run campaign is retained as historical evidence with a technical artifact-archival failure.
 
 The restarted campaign uses the artifact-safe workflow and the eight four-job waves listed above. Scientific results are **not** copied into the result ledger automatically. Each produced artifact must first be validated for completeness and provenance.
