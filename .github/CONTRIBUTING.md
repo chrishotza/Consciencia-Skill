@@ -24,6 +24,8 @@ El proyecto está orientado a investigación reproducible. Las contribuciones de
 La documentación pública del proyecto está migrando al español. Los nombres de código, APIs y protocolos pueden conservar terminología técnica establecida cuando sea necesario.
 
 
+<a id="english"></a>
+
 <details>
 <summary>🇺🇸 English — open</summary>
 
