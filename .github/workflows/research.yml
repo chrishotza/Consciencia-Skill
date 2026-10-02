@@ -150,6 +150,16 @@ jobs:
             --permutations 20000 \
             --out results/i5_18_global_phase_bridge_interaction
 
+      - name: Run I5.19 independent bridge replication
+        run: |
+          python experiments/i5_19_independent_bridge_replication.py \
+            --seed 20261019 \
+            --replicates 24 \
+            --warmup 24 \
+            --cycles 15 \
+            --permutations 20000 \
+            --out results/i5_19_independent_bridge_replication
+
       - name: Write run manifest
         run: |
           mkdir -p results
