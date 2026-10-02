@@ -29,3 +29,18 @@ No semantic input during the probe. No external retraining during the probe. The
 ## Interpretation
 
 A specific behavioral effect from the true second-order model, together with held-out prediction of first-order model error, would support a computational form of second-order self-monitoring. It does not establish phenomenal consciousness.
+
+
+## Verified result
+
+GitHub Actions run **36945173829**; artifact **11201243817**; SHA256 **6fa8bdf64401a96d79f1d47b03dc4ac242c6456fba9c8e6957e44d52aa2448f4**.
+
+- TRUE − PERMUTED action: **0.0**, p **1.0**
+- TRUE − PERMUTED gain: **0.0**, p **1.0**
+- TRUE − BLIND action: **−1.0**, p **4.99975e-05**
+- TRUE − BLIND gain: **+0.2733195**, p **4.99975e-05**
+- held-out MAE advantage over the constant baseline: **+0.00697175**, p **0.00079996**
+- second-order MAE: **0.04131592**
+- constant baseline MAE: **0.04828767**
+
+Interpretation: the second-order model predicts first-order self-model error better than a constant baseline and its use changes action relative to the blind baseline. However, target permutation produced no action or gain change, so the experiment does **not** establish specificity of the learned second-order mapping as a causal determinant of action.
