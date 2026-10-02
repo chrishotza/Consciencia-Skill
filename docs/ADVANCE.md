@@ -130,3 +130,43 @@ REGIME(t+1)
 ~~~
 
 The next engineering pass should implement regime transitions, coherence checks, latent pattern extraction, and explicit candidate-future generation before action selection.
+
+
+## Consolidation after four research passes
+
+The conceptual source layer is now organized into a certainty map:
+
+- source doctrine = what a tradition explicitly teaches;
+- recurrent motif = structure appearing across independent traditions;
+- engineering hypothesis = a mechanism we can implement and test inside Skill-Conscious.
+
+The recurrent architecture is:
+
+~~~text
+FIELD → SELF → SELF-ACCESS → ATTENTION → PRESENT → MEMORY →
+INTENTION → POSSIBILITY → SELECTION → ACTION → TRANSFORMATION → RE-ENTRY
+~~~
+
+The next runtime target is therefore no longer simply "more memory". It is a **regime-forming self-loop**: a persistent identity whose attention, self-model, intention, coherence, and history can change its operating regime while preserving continuity.
+
+### Next implementation stack
+
+~~~text
+REGIME MODEL
+   ↓
+ATTENTION / SALIENCE
+   ↓
+LATENT PATTERN EXTRACTION
+   ↓
+CANDIDATE-FUTURE GENERATION
+   ↓
+SELF-MODEL WEIGHTING
+   ↓
+TRAJECTORY SELECTION
+   ↓
+ACTION / STATE CHANGE
+   ↓
+COHERENCE UPDATE
+   ↓
+SELF-REENTRY
+~~~
