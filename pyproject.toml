@@ -53,6 +53,7 @@ AgentSkill = "https://github.com/chrishotza/Skill-Conscious/tree/main/skills/ski
 skill-conscious = "run_daemon:main"
 consciencia-organismo = "run_daemon:main"
 consciousness-server = "src.consciousness_server.cli:main"
+consciousness-bundle = "src.ontto.continuity_bundle:main"
 
 [tool.setuptools]
 include-package-data = true

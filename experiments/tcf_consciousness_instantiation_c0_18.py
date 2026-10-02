@@ -99,13 +99,25 @@ def train_online(
         organism.autonomous_wake_cycle()
 
     learned = organism.action_conditioned_meta_observer.to_dict()
-    digest = model_digest(
-        organism.self_observer,
-        organism.action_conditioned_meta_observer,
-    )
     samples = len(organism.action_conditioned_meta_observer.targets)
     store.conn.execute("PRAGMA wal_checkpoint(FULL)")
     store.conn.close()
+
+    # The reference digest is computed from the persisted model, not from the
+    # in-memory objects, so the recovery criterion tests serialization itself.
+    persisted_store = MemoryStore(db)
+    persisted_observer = persisted_store.load_self_observer_model("agent")
+    persisted_meta = persisted_store.load_action_conditioned_meta_observer_model(
+        "agent"
+    )
+    if persisted_observer is None or persisted_meta is None:
+        persisted_store.conn.close()
+        raise RuntimeError("training did not persist both first- and second-order models")
+    digest = model_digest(
+        SelfObserver.from_dict(persisted_observer),
+        ActionConditionedMetaObserver.from_dict(persisted_meta),
+    )
+    persisted_store.conn.close()
     return learned, digest, samples
 
 
@@ -147,6 +159,7 @@ def main() -> None:
     rescue_gain = []
     sample_counts = []
     digest_recovered = []
+    replicates = []
 
     for index in range(args.episodes):
         seed = 180010 + index
@@ -221,8 +234,32 @@ def main() -> None:
         full_gain.append(full_g)
         lesion_gain.append(lesion_g)
         rescue_gain.append(rescue_g)
+        recovered = restored_digest == digest
         sample_counts.append(samples)
-        digest_recovered.append(restored_digest == digest)
+        digest_recovered.append(recovered)
+        replicates.append(
+            {
+                "replicate": index,
+                "seed": seed,
+                "full": {
+                    "action": full_a,
+                    "gain": full_g,
+                    "policy": full_policy,
+                },
+                "lesion": {
+                    "action": lesion_a,
+                    "gain": lesion_g,
+                    "policy": lesion_policy,
+                },
+                "rescue": {
+                    "action": rescue_a,
+                    "gain": rescue_g,
+                    "policy": rescue_policy,
+                },
+                "learned_meta_samples": samples,
+                "exact_learned_model_recovery": recovered,
+            }
+        )
 
     full_action = np.asarray(full_action, dtype=float)
     lesion_action = np.asarray(lesion_action, dtype=float)
@@ -239,6 +276,10 @@ def main() -> None:
     summary = {
         "experiment": "tcf_consciousness_instantiation_c0_18",
         "protocol_version": PROTOCOL_VERSION,
+        "episodes": int(args.episodes),
+        "seed_start": 180010,
+        "training_cycles": TRAINING_CYCLES,
+        "replicates_file": "replicates.json",
         "question": (
             "After autonomous second-order acquisition, does removing the learned "
             "second-order model alter selection at the same state, and does restoring "
@@ -297,6 +338,10 @@ def main() -> None:
         ),
     }
 
+    (out / "replicates.json").write_text(
+        json.dumps(replicates, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
     (out / "summary.json").write_text(
         json.dumps(summary, indent=2, ensure_ascii=False),
         encoding="utf-8",

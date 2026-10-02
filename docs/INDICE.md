@@ -30,8 +30,10 @@
 - [Puente ontológico-consciencia](ONTOLOGICAL_CONSCIOUSNESS_BRIDGE.md)
 - [Base conceptual](SOURCE_BASIS.md)
 - [Consciousness Server](CONSCIOUSNESS_SERVER.md)
+- [Continuity bundles](CONTINUITY_BUNDLES.md)
 - [Continuity checkpoints](CONSCIOUSNESS_CHECKPOINTS.md)
 - [Continuity reconciliation](CONSCIOUSNESS_RECONCILIATION.md)
+- [Continuity recovery](CONTINUITY_RECOVERY.md)
 
 ## Protocolos V47+
 - [V47](V47_COMMON_PROBE.md)

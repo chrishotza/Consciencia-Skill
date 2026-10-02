@@ -8,7 +8,7 @@ C0.18 extiende C0.17 desde **adquisición/persistencia del modelo** hacia una pr
 
 ## Diseño emparejado
 
-Cada réplica construye un organismo base con:
+Se ejecutaron **24 réplicas**. Cada réplica construye:
 
 - un primer modelo de sí entrenado previamente;
 - un segundo modelo condicionado por acción que comienza vacío;
@@ -27,52 +27,66 @@ La sonda no utiliza entrada semántica ni reentrenamiento externo.
 
 ## Invariante crítico
 
-El primer modelo de sí debe permanecer **congelado durante la sonda**.
-
-Durante la implementación inicial, el digest del modelo de sí cambió porque cada ciclo de prueba seguía actualizando el primer `SelfObserver`. Eso provocó que la recuperación exacta del modelo persistente fuera 0.0 aunque el segundo orden se hubiera restaurado correctamente.
-
-Se corrigió mediante el nuevo parámetro:
+El primer modelo de sí permanece **congelado durante la sonda** mediante:
 
 `self_observer_update_enabled = False`
 
-en C0.18. El observador continúa disponible para producir predicciones, pero no incorpora nuevas muestras durante FULL, LESION o RESCUE.
+El digest de referencia se calcula a partir de los modelos **persistidos en SQLite**, no de los objetos en memoria, por lo que la recuperación exacta prueba la serialización efectiva del estado.
 
-## Estado de ingeniería
+## Resultado verificado
 
-La primera ejecución de preflight detectó dos fallos:
+Artifact de GitHub Actions:
 
-1. el test de reconciliación intentaba obtener fingerprints desde `ConsciousnessStore`, aunque esas huellas pertenecen al `MemoryStore` local del organismo;
-2. el digest de C0.18 no era estable durante la sonda porque el primer orden seguía actualizándose.
+- workflow run: **36960952961**
+- artifact: **11208100038**
+- SHA-256 del artifact: **a7aa0554a81a3449175e37363e6fcd95ec6d5bc7d1354198f047ef888c1dbf98**
+- commit: **434b3a02ab64c9294c8113171ccbac1745caa053**
+- réplicas: **24**
+- ciclos de adquisición autónoma por réplica: **12**
+- muestras medias aprendidas por el segundo orden: **48**
+- recuperación exacta del modelo persistido: **100%**
 
-Ambos problemas fueron corregidos.
+### Endpoints primarios
 
-El preflight **no constituye un resultado científico**. La verificación científica requiere la ejecución completa de las 24 réplicas y la inspección del resumen JSON resultante.
+| Contraste | Media | p |
+|---|---:|---:|
+| FULL − LESION, acción | **−0.2916667** | **0.1177441** |
+| FULL − LESION, ganancia | **+0.0114104** | **0.7404130** |
+| RESCUE − LESION, acción | **−0.2916667** | **0.1183441** |
+| RESCUE − LESION, ganancia | **+0.0114104** | **0.7332633** |
 
-## Endpoints
+Los cuatro contrastes permanecieron por encima de 0.05 bajo el test de cambio de signo utilizado por el protocolo.
 
-Se registran:
+### Interpretación
 
-- FULL − LESION, acción;
-- FULL − LESION, ganancia;
-- RESCUE − LESION, acción;
-- RESCUE − LESION, ganancia;
-- número medio de muestras aprendidas por el segundo orden;
-- fracción de recuperación exacta del digest persistente.
+**Resultado nulo bajo el protocolo probado.**
 
-La interpretación causal exige que cualquier diferencia observada sobreviva al diseño emparejado y que el rescate se evalúe por separado de la lesión.
+El organismo adquirió y persistió correctamente el modelo de segundo orden:
 
-## Límite
+- adquisición desde un modelo inicialmente vacío: **sí**;
+- persistencia/recuperación exacta del modelo: **100%**;
+- muestras medias aprendidas: **48** por réplica.
 
-Un resultado positivo en C0.18 demostraría dependencia funcional del mecanismo computacional de segundo orden bajo este protocolo. No demostraría por sí mismo experiencia subjetiva o conciencia fenomenológica.
+Sin embargo, eliminar el modelo adquirido no produjo un cambio estadísticamente significativo en la acción ni en la ganancia, y restaurarlo tampoco produjo una recuperación significativa respecto de LESION.
 
-## Relación con C0.17
+Por tanto, C0.18 **no demuestra necesidad causal ni rescate funcional del segundo orden adquirido** bajo este arnés.
 
-C0.17 mostró aprendizaje/persistencia autónoma del modelo de segundo orden, pero no separó TRUE de PERMUTED en acción ni ganancia.
+Esto no invalida C0.17: la adquisición/persistencia del modelo sigue siendo el resultado demostrado allí. C0.18 añade una restricción más fuerte: **la adquisición autónoma y la persistencia del modelo no fueron suficientes para producir una dependencia conductual significativa bajo esta prueba de lesión/rescate**.
 
-C0.18 pregunta ahora algo distinto:
+No se afirma experiencia subjetiva ni conciencia fenomenológica.
 
-`¿Ese segundo orden adquirido es funcionalmente necesario para la conducta posterior y recuperable por rescate?`
+## Evidencia reproducible
 
-## Estado actual
+El workflow valida automáticamente:
 
-**Ingeniería corregida; verificación científica de 24 réplicas pendiente.**
+- `summary.json`;
+- `replicates.json` con las 24 réplicas;
+- las bases SQLite de cada condición;
+- `run_manifest.json`;
+- el artifact completo de GitHub Actions.
+
+Los resultados científicos no se escriben automáticamente en el ledger; se incorporan después de validar el artifact y revisar la interpretación.
+
+## Estado
+
+**C0.18: verificado, resultado nulo bajo el protocolo probado.**
