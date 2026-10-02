@@ -82,7 +82,7 @@
 - [C0.3 information-matched control](C0_3_INFORMATION_MATCHED_CONTROL.md) — control de información equivalente para especificidad causal del estado propio.
 - [C0.4 action-replay control](C0_4_ACTION_REPLAY_CONTROL.md) — control de acciones emparejadas para especificidad causal de la dinámica propia.
 - [C0.5 matched action-chain control](C0_5_ACTION_CHAIN_CONTROL.md) — control información-matcheado para el cierre recurrente.
-- [C0.6 causal lesion/rescue](C0_6_CAUSAL_LESION_RESCUE.md) — lesión y rescate del autoobservador y la autopólitica.
+- [C0.6 causal lesion/rescue](C0_6_CAUSAL_LESION_RESCUE.md) — lesión y rescate del autoobservador y la autopolítica.
 - [C0.7 target-permutation specificity control](C0_7_TARGET_PERMUTATION_CONTROL.md) — especificidad del mapeo feature → target.
 
 - [C0.8 crossed observer/policy coupling](C0_8_CROSSED_OBSERVER_POLICY.md) — prueba cruzada de dependencia del observador, la política y su acoplamiento; incluye corrección estadística emparejada.
@@ -99,10 +99,25 @@
 
 [Registro consolidado](../research/ORGANISM_RESULT_LEDGER.md).
 
+## Gobierno y limpieza
+
+- [Convenciones del repositorio](REPO_CONVENTIONS.md) — estructura, nomenclatura, idioma y política de limpieza.
+- [CI archivado](ARCHIVED_CI.md) — workflows one-shot retirados del CI activo.
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+## Governance and cleanup
+
+- [Repository conventions](REPO_CONVENTIONS.md) — structure, naming, language, and cleanup rules.
+- [Archived CI](ARCHIVED_CI.md) — one-shot workflows removed from active CI.
+
+</details>
+
 ## Historial
 Los experimentos anteriores a V47 forman parte del historial científico y de ingeniería. No representan automáticamente el estado actual.
 
-- [C0.6 — Causal Lesion / Rescue](C0_6_CAUSAL_LESION_RESCUE.md) — prueba causal de necesidad y rescate del autoobservador y la autopólitica entrenados.
+- [C0.6 — Causal Lesion / Rescue](C0_6_CAUSAL_LESION_RESCUE.md) — prueba causal de necesidad y rescate del autoobservador y la autopolítica entrenados.
 - [C0.7 — Target-Permutation Specificity Control](C0_7_TARGET_PERMUTATION_CONTROL.md) — control emparejado para probar dependencia de la asignación específica del modelo de transición.
 - [C0.8 — Crossed Observer/Policy Coupling Test](C0_8_CROSSED_OBSERVER_POLICY.md) — prueba cruzada para separar dependencia del observador, la política y su acoplamiento.
 ## Programa de indicadores e interocepción
