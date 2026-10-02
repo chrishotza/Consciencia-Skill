@@ -96,9 +96,13 @@ def reconcile(
 
     if state_match and trajectory_match and event_delta == 0 and memory_delta == 0:
         status = ReconciliationStatus.ALIGNED
-    elif event_delta > 0 or memory_delta > 0:
+    elif event_delta >= 0 and memory_delta >= 0 and (
+        event_delta > 0 or memory_delta > 0
+    ):
         status = ReconciliationStatus.LOCAL_AHEAD
-    elif event_delta < 0 or memory_delta < 0:
+    elif event_delta <= 0 and memory_delta <= 0 and (
+        event_delta < 0 or memory_delta < 0
+    ):
         status = ReconciliationStatus.LOCAL_BEHIND
     else:
         status = ReconciliationStatus.DIVERGED
