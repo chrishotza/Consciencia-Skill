@@ -217,7 +217,7 @@ The runtime also supports **WAKE** and **SLEEP** regimes, local persistence, and
 - **I5.6** integrated query+attention into `PersistentOrganism` with an internal task: FULL−SHUFFLED_QUERY action **+1.0**, p **4.99975×10⁻⁵**; FULL−SHUFFLED_ATTENTION **+0.75**, p **4.99975×10⁻⁵**; persistence **100%**.
 - **Lattice v0/v1** are verified computational-substrate protocols; physical claims remain explicitly separated from the implementation.
 - **I5.7** produced descriptive persistent trajectory divergence, but the prespecified signed state endpoint at t+1 did not separate significantly; a causal re-entry effect is not established yet.
-- **Next integration:** I5.22 — cyclic semantic phase-shift control.
+- **Next integration:** I5.23 — cyclic shift sweep.
 ## Strongest results so far
 
 | Protocol | What was tested | Observed result |
@@ -342,3 +342,7 @@ I5.20 preserved the exact post-t0 semantic multiset and t0 action while disrupti
 
 ### I5.21 — Phase-local semantic permutation
 I5.21 preserved the semantic multiset within each seven-phase cycle while disrupting phase↔content correspondence. Signed-AUC specificity was null (**+0.02155**, p=0.85726), but absolute-AUC (**+0.44740**, p=0.00010) and future-action (**+0.04663**, p=0.00100) specificity remained significant. Global phase×specificity interaction was significant for absolute AUC (p=0.00030) and future action (p<0.00005).
+
+
+### I5.22 — Cyclic semantic phase-shift control
+I5.22 preserved t0, phase-label sequence, and the post-t0 semantic content multiset at 100%, while shifting semantic content cyclically by +1. The specificity gap was null for signed AUC (**+0.02801**, p=0.74476), absolute AUC (**+0.02983**, p=0.71256), and future-action change (**+0.00645**, p=0.52927). Global lag×specificity interaction was non-significant for all three endpoints.

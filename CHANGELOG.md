@@ -1,3 +1,12 @@
+## 2026-10-02 — I5.22 verificado / I5.22 verified
+
+- I5.22 corrected rerun: 24 replicates, seed **20261022**, 24 warmup, 15 cycles, 20,000 permutations.
+- Workflow **37061263630**, artifact **11251161457**; tests **37061263638** and package check **37061263624** passed.
+- All four invariants were preserved at 100%.
+- Semantic specificity was null for signed AUC, absolute AUC, and future-action change; global lag×specificity interaction was non-significant for all three endpoints.
+- Initial I5.22 integrity metric was discarded and replaced by the corrected run; only the corrected run is valid.
+- Next: I5.23 cyclic shift sweep.
+
 ## 2026-10-02 — I5.21 verificado / I5.21 verified
 
 <a id="espanol"></a>

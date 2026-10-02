@@ -117,3 +117,12 @@ Result ledger: research/ORGANISM_RESULT_LEDGER.md
 Status: verified on workflow 37059465725 / artifact 11249378346.
 Result: phase-local semantic specificity remained positive for absolute AUC and future-action change; signed AUC remained null; lag×specificity interaction was significant for the two positive endpoints.
 Next: I5.22 cyclic semantic phase-shift control.
+
+
+## I5.22 verified
+Protocol: docs/I5_22_CYCLIC_SEMANTIC_PHASE_SHIFT.md
+Experiment: experiments/i5_22_cyclic_semantic_phase_shift.py
+Result ledger: research/ORGANISM_RESULT_LEDGER.md
+Status: corrected rerun verified on workflow 37061263630 / artifact 11251161457.
+Result: all four invariants were preserved at 100%; semantic specificity and lag×specificity interaction were null for signed AUC, absolute AUC, and future-action change.
+Next: I5.23 cyclic shift sweep.

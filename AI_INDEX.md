@@ -476,3 +476,16 @@ Usá el documento de protocolo para localizar la implementación exacta.
 <a id="english"></a>
 
 - `docs/I5_GLOBAL_WORKSPACE.md` — bounded global workspace protocol; `src/ontto/global_workspace.py` is the reusable mechanism.
+
+
+### I5.22 — Cyclic semantic phase-shift control
+- `docs/I5_22_CYCLIC_SEMANTIC_PHASE_SHIFT.md`
+- `experiments/i5_22_cyclic_semantic_phase_shift.py`
+- `tests/test_i5_22_cyclic_semantic_phase_shift.py`
+- Validated: research-lab **37061263630** / artifact **11251161457**; tests **37061263638** and package check **37061263624** successful.
+- 24 replicates; all four invariants preserved at **100%**.
+- Specificity gap: signed AUC **+0.02801**, p=0.74476; absolute AUC **+0.02983**, p=0.71256; future-action change **+0.00645**, p=0.52927.
+- Global lag×specificity interaction non-significant for all three endpoints.
+- max-T any-lag p: **0.22344** signed AUC, **0.76186** absolute AUC, **0.78481** future action.
+- Interpretation: strict cyclic phase-shift control was null; I5.21 cannot be attributed solely to phase↔content decoupling.
+- Next: I5.23 cyclic shift sweep.
