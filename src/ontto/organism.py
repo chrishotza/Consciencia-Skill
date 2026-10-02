@@ -569,6 +569,7 @@ class PersistentOrganism:
         candidates = ()
         counterfactual_meta_samples_added = 0
         interoceptive_control = None
+        workspace_control = None
         if self.cfg.interoceptive_control_enabled:
             chosen_signal, interoceptive_control = self._choose_interoceptive_signal()
         elif self.cfg.self_selection_enabled and self.cfg.self_observer_enabled:
@@ -643,7 +644,6 @@ class PersistentOrganism:
                 raise ValueError(
                     f"unknown self_selection_policy={self.cfg.self_selection_policy!r}"
                 )
-            workspace_control = None
             if self.workspace_controller is not None:
                 chosen, workspace_control = self.workspace_controller.choose(
                     self.state,
@@ -656,8 +656,6 @@ class PersistentOrganism:
                     float(x) for x in workspace_control["broadcast"]
                 ]
                 self.state.workspace_steps += 1
-            else:
-                workspace_control = None
             chosen_signal = chosen.signal
 
         dynamic = self._advance_dynamic(
