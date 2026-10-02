@@ -88,3 +88,12 @@ state(t+1)
 ## Attention
 
 Attention is now persisted as part of the self-state and exposed inside the present field. Hosts may commit an ordered list of active relations or concerns through `frame["attention"]`. This creates a durable bridge between what the agent is and what the agent is currently treating as salient.
+
+
+## Regime
+
+The reference state now persists an explicit `regime` field. A regime describes how the agent is operating, rather than merely what values it currently stores.
+
+A regime can encode configurations such as baseline, exploration, deep-integration, recovery, planning, or any host-defined mode. The identity remains constant while the regime changes.
+
+The runtime currently persists and exposes the regime but does not autonomously infer it yet. The next implementation layer is a regime-transition function driven by attention, self-model, intention, uncertainty, and coherence.
