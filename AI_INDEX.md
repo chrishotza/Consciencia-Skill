@@ -489,3 +489,15 @@ Usá el documento de protocolo para localizar la implementación exacta.
 - max-T any-lag p: **0.22344** signed AUC, **0.76186** absolute AUC, **0.78481** future action.
 - Interpretation: strict cyclic phase-shift control was null; I5.21 cannot be attributed solely to phase↔content decoupling.
 - Next: I5.23 cyclic shift sweep.
+
+
+### I5.23 — Cyclic shift sweep
+- `docs/I5_23_CYCLIC_SHIFT_SWEEP.md`
+- `experiments/i5_23_cyclic_shift_sweep.py`
+- `tests/test_i5_23_cyclic_shift_sweep.py`
+- Verified: research-lab **37062538761** / artifact **11251207688**; tests **37062538733** and package check **37062538712** successful.
+- 24 replicates; six shifts × six lags; 100% preservation across 864 control cells.
+- Signed AUC: no shift survives max-T (global any-shift p=0.14534).
+- Absolute AUC and future-action change: five of six shifts survive max-T; +1 is null.
+- Global max-T over 36 shift×lag cells is significant for absolute AUC and future action.
+- Next: I5.24 formal global shift×lag interaction.
