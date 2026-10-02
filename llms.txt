@@ -93,3 +93,11 @@ Result ledger: research/ORGANISM_RESULT_LEDGER.md
 Status: verified on workflow 37052907187 / artifact 11246744569.
 Result: global bridge ON−OFF mean remained non-zero across all three endpoints; global phase × bridge interaction was non-significant for signed AUC, absolute AUC, and future-action change.
 Next: I5.19 independent replication of the global bridge effect with the I5.17/I5.18 analysis frozen.
+
+## I5.19 verified
+Protocol: docs/I5_19_INDEPENDENT_BRIDGE_REPLICATION.md
+Experiment: experiments/i5_19_independent_bridge_replication.py
+Result ledger: research/ORGANISM_RESULT_LEDGER.md
+Status: verified on workflow 37056574657 / artifact 11247979913.
+Result: independent seed 20261019 reproduced a non-zero average bridge ON−OFF effect for signed AUC, absolute AUC, and future-action change; global phase × bridge interaction remained non-significant.
+Next: I5.20 bridge specificity under semantic permutation control.
