@@ -99,7 +99,7 @@ Los resultados positivos, nulos y negativos se conservan.
 | C0.11 | Mediación causal acción → estado → siguiente acción | **Positivo: intervención sobre acción cambia estado y siguiente acción** |
 | C0.12 | Segundo orden: modelo del error del propio modelo de sí | **Mixto: predice el error, pero sin especificidad TRUE vs permutado** |
 | C0.13 | Segundo orden condicionado por acción | **Resultado verificado** |
-| C0.14 | Persistencia del segundo orden tras reinicio | **Implementado; ejecución pendiente** |
+| C0.14 | Persistencia del segundo orden tras reinicio | **Positivo: modelos y conducta sobreviven el reinicio** |
 | C0 Campaign | 32 ejecuciones en 8 grupos | **Ejecutada: 32 workflows; fallo técnico en el archivado de artifacts** |
 
 ## Fundamentos
@@ -232,7 +232,7 @@ Positive, null, and negative results are all kept.
 | C0.11 | Causal action → state → next-action mediation | **Positive: action intervention changed state and next action** |
 | C0.12 | Second-order self-monitoring | **Mixed: predicts first-order error, but no TRUE-vs-permuted specificity** |
 | C0.13 | Action-conditioned second-order self-model | **Verified result** |
-| C0.14 | Persistent second-order self-model | **Implemented; run pending** |
+| C0.14 | Persistent second-order self-model | **Positive: models and behavior survive restart** |
 | C0 Campaign | 32 executions across 8 groups | **Executed: 32 workflows; technical artifact-archival failure** |
 
 ## Foundations
