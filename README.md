@@ -217,7 +217,7 @@ The runtime also supports **WAKE** and **SLEEP** regimes, local persistence, and
 - **I5.6** integrated query+attention into `PersistentOrganism` with an internal task: FULL−SHUFFLED_QUERY action **+1.0**, p **4.99975×10⁻⁵**; FULL−SHUFFLED_ATTENTION **+0.75**, p **4.99975×10⁻⁵**; persistence **100%**.
 - **Lattice v0/v1** are verified computational-substrate protocols; physical claims remain explicitly separated from the implementation.
 - **I5.7** produced descriptive persistent trajectory divergence, but the prespecified signed state endpoint at t+1 did not separate significantly; a causal re-entry effect is not established yet.
-- **Next integration:** I5.24 — global shift×lag interaction.
+- **Next integration:** I5.25 — shift×lag orientation and symmetry control.
 ## Strongest results so far
 
 | Protocol | What was tested | Observed result |
@@ -350,3 +350,7 @@ I5.22 preserved t0, phase-label sequence, and the post-t0 semantic content multi
 
 ### I5.23 — Cyclic shift sweep
 I5.23 replaced the single +1 cyclic shift with all six non-zero shifts. Structural invariants were 100%. Signed AUC remained null globally, while absolute AUC and future-action specificity survived max-T for five of six shifts; +1 was the only null shift. The 36-cell sweep was globally significant for absolute AUC and future action.
+
+
+### I5.24 — Global shift×lag interaction
+I5.24 tested the frozen I5.23 6×6 specificity surface. The global shift×lag interaction was null for signed AUC (p=0.89461) but significant for absolute AUC and future-action change (permutation p=0.00005 each; Bonferroni 0.00015). No new trajectories were collected.
