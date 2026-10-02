@@ -43,7 +43,7 @@ def oracle_for_state(state, seed: int, step_index: int) -> dict[str, object]:
     outcomes={}
     for signal in CANDIDATE_SIGNALS:
         snap=bridge.advance(previous_state=state.dynamic_prev_state,state=state.dynamic_state,memory=state.dynamic_memory,pressure=state.dynamic_pressure,signal=signal,steps=1,step_index=step_index)
-        outcomes[signal]={'state':float(snap.state),'distance':float(abs(snap.state-snap.attractor_distance*0.0))}
+        outcomes[signal]={'state':float(snap.state),'distance':float(abs(snap.state-0.0))}
     oracle_signal=min(CANDIDATE_SIGNALS,key=lambda s:(abs(outcomes[s]['state']-0.0),abs(s)))
     return {'oracle_signal':oracle_signal,'oracle_distance':abs(outcomes[oracle_signal]['state']-0.0),'outcomes':outcomes}
 
@@ -62,7 +62,7 @@ def run_arm(db_path: Path, *, seed: int, workspace: bool, broadcast: bool, lesio
     after=store.load_state('receiver')
     event=store.recent_events('receiver',1)[0]
     chosen=float(event['payload']['self_selection']['chosen_signal'])
-    actual=float(abs(after.dynamic_state-after.dynamic_attractor_distance*0.0))
+    actual=float(abs(after.dynamic_state-0.0))
     regret=actual-float(oracle['oracle_distance'])
     control=event['payload']['self_selection'].get('workspace_control')
     persisted_before={k:v for k,v in store.persistence_observables('receiver').items() if k.startswith('workspace_')}
@@ -79,7 +79,9 @@ def run(seed: int, replicates: int, warmup_cycles: int, influence: float, out: P
         rep_seed=seed+rep
         base=out/f'base_{rep}.db'; full_db=out/f'full_{rep}.db'; nobroadcast_db=out/f'nobroadcast_{rep}.db'; lesion_db=out/f'lesion_{rep}.db'; baseline_db=out/f'baseline_{rep}.db'
         warmup(base,rep_seed,warmup_cycles)
-        state=MemoryStore(base).load_state('receiver')
+        state_store=MemoryStore(base)
+        state=state_store.load_state('receiver')
+        state_store.conn.close()
         source=baseline_workspace_source(state)
         shutil.copy2(base,full_db); shutil.copy2(base,nobroadcast_db); shutil.copy2(base,lesion_db); shutil.copy2(base,baseline_db)
         full=run_arm(full_db,seed=rep_seed,workspace=True,broadcast=True,lesion_index=None,influence=influence)
@@ -87,6 +89,8 @@ def run(seed: int, replicates: int, warmup_cycles: int, influence: float, out: P
         lesion=run_arm(lesion_db,seed=rep_seed,workspace=True,broadcast=True,lesion_index=source,influence=influence)
         baseline=run_arm(baseline_db,seed=rep_seed,workspace=False,broadcast=False,lesion_index=None,influence=influence)
         rows.append({'replicate':rep,'seed':rep_seed,'selected_source':source,'full':full,'no_broadcast':nobroadcast,'lesion':lesion,'no_workspace':baseline,'broadcast_regret_advantage':nobroadcast['regret']-full['regret'],'workspace_regret_advantage':baseline['regret']-full['regret'],'lesion_regret_cost':lesion['regret']-full['regret'],'broadcast_action_change':int(full['chosen_signal']!=nobroadcast['chosen_signal']),'lesion_action_change':int(full['chosen_signal']!=lesion['chosen_signal'])})
+        for db in (base, full_db, nobroadcast_db, lesion_db, baseline_db):
+            db.unlink(missing_ok=True)
     b=np.asarray([r['broadcast_regret_advantage'] for r in rows]); w=np.asarray([r['workspace_regret_advantage'] for r in rows]); l=np.asarray([r['lesion_regret_cost'] for r in rows])
     summary={'experiment':'i5_1_persistent_organism_workspace','seed':seed,'replicates':replicates,'warmup_cycles':warmup_cycles,'candidate_signals':list(CANDIDATE_SIGNALS),'influence_weight':influence,'endpoints':{'broadcast_regret_advantage_mean':float(b.mean()),'broadcast_regret_advantage_p':sign_flip(b,seed+1),'workspace_regret_advantage_mean':float(w.mean()),'workspace_regret_advantage_p':sign_flip(w,seed+2),'lesion_regret_cost_mean':float(l.mean()),'lesion_regret_cost_p':sign_flip(l,seed+3),'broadcast_action_change_rate':float(np.mean([r['broadcast_action_change'] for r in rows])),'lesion_action_change_rate':float(np.mean([r['lesion_action_change'] for r in rows])),'workspace_persistence_rate':float(np.mean([r['full']['workspace_persistence_equal'] for r in rows]))},'boundary':'I5.1 tests opt-in bounded workspace integration into PersistentOrganism. It evaluates computational broadcast/lesion effects inside the persistent runtime and does not establish consciousness.'}
     (out/'summary.json').write_text(json.dumps(summary,indent=2,ensure_ascii=False),'utf-8')
