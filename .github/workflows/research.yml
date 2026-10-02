@@ -187,6 +187,15 @@ jobs:
             --permutations 20000 \
             --out results/i5_22_cyclic_semantic_phase_shift
 
+      - name: Run I5.23 cyclic shift sweep
+        run: |
+          python experiments/i5_23_cyclic_shift_sweep.py \
+            --seed 20261023 \
+            --replicates 24 \
+            --warmup 24 \
+            --permutations 20000 \
+            --out results/i5_23_cyclic_shift_sweep
+
       - name: Write run manifest
         run: |
           mkdir -p results
