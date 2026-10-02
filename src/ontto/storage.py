@@ -148,6 +148,11 @@ class MemoryStore:
                 model_json TEXT NOT NULL,
                 updated_at TEXT NOT NULL
             );
+            CREATE TABLE IF NOT EXISTS action_conditioned_meta_observer_models (
+                agent_id TEXT PRIMARY KEY,
+                model_json TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            );
             CREATE TABLE IF NOT EXISTS input_queue (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 agent_id TEXT NOT NULL,
@@ -293,6 +298,38 @@ class MemoryStore:
     def load_self_policy_model(self, agent_id: str) -> dict[str, Any] | None:
         row = self.conn.execute(
             "SELECT model_json FROM self_policy_models WHERE agent_id=?",
+            (agent_id,),
+        ).fetchone()
+        if row is None:
+            return None
+        return json.loads(row[0])
+
+    def save_action_conditioned_meta_observer_model(
+        self,
+        agent_id: str,
+        model: dict[str, Any],
+    ) -> None:
+        self.conn.execute(
+            "INSERT INTO action_conditioned_meta_observer_models("
+            "agent_id,model_json,updated_at"
+            ") VALUES(?,?,?) "
+            "ON CONFLICT(agent_id) DO UPDATE SET "
+            "model_json=excluded.model_json,updated_at=excluded.updated_at",
+            (
+                agent_id,
+                json.dumps(model, ensure_ascii=False),
+                now_iso(),
+            ),
+        )
+        self.conn.commit()
+
+    def load_action_conditioned_meta_observer_model(
+        self,
+        agent_id: str,
+    ) -> dict[str, Any] | None:
+        row = self.conn.execute(
+            "SELECT model_json FROM action_conditioned_meta_observer_models "
+            "WHERE agent_id=?",
             (agent_id,),
         ).fetchone()
         if row is None:
@@ -447,6 +484,12 @@ class MemoryStore:
             "self_prediction_confidence": state.self_prediction_confidence,
             "self_prediction_samples": state.self_prediction_samples,
             "self_observer_snapshot_count": self.self_observer_snapshot_count(agent_id),
+            "action_conditioned_meta_model_samples": (
+                len(
+                    (self.load_action_conditioned_meta_observer_model(agent_id) or {})
+                    .get("targets", [])
+                )
+            ),
         }
 
     def begin_dream(self, agent_id: str, state_before: OntologicalState) -> int:
