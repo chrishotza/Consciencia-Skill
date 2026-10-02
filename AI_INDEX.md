@@ -1,5 +1,7 @@
 # AI Index — Skill-Conscious
 
+<a id="english"></a>
+
 ## One-screen route
 
 | Need | Read first | Then |
@@ -148,70 +150,30 @@ Use the protocol document to find the exact implementation.
 
 ## Frontera actual
 
-### C0.8
-- `docs/C0_8_CROSSED_OBSERVER_POLICY.md`
-- `experiments/tcf_consciousness_instantiation_c0_8.py`
+### I4.3 — Generalización metacognitiva estructural OOD
+- `docs/I4_3_STRUCTURAL_OOD_METACOGNITIVE_GENERALIZATION.md`
+- `experiments/interoception_i4_3.py`
+- Verificado: run 36974947476; META−LESION error p=4.27e-06; recovery agregado nulo (p=0.1505).
 
-### C0.9
-- `docs/C0_9_OBSERVER_POLICY_INTERFACE_SHUFFLE.md`
-- `experiments/tcf_consciousness_instantiation_c0_9.py`
+### I5.0 — Workspace global acotado
+- `docs/I5_GLOBAL_WORKSPACE.md`
+- `src/ontto/global_workspace.py`
+- `experiments/i5_global_workspace_v1.py`
+- `tests/test_global_workspace.py`
+- Verificado: run 36982788159; 512 episodios; broadcast, capacidad y lesión del origen seleccionado separados bajo el protocolo sintético.
 
-### C0.10
-- `docs/C0_10_WITHIN_EPISODE_TEMPORAL_ALIGNMENT.md`
-- `experiments/tcf_consciousness_instantiation_c0_10.py`
+### Lattice Computer v0/v1
+- `docs/LATTICE_COMPUTER_V0.md`
+- `docs/LATTICE_COMPUTER_V1.md`
+- `src/ontto/lattice.py`
+- Verificados: v0 run 36977088882; v1 run 36981980509.
 
-### C0.11
-- `docs/C0_11_CAUSAL_ACTION_MEDIATION.md`
-- `experiments/tcf_consciousness_instantiation_c0_11.py`
-
-### C0.12
-- `docs/C0_12_SECOND_ORDER_SELF_MONITORING.md`
-- `experiments/tcf_consciousness_instantiation_c0_12.py`
-
-### C0.13
-- `docs/C0_13_ACTION_CONDITIONED_META_MODEL.md`
-- `experiments/tcf_consciousness_instantiation_c0_13.py`
-
-### C0.14
-- `docs/C0_14_PERSISTENT_SECOND_ORDER_SELF_MODEL.md`
-- `experiments/tcf_consciousness_instantiation_c0_14.py`
-
-### C0.15
-- `docs/C0_15_SECOND_ORDER_LESION_RESCUE.md`
-- `experiments/tcf_consciousness_instantiation_c0_15.py`
-
-### C0.16
-- `docs/C0_16_INTEGRATED_SECOND_ORDER_ORGANISM.md`
-- `experiments/tcf_consciousness_instantiation_c0_16.py`
-
-### C0.17
-- `docs/C0_17_AUTONOMOUS_SECOND_ORDER_ACQUISITION.md`
-- `experiments/tcf_consciousness_instantiation_c0_17.py`
-
-- `tests/test_second_node_interoperability.py` — replay HTTP entre dos nodos y bloqueo de divergencias.
-
-### Campaña C0
-- `docs/C0_CAMPAIGN_32_RUNS.md`
-- `research/c0_campaign/C0_CAMPAIGN_RESTARTED_G1_EVIDENCE.json`
-- Verificado: **G1 completado, 4/32 ejecuciones; G2–G8 pendientes; todos los p-values de G1 > 0.05**.
-
-### C0.18
-- `docs/C0_18_AUTONOMOUS_SECOND_ORDER_LESION_RESCUE.md`
-- `experiments/tcf_consciousness_instantiation_c0_18.py`
-- `tests/test_tcf_consciousness_instantiation_c0_18.py`
-- Verificado: 24 réplicas; efecto de lesión/rescate nulo bajo el protocolo probado; artifact conservado en GitHub Actions.
-
-### V69
-- `docs/V69_SELF_STATE_READOUT.md`
-- `docs/V69_SELF_READ_STATE.md`
-
-### V70
-- `docs/V70_SELF_MODEL_ACTION.md`
-- `docs/V70_PERSISTENT_SELF_READER.md`
+### C0
+- `docs/C0_18_AUTONOMOUS_SECOND_ORDER_LESION_RESCUE.md` — resultado nulo verificado de lesión/rescate.
+- `docs/C0_CAMPAIGN_32_RUNS.md` — G1 validado 4/32; G2–G8 pendientes.
 
 ### Evidencia
 - `research/ORGANISM_RESULT_LEDGER.md` — primera parada para afirmaciones experimentales consolidadas.
-
 ## Interocepción
 - `docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md` — mapa de investigación de 14 indicadores y análisis de brechas.
 - `docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md` — instrumentación de estado interno de solo lectura.
