@@ -27,3 +27,16 @@ The first-order self-observer and dynamic system remain intact in all conditions
 A strong lesion effect combined with recovery after restoration would provide a causal necessity/rescue result for the second-order selector under this protocol.
 
 It remains a computational organizational result and does not establish subjective experience.
+
+
+## Verified result
+
+Run **36945882211**; artifact **11202160302**; SHA256 **5c297e25f01036b87f63ab0355555faf80dc4a2462199f5c7e115b62cbadcd6f**.
+
+- FULL − LESION late action: **+0.271484375**, p **0.00064997**
+- FULL − LESION late gain: **+0.03751679**, p **0.08415**
+- FULL − RESCUE post-restore action: **+0.02734375**, p **0.68607**
+- FULL − RESCUE post-restore gain: **−0.03525716**, p **0.03860**
+- exact checkpoint fraction: **100%**
+
+Interpretation: the second-order component affected later action selection when removed, but the gain endpoint was not significant. Restoring the component made the action contrast small, but did not reproduce the full arm's gain; therefore rescue is not established as a clean functional recovery under this protocol.
