@@ -109,3 +109,11 @@ Result ledger: research/ORGANISM_RESULT_LEDGER.md
 Status: verified on workflow 37058932661 / artifact 11249457646.
 Result: semantic-correspondence specificity was positive for absolute AUC and future-action change, null for signed AUC; global lag×specificity interaction remained non-significant.
 Next: I5.21 phase-local semantic permutation.
+
+## I5.21 verified
+Protocol: docs/I5_21_PHASE_LOCAL_SEMANTIC_PERMUTATION.md
+Experiment: experiments/i5_21_phase_local_semantic_permutation.py
+Result ledger: research/ORGANISM_RESULT_LEDGER.md
+Status: verified on workflow 37059465725 / artifact 11249378346.
+Result: phase-local semantic specificity remained positive for absolute AUC and future-action change; signed AUC remained null; lag×specificity interaction was significant for the two positive endpoints.
+Next: I5.22 cyclic semantic phase-shift control.
