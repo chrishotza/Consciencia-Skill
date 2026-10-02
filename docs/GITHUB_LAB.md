@@ -76,6 +76,8 @@ Los workflows pueden demostrar que un comportamiento computacional ocurrió bajo
 No convierten automáticamente ese comportamiento en una afirmación de experiencia subjetiva. Esa distinción se mantiene explícita en los resultados.
 
 
+<a id="english"></a>
+
 <details>
 <summary>🇺🇸 English — open</summary>
 
