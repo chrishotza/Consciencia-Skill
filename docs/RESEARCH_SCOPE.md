@@ -1,3 +1,5 @@
+<a id="english"></a>
+
 # Research Scope and System Boundary
 
 ## What the experimental system is
@@ -71,6 +73,8 @@ The project can be ambitious about the engineering problem while remaining conse
 
 The goal is not to make the evidence sound smaller than it is. The goal is to make every claim traceable to the exact computational system, intervention, control, and analysis that produced it.
 
+
+<a id="espanol"></a>
 
 <details>
 <summary>🇪🇸 Español — abrir</summary>
