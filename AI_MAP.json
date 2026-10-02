@@ -35,11 +35,12 @@
       "docs/I5_19_INDEPENDENT_BRIDGE_REPLICATION.md",
       "docs/I5_20_SEMANTIC_PERMUTATION_SPECIFICITY.md",
       "docs/I5_21_PHASE_LOCAL_SEMANTIC_PERMUTATION.md",
-      "docs/I5_22_CYCLIC_SEMANTIC_PHASE_SHIFT.md"
+      "docs/I5_22_CYCLIC_SEMANTIC_PHASE_SHIFT.md",
+      "docs/I5_23_CYCLIC_SHIFT_SWEEP.md"
     ],
     "experimental_next": [
-      "I5.23 cyclic shift sweep",
-      "test all six non-zero seven-phase semantic shifts while preserving phase sequence and semantic content multiset",
+      "I5.24 global shift×lag interaction",
+      "formalize the two-dimensional shift×lag interaction before mechanistic interpretation of the sweep surface",
       "C0 campaign G2-G8"
     ]
   },
@@ -73,8 +74,8 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.23 cyclic shift sweep",
-    "test all six non-zero seven-phase semantic shifts while preserving phase sequence and semantic content multiset",
+    "I5.24 global shift×lag interaction",
+    "formalize the two-dimensional shift×lag interaction before mechanistic interpretation of the sweep surface",
     "C0 campaign G2-G8"
   ]
 }
