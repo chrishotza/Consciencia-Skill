@@ -69,6 +69,15 @@ jobs:
             --task-weight 0.35 \
             --out results/i5_8_action_clamp_reentry
 
+      - name: Run I5.9 action-replay sufficiency
+        run: |
+          python experiments/i5_9_action_replay_sufficiency.py \
+            --replicates 24 \
+            --warmup 24 \
+            --cycles 8 \
+            --task-weight 0.35 \
+            --out results/i5_9_action_replay_sufficiency
+
       - name: Write run manifest
         run: |
           mkdir -p results
