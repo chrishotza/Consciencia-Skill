@@ -109,6 +109,15 @@
 
 
 ### I5.17 — Phase-resolved bridge mediation map
+### I5.18 — Global phase × bridge interaction and multiplicity control
+- `docs/I5_18_GLOBAL_PHASE_BRIDGE_INTERACTION.md`
+- `experiments/i5_18_global_phase_bridge_interaction.py`
+- `tests/test_i5_18_global_phase_bridge_interaction.py`
+- Verified: research-lab **37052907187** / artifact **11246744569**; 24 replicates, 15 cycles, 20,000 permutations; tests/package/research workflows all successful.
+- Global bridge effect across six lags: signed AUC **-1.38013**, p **0.00005**; absolute AUC **-0.52589**, p **0.00290**; future-action change **-0.08681**, p **0.00090**.
+- Global phase × bridge interaction was non-significant for signed AUC (**p=0.49323**), absolute AUC (**p=0.46618**), and future-action change (**p=0.26739**).
+- Boundary: this is a statistical follow-up on frozen I5.17 data; no new trajectories and no consciousness claim.
+
 - `docs/I5_17_PHASE_RESOLVED_BRIDGE_MEDIATION_MAP.md`
 - `experiments/i5_17_phase_resolved_bridge_mediation_map.py`
 - `tests/test_i5_17_phase_resolved_bridge_mediation_map.py`
@@ -122,6 +131,15 @@
 - `tests/test_i5_16_counterbalanced_pure_phase_temporal_control.py`
 - Verified: run 37046361416 / artifact 11245200134; 100% t0 action match and 100% SELF_MODEL distribution match; +1 vs -1 absolute-AUC symmetry difference -1.138780, p=0.000300; +2 vs -2 and +3 vs -3 absolute symmetry were non-significant; all signed BASE-vs-lag contrasts were non-significant. The -1/+1 magnitude asymmetry therefore survives the pure-phase and semantic-counterbalancing control, motivating phase-resolved bridge mapping.
 ### I5.17 — Phase-resolved bridge mediation map
+### I5.18 — Global phase × bridge interaction and multiplicity control
+- `docs/I5_18_GLOBAL_PHASE_BRIDGE_INTERACTION.md`
+- `experiments/i5_18_global_phase_bridge_interaction.py`
+- `tests/test_i5_18_global_phase_bridge_interaction.py`
+- Verified: research-lab **37052907187** / artifact **11246744569**; 24 replicates, 15 cycles, 20,000 permutations; tests/package/research workflows all successful.
+- Global bridge effect across six lags: signed AUC **-1.38013**, p **0.00005**; absolute AUC **-0.52589**, p **0.00290**; future-action change **-0.08681**, p **0.00090**.
+- Global phase × bridge interaction was non-significant for signed AUC (**p=0.49323**), absolute AUC (**p=0.46618**), and future-action change (**p=0.26739**).
+- Boundary: this is a statistical follow-up on frozen I5.17 data; no new trajectories and no consciousness claim.
+
 - `docs/I5_17_PHASE_RESOLVED_BRIDGE_MEDIATION_MAP.md`
 - `experiments/i5_17_phase_resolved_bridge_mediation_map.py`
 - `tests/test_i5_17_phase_resolved_bridge_mediation_map.py`
