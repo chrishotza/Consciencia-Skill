@@ -94,6 +94,14 @@ jobs:
             --cycles 8 \
             --out results/i5_11_semantic_reentry_trajectory_selection
 
+      - name: Run I5.12 information-matched self-model control
+        run: |
+          python experiments/i5_12_information_matched_self_model_control.py \
+            --replicates 24 \
+            --warmup 24 \
+            --cycles 8 \
+            --out results/i5_12_information_matched_self_model_control
+
       - name: Write run manifest
         run: |
           mkdir -p results
