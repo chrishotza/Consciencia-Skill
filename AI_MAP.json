@@ -15,14 +15,17 @@
       "docs/I5_GLOBAL_WORKSPACE.md",
       "docs/I5_1_PERSISTENT_ORGANISM_WORKSPACE.md",
       "docs/I5_2_STATE_DEPENDENT_QUERY.md",
+      "docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md",
       "docs/LATTICE_COMPUTER_V1.md",
       "docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md",
       "research/ORGANISM_RESULT_LEDGER.md",
       "docs/C0_18_AUTONOMOUS_SECOND_ORDER_LESION_RESCUE.md"
     ],
     "experimental_next": [
-      "I5.2 PersistentOrganism integration",
-      "I5.3 causal attention allocation / attention schema"
+      "I5.2 + I5.3 PersistentOrganism integration",
+      "cross-mechanism interaction test",
+      "Lattice-2 causal influence map",
+      "C0 campaign G2-G8"
     ]
   },
   "architecture": {
@@ -55,8 +58,8 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.2 PersistentOrganism integration",
-    "I5.3 causal attention allocation / attention schema",
+    "I5.2 + I5.3 PersistentOrganism integration",
+    "cross-mechanism interaction test",
     "Lattice-2 causal influence map",
     "C0 campaign G2-G8"
   ]
