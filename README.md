@@ -59,7 +59,8 @@ El runtime también mantiene regímenes de **VIGILIA** y **SUEÑO**, persistenci
 - **I5.6** integró query+atención en `PersistentOrganism` con una tarea interna: FULL−SHUFFLED_QUERY acción **+1.0**, p **4.99975×10⁻⁵**; FULL−SHUFFLED_ATTENTION **+0.75**, p **4.99975×10⁻⁵**; persistencia **100%**.
 - **Lattice v0/v1** son protocolos verificados del sustrato computacional; las afirmaciones físicas siguen explícitamente separadas de la implementación.
 - **I5.7** produjo divergencia descriptiva persistente, pero el endpoint primario firmado de estado en t+1 no se separó significativamente; no se establece todavía un efecto causal de reentrada.
-- **Siguiente integración:** I5.8 — probar mediante action-clamp si la perturbación de query se transmite específicamente por query → acción → estado.
+- **I5.17** está verificado: el bridge produjo una respuesta dependiente de la fase en múltiples lags bajo el arnés puro de I5.16; los contrastes absolutos +k/-k no fueron significativos.
+- **Siguiente integración:** I5.18 — probar la interacción global fase × bridge con contraste preregistrado y corrección por multiplicidad antes de hacer una interpretación mecanística más fuerte.
 ## Resultados más sólidos hasta ahora
 
 | Protocolo | Qué se probó | Resultado observado |
