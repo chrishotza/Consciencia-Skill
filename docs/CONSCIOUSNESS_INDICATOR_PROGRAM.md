@@ -286,8 +286,8 @@ El proyecto ya tiene evidencia fuerte para varios bloques funcionales, pero la c
 | RPT-1 | PARCIAL | dinámica interna recurrente y autoobservación iterativa | no existe un módulo perceptivo/de entrada explícitamente recurrente |
 | RPT-2 | AUSENTE / NO TESTEADO | existe estado interno numérico | no existe una capa validada de representación perceptiva organizada |
 | GWT-1 | PARCIAL | memoria, self-observer, meta-observer, dinámica y política | no existe una arquitectura explícita de workspace paralelo |
-| GWT-2 | AUSENTE | existe selección de trayectorias | no existe un cuello de botella de workspace global con capacidad limitada |
-| GWT-3 | PARCIAL | el contexto del organismo se ensambla entre módulos persistentes | no existe un mecanismo explícito de broadcast global con ablación causal |
+| GWT-2 | PARCIAL / PROTOTIPO I5.0 VERIFICADO | workspace acotado K=2 con selección competitiva | aún no está integrado en PersistentOrganism ni conectado a un controlador de atención aprendido |
+| GWT-3 | PARCIAL / PROTOTIPO I5.0 VERIFICADO | broadcast causal desde el contenido seleccionado hacia todos los módulos | falta integración en el organismo completo y ablación específica del broadcast |
 | GWT-4 | PARCIAL | existe selección dependiente del estado | no existe consulta secuencial explícita controlada por atención |
 | HOT-1 | PARCIAL | autopredicción generativa respecto de la dinámica interna | no es un módulo de percepción generativa |
 | HOT-2 | PARCIAL / línea más fuerte actual | SelfObserver, MetaSelfObserver, error predictivo, confianza y modelos de segundo orden | el monitoreo de fiabilidad aún no es un bucle metacognitivo general a nivel perceptivo |
@@ -381,16 +381,15 @@ Preguntar si el sistema predice su propio error de estado interno, si la confian
 
 ### I5 — integración en workspace
 
-Introducir un workspace acotado solo después de obtener evidencia independiente para I1–I4.
+**I5.0 ya está verificado como prototipo independiente.** Implementa seis módulos, capacidad K=2, selección competitiva, broadcast causal, control K=6 y lesión del origen seleccionado frente a un origen no seleccionado. La ejecución verificada utilizó 512 episodios emparejados.
 
-Tests necesarios:
+Resultados:
 
-- cuello de botella de capacidad limitada;
-- broadcast;
-- acceso selectivo;
-- lesión de módulos;
-- recuperación;
-- consulta dependiente del estado.
+- broadcast vs no-broadcast: **+0.126953125**, p **4.99975×10⁻⁵**;
+- K=2 vs K=6: **+0.017578125**, p **0.0222489**;
+- lesión origen seleccionado − no seleccionado: **−0.490234375**, p **4.99975×10⁻⁵**.
+
+El siguiente paso es **I5.1**: integrar el workspace en `PersistentOrganism`, conservar controles de lesión emparejados y añadir consultas dependientes del estado. El prototipo aislado no se interpreta como evidencia de que el organismo completo posea consciencia de workspace global.
 
 ### I6 — esquema de atención
 
