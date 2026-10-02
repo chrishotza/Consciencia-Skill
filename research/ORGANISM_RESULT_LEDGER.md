@@ -718,3 +718,20 @@ Medias descriptivas:
 - PP: ganancia **0.20488969**; distancia final **0.14799625**; varianza **0.06747759**.
 
 Interpretación: la ejecución confirmatoria respalda **dependencia separable del observador, de la política y de su acoplamiento particular** bajo el protocolo probado. En particular, la interacción TT − TP − PT + PP se separa de cero en los tres endpoints principales evaluados. Esto es evidencia de organización computacional específica; no demuestra experiencia subjetiva.
+
+
+### C0.17 — Resultado verificado
+
+Artefacto: GitHub Actions run **36946964601**, artifact **11201784892**, SHA256 **bf4aed2caaaff14e3aac2dca54e584cc0c10d38f9dde13c0f4720db8eacc9ea8**.
+
+- el modelo de segundo orden comenzó **vacío**;
+- muestras de segundo orden aprendidas por organismo: **48** por réplica;
+- recuperación exacta del modelo al construir los pares de evaluación: **100%**;
+- TRUE − PERMUTED, primera acción: **+0.2916667**, p **0.3417829**;
+- TRUE − PERMUTED, primera ganancia: **−0.0141513**, p **0.7728114**;
+- TRUE − PERMUTED, acción media de evaluación: **+0.0833333**, p **0.6331683**;
+- TRUE − PERMUTED, ganancia media de evaluación: **+0.0256299**, p **0.4691765**;
+- entrada semántica durante la adquisición/evaluación: **no**;
+- reentrenamiento externo durante la evaluación: **no**.
+
+Interpretación: **resultado mixto/nulo bajo el protocolo probado**. El organismo persistente sí adquirió un modelo de segundo orden desde cero usando errores de predicción contrafactuales generados dentro del propio ciclo autónomo. Sin embargo, al congelar ese modelo y compararlo con un control target-permuted, no apareció una separación estadísticamente significativa en acción ni en ganancia. Por tanto, la adquisición autónoma está demostrada a nivel de aprendizaje/persistencia del modelo, pero su especificidad causal conductual no quedó demostrada.
