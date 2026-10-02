@@ -1,3 +1,34 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V50 — Registro de evidencia del protocolo factorial
+
+## Estado
+
+**Protocolo implementado; resultado empírico pendiente.**
+
+## Controles requeridos
+
+1. mismo receptor base para las cuatro celdas;
+2. memory cambia solo cuando cambia el factor memory;
+3. dynamic_state cambia solo cuando cambia el factor dinámico;
+4. el event stream es idéntico antes de la intervención;
+5. dynamic memory, pressure y step count permanecen fijos antes de la intervención;
+6. el texto de la sonda es idéntico en todas las celdas;
+7. se conservan múltiples réplicas.
+
+## Límite de evidencia
+
+Una interacción factorial reproducible y no nula respalda una interacción entre contenido de memory persistente y dynamic state almacenado en la respuesta operacional.
+
+No establece consciencia ni fenomenología.
+
+</details>
+
+<a id="english"></a>
+
 # V50 — Protocol Evidence Record
 
 ## Status
