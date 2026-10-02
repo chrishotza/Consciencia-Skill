@@ -28,7 +28,15 @@
 - `docs/I5_1_PERSISTENT_ORGANISM_WORKSPACE.md`
 - `src/ontto/workspace_controller.py`
 - `experiments/i5_1_persistent_organism_workspace.py`
-- Opt-in integration of I5.0 into the real persistent runtime.
+- Verified integration into the real persistent runtime.
+- Behavioral endpoints were null under the tested broadcast→trajectory mapping; workspace-state persistence across restart was 100%.
+
+### I5.2 — State-dependent workspace query
+- `docs/I5_2_STATE_DEPENDENT_QUERY.md`
+- `src/ontto/workspace_query.py`
+- `experiments/i5_2_state_dependent_query.py`
+- Verified standalone GWT-4 mechanism over 512 episodes.
+- FULL−SHUFFLED query accuracy: +1.0, p=4.99975e-05; FULL−LESION: +0.763671875, p=4.99975e-05.
 
 ### I5.0 — Bounded global workspace
 - `docs/I5_GLOBAL_WORKSPACE.md`
