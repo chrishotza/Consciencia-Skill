@@ -53,9 +53,9 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.1 PersistentOrganism integration",
-    "state-dependent workspace querying",
-    "causal attention allocation",
+    "I5.1 persistent-organism workspace integration",
+    "I5.2 state-dependent workspace querying",
+    "I5.3 causal attention allocation / attention schema",
     "Lattice-2 causal influence map",
     "C0 campaign G2-G8"
   ]
