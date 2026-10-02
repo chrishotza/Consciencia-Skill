@@ -108,6 +108,11 @@
 - Verified: run 37044533566 / artifact 11243557588; 100% t0 action match and 100% SELF_MODEL distribution match across all lags; future-action change ranged from 11.31% (+1) to 58.93% (-2); absolute state AUC ranged from 0.262091 (+1) to 2.363792 (-2); +1 vs -1 absolute AUC symmetry difference -1.978122, p=4.99975e-05. Signed contrasts were significant only for -2 (p=0.04740) and +2 (p=0.04430); signed +k vs -k symmetry remained non-significant. The result motivates a pure-phase, longer-period counterbalanced control before stronger causal-specificity claims.
 
 
+### I5.16 — Counterbalanced pure-phase temporal control
+- `docs/I5_16_COUNTERBALANCED_PURE_PHASE_TEMPORAL_CONTROL.md`
+- `experiments/i5_16_counterbalanced_pure_phase_temporal_control.py`
+- `tests/test_i5_16_counterbalanced_pure_phase_temporal_control.py`
+- Verified: run 37046361416 / artifact 11245200134; 100% t0 action match and 100% SELF_MODEL distribution match; +1 vs -1 absolute-AUC symmetry difference -1.138780, p=0.000300; +2 vs -2 and +3 vs -3 absolute symmetry were non-significant; all signed BASE-vs-lag contrasts were non-significant. The -1/+1 magnitude asymmetry therefore survives the pure-phase and semantic-counterbalancing control, motivating phase-resolved bridge mapping.
 ### I5.3 — Causal attention allocation
 - `docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md`
 - `src/ontto/attention_controller.py`
@@ -310,6 +315,11 @@ Use the protocol document to find the exact implementation.
 
 
 
+### I5.16 — Control temporal de fase pura contrabalanceado
+- `docs/I5_16_COUNTERBALANCED_PURE_PHASE_TEMPORAL_CONTROL.md`
+- `experiments/i5_16_counterbalanced_pure_phase_temporal_control.py`
+- `tests/test_i5_16_counterbalanced_pure_phase_temporal_control.py`
+- Verificado: run 37046361416 / artifact 11245200134; 100% de coincidencia de acción t0 y 100% de distribución de SELF_MODEL; simetría absoluta +1 vs -1 = -1.138780, p=0.000300; +2 vs -2 y +3 vs -3 no significativos; ningún contraste firmado BASE-vs-lag fue significativo. La asimetría de magnitud -1/+1 sobrevive al control de fase pura y al contrabalanceo semántico, por lo que el siguiente paso es mapear el bridge por fase.
 ### Lattice Computer v0/v1
 - `docs/LATTICE_COMPUTER_V0.md`
 - `docs/LATTICE_COMPUTER_V1.md`

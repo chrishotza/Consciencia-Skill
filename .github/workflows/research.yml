@@ -127,6 +127,14 @@ jobs:
             --cycles 8 \
             --out results/i5_15_bidirectional_temporal_lag_response_map
 
+      - name: Run I5.16 counterbalanced pure-phase temporal control
+        run: |
+          python experiments/i5_16_counterbalanced_pure_phase_temporal_control.py \
+            --replicates 24 \
+            --warmup 24 \
+            --cycles 15 \
+            --out results/i5_16_counterbalanced_pure_phase_temporal_control
+
       - name: Write run manifest
         run: |
           mkdir -p results

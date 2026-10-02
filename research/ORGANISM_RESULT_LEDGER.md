@@ -963,6 +963,21 @@ Workflow: **37044533566** (run **784**); artifact **11243557588**; commit **09e5
 
 Interpretación: I5.15 muestra una respuesta claramente dependiente del desplazamiento temporal en métricas de magnitud, con una asimetría particularmente fuerte entre -1 y +1. Sin embargo, los contrastes firmados no sostienen una separación direccional robusta y el protocolo de rotación finita todavía mezcla fase con efectos de frontera/reordenamiento local. El siguiente control debe aislar una **fase temporal pura** mediante una secuencia periódica más larga y contrabalanceada, conservando t0 y la distribución de SELF_MODEL sin la frontera artificial de rotar una cola de siete posiciones. No demuestra consciencia ni experiencia subjetiva.
 
+### I5.16 — Control temporal de fase pura contrabalanceado — resultado verificado
+
+Workflow: **37046361416** (run **793**); artifact **11245200134**; commit verificado **4cff840bc1eed25a61c57eb7473964882bab277a**; seed **20261016**; **24** réplicas; **24** ciclos de warmup; **15** ciclos experimentales.
+
+- coincidencia de acción aplicada en t0: **100%** en todos los lags;
+- coincidencia de distribución de SELF_MODEL: **100%** en todos los lags;
+- cambio de acción futura: **39.88%** (+1), **53.87%** (-1), **47.02%** (+2), **47.62%** (-2), **47.02%** (+3), **46.13%** (-3);
+- AUC absoluta media: **3.874681** (+1), **5.013461** (-1), **4.463180** (+2), **4.494550** (-2), **4.434401** (+3), **4.342633** (-3);
+- ningún contraste firmado BASE → lag fue significativo; p mínima **0.19309**;
+- simetría firmada +k vs -k: p=**0.28164**, **0.95275**, **0.51892** para k=1,2,3;
+- simetría absoluta +1 vs -1: diferencia **-1.138780**, p=**0.000300**; k=2 y k=3: p=**0.92175** y **0.69422**;
+- bridge +1 ON−OFF: **-0.731135**, p=**0.002950**; bridge -1 ON−OFF: **+0.407645**, p=**0.13554**.
+
+Interpretación: la asimetría de magnitud entre +1 y -1 de I5.15 sobrevivió al control de fase pura con periodo siete, horizonte de 15 ciclos y contrabalanceo semántico. Esto reduce la plausibilidad de que la diferencia sea solamente un artefacto de la rotación finita de la cola. La dirección firmada, sin embargo, no se separó robustamente. El siguiente experimento debe cartografiar el efecto del bridge a través de todas las fases antes de atribuirlo a un mecanismo específico. No demuestra consciencia ni experiencia subjetiva.
+
 ## Estado de campaña C0
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.

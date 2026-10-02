@@ -28,11 +28,12 @@
       "docs/I5_12_INFORMATION_MATCHED_SELF_MODEL_CONTROL.md",
       "docs/I5_13_SEMANTIC_CORRESPONDENCE_CAUSAL_SPECIFICITY.md",
       "docs/I5_14_PHASE_MATCHED_TEMPORAL_SPECIFICITY.md",
-      "docs/I5_15_BIDIRECTIONAL_TEMPORAL_LAG_RESPONSE_MAP.md"
+      "docs/I5_15_BIDIRECTIONAL_TEMPORAL_LAG_RESPONSE_MAP.md",
+      "docs/I5_16_COUNTERBALANCED_PURE_PHASE_TEMPORAL_CONTROL.md"
     ],
     "experimental_next": [
-      "I5.15 bidirectional temporal-lag response map",
-      "measure a controlled lag sweep beyond one cycle to characterize temporal phase sensitivity before making stronger causal-specificity claims",
+      "I5.17 phase-resolved bridge mediation map",
+      "repeat the matched pure-phase temporal construction across all ±1/±2/±3 lags with bridge ON/OFF so the direction-specific +1 bridge effect can be localized or rejected as phase-general",
       "C0 campaign G2-G8"
     ]
   },
@@ -66,8 +67,8 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.16 counterbalanced pure-phase temporal control",
-    "replace finite tail rotation with a longer periodic sequence, preserve cycle-0 action and SELF_MODEL distribution, and test whether the I5.15 +1/-1 asymmetry survives a phase-only construction",
+    "I5.17 phase-resolved bridge mediation map",
+    "repeat the matched pure-phase temporal construction across all ±1/±2/±3 lags with bridge ON/OFF so the direction-specific +1 bridge effect can be localized or rejected as phase-general",
     "C0 campaign G2-G8"
   ]
 }
