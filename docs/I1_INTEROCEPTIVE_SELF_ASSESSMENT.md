@@ -32,11 +32,11 @@ I1 compares four predictors:
 | Predictor | Purpose |
 |---|---|
 | Interoceptive | full bounded internal readout |
-| Raw-state | strongest simple internal-state baseline used here |
+| Single-signal | strongest single interoceptive variable baseline used here |
 | Target-permuted | tests whether feature→target mapping carries predictive information |
 | Constant | predicts the training-set mean recovery |
 
-The primary OOD comparison is the interoceptive predictor against the raw-state baseline, target-permuted control, and constant baseline.
+The primary OOD comparison is the full interoceptive predictor against a single-signal baseline, a target-permuted control, and a constant baseline.
 
 ## Primary endpoint
 
