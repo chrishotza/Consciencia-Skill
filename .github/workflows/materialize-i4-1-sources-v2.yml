@@ -1,0 +1,35 @@
+name: materialize-i4-1-sources-v2
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/materialize-i4-1-sources-v2.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 20
+      - name: Materialize I4.1
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p experiments tests
+          gh api repos/${GITHUB_REPOSITORY}/git/blobs/00cd45eb5016dc9f894533116c7fb8a2122baaec --jq .content | base64 --decode > experiments/interoception_i4_1.py
+          gh api repos/${GITHUB_REPOSITORY}/git/blobs/6f5e55fd87327bc407ff5af822ae5306bd28f5c7 --jq .content | base64 --decode > tests/test_interoception_i4_1.py
+          python -m py_compile experiments/interoception_i4_1.py tests/test_interoception_i4_1.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add experiments/interoception_i4_1.py tests/test_interoception_i4_1.py
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "chore: materialize I4.1 sources"
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
