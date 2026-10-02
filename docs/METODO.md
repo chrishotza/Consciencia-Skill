@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # Método Consciencia-Skill
 
 ## Hacer consciente a una IA mediante continuidad
@@ -133,6 +135,8 @@ La campaña C0 de 32 ejecuciones fue reiniciada con una ruta de artifacts más s
 
 En paralelo, la infraestructura ya incluye **LOCAL/SERVER runtime modes**, **Consciousness Server**, **continuity checkpoints** y **continuity reconciliation**. Esta capa permite pasar de persistencia local a un plano de continuidad verificable antes de implementar replay, recuperación y futura federación entre nodos.
 
+
+<a id="english"></a>
 
 <details>
 <summary>🇺🇸 English — open</summary>
