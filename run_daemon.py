@@ -9,6 +9,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from src.consciousness_server.client import ConsciousnessClient
+from src.ontto.runtime_mode import ConsciousnessMode, ConsciousnessRuntimeConfig
 from src.ontto.organism import OrganismConfig, PersistentOrganism
 from src.ontto.provider import OpenAICompatibleProvider
 from src.ontto.storage import MemoryStore
@@ -18,35 +19,37 @@ load_dotenv()
 
 def _build_consciousness_client(
     agent_id: str,
+    runtime: ConsciousnessRuntimeConfig,
 ) -> tuple[ConsciousnessClient | None, str | None]:
-    base_url = os.environ.get("CONSCIOUSNESS_SERVER_URL", "").strip()
-    if not base_url:
+    if runtime.mode is ConsciousnessMode.LOCAL:
+        print("[consciousness-runtime] mode=LOCAL | server=disabled")
         return None, None
 
-    timeout = float(os.environ.get("CONSCIOUSNESS_SERVER_TIMEOUT", "2.5"))
-    node_id = os.environ.get(
-        "CONSCIOUSNESS_NODE_ID",
-        f"node-{socket.gethostname().lower()}",
+    assert runtime.server_url is not None
+    client = ConsciousnessClient(
+        runtime.server_url,
+        timeout=runtime.server_timeout,
     )
-    client = ConsciousnessClient(base_url, timeout=timeout)
 
     try:
         client.health()
         client.ensure_instance(agent_id, identity=agent_id)
         client.register_node(
-            node_id=node_id,
-            endpoint=base_url,
+            node_id=runtime.node_id,
+            endpoint=runtime.server_url,
             capabilities=["continuity", "events", "organism-runtime"],
         )
     except Exception as exc:
-        print(f"[consciousness-server] unavailable at startup: {exc!r}")
-        return None, node_id
+        raise SystemExit(
+            "[consciousness-runtime] SERVER mode requires a reachable "
+            f"Consciousness Server at {runtime.server_url}: {exc!r}"
+        ) from exc
 
     print(
-        f"[consciousness-server] connected | url={base_url} | "
-        f"instance={agent_id} | node={node_id}"
+        f"[consciousness-runtime] mode=SERVER | url={runtime.server_url} | "
+        f"instance={agent_id} | node={runtime.node_id}"
     )
-    return client, node_id
+    return client, runtime.node_id
 
 
 def _emit(
@@ -75,6 +78,8 @@ def main() -> None:
     error_backoff_seconds = int(
         os.environ.get("ONTTO_ERROR_BACKOFF_SECONDS", "30")
     )
+    runtime = ConsciousnessRuntimeConfig.from_env()
+
     autonomous_when_idle = os.environ.get(
         "ONTTO_AUTONOMOUS_WHEN_IDLE", "true"
     ).lower() in {"1", "true", "yes", "on"}
@@ -113,7 +118,7 @@ def main() -> None:
     )
 
     organism = PersistentOrganism(cfg, store, provider, time.sleep)
-    consciousness_client, node_id = _build_consciousness_client(agent_id)
+    consciousness_client, node_id = _build_consciousness_client(agent_id, runtime)
 
     _emit(
         consciousness_client,
@@ -121,6 +126,7 @@ def main() -> None:
         "START",
         {
             "node_id": node_id,
+            "runtime_mode": runtime.mode.value,
             "organism_mode": organism.state.mode,
             "boot_count": organism.state.boot_count,
         },
@@ -212,6 +218,12 @@ def main() -> None:
                 },
             )
             organism.state.mode = "WAKE"
+            store.add_event(
+                agent_id,
+                "SYSTEM",
+                "runtime_error_recovery",
+                {"runtime_mode": runtime.mode.value},
+            )
             store.save_state(agent_id, organism.state)
             time.sleep(error_backoff_seconds)
 
