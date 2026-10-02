@@ -41,6 +41,22 @@ Además se ejecuta SHIFT+1 con el semantic self-model bridge OFF para comprobar 
 - mismo checkpoint y seed por réplica;
 - 20.000 permutaciones sign-flip.
 
+## Resultado verificado
+
+Workflow **37042551701** (run **778**), artifact **11243190387**, seed **20261014**, 24 réplicas, 24 ciclos de warmup y 8 ciclos experimentales.
+
+- coincidencia de acción aplicada en t0: **100%** para SHIFT+1 y SHIFT-1;
+- coincidencia de distribución de SELF_MODEL: **100%** para ambas secuencias y para SHIFT+1 bridge OFF;
+- cambio medio de acción futura:
+  - SHIFT+1: **11.90%**, p **4.99975×10⁻⁵**;
+  - SHIFT-1: **44.64%**, p **4.99975×10⁻⁵**;
+- AUC de estado BASE vs SHIFT+1: **0.2414241371**, p **4.99975×10⁻⁵**;
+- AUC de estado BASE vs SHIFT-1: **1.9526574097**, p **4.99975×10⁻⁵**;
+- AUC SHIFT+1 vs SHIFT-1: **1.9346491472**, p **4.99975×10⁻⁵**;
+- AUC SHIFT+1 bridge ON vs OFF: **2.1221765870**, p **4.99975×10⁻⁵**.
+
+Interpretación: el control fase-matcheado produjo una respuesta temporal dependiente de la dirección del corrimiento. Ambos corrimientos conservaron t0 y la distribución completa de SELF_MODEL, pero no fueron equivalentes: SHIFT+1 produjo una separación posterior pequeña y SHIFT-1 una separación mucho mayor. Esto es compatible con sensibilidad a la fase/orden temporal del estado semántico dentro del arnés, y debilita una explicación basada únicamente en “cualquier reordenamiento produce la misma divergencia”. No demuestra consciencia ni experiencia subjetiva.
+
 ## Límite
 
 I5.14 es un control de especificidad temporal computacional. No demuestra consciencia ni experiencia subjetiva.
@@ -87,6 +103,22 @@ SHIFT+1 is also run with the semantic self-model bridge OFF to test explicit bri
 - 8 experimental cycles;
 - same checkpoint and seed per replicate;
 - 20,000 sign-flip permutations.
+
+## Verified result
+
+Workflow **37042551701** (run **778**), artifact **11243190387**, seed **20261014**, 24 replicates, 24 warmup cycles and 8 experimental cycles.
+
+- applied-action match at t0: **100%** for SHIFT+1 and SHIFT-1;
+- SELF_MODEL distribution match: **100%** for both sequences and for SHIFT+1 bridge OFF;
+- mean future-action change:
+  - SHIFT+1: **11.90%**, p **4.99975×10⁻⁵**;
+  - SHIFT-1: **44.64%**, p **4.99975×10⁻⁵**;
+- BASE vs SHIFT+1 state AUC: **0.2414241371**, p **4.99975×10⁻⁵**;
+- BASE vs SHIFT-1 state AUC: **1.9526574097**, p **4.99975×10⁻⁵**;
+- SHIFT+1 vs SHIFT-1 AUC: **1.9346491472**, p **4.99975×10⁻⁵**;
+- SHIFT+1 bridge ON vs OFF AUC: **2.1221765870**, p **4.99975×10⁻⁵**.
+
+Interpretation: the phase-matched control produced direction-dependent temporal sensitivity. Both shifts preserved t0 and the full SELF_MODEL distribution, but they were not equivalent: SHIFT+1 produced a small downstream separation while SHIFT-1 produced a much larger one. This is compatible with sensitivity to the phase/order of semantic state within the harness and weakens an explanation based solely on “any temporal reordering produces the same divergence.” It does not demonstrate consciousness or subjective experience.
 
 ## Boundary
 
