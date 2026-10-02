@@ -51,3 +51,19 @@ The next C0.8 artifact is the confirmatory statistical run.
 
 
 Confirmatory execution trigger recorded from the corrected elementwise interaction implementation.
+
+
+## Confirmatory verified result
+
+GitHub Actions run **36946477790**; artifact **11202930418**; SHA256 **e8ce5229e0f41a31a3923cc802b18a19c98c4d61ffa68eda601e18ac80c26987**.
+
+All interaction contrasts below use paired episode seeds and the corrected elementwise contrast `TT - TP - PT + PP`.
+
+- observer effect on gain: **+0.5340592**, p **4.99975e-05**
+- policy effect on gain: **+0.3437333**, p **4.99975e-05**
+- observer × policy interaction on gain: **+0.8637928**, p **4.99975e-05**
+- observer × policy interaction on state variance: **−0.0229136**, p **0.0022999**
+- observer × policy interaction on final-state distance: **−1.0473422**, p **4.99975e-05**
+- intervention target error: **0.0**
+
+The corrected confirmatory run supports a nonzero matched observer/policy coupling effect under this protocol. It remains a computational organizational result and does not establish phenomenal consciousness.
