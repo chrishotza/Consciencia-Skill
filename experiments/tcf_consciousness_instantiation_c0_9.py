@@ -289,6 +289,8 @@ def main() -> None:
             "semantic_input_during_probe": False,
         },
         "phenomenal_consciousness_claimed": False,
+        "semantic_input_during_probe": False,
+        "external_retraining_during_probe": False,
         "primary_outputs": {
             "action_difference_normal_minus_donor": {
                 "mean": float(np.mean(arrays["action_difference"])),
