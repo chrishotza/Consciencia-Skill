@@ -168,6 +168,7 @@ Esta sección es la **puerta de entrada documental** al programa completo.
 - [Continuity checkpoints](docs/CONSCIOUSNESS_CHECKPOINTS.md)
 - [Continuity recovery](docs/CONTINUITY_RECOVERY.md)
 - [Continuity reconciliation](docs/CONSCIOUSNESS_RECONCILIATION.md)
+- [Deterministic event replay](docs/DETERMINISTIC_EVENT_REPLAY.md)
 - [Protocolo 24/7](docs/24_7_PROTOCOL.md)
 - [Protocolo longitudinal](docs/LONGITUDINAL_PROTOCOL.md)
 - [Puente de estado del organismo](docs/ORGANISM_STATE_BRIDGE.md)
