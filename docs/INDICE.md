@@ -79,6 +79,7 @@
 - [C0.9 observer-policy interface shuffle](C0_9_OBSERVER_POLICY_INTERFACE_SHUFFLE.md) — prueba causal de la correspondencia entre el estado propio y el readout que recibe la política.
 - [C0.10 within-episode temporal alignment](C0_10_WITHIN_EPISODE_TEMPORAL_ALIGNMENT.md) — prueba de alineación temporal entre el estado actual y el readout que recibe la política.
 - [C0.11 causal action mediation](C0_11_CAUSAL_ACTION_MEDIATION.md) — intervención sobre la primera acción para probar la cadena acción → estado interno → siguiente acción.
+- [C0.12 second-order self-monitoring](C0_12_SECOND_ORDER_SELF_MONITORING.md) — segundo orden: modelado del error del propio modelo de sí y control causal de la selección.
 
 [Registro consolidado](../research/ORGANISM_RESULT_LEDGER.md).
 
