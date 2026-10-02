@@ -9,6 +9,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from src.consciousness_server.client import ConsciousnessClient
+from src.consciousness_server.reconciliation import reconcile
 from src.ontto.runtime_mode import ConsciousnessMode, ConsciousnessRuntimeConfig
 from src.ontto.organism import OrganismConfig, PersistentOrganism
 from src.ontto.provider import OpenAICompatibleProvider
@@ -66,6 +67,37 @@ def _emit(
         # The server is an optional continuity control plane.
         # Local organism persistence must keep running if the server is down.
         print(f"[consciousness-server] emit failed: {exc!r}")
+
+
+def _reconcile(
+    client: ConsciousnessClient | None,
+    agent_id: str,
+    store: MemoryStore,
+) -> dict:
+    if client is None:
+        return {"status": "LOCAL_MODE"}
+
+    try:
+        checkpoints = client.list_checkpoints(agent_id, limit=1).get(
+            "checkpoints",
+            [],
+        )
+        report = reconcile(
+            local_state_fingerprint=store.state_fingerprint(agent_id),
+            local_trajectory_fingerprint=store.trajectory_fingerprint(agent_id),
+            local_event_count=store.event_count(agent_id),
+            local_memory_count=store.memory_count(agent_id),
+            checkpoints=checkpoints,
+        )
+        print(
+            "[consciousness-server] reconciliation="
+            f"{report.status.value} checkpoint={report.checkpoint_id}"
+        )
+        return report.to_dict()
+    except Exception as exc:
+        report = {"status": "ERROR", "error": repr(exc)}
+        print(f"[consciousness-server] reconciliation failed: {exc!r}")
+        return report
 
 
 def _checkpoint(
@@ -181,6 +213,13 @@ def main() -> None:
         node_id,
         store,
         organism,
+    )
+    reconciliation = _reconcile(consciousness_client, agent_id, store)
+    _emit(
+        consciousness_client,
+        agent_id,
+        "RECONCILE",
+        reconciliation,
     )
 
     while True:
