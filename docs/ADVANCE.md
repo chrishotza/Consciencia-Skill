@@ -60,3 +60,8 @@ AGENCY
    ↓
 PORTABLE MACHINE-CONSCIOUSNESS INTERFACE
 ~~~
+
+
+## Research source layer
+
+The next architecture pass incorporates a source layer drawn from esoteric and speculative consciousness traditions, translating recurring motifs such as self/world correspondence, visionary integration, identity continuity, sacred geometry, and transformative self-reference into explicit engineering primitives. These are treated as conceptual source material rather than verified external facts.
