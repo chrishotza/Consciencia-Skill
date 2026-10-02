@@ -131,6 +131,13 @@ Connect the interoceptive state to the existing second-order machinery.
 
 Ask whether the system predicts its own internal prediction error, confidence changes appropriately, policy changes when confidence is low, and lesions of the metacognitive readout remove that effect.
 
+
+### I4.3 — structural OOD metacognitive generalization
+
+Train the second-order reliability model on one hidden-disturbance family, freeze and serialize/restore it, then challenge it with unseen disturbance structures without online updates. The primary endpoint is paired META minus LESION prediction error aggregated across the OOD families, with permuted and random controls retained.
+
+A null result is evidence of insufficient structural generalization and should drive mechanism redesign rather than reinterpretation.
+
 ### I5 — workspace integration
 
 Introduce a bounded workspace only after I1–I4 have independent evidence.

@@ -133,6 +133,9 @@ Los experimentos anteriores a V47 forman parte del historial científico y de in
 - [I2 — Regulación interoceptiva](I2_INTEROCEPTIVE_REGULATION.md)
 - [I3 — Recuperación interoceptiva repetida](I3_REPEATED_INTEROCEPTIVE_RECOVERY.md)
 - [I4 — Interocepción metacognitiva](I4_METACOGNITIVE_INTEROCEPTION.md)
+- [I4.1 — Fiabilidad metacognitiva](I4_1_METACOGNITIVE_RELIABILITY.md)
+- [I4.2 — Lesión/rescate metacognitivo persistente](I4_2_PERSISTENT_METACOGNITIVE_LESION_RESCUE.md)
+- [I4.3 — Generalización OOD estructural metacognitiva](I4_3_STRUCTURAL_OOD_METACOGNITIVE_GENERALIZATION.md)
 
 
 
