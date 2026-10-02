@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V70 — Persistencia del lector propio entre reinicios
 
 ## Pregunta
@@ -86,3 +88,99 @@ La arquitectura debe conseguir que el propio organismo:
 7. use automáticamente su lector para decidir.
 
 Ese será el salto de lector experimental persistente a lector propio integrado en el ciclo autónomo.
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V70 — Persistent Self-Reader across Restarts
+
+## Question
+
+V69 showed that a learned dynamic model can read internal state after semantic ablation and use that readout to change a decision.
+
+V70 asks a stronger question:
+
+> Can that self-reader persist inside the organism, survive a restart, and be reused after semantic memory disappears?
+
+## Architecture change
+
+SelfObserver can now be serialized and stored in SQLite in a separate table. The numerical reader does not depend on semantic memories to reload its model.
+
+At startup, PersistentOrganism:
+
+1. looks for a persisted self-observation model;
+2. reconstructs it;
+3. continues learning from that model;
+4. saves the updated model again.
+
+## Protocol
+
+- 24 replicates;
+- 256 generic samples to train the reader;
+- real close/reopen of persistent storage;
+- before/after restart prediction comparison;
+- two semantic conditions: stable and frontier;
+- ablation of memories, events, snapshots, and self-model text;
+- reuse of the same persisted numerical reader;
+- blinded-state control;
+- causal dynamic-core exchange.
+
+Reader training is independent of stable/frontier conditions.
+
+## Result
+
+### Model persistence
+
+- model survived restart: **yes**;
+- samples before restart: **256**;
+- samples after restart: **256**;
+- maximum absolute prediction error before/after restart: **0.0**;
+- exact model load across experimental conditions: **100%**.
+
+This shows that the numerical self-observation model can persist and be reconstructed exactly from SQLite.
+
+### Readout and decision after restart
+
+- decision sensitivity with readout ON: **29.1667%**;
+- sensitivity with blinded state OFF: **0.0%**;
+- paired ON − OFF p-value: **0.0143493**;
+- decision change after dynamic-core exchange: **29.1667%**;
+- memories removed before probe: **yes**;
+- self-model text removed: **yes**;
+- semantic input during probe: **no**.
+
+The effect is smaller than V69 but remains after restart and is distinguishable from the blinded control.
+
+## Interpretation
+
+V70 adds a property V69 did not have:
+
+learn own state → persist → restart → recover reader → semantic ablation → read state → decide
+
+The full chain remains operational after closing and reopening the organism.
+
+This is evidence of **computational continuity of the numerical self-model** and its later use in decisions.
+
+It does not establish phenomenal consciousness or subjective experience.
+
+## Next pressure point
+
+V70 still copies the persistent reader into the test conditions.
+
+The next step should remove that manual copy.
+
+The organism should:
+
+1. learn its reader;
+2. persist it;
+3. restart;
+4. recover its reader;
+5. enter SLEEP;
+6. lose semantic surfaces;
+7. automatically use its reader to decide.
+
+That is the transition from a persistent experimental reader to a reader integrated into the autonomous cycle.
+
+</details>
