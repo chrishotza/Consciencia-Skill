@@ -1,3 +1,47 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V16 — Cuello de botella de estado mínimo
+
+## Pregunta
+
+V15 mostró que borrar selectivamente el estado recurrente causa una pérdida fuerte de identidad histórica en los regímenes critical. V16 pregunta cuánto de ese estado es realmente necesario.
+
+## Cuello de botella estructural
+
+En el límite de historia, el contexto completo del donante contiene dos slots recurrentes: state_prev y state.
+
+Comparamos:
+
+- full: ambos slots conservados;
+- current_only: se conserva current state y previous state se reemplaza por el valor común A/B;
+- previous_only: se conserva previous state y current state se reemplaza por el valor común;
+- state_zero: ambos slots se reemplazan por el valor común.
+
+Las otras variables de contexto permanecen específicas del donante.
+
+## Cuello de botella de precisión
+
+Ambos slots se conservan, pero sus valores se cuantizan uniformemente sobre el rango natural tanh [-1, 1] a 1, 2, 3, 4, 6 y 8 bits.
+
+El input de continuación es exactamente cero y el noise seed se mantiene emparejado entre intervenciones.
+
+## Readout
+
+La identidad se clasifica a partir de affinity de trayectoria respecto de las referencias de continuación A/B intactas durante los primeros 60 pasos futuros. El MAE de predicción se mide contra la trayectoria intacta del donante.
+
+## Interpretación
+
+Si current_only conserva la mayor parte de la señal de identidad mientras previous_only no, el estado recurrente actual sería el portador temporal dominante en la frontera. Si la cuantización de pocos bits conserva identidad, el mecanismo tiene una representación de estado efectiva compacta.
+
+El experimento caracteriza las dinámicas computacionales implementadas. No establece experiencia subjetiva ni consciencia.
+
+</details>
+
+<a id="english"></a>
+
 # V16 — Minimal-State Bottleneck
 
 ## Question
