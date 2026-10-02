@@ -282,3 +282,13 @@ The V47–V80 files retain their canonical identifiers and terminology for repro
 - 24 replicates; t0, phase sequence, semantic content multiset and phase labels preserved at 100%.
 - All three endpoints were null; global lag×specificity interaction was non-significant for all three.
 - Next: I5.23 cyclic shift sweep.
+
+
+## I5.23 — Cyclic shift sweep
+- Protocol: `docs/I5_23_CYCLIC_SHIFT_SWEEP.md`
+- Experiment: `experiments/i5_23_cyclic_shift_sweep.py`
+- Test: `tests/test_i5_23_cyclic_shift_sweep.py`
+- Verified workflow: **37062538761**, artifact **11251207688**.
+- 24 replicates; six shifts × six lags; 100% control invariants.
+- Signed AUC null; absolute AUC and future action significant for five of six shifts after max-T, with +1 null.
+- Next: I5.24 global shift×lag interaction.
