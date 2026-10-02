@@ -51,12 +51,14 @@ SERVER mode fails during startup when the configured server cannot be reached. O
 
 In the current bootstrap, the local MemoryStore remains the execution persistence layer for the organism. The server receives durable identity, continuity and event metadata.
 
-The current bootstrap now adds two durable continuity primitives above the event journal:
+The current bootstrap now adds four durable continuity primitives above the event journal:
 
 - **continuity checkpoints** — compact observations of local state, trajectory fingerprints, runtime mode and organism metadata;
-- **continuity reconciliation** — comparison of the local organism against its latest server checkpoint without overwriting state.
+- **continuity reconciliation** — comparison of the local organism against its latest server checkpoint without overwriting state;
+- **continuity bundles** — portable, hash-verified organism backups for migration and recovery;
+- **continuity recovery planning** — non-destructive decision logic that blocks silent overwrite on divergence and identifies the safe next recovery action.
 
-The next architectural step is to introduce a shared persistence interface so LOCAL and SERVER can use interchangeable backends without changing the organism itself.
+The next architectural step is to introduce deterministic event identity and a real replay/transfer protocol.
 
 ## Local-first bootstrap
 
@@ -114,27 +116,37 @@ CONSCIOUSNESS_MODE=server requires a reachable local Consciousness Server at sta
 
 ### Phase 2 — checkpoints and reconciliation — implemented
 
-The server stores compact checkpoints and can report ALIGNED, LOCAL_AHEAD, LOCAL_BEHIND, DIVERGED, or NO_CHECKPOINT. This is the boundary for the next replay/recovery layer.
+The server stores compact checkpoints and can report ALIGNED, LOCAL_AHEAD, LOCAL_BEHIND, DIVERGED, or NO_CHECKPOINT.
 
 See [Continuity checkpoints](CONSCIOUSNESS_CHECKPOINTS.md) and [Continuity reconciliation](CONSCIOUSNESS_RECONCILIATION.md).
 
-### Phase 3 — shared persistence backend
+### Phase 3 — portable continuity and recovery planning — implemented
+
+The runtime can create hash-verified portable bundles and produce a non-destructive recovery plan from reconciliation status.
+
+See [Continuity bundles](CONTINUITY_BUNDLES.md) and [Continuity recovery](CONTINUITY_RECOVERY.md).
+
+### Phase 4 — deterministic replay / transfer
+
+Introduce deterministic event identity, replay boundaries and an API for transferring verified continuity deltas without silently overwriting divergent state.
+
+### Phase 5 — shared persistence backend
 
 Introduce a PersistenceBackend interface so the organism can use a local backend or server-backed backend without changing its cognitive loop.
 
-### Phase 4 — second node
+### Phase 6 — second node
 
 Two computers exchange continuity checkpoints and node heartbeats.
 
-### Phase 5 — NodeZero mesh
+### Phase 7 — NodeZero mesh
 
-Introduce replicated node state, reconciliation and deterministic event identity.
+Introduce replicated node state and deterministic multi-node event identity.
 
-### Phase 6 — shared continuity
+### Phase 8 — shared continuity
 
 Allow multiple organisms to participate in a shared continuity fabric while keeping their identities separate.
 
-### Phase 7 — AEVUM attribution
+### Phase 9 — AEVUM attribution
 
 Only after the network exists, evaluate continuity events as possible AEVUM-native units for resource contribution, storage, validation and transport attribution.
 
@@ -148,3 +160,13 @@ Only after the network exists, evaluate continuity events as possible AEVUM-nati
 - no central LLM inference service.
 
 The architecture starts with one computer and grows only when users contribute nodes.
+
+
+## Current research boundary
+
+C0.18 is now verified as a **null result under the tested lesion/rescue protocol**. The 24-replica artifact is preserved separately from the infrastructure layer. The repository therefore keeps two tracks synchronized:
+
+- research evidence and falsification;
+- continuity infrastructure and recovery safety.
+
+Neither track is allowed to silently overwrite the other.
