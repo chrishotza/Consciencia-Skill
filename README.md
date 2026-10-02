@@ -55,7 +55,7 @@ El runtime también mantiene regímenes de **VIGILIA** y **SUEÑO**, persistenci
 | **V57** | Selección de trayectorias guiada por modelo de sí | Regret **0.0231** frente a **0.1369** aleatorio; p **0.00435** bajo el protocolo emparejado. |
 | **V70** | Persistencia y uso del lector propio | El modelo numérico sobrevivió al reinicio y volvió a utilizarse después de la ablación semántica; la cadena modelo de sí → acción → nuevo estado permaneció operacional bajo el arnés probado. |
 | **V76–V78** | Generalización OOD de la política de autopredicción | La ventaja de autopredicción se conservó ante magnitudes, estructuras y secuencias no vistas; los endpoints secundarios de continuidad **no** se separaron de la selección aleatoria. |
-| **C0.6** | Lesión y rescate causal de autoobservador/autopólitica | Las lesiones cambiaron la organización medida y la restauración produjo efectos de rescate significativos bajo el protocolo probado. |
+| **C0.6** | Lesión y rescate causal de autoobservador/autopolítica | Las lesiones cambiaron la organización medida y la restauración produjo efectos de rescate significativos bajo el protocolo probado. |
 
 Los valores exactos, artefactos, semillas y condiciones están preservados en el ledger y en los documentos de protocolo.
 
@@ -102,6 +102,12 @@ Una divergencia nunca se sobrescribe silenciosamente.
 
 → [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md) · [Replay determinista](docs/DETERMINISTIC_EVENT_REPLAY.md) · [Sincronización entre pares](src/consciousness_server/synchronization.py)
 
+## Estructura y consistencia
+
+- Reglas para agentes: [AGENTS.md](AGENTS.md)
+- Convenciones del repositorio: [docs/REPO_CONVENTIONS.md](docs/REPO_CONVENTIONS.md)
+- Material histórico de CI retirado: [docs/ARCHIVED_CI.md](docs/ARCHIVED_CI.md)
+
 ## Empezar
 
 - Instalación: [INSTALL.md](INSTALL.md)
@@ -131,7 +137,7 @@ Estos documentos pueden motivar hipótesis de ingeniería, pero están separados
 
 ## Reproducibilidad
 
-El laboratorio usa **GitHub Actions**. Los workflows conservan commits, manifiestos y artifacts para que los resultados puedan rastrearse hasta el código que los produjo.
+El laboratorio usa **GitHub Actions**. El CI activo se limita a workflows que verifican código o ejecutan protocolos reproducibles; los workflows one-shot de materialización fueron retirados y documentados en `docs/ARCHIVED_CI.md`. Los workflows conservan commits, manifiestos y artifacts para que los resultados puedan rastrearse hasta el código que los produjo.
 
 La evidencia se interpreta como:
 
@@ -258,7 +264,7 @@ These documents can motivate engineering hypotheses, but they are kept separate 
 
 ## Reproducibility
 
-The laboratory uses **GitHub Actions**. Workflows preserve commits, manifests, and artifacts so results can be traced to the code that produced them.
+The laboratory uses **GitHub Actions**. Active CI is limited to workflows that verify code or run reproducible protocols; one-shot materialization workflows were retired and documented in `docs/ARCHIVED_CI.md`. Workflows preserve commits, manifests, and artifacts so results can be traced to the code that produced them.
 
 Evidence is interpreted as:
 
