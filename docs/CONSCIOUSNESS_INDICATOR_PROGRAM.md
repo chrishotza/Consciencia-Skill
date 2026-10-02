@@ -38,8 +38,8 @@ The project already has strong evidence for several functional building blocks, 
 | RPT-1 | PARTIAL | recurrent internal dynamics and iterative self-observation | recurrence is not an explicitly recurrent perceptual/input module |
 | RPT-2 | ABSENT / UNTESTED | numerical internal state exists | no validated organized perceptual representation layer |
 | GWT-1 | PARTIAL | memory, self-observer, meta-observer, dynamics, policy components | no explicit parallel workspace architecture |
-| GWT-2 | ABSENT | trajectory selection exists | no limited-capacity global workspace / attention bottleneck |
-| GWT-3 | PARTIAL | organism context is assembled across persistent modules | no explicit global broadcast mechanism with causal ablation |
+| GWT-2 | PARTIAL / I5.0 VERIFIED PROTOTYPE | bounded K=2 workspace with competitive selection | not yet integrated into PersistentOrganism or coupled to a learned attention controller |
+| GWT-3 | PARTIAL / I5.0 VERIFIED PROTOTYPE | causal broadcast from selected workspace content to all modules | full-organism integration and module-specific broadcast ablation still pending |
 | GWT-4 | PARTIAL | state-dependent trajectory selection exists | no explicit attention-controlled sequential module querying |
 | HOT-1 | PARTIAL | self-prediction is generative with respect to internal dynamics | not a generative perception module |
 | HOT-2 | PARTIAL / strongest current line | SelfObserver, MetaSelfObserver, prediction error, confidence, second-order models | reliability monitoring is not yet a general perception-level metacognitive loop |
@@ -140,16 +140,15 @@ A null result is evidence of insufficient structural generalization and should d
 
 ### I5 — workspace integration
 
-Introduce a bounded workspace only after I1–I4 have independent evidence.
+**I5.0 is now verified as a standalone bounded-workspace prototype.** It implements six modules, capacity K=2, competitive selection, causal broadcast, K=6 unlimited-access control, and selected-source versus non-selected-source lesioning. The verified run used 512 paired episodes.
 
-Required tests:
+Verified effects:
 
-- limited-capacity bottleneck;
-- broadcast;
-- selective access;
-- module lesion;
-- recovery;
-- state-dependent querying.
+- broadcast versus no-broadcast accuracy: **+0.126953125**, p **4.99975×10⁻⁵**;
+- bounded K=2 versus K=6 accuracy: **+0.017578125**, p **0.0222489**;
+- selected-source lesion versus unselected-source lesion: **−0.490234375**, p **4.99975×10⁻⁵**.
+
+The next stage is **I5.1**: integrate the workspace into `PersistentOrganism`, preserve paired lesion controls, and add state-dependent querying. A standalone prototype result is not treated as evidence that the full organism has global-workspace consciousness.
 
 ### I6 — attention schema
 
