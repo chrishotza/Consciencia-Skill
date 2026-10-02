@@ -15,12 +15,14 @@
 - Current frontier: I4.3 OOD metacognition, I5.0 bounded global workspace, I5.1 PersistentOrganism integration (behavioral null under tested mapping), I5.2 state-dependent query (standalone verified), Lattice v0/v1, C0 campaign G1=4/32.
 - I5.2 result: 512 paired episodes; FULL−SHUFFLED +1.0 (p=4.99975e-05); FULL−LESION +0.763671875 (p=4.99975e-05).
 - I5.3 result: 512 episodes; FULL−SHUFFLED target attention mass +0.9768188958 (p=4.99975e-05); FULL−LESION +0.7345638420 (p=4.99975e-05).
+- I5.4 result: 24 persistent replicates; query controls null; SHUFFLED_ATTENTION action-change 20.83%, regret cost +0.0280384 (p=0.5022); exact persistence 100%.
 - Lattice v1: 128 paired trials; delay-8 retention 0.7486968980; AUC 0.7597552199.
 - research/ORGANISM_RESULT_LEDGER.md
 - docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md
 - docs/I5_1_PERSISTENT_ORGANISM_WORKSPACE.md
 - docs/I5_2_STATE_DEPENDENT_QUERY.md
 - docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md
+- docs/I5_4_PERSISTENT_SELECTIVE_ACCESS.md
 - docs/GITHUB_LAB.md
 
 ## Arquitectura

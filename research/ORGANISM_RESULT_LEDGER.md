@@ -782,6 +782,24 @@ Workflow verificado: **36985957522**; artifact **11218020500**; commit experimen
 
 Interpretación: **resultado positivo para el mecanismo computacional probado**. El modelo de atención concentró recursos sobre el módulo objetivo de forma reproducible y los controles eliminan esa concentración. La condición LESION es una pérdida operacional de concentración del controlador, no una lesión anatómica.
 
+## I5.4 — Integración persistente de consulta + atención — resultado nulo/mixto
+
+Workflow verificado: **36986823516**; artifact **11217906875**; commit experimental **27f08ab3d84633986a609a7981429cf6f3fe0cf5**.
+
+- seed **20261004**;
+- **24** réplicas;
+- **24** ciclos de warmup;
+- SHUFFLED_QUERY regret cost: **0.0**, p=**1.0**; action-change **0%**;
+- SHUFFLED_ATTENTION regret cost: **+0.0280384**, p=**0.5022**; action-change **20.83%**;
+- ZERO_QUERY regret cost: **0.0**, p=**1.0**; action-change **0%**;
+- RANDOM_QUERY regret cost: **0.0**, p=**1.0**; action-change **0%**;
+- LESION_QUERY regret cost: **0.0**, p=**1.0**; action-change **0%**;
+- FULL attention mass mean: **0.69550**;
+- FULL selective-access strength mean: **0.30500**;
+- exact persistence: **100%**.
+
+Interpretación: **resultado nulo/mixto bajo el protocolo probado**. La cadena integrada es operativa y sus observables persisten, pero los controles de consulta no cambiaron la acción ni el regret. La reasignación de atención sí cambió la acción en 20.83% de réplicas, aunque el costo de regret no fue significativo. La integración no demuestra necesidad funcional del acceso selectivo bajo este mapeo.
+
 ## Estado de campaña C0
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.
@@ -1167,6 +1185,24 @@ Verified workflow: **36985957522**; artifact **11218020500**; experimental commi
 - attention selection-change rate: **1.0**.
 
 Interpretation: **positive result for the tested computational mechanism**. The attention model reproducibly concentrated resources on the target module and the controls removed that concentration. The LESION condition is an operational loss-of-concentration control, not an anatomical lesion.
+
+## I5.4 — Persistent query + attention integration — null/mixed result
+
+Verified workflow: **36986823516**; artifact **11217906875**; experimental commit **27f08ab3d84633986a609a7981429cf6f3fe0cf5**.
+
+- seed **20261004**;
+- **24** replicates;
+- **24** warmup cycles;
+- SHUFFLED_QUERY regret cost: **0.0**, p=**1.0**; action-change **0%**;
+- SHUFFLED_ATTENTION regret cost: **+0.0280384**, p=**0.5022**; action-change **20.83%**;
+- ZERO_QUERY regret cost: **0.0**, p=**1.0**; action-change **0%**;
+- RANDOM_QUERY regret cost: **0.0**, p=**1.0**; action-change **0%**;
+- LESION_QUERY regret cost: **0.0**, p=**1.0**; action-change **0%**;
+- FULL mean attention mass: **0.69550**;
+- FULL mean selective-access strength: **0.30500**;
+- exact persistence: **100%**.
+
+Interpretation: **null/mixed result under the tested protocol**. The integrated chain is operational and its observables persist, but query controls did not change action or regret. Attention reassignment changed the action in 20.83% of replicates, but regret cost was not significant. The integration therefore does not establish functional necessity of selective access under this mapping.
 
 ## C0 campaign and causal controls
 

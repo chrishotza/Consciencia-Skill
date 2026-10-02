@@ -19,6 +19,7 @@ from .action_conditioned_meta_observer import ActionConditionedMetaObserver
 from .interoception import InteroceptiveProbe
 from .interoception_controller import InteroceptiveController
 from .workspace_controller import WorkspaceRuntimeConfig, WorkspaceTrajectoryController
+from .workspace_selective_access import WorkspaceSelectiveAccessController
 
 
 @dataclass
@@ -74,6 +75,10 @@ class OrganismConfig:
     workspace_influence_weight: float = 0.35
     workspace_broadcast_enabled: bool = True
     workspace_lesion_index: int | None = None
+    workspace_selective_access_enabled: bool = False
+    workspace_selective_access_query_mode: str = "full"
+    workspace_selective_access_attention_mode: str = "full"
+    workspace_selective_access_weight: float = 0.35
 
 
 class PersistentOrganism:
@@ -132,18 +137,27 @@ class PersistentOrganism:
             InteroceptiveProbe(memory_limit=cfg.memory_limit),
             memory_count=cfg.interoceptive_control_memory_count,
         )
+        workspace_runtime_cfg = WorkspaceRuntimeConfig(
+            capacity=cfg.workspace_capacity,
+            broadcast_gain=cfg.workspace_broadcast_gain,
+            local_gain=cfg.workspace_local_gain,
+            influence_weight=cfg.workspace_influence_weight,
+            broadcast_enabled=cfg.workspace_broadcast_enabled,
+            lesion_index=cfg.workspace_lesion_index,
+        )
         self.workspace_controller = (
-            WorkspaceTrajectoryController(
-                WorkspaceRuntimeConfig(
-                    capacity=cfg.workspace_capacity,
-                    broadcast_gain=cfg.workspace_broadcast_gain,
-                    local_gain=cfg.workspace_local_gain,
-                    influence_weight=cfg.workspace_influence_weight,
-                    broadcast_enabled=cfg.workspace_broadcast_enabled,
-                    lesion_index=cfg.workspace_lesion_index,
-                )
-            )
+            WorkspaceTrajectoryController(workspace_runtime_cfg)
             if cfg.workspace_enabled
+            else None
+        )
+        self.workspace_selective_access_controller = (
+            WorkspaceSelectiveAccessController(
+                workspace_runtime_cfg,
+                query_mode=cfg.workspace_selective_access_query_mode,
+                attention_mode=cfg.workspace_selective_access_attention_mode,
+                access_weight=cfg.workspace_selective_access_weight,
+            )
+            if cfg.workspace_selective_access_enabled
             else None
         )
         if cfg.self_observer_enabled and persisted_self_model is None:
@@ -644,7 +658,33 @@ class PersistentOrganism:
                 raise ValueError(
                     f"unknown self_selection_policy={self.cfg.self_selection_policy!r}"
                 )
-            if self.workspace_controller is not None:
+            if self.workspace_selective_access_controller is not None:
+                chosen, selective_access = (
+                    self.workspace_selective_access_controller.choose(
+                        self.state,
+                        candidates,
+                        seed=self.cfg.dynamic_seed + self.state.dynamic_steps,
+                    )
+                )
+                workspace_control = selective_access.workspace_control
+                self.state.workspace_last_selected_module = int(
+                    workspace_control["selected_modules"][0]
+                ) if workspace_control["selected_modules"] else -1
+                self.state.workspace_last_broadcast = [
+                    float(x) for x in workspace_control["broadcast"]
+                ]
+                self.state.workspace_steps += 1
+                self.state.workspace_last_query_module = int(
+                    selective_access.query_module
+                )
+                self.state.workspace_last_query_distance = float(
+                    selective_access.query_distance
+                )
+                self.state.workspace_last_attention_weights = [
+                    float(x) for x in selective_access.attention_weights
+                ]
+                self.state.workspace_selective_access_steps += 1
+            elif self.workspace_controller is not None:
                 chosen, workspace_control = self.workspace_controller.choose(
                     self.state,
                     candidates,
@@ -699,6 +739,24 @@ class PersistentOrganism:
                     "counterfactual_meta_samples_added": counterfactual_meta_samples_added,
                     "chosen_signal": chosen_signal,
                     "workspace_control": workspace_control,
+                    "workspace_selective_access": (
+                        {
+                            "enabled": True,
+                            "query_mode": self.cfg.workspace_selective_access_query_mode,
+                            "attention_mode": self.cfg.workspace_selective_access_attention_mode,
+                            "chosen_signal": float(selective_access.chosen_signal),
+                            "query_module": int(selective_access.query_module),
+                            "query_distance": float(selective_access.query_distance),
+                            "query_value": float(selective_access.query_value),
+                            "attention_module": int(selective_access.attention_module),
+                            "attention_mass": float(selective_access.attention_mass),
+                            "attention_weights": list(selective_access.attention_weights),
+                            "access_strength": float(selective_access.access_strength),
+                            "access_weight": float(self.cfg.workspace_selective_access_weight),
+                        }
+                        if self.workspace_selective_access_controller is not None
+                        else None
+                    ),
                     "candidates": [
                         {
                             "signal": candidate.signal,

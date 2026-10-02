@@ -49,6 +49,12 @@ class OntologicalState:
     workspace_last_selected_module: int = -1
     workspace_last_broadcast: list[float] = field(default_factory=lambda: [0.0, 0.0])
     workspace_steps: int = 0
+    workspace_last_query_module: int = -1
+    workspace_last_query_distance: float = 0.0
+    workspace_last_attention_weights: list[float] = field(
+        default_factory=lambda: [0.0, 0.0, 0.0, 0.0]
+    )
+    workspace_selective_access_steps: int = 0
 
     def to_json(self) -> str:
         payload = asdict(self)
