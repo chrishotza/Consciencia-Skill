@@ -351,7 +351,7 @@ def main():
     for control in ("lesion", "permuted", "random"):
         for metric in ("mean_error", "recovery"):
             mean, p = paired(rows["meta"], rows[control], metric)
-            contrasts[f"META_minus_{control}_{metric}_aggregate"] = {
+            contrasts[f"META_minus_{control.upper()}_{metric}_aggregate"] = {
                 "mean": mean,
                 "p": p,
             }
@@ -370,7 +370,7 @@ def main():
             subset_control = [r for r in rows[control] if r["family"] == family]
             for metric in ("mean_error", "recovery"):
                 mean, p = paired(subset_meta, subset_control, metric)
-                family_contrasts[family][f"META_minus_{control}_{metric}"] = {
+                family_contrasts[family][f"META_minus_{control.upper()}_{metric}"] = {
                     "mean": mean,
                     "p": p,
                 }
