@@ -86,6 +86,14 @@ jobs:
             --cycles 8 \
             --out results/i5_10_semantic_reentry_under_action_replay
 
+      - name: Run I5.11 semantic re-entry trajectory selection
+        run: |
+          python experiments/i5_11_semantic_reentry_trajectory_selection.py \
+            --replicates 24 \
+            --warmup 24 \
+            --cycles 8 \
+            --out results/i5_11_semantic_reentry_trajectory_selection
+
       - name: Write run manifest
         run: |
           mkdir -p results
