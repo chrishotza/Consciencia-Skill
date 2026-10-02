@@ -80,6 +80,7 @@
 - [C0.10 within-episode temporal alignment](C0_10_WITHIN_EPISODE_TEMPORAL_ALIGNMENT.md) — prueba de alineación temporal entre el estado actual y el readout que recibe la política.
 - [C0.11 causal action mediation](C0_11_CAUSAL_ACTION_MEDIATION.md) — intervención sobre la primera acción para probar la cadena acción → estado interno → siguiente acción.
 - [C0.12 second-order self-monitoring](C0_12_SECOND_ORDER_SELF_MONITORING.md) — segundo orden: modelado del error del propio modelo de sí y control causal de la selección.
+- [C0.13 action-conditioned second-order self-model](C0_13_ACTION_CONDITIONED_META_MODEL.md) — segundo orden condicionado por la acción candidata y su predicción de primer orden.
 
 [Registro consolidado](../research/ORGANISM_RESULT_LEDGER.md).
 
