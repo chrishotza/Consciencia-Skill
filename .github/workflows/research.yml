@@ -143,6 +143,13 @@ jobs:
             --cycles 15 \
             --out results/i5_17_phase_resolved_bridge_mediation_map
 
+      - name: Run I5.18 global phase x bridge interaction
+        run: |
+          python experiments/i5_18_global_phase_bridge_interaction.py \
+            --input results/i5_17_phase_resolved_bridge_mediation_map/summary.json \
+            --permutations 20000 \
+            --out results/i5_18_global_phase_bridge_interaction
+
       - name: Write run manifest
         run: |
           mkdir -p results

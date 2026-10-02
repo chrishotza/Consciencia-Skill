@@ -84,3 +84,12 @@ Experiment: experiments/i5_17_phase_resolved_bridge_mediation_map.py
 Result ledger: research/ORGANISM_RESULT_LEDGER.md
 Status: verified on workflow 37047719727 / artifact 11244733803.
 Next: I5.18 global phase-by-bridge interaction with multiplicity-controlled contrasts.
+
+
+## I5.18 verified
+Protocol: docs/I5_18_GLOBAL_PHASE_BRIDGE_INTERACTION.md
+Experiment: experiments/i5_18_global_phase_bridge_interaction.py
+Result ledger: research/ORGANISM_RESULT_LEDGER.md
+Status: verified on workflow 37052907187 / artifact 11246744569.
+Result: global bridge ON−OFF mean remained non-zero across all three endpoints; global phase × bridge interaction was non-significant for signed AUC, absolute AUC, and future-action change.
+Next: I5.19 independent replication of the global bridge effect with the I5.17/I5.18 analysis frozen.

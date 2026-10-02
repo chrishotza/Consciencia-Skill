@@ -233,3 +233,12 @@ The V47–V80 files retain their canonical identifiers and terminology for repro
 - Test: `tests/test_i5_17_phase_resolved_bridge_mediation_map.py`
 - Verified workflow: **37047719727**, artifact **11244733803**.
 - Next: I5.18 global phase × bridge interaction with multiplicity-controlled contrasts.
+
+
+## I5.18 — Global phase × bridge interaction
+- Protocol: `docs/I5_18_GLOBAL_PHASE_BRIDGE_INTERACTION.md`
+- Experiment: `experiments/i5_18_global_phase_bridge_interaction.py`
+- Test: `tests/test_i5_18_global_phase_bridge_interaction.py`
+- Verified workflow: **37052907187**, artifact **11246744569**.
+- 24 replicates, 15 cycles, 20,000 permutations; mean bridge ON−OFF effect remained non-zero across lags, while global phase × bridge interaction was non-significant for all three endpoints.
+- Next: I5.19 independent replication with I5.17/I5.18 analysis frozen.

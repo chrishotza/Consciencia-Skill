@@ -30,11 +30,12 @@
       "docs/I5_14_PHASE_MATCHED_TEMPORAL_SPECIFICITY.md",
       "docs/I5_15_BIDIRECTIONAL_TEMPORAL_LAG_RESPONSE_MAP.md",
       "docs/I5_16_COUNTERBALANCED_PURE_PHASE_TEMPORAL_CONTROL.md",
-      "docs/I5_17_PHASE_RESOLVED_BRIDGE_MEDIATION_MAP.md"
+      "docs/I5_17_PHASE_RESOLVED_BRIDGE_MEDIATION_MAP.md",
+      "docs/I5_18_GLOBAL_PHASE_BRIDGE_INTERACTION.md"
     ],
     "experimental_next": [
-      "I5.18 global phase-by-bridge interaction with multiplicity-controlled contrasts",
-      "test the I5.17 phase profile with a pre-registered global interaction and multiplicity correction before stronger mechanistic interpretation",
+      "I5.19 independent replication of the global bridge effect with a frozen I5.17/I5.18 protocol",
+      "test whether the average bridge ON-OFF effect across lags reproduces under an independent seed without changing endpoints or multiplicity control",
       "C0 campaign G2-G8"
     ]
   },
@@ -68,8 +69,8 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.18 global phase-by-bridge interaction with multiplicity-controlled contrasts",
-    "test the I5.17 phase profile with a pre-registered global interaction and multiplicity correction before stronger mechanistic interpretation",
+    "I5.19 independent replication of the global bridge effect with a frozen I5.17/I5.18 protocol",
+    "test whether the average bridge ON-OFF effect across lags reproduces under an independent seed without changing endpoints or multiplicity control",
     "C0 campaign G2-G8"
   ]
 }
