@@ -48,3 +48,6 @@ The original final-distance interaction also used the opposite sign from the dec
 `TT - TP - PT + PP`
 
 The next C0.8 artifact is the confirmatory statistical run.
+
+
+Confirmatory execution trigger recorded from the corrected elementwise interaction implementation.
