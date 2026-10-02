@@ -21,12 +21,14 @@
       "docs/LATTICE_COMPUTER_V1.md",
       "docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md",
       "research/ORGANISM_RESULT_LEDGER.md",
-      "docs/C0_18_AUTONOMOUS_SECOND_ORDER_LESION_RESCUE.md"
+      "docs/C0_18_AUTONOMOUS_SECOND_ORDER_LESION_RESCUE.md",
+      "docs/I5_6_PERSISTENT_QUERY_TASK.md",
+      "docs/I5_7_RECURRENT_SELF_ACCESS.md"
     ],
     "experimental_next": [
-      "I5.5 integration into PersistentOrganism with task-level bottleneck",
-      "force bottleneck necessity by information-matched distractor controls",
-      "cross-mechanism interaction with recurrence/re-entry",
+      "I5.7 recurrent self-access and state re-entry",
+      "test whether one-cycle query perturbations propagate into later state/query/action cycles",
+      "compare pulse perturbation against persistent perturbation and FULL restoration",
       "C0 campaign G2-G8"
     ]
   },
@@ -60,9 +62,9 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.5 integration into PersistentOrganism with task-level bottleneck",
-    "force bottleneck necessity by information-matched distractor controls",
-    "cross-mechanism interaction with recurrence/re-entry",
+    "I5.7 recurrent self-access and state re-entry",
+    "test whether one-cycle query perturbations propagate into later state/query/action cycles",
+    "compare pulse perturbation against persistent perturbation and FULL restoration",
     "C0 campaign G2-G8"
   ]
 }
