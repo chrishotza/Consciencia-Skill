@@ -35,6 +35,10 @@
 - `docs/C0_12_SECOND_ORDER_SELF_MONITORING.md` — second-order self-monitoring: predicting the first-order self-model's own error.
 - `experiments/tcf_consciousness_instantiation_c0_12.py` — true/permuted/blind second-order control.
 
+### C0.13
+- `docs/C0_13_ACTION_CONDITIONED_META_MODEL.md` — action-conditioned second-order self-model using first-order predicted state.
+- `experiments/tcf_consciousness_instantiation_c0_13.py` — true/permuted/blind action-conditioned meta control.
+
 ### V69
 - `docs/V69_SELF_STATE_READOUT.md` — numeric readout; discrete action endpoint is null.
 - `docs/V69_SELF_READ_STATE.md` — readout participates in trajectory selection; includes blinded control and state-swap intervention.
