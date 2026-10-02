@@ -143,3 +143,12 @@ Result ledger: research/ORGANISM_RESULT_LEDGER.md
 Status: verified on frozen I5.23 data; workflow 37063264401 / artifact 11252345042.
 Result: signed AUC interaction p=0.89461; absolute AUC and future-action interaction p=0.00005 each; Bonferroni 0.00015.
 Next: I5.25 shift×lag orientation and symmetry control.
+
+
+## I5.25 verified
+Protocol: docs/I5_25_SHIFT_LAG_ORIENTATION_SYMMETRY.md
+Experiment: experiments/i5_25_shift_lag_orientation_symmetry.py
+Result ledger: research/ORGANISM_RESULT_LEDGER.md
+Status: verified on frozen I5.23 data; workflow 37065168288 / artifact 11251708654.
+Result: signed AUC orientation/diagonal null; absolute AUC and future action both orientation-asymmetric and diagonally enriched, p=0.00005 each; Bonferroni 0.00030.
+Next: I5.26 matched-magnitude sign-coupling control.
