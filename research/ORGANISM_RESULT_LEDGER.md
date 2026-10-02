@@ -854,6 +854,34 @@ Workflow: **37035390086**; artifact **11240100197**; seed **20261007**; **24** r
 
 Interpretación: hubo divergencia descriptiva persistente entre trayectorias, pero el endpoint primario firmado no se separó significativamente. I5.7 **no establece todavía un efecto causal de reentrada**. La igualdad de los perfiles agregados de PULSE_SHUFFLED_QUERY y PULSE_ZERO_QUERY sugiere que la perturbación actual del query es demasiado gruesa para discriminar la ruta de transmisión.
 
+### I5.8 — Mediación por action-clamp — resultado verificado
+
+Workflow: **37036909691**; artifact **11241340710**; seed **20261008**; **24** réplicas; **24** ciclos de warmup; **8** ciclos experimentales.
+
+- FULL_ACTION_CLAMP vs FULL: Δ estado t+1 **0.0**, p **1.0**;
+- PULSE_SHUFFLED_QUERY − PULSE_SHUFFLED_QUERY_ACTION_CLAMP: Δ estado t+1 **0.42596**, p **4.99975×10⁻⁵**;
+- diferencia de AUC post-pulso: **2.10472**, p **4.99975×10⁻⁵**;
+- divergencia pulse t+1: **0.42596**;
+- divergencia pulse+clamp t+1: **0.0**;
+- cambio post-pulso de acción: **47.62%** vs **0%** con clamp;
+- cambio post-pulso de query: **73.21%** vs **0%** con clamp;
+- cambio post-pulso de target: **82.14%** vs **0%** con clamp.
+
+Interpretación: el action-clamp eliminó por completo la divergencia de estado del pulso bajo el arnés probado. El resultado es consistente con una mediación por la acción aplicada, sin demostrar consciencia ni una ruta fenomenológica.
+
+### I5.9 — Suficiencia por action-replay — resultado verificado
+
+Workflow: **37037747712**; artifact **11240278321**; seed **20261009**; **24** réplicas; **24** ciclos de warmup; **8** ciclos experimentales.
+
+- coincidencia exacta de acciones aplicadas PULSE vs ACTION_REPLAY: **100%**;
+- Δ estado PULSE vs ACTION_REPLAY en t+1: **0.0**, p **1.0**;
+- AUC PULSE vs ACTION_REPLAY: **0.0**, p **1.0**;
+- divergencia máxima PULSE vs ACTION_REPLAY: **0.0** en las 24 réplicas;
+- AUC PULSE vs FULL: **2.12790**;
+- AUC ACTION_REPLAY vs FULL: **2.12790**.
+
+Interpretación: la secuencia de acciones del pulso reconstruyó exactamente la trayectoria dinámica bajo query FULL. En este arnés, el efecto dinámico del query queda completamente explicado por la secuencia de acciones aplicadas. La siguiente etapa separará dinámica y estado semántico.
+
 ## Estado de campaña C0
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.
@@ -1311,6 +1339,34 @@ Workflow: **37035390086**; artifact **11240100197**; seed **20261007**; **24** r
 - post-pulse target change: **82.14%**.
 
 Interpretation: persistent trajectory divergence was descriptive, but the primary signed endpoint did not separate significantly. I5.7 **does not yet establish a causal re-entry effect**. The identical aggregate profiles of PULSE_SHUFFLED_QUERY and PULSE_ZERO_QUERY suggest that the current query perturbation is too coarse to discriminate the transmission pathway.
+
+### I5.8 — Action-clamp mediation — verified result
+
+Workflow: **37036909691**; artifact **11241340710**; seed **20261008**; **24** replicates; **24** warmup cycles; **8** experimental cycles.
+
+- FULL_ACTION_CLAMP vs FULL: state delta t+1 **0.0**, p **1.0**;
+- PULSE_SHUFFLED_QUERY − PULSE_SHUFFLED_QUERY_ACTION_CLAMP: state delta t+1 **0.42596**, p **4.99975×10⁻⁵**;
+- post-pulse AUC difference: **2.10472**, p **4.99975×10⁻⁵**;
+- pulse t+1 divergence: **0.42596**;
+- pulse+clamp t+1 divergence: **0.0**;
+- post-pulse action change: **47.62%** vs **0%** with clamp;
+- post-pulse query change: **73.21%** vs **0%** with clamp;
+- post-pulse target change: **82.14%** vs **0%** with clamp.
+
+Interpretation: action-clamping fully removed pulse state divergence under the tested harness. The result is consistent with action-mediated propagation, without establishing consciousness or phenomenological re-entry.
+
+### I5.9 — Action-replay sufficiency — verified result
+
+Workflow: **37037747712**; artifact **11240278321**; seed **20261009**; **24** replicates; **24** warmup cycles; **8** experimental cycles.
+
+- exact applied-action match PULSE vs ACTION_REPLAY: **100%**;
+- PULSE vs ACTION_REPLAY state delta at t+1: **0.0**, p **1.0**;
+- PULSE vs ACTION_REPLAY AUC: **0.0**, p **1.0**;
+- maximum PULSE vs ACTION_REPLAY divergence: **0.0** across all 24 replicates;
+- PULSE vs FULL AUC: **2.12790**;
+- ACTION_REPLAY vs FULL AUC: **2.12790**.
+
+Interpretation: the pulse action sequence exactly reconstructed the dynamic trajectory under FULL query. In this harness, the dynamic effect of query is fully explained by the applied action sequence. The next stage separates dynamics from semantic state.
 
 ## C0 campaign and causal controls
 
