@@ -1,0 +1,56 @@
+name: interoception-i4-3-structural-ood
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/interoception-i4-3-structural-ood.yml"
+      - "experiments/interoception_i4_3.py"
+      - "tests/test_interoception_i4_3.py"
+      - "docs/I4_3_STRUCTURAL_OOD_METACOGNITIVE_GENERALIZATION.md"
+
+jobs:
+  i4_3:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+      - name: Tests
+        run: pytest -q tests/test_interoception_i4_3.py tests/test_interoceptive_meta_observer.py
+      - name: Run I4.3
+        run: |
+          mkdir -p results/i4_3
+          python experiments/interoception_i4_3.py --output results/i4_3/summary.json
+      - name: Manifest
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          Path("results/i4_3/run_manifest.json").write_text(
+              json.dumps(
+                  {
+                      "repository": os.environ.get("GITHUB_REPOSITORY"),
+                      "sha": os.environ.get("GITHUB_SHA"),
+                      "run_id": os.environ.get("GITHUB_RUN_ID"),
+                      "run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT"),
+                      "workflow": os.environ.get("GITHUB_WORKFLOW"),
+                  },
+                  indent=2,
+              ),
+              encoding="utf-8",
+          )
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: interoception-i4-3-structural-ood
+          path: results/i4_3/
+          if-no-files-found: error
