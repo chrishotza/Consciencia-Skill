@@ -10,10 +10,10 @@ from experiments.i5_26_matched_magnitude_sign_coupling import (
 
 def test_matched_magnitude_contrast_from_synthetic_surface():
     matrix = np.zeros((4, 6, 6))
-    matrix[:, 0, 4] = 2.0
-    matrix[:, 4, 0] = 2.0
+    matrix[:, 0, 5] = 2.0
+    matrix[:, 5, 0] = 2.0
     matrix[:, 0, 0] = 0.0
-    matrix[:, 4, 4] = 0.0
+    matrix[:, 5, 5] = 0.0
 
     opposite, same = matched_magnitude_cells(matrix, 3)
     assert opposite.mean() == pytest.approx(2.0)
