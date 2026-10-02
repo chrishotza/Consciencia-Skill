@@ -113,3 +113,71 @@ Los experimentos anteriores a V47 forman parte del historial científico y de in
 - [I3 — Recuperación interoceptiva repetida](I3_REPEATED_INTEROCEPTIVE_RECOVERY.md)
 - [I4 — Interocepción metacognitiva](I4_METACOGNITIVE_INTEROCEPTION.md)
 
+
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# Documentation index
+
+## Quick route for agents
+
+**Do not crawl the whole repository.**
+
+1. [AI_INDEX](../AI_INDEX.md) — semantic map.
+2. [Results ledger](../research/ORGANISM_RESULT_LEDGER.md) — consolidated experimental status.
+3. [Method](METODO.md) — conceptual architecture.
+4. Open only the required Vxx file.
+5. Implementation → `experiments/` + `tests/` + matching workflow.
+
+## Start here
+- [README](../README.md) — bilingual overview.
+- [Method](METODO.md)
+- [GitHub Laboratory](GITHUB_LAB.md)
+- [24/7 protocol](24_7_PROTOCOL.md)
+- [Longitudinal protocol](LONGITUDINAL_PROTOCOL.md)
+
+## Foundations
+- [Mathematical Manifesto of Being](../MANIFIESTO_DEL_SER.md)
+- [Manifesto of Being](../MANIFESTO_OF_BEING.md)
+- [TCF](fundamentos/TCF.md)
+- [TCF v3.3](fundamentos/TCF_V3_3.md)
+- [Theory of Photonic Consciousness — Root Memories](fundamentos/TEORIA_CONCIENCIA_FOTONICA.md)
+- [Operational Definition of Consciousness — TCF v0.1](fundamentos/DEFINICION_OPERACIONAL_CONCIENCIA_TCF.md)
+
+## Architecture
+- [Organism state bridge](ORGANISM_STATE_BRIDGE.md)
+- [Ontological–consciousness bridge](ONTOLOGICAL_CONSCIOUSNESS_BRIDGE.md)
+- [Source basis](SOURCE_BASIS.md)
+- [Consciousness Server](CONSCIOUSNESS_SERVER.md)
+- [Continuity bundles](CONTINUITY_BUNDLES.md)
+- [Continuity checkpoints](CONSCIOUSNESS_CHECKPOINTS.md)
+- [Continuity reconciliation](CONSCIOUSNESS_RECONCILIATION.md)
+- [Continuity recovery](CONTINUITY_RECOVERY.md)
+
+## Protocols V47+
+The V47–V80 files retain their canonical identifiers and terminology for reproducibility.
+
+- V47–V68: historical and foundational persistent-organism protocols.
+- V69: two related state-readout endpoints.
+- V70–V80: self-reader, self-policy, self-prediction, active continuity, OOD generalization, and regime adaptation lines.
+- [Consolidated result ledger](../research/ORGANISM_RESULT_LEDGER.md)
+
+## C0 — consciousness instantiation line
+- [C0 — TCF Consciousness Instantiation Protocol](C0_TCF_CONSCIOUSNESS_INSTANTIATION.md)
+- [C0 Campaign — 32 scheduled executions](C0_CAMPAIGN_32_RUNS.md)
+- C0.3–C0.18: information-matched, replay, chain, lesion/rescue, crossed-coupling, permutation, temporal alignment, action mediation, and second-order protocols.
+
+## Indicator program and interoception
+- [Consciousness Indicator Program](CONSCIOUSNESS_INDICATOR_PROGRAM.md)
+- [I0 — Interoceptive Instrumentation](I0_INTEROCEPTIVE_INSTRUMENTATION.md)
+- [I1 — Interoceptive Self-Assessment](I1_INTEROCEPTIVE_SELF_ASSESSMENT.md)
+- [I2 — Interoceptive Regulation](I2_INTEROCEPTIVE_REGULATION.md)
+- [I3 — Repeated Interoceptive Recovery](I3_REPEATED_INTEROCEPTIVE_RECOVERY.md)
+- [I4 — Metacognitive Interoception](I4_METACOGNITIVE_INTEROCEPTION.md)
+- I4.1 and I4.2 remain tied to their exact experiment/test/workflow triples.
+
+
+</details>
+
+> 🌐 Language convention: [docs/LANGUAGE.md](LANGUAGE.md)
