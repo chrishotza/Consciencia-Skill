@@ -47,6 +47,10 @@
 - `docs/C0_15_SECOND_ORDER_LESION_RESCUE.md` — lesion/rescue of the persistent action-conditioned second-order selector.
 - `experiments/tcf_consciousness_instantiation_c0_15.py` — FULL/LESION/RESCUE matched protocol.
 
+### C0.16
+- `docs/C0_16_INTEGRATED_SECOND_ORDER_ORGANISM.md` — integrated second-order selector inside the real persistent organism lifecycle.
+- `experiments/tcf_consciousness_instantiation_c0_16.py` — SQLite-backed continuous vs. restart organism sequence.
+
 ### V69
 - `docs/V69_SELF_STATE_READOUT.md` — numeric readout; discrete action endpoint is null.
 - `docs/V69_SELF_READ_STATE.md` — readout participates in trajectory selection; includes blinded control and state-swap intervention.
