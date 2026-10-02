@@ -100,6 +100,44 @@ def _reconcile(
         return report
 
 
+def _sync_peers(
+    client: ConsciousnessClient | None,
+    agent_id: str,
+    peer_urls: list[str],
+    timeout: float,
+) -> list[dict]:
+    if client is None or not peer_urls:
+        return []
+
+    reports: list[dict] = []
+    for peer_url in peer_urls:
+        peer_url = peer_url.strip().rstrip("/")
+        if not peer_url or peer_url == client.base_url:
+            continue
+        try:
+            peer = ConsciousnessClient(peer_url, timeout=timeout)
+            report = client.synchronize_with(
+                peer,
+                instance_id=agent_id,
+                identity=agent_id,
+            )
+            reports.append({"peer": peer_url, **report})
+            print(
+                "[consciousness-mesh] peer="
+                f"{peer_url} status={report.get('status')} "
+                f"direction={report.get('direction')}"
+            )
+        except Exception as exc:
+            report = {
+                "status": "ERROR",
+                "peer": peer_url,
+                "error": repr(exc),
+            }
+            reports.append(report)
+            print(f"[consciousness-mesh] sync failed peer={peer_url}: {exc!r}")
+    return reports
+
+
 def _checkpoint(
     client: ConsciousnessClient | None,
     agent_id: str,
@@ -202,7 +240,16 @@ def main() -> None:
     heartbeat_seconds = float(
         os.environ.get("CONSCIOUSNESS_HEARTBEAT_SECONDS", "30")
     )
+    sync_seconds = float(
+        os.environ.get("CONSCIOUSNESS_SYNC_SECONDS", "60")
+    )
+    peer_urls = [
+        value.strip()
+        for value in os.environ.get("CONSCIOUSNESS_PEERS", "").split(",")
+        if value.strip()
+    ]
     last_heartbeat = 0.0
+    last_sync = 0.0
 
     _emit(
         consciousness_client,
@@ -247,6 +294,19 @@ def main() -> None:
                 last_heartbeat = time.monotonic()
             except Exception as exc:
                 print(f"[consciousness-server] heartbeat failed: {exc!r}")
+
+        if (
+            consciousness_client is not None
+            and peer_urls
+            and time.monotonic() - last_sync >= sync_seconds
+        ):
+            _sync_peers(
+                consciousness_client,
+                agent_id,
+                peer_urls,
+                runtime.server_timeout,
+            )
+            last_sync = time.monotonic()
 
         item = store.claim_next_input(agent_id)
 
