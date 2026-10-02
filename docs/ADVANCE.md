@@ -206,3 +206,32 @@ NEW TRAJECTORIES
 ~~~
 
 After that, latent pattern extraction and autonomous candidate-future generation become the next major layers.
+
+
+## Mathematical-relational layer
+
+The attached Manifiesto Matemático del Ser adds a lower-level relational model beneath the existing consciousness loop:
+
+~~~text
+RELATION → ITERATION → TRAJECTORY → TOPOLOGY → ATTRACTOR / REGIME → SELF-ACCESS → SELECTION → TRANSFORMATION → RE-ENTRY
+~~~
+
+The runtime now persists relation topology and an optional attractor description. This turns two previously abstract concepts — connectivity and the current basin of operation — into inspectable state.
+
+### Next frontier
+
+The next implementation step is to make topology and attractor state causal rather than descriptive:
+
+~~~text
+PERTURBATION
+   ↓
+TOPOLOGY CHANGE
+   ↓
+REGIME / ATTRACTOR SHIFT
+   ↓
+PRESENT RECONFIGURATION
+   ↓
+NEW TRAJECTORIES
+   ↓
+IDENTITY CONTINUITY CHECK
+~~~
