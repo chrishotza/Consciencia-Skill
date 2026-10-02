@@ -93,7 +93,7 @@
 - `docs/I5_13_SEMANTIC_CORRESPONDENCE_CAUSAL_SPECIFICITY.md`
 - `experiments/i5_13_semantic_correspondence_causal_specificity.py`
 - `tests/test_i5_13_semantic_correspondence_causal_specificity.py`
-- Protocol planned; no I5.13 result is claimed yet.
+- Verified: run 37042091184 / artifact 11242354548; 100% t0 applied-action match and 100% self-model distribution match; future action change 46.43%, p=4.99975e-05; state AUC 2.1867184440, p=4.99975e-05; bridge ON-vs-OFF AUC 2.6656102772, p=4.99975e-05.
 
 
 ### I5.3 — Causal attention allocation
@@ -288,7 +288,7 @@ Use the protocol document to find the exact implementation.
 - `docs/I5_13_SEMANTIC_CORRESPONDENCE_CAUSAL_SPECIFICITY.md`
 - `experiments/i5_13_semantic_correspondence_causal_specificity.py`
 - `tests/test_i5_13_semantic_correspondence_causal_specificity.py`
-- Protocolo planificado; todavía no se reclama ningún resultado de I5.13.
+- Verificado: run 37042091184 / artifact 11242354548; 100% de coincidencia de acción aplicada en t0 y 100% de coincidencia de distribución de SELF_MODEL; cambio de acción futura 46.43%, p=4.99975e-05; AUC de estado 2.1867184440, p=4.99975e-05; AUC bridge ON-vs-OFF 2.6656102772, p=4.99975e-05.
 
 
 
