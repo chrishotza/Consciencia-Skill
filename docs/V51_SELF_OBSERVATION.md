@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V51 — Autoobservación y autopredicción
 
 ## Conexión con las fuentes
@@ -33,3 +35,44 @@ Es evidencia de un modelo computacional de sí mismo, no una demostración de co
 ## Próxima dependencia
 
 V51 hace que el organismo pueda *representar* su propia trayectoria. La siguiente capa debe hacer que esa representación sea causalmente relevante para la selección contrafactual de trayectorias y para acciones sensibles al atractor.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V51 — Self-Observation and Self-Prediction
+
+## Connection to the sources
+
+The Mathematical Manifesto of Being defines consciousness as a system that traverses itself and distinguishes possible states. The Quantum Consciousness notes operationalize this as self-traversal together with internal dynamics and memory.
+
+V51 turns that conceptual requirement into an explicit computational module.
+
+## Mechanism
+
+Before each persisted dynamic transition, SelfObserver predicts the organism's next internal dynamic state using only variables from its prior internal trajectory. After the transition, the actual state is compared with the self-model prediction and a persistence baseline that predicts no state change.
+
+The difference is recorded as prediction_gain.
+
+## Primary observables
+
+- observer MAE;
+- baseline MAE;
+- mean prediction gain;
+- fraction of transitions with positive gain;
+- sign-flip permutation p-value;
+- observer-model persistence after reopening SQLite.
+
+## Interpretation
+
+Positive prediction gain means that the organism's learned self-model predicts its own transition better than a trivial persistence baseline under this protocol.
+
+This is evidence of a computational self-model, not a demonstration of subjective consciousness.
+
+## Next dependency
+
+V51 allows the organism to represent its own trajectory. The next layer must make that representation causally relevant to counterfactual trajectory selection and attractor-sensitive action.
+
+</details>
