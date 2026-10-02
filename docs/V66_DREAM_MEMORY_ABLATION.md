@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V66 — Consolidación de SUEÑO después de la ablación de memoria episódica
 
 ## Pregunta
@@ -68,3 +70,80 @@ El siguiente protocolo debe evitar pedir a la lección retenida que influya sobr
 ## Límite de evidencia
 
 El proveedor es determinista y sintético. V66 prueba persistencia de una huella computacional consolidada después de eliminar la memoria fuente. No establece consolidación de memoria humana, sueño subjetivo ni consciencia fenomenológica.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V66 — SLEEP Consolidation after Episodic-Memory Ablation
+
+## Question
+
+After SLEEP transforms recent experience into a consolidated lesson, does the organism retain a functional trace of that lesson when the original episodic memories are removed?
+
+## Protocol
+
+Each replicate runs a deterministic SLEEP consolidation phase.
+
+After SLEEP, two matched arms are cloned from the same post-sleep state:
+
+1. **retained_lesson** — raw experience memories are removed, but the consolidated lesson remains;
+2. **ablated_lesson** — both raw experience memories and the consolidated lesson are removed.
+
+Both arms receive the same post-sleep recovery probe. The resulting MEMORY output is sent through the ordinary semantic-to-dynamic bridge before future trajectory selection.
+
+## Causal chain
+
+~~~text
+experiences
+   ↓
+SLEEP
+   ↓
+consolidated lesson
+   ↓
+raw-memory ablation
+   ↓
+lesson recovery
+   ↓
+semantic bridge
+   ↓
+internal state
+   ↓
+future selection
+~~~
+
+## Result
+
+The CI audit completed correctly with 24 paired replicates.
+
+- mean retained_lesson regret: **-0.1086777912**;
+- mean ablated_lesson regret: **-0.1086777912**;
+- retained_lesson oracle hit rate: **85.0694%**;
+- ablated_lesson oracle hit rate: **85.0694%**;
+- ablation − retained regret advantage: **0.0**;
+- paired sign-flip p-value for regret: **1.0**;
+- retained − ablated hit-rate advantage: **0.0**;
+- paired sign-flip p-value for hit-rate: **1.0**;
+- all retained runs produced a recovery-bridge signal: **true**.
+
+## Interpretation
+
+V66 is a **null result**.
+
+The retained consolidated lesson was present and generated a semantic recovery signal, but preserving it did not produce a measurable difference in regret or oracle hit rate relative to removing it.
+
+The experiment therefore did **not** show that SLEEP-generated episodic consolidation became functionally necessary for later trajectory selection after original episodic memory was removed.
+
+The null result does not show that SLEEP consolidation is generally useless. It shows that the current recovery and selection pathway did not make the retained lesson discriminatively important under the tested deterministic conditions.
+
+## Methodological consequence
+
+The next protocol should avoid requiring the retained lesson to influence behavior only through a new semantic recovery response. Instead, test whether the **internal numerical state produced directly by SLEEP** contains a recoverable, causally transferable trace after semantic memory and self-model text are removed.
+
+## Evidence boundary
+
+The provider is deterministic and synthetic. V66 tests persistence of a computationally consolidated trace after source-memory ablation. It does not establish human-like memory consolidation, subjective sleep, or phenomenal consciousness.
+
+</details>
