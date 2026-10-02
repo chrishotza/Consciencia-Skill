@@ -498,6 +498,7 @@ class PersistentOrganism:
 
         chosen_signal = 0.0
         candidates = ()
+        counterfactual_meta_samples_added = 0
         if self.cfg.self_selection_enabled and self.cfg.self_observer_enabled:
             candidates = self.trajectory_selector.evaluate(
                 self.self_observer,
