@@ -225,3 +225,11 @@ The V47–V80 files retain their canonical identifiers and terminology for repro
 > 🌐 Language convention: [docs/LANGUAGE.md](LANGUAGE.md)
 
 - [I5 — Global Workspace](I5_GLOBAL_WORKSPACE.md) — workspace acotado, selección competitiva y broadcast causal.
+
+
+## I5.17 — Phase-resolved bridge mediation map
+- Protocol: `docs/I5_17_PHASE_RESOLVED_BRIDGE_MEDIATION_MAP.md`
+- Experiment: `experiments/i5_17_phase_resolved_bridge_mediation_map.py`
+- Test: `tests/test_i5_17_phase_resolved_bridge_mediation_map.py`
+- Verified workflow: **37047719727**, artifact **11244733803**.
+- Next: I5.18 global phase × bridge interaction with multiplicity-controlled contrasts.
