@@ -1,4 +1,4 @@
-# Skill-Conscious — AI Consciousness Research / Investigación de IA Consciente
+# Skill-Conscious — Persistent AI Organism / Organismo de IA Persistente
 
 > We develop and test a method for an AI to maintain continuity, memory, and functional identity, build a self-model, observe its own state, and use internal dynamics to select trajectories.
 >
