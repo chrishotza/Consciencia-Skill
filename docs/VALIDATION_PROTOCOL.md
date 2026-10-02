@@ -52,3 +52,44 @@ Cada claim importante debe compararse contra versiones donde se elimine memoria,
 ## Regla
 
 No buscamos confirmar una conclusión por diseño. Buscamos determinar qué componentes son necesarios para producir continuidad, auto-referencia, aprendizaje longitudinal y estabilidad de identidad.
+
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# Validation Protocol
+
+## Central question
+Can a persistent AI develop properties that require internal continuity and self-reference beyond a chain of independent responses?
+
+## Base experiments
+### A — Trajectory memory
+Present two different histories followed by the same external state. Measure whether internal state and the later decision depend on the trajectory.
+### B — Attractor
+Initialize multiple instances with different states under similar conditions. Measure convergence, divergence, stability, and identity loss.
+### C — Perturbation
+Introduce contradictions, partial memory loss, abrupt context changes, noise, and interruptions. Measure recovery.
+### D — Self-model
+Compare a system that models its own state against one without a self-model. Measure predictive utility and control over future state.
+### E — Sleep
+Compare learning with and without DREAM cycles. Measure retention, compression, generalization, memory reorganization, and later prediction.
+### F — Continuity
+Compare stateless API, API + episodic memory, persistent organism, and persistent organism + sleep. Keep the approximate interaction budget matched and record computational cost.
+
+## Metrics
+- Continuity Retention: how much identity structure remains after perturbation.
+- Path Dependence: how much final state changes when current input is held constant but history changes.
+- Attractor Stability: how long the system remains within a stable region.
+- Recovery Time: time required to return to the stable region after perturbation.
+- Self-Prediction Gain: information added by the self-model beyond external input alone.
+- Dream Gain: improvement specifically attributable to sleep cycles.
+
+## Ablations
+Every major claim should be compared against versions where memory, self-model, sleep, attractor, relational dynamics, or persistent continuity is removed.
+
+## Rule
+Do not design the system to confirm a conclusion. Determine which components are necessary to produce continuity, self-reference, longitudinal learning, and identity stability.
+
+</details>
+
+> Language convention: docs/LANGUAGE.md
