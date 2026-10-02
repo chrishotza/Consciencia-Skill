@@ -737,8 +737,26 @@ Interpretación: **resultado mixto/nulo bajo el protocolo probado**. El organism
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.
 
-**Estado documental actual:** la nueva ventana de ejecución está definida en [C0 Campaign](../docs/C0_CAMPAIGN_32_RUNS.md). Los resultados de esa ejecución no se incorporan automáticamente a este ledger: cada réplica debe validarse y sus resultados científicos deben registrarse por separado. Un fallo técnico de infraestructura no se convierte en un resultado nulo.
+**Estado documental actualizado:** la nueva ventana de ejecución está definida en [C0 Campaign](../docs/C0_CAMPAIGN_32_RUNS.md). Ya existe una primera ola validada: **G1, 4/32 réplicas**, con workflow run **36955261246**. Los cuatro artifacts fueron producidos correctamente y sus archivos `summary.json`, `policy_snapshot.json` y metadatos de slot fueron validados. G2–G8 todavía no tienen resultados científicos registrados. Un fallo técnico de infraestructura no se convierte en un resultado nulo.
 
+
+
+### C0 Campaign — G1 completado (4/32)
+
+Workflow de GitHub Actions: **36955261246** (run #33), commit **0587915bf90d44872fa950bdbd62ffaaae6d7ec7**.
+
+Criterio: **C3 causal self-reference**. Control: **information-matched state shuffle**.
+
+| Réplica | Artifact | Effect | p | Own gap | Matched gap |
+|---|---:|---:|---:|---:|---:|
+| G1-R1 | 11205791665 | 0.0625 | 0.38498075096 | 0.9921875 | 0.9296875 |
+| G1-R2 | 11205378393 | 0.046875 | 0.49912504375 | 0.9921875 | 0.9453125 |
+| G1-R3 | 11206041359 | 0.01953125 | 0.84995750212 | 0.94140625 | 0.921875 |
+| G1-R4 | 11205626944 | 0.08984375 | 0.13454327284 | 1.04296875 | 0.953125 |
+
+Medias descriptivas de G1: effect **0.0546875**, own gap **0.9921875**, matched gap **0.9375**. Las cuatro réplicas tienen p > 0.05.
+
+**Interpretación:** G1 es una **ola parcial validada**, no el resultado de la campaña completa. No se registra inferencia compuesta de 32 ejecuciones. G2–G8 permanecen pendientes.
 
 
 ## C0.18 — Adquisición autónoma y lesión/rescate del segundo orden — resultado verificado
