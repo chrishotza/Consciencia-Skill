@@ -235,6 +235,8 @@ It is a system in which many independently motivated indicator properties conver
 - Lee et al. (2026), *Life-inspired interoceptive artificial intelligence for autonomous and adaptive agents*, Nature Machine Intelligence 8, 1335–1346. https://doi.org/10.1038/s42256-026-01296-8
 
 
+<a id="espanol"></a>
+
 <details>
 <summary>🇪🇸 Español — abrir</summary>
 
