@@ -84,6 +84,7 @@
 - [C0.14 persistent second-order self-model](C0_14_PERSISTENT_SECOND_ORDER_SELF_MODEL.md) — prueba de continuidad del segundo orden después de serialización y reinicio.
 - [C0.15 lesion/rescue of persistent second-order selector](C0_15_SECOND_ORDER_LESION_RESCUE.md) — lesión y restauración del segundo orden persistente.
 - [C0.16 integrated second-order organism](C0_16_INTEGRATED_SECOND_ORDER_ORGANISM.md) — integración del segundo selector dentro de PersistentOrganism y persistencia real en SQLite.
+- [C0.17 autonomous second-order acquisition](C0_17_AUTONOMOUS_SECOND_ORDER_ACQUISITION.md) — adquisición online del segundo orden mediante errores de predicción contrafactuales.
 
 [Registro consolidado](../research/ORGANISM_RESULT_LEDGER.md).
 
