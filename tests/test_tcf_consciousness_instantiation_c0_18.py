@@ -22,9 +22,13 @@ def test_c0_18_schema(tmp_path):
     summary = json.loads(result.stdout)
     assert summary["experiment"] == "tcf_consciousness_instantiation_c0_18"
     assert summary["protocol_version"] == "C0.18"
+    assert summary["episodes"] == 1
+    assert summary["training_cycles"] == 12
     assert summary["matched_design"]["second_order_was_acquired_inside_organism"] is True
     assert summary["matched_design"]["base_state_same_for_full_lesion_rescue"] is True
     assert summary["phenomenal_consciousness_claimed"] is False
     assert summary["secondary_outputs"]["mean_learned_meta_samples"] > 0
     assert summary["secondary_outputs"]["exact_learned_model_recovery_fraction"] == 1.0
+    assert summary["replicates_file"] == "replicates.json"
+    assert (out / "replicates.json").exists()
     assert summary["analysis_note"].startswith("The lesion and rescue probes")
