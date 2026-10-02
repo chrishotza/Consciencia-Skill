@@ -178,6 +178,15 @@ jobs:
             --permutations 20000 \
             --out results/i5_21_phase_local_semantic_permutation
 
+      - name: Run I5.22 cyclic semantic phase-shift
+        run: |
+          python experiments/i5_22_cyclic_semantic_phase_shift.py \
+            --seed 20261022 \
+            --replicates 24 \
+            --warmup 24 \
+            --permutations 20000 \
+            --out results/i5_22_cyclic_semantic_phase_shift
+
       - name: Write run manifest
         run: |
           mkdir -p results
