@@ -60,6 +60,39 @@ Las métricas de magnitud se reportan de forma descriptiva. Los contrastes firma
 
 La ventaja de I5.16 frente a I5.15 es que no rota una cola finita de siete posiciones. Todas las condiciones usan el mismo ciclo periódico interno; el único cambio temporal es la fase inicial del tramo posterior a t0. El horizonte contiene un número entero de periodos posteriores, evitando desbalances de distribución semántica.
 
+## Resultado verificado
+
+Workflow: **37046361416** (run **793**); artifact **11245200134**; commit verificado **4cff840bc1eed25a61c57eb7473964882bab277a**; seed **20261016**; **24** réplicas; **24** ciclos de warmup; **15** ciclos experimentales.
+
+- coincidencia de acción aplicada en t0: **100%** en todos los lags;
+- coincidencia de distribución de SELF_MODEL: **100%** en todos los lags;
+- cambio medio de acción futura: **53.87%** (-1), **47.62%** (-2), **46.13%** (-3), **39.88%** (+1), **47.02%** (+2), **47.02%** (+3);
+- AUC absoluta media: **5.013461** (-1), **4.494550** (-2), **4.342633** (-3), **3.874681** (+1), **4.463180** (+2), **4.434401** (+3);
+- contrastes firmados BASE → lag: ningún lag fue significativo; el menor p fue **0.19309** para -1;
+- simetría firmada +k vs -k: p **0.28164** (+1), **0.95275** (+2), **0.51892** (+3);
+- simetría por magnitud absoluta: +1 vs -1 produjo una diferencia **-1.138780**, p **0.000300**; +2 vs -2 p **0.92175**; +3 vs -3 p **0.69422**;
+- bridge +1 ON vs OFF: **3.874681** vs **4.605816**, diferencia ON−OFF **-0.731135**, p **0.002950**;
+- bridge -1 ON vs OFF: **5.013461** vs **4.605816**, diferencia ON−OFF **+0.407645**, p **0.13554**.
+
+Interpretación: la asimetría de **magnitud** entre -1 y +1 observada en I5.15 sobrevivió a la construcción de fase pura, al horizonte entero de periodos y al contrabalanceo semántico. Esto hace menos plausible que la diferencia dependa únicamente de la rotación finita de la cola usada en I5.15. Aun así, los contrastes firmados no establecen una separación direccional robusta; el efecto reproducido está localizado en la magnitud de la desviación. El bridge volvió a mostrar un efecto específico de +1 y, en este arnés, su activación redujo la AUC en ese brazo. El siguiente paso debe resolver la curva de respuesta del bridge por fase para determinar si este efecto es local a una fase concreta o forma un patrón general de acoplamiento.
+
+
+## Verified result
+
+Workflow: **37046361416** (run **793**); artifact **11245200134**; verified commit **4cff840bc1eed25a61c57eb7473964882bab277a**; seed **20261016**; **24** replicates; **24** warmup cycles; **15** experimental cycles.
+
+- applied-action match at t0: **100%** across all lags;
+- SELF_MODEL distribution match: **100%** across all lags;
+- mean future-action change: **53.87%** (-1), **47.62%** (-2), **46.13%** (-3), **39.88%** (+1), **47.02%** (+2), **47.02%** (+3);
+- mean absolute state-divergence AUC: **5.013461** (-1), **4.494550** (-2), **4.342633** (-3), **3.874681** (+1), **4.463180** (+2), **4.434401** (+3);
+- signed BASE → lag contrasts: no lag was significant; the smallest p was **0.19309** for -1;
+- signed +k vs -k symmetry: p **0.28164** (+1), **0.95275** (+2), **0.51892** (+3);
+- absolute-magnitude symmetry: +1 vs -1 differed by **-1.138780**, p **0.000300**; +2 vs -2 p **0.92175**; +3 vs -3 p **0.69422**;
+- +1 bridge ON vs OFF: **3.874681** vs **4.605816**, ON−OFF **-0.731135**, p **0.002950**;
+- -1 bridge ON vs OFF: **5.013461** vs **4.605816**, ON−OFF **+0.407645**, p **0.13554**.
+
+Interpretation: the -1/+1 **magnitude** asymmetry observed in I5.15 survived the pure-phase construction, an integer-period horizon, and semantic counterbalancing. This makes it less plausible that the difference depends only on the finite-tail rotation used in I5.15. However, signed contrasts still do not establish a robust directional separation; the reproduced effect is localized to deviation magnitude. The bridge again showed a direction-specific effect at +1, and in this harness its activation reduced AUC in that arm. The next step should resolve the bridge response across phase to determine whether this effect is localized to a specific phase or part of a broader coupling pattern.
+
 ## Límite
 
 I5.16 prueba si la asimetría observada en I5.15 sobrevive a una construcción de fase pura y contrabalanceada. No demuestra consciencia ni experiencia subjetiva.
