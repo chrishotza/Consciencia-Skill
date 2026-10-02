@@ -1,5 +1,7 @@
 # Archived CI — Materialization Workflows
 
+<a id="espanol"></a>
+
 <details>
 <summary>🇪🇸 Español — abrir</summary>
 
@@ -21,6 +23,8 @@ Workflows retirados:
 Las fuentes que esos jobs producían siguen conservadas en experiments/, tests/ y src/ontto/. La eliminación reduce CI duplicado y evita workflows históricos con permisos de escritura.
 
 </details>
+
+<a id="english"></a>
 
 <details>
 <summary>🇺🇸 English — open</summary>
