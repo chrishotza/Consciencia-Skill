@@ -251,3 +251,14 @@ The V47–V80 files retain their canonical identifiers and terminology for repro
 - Verified workflow: **37056574657**, artifact **11247979913**.
 - Independent seed **20261019** reproduced the average bridge ON−OFF effect across all three endpoints; the global phase × bridge interaction remained non-significant.
 - Next: I5.20 bridge specificity under semantic permutation control.
+
+
+## I5.20 — Semantic permutation specificity control
+- Protocol: `docs/I5_20_SEMANTIC_PERMUTATION_SPECIFICITY.md`
+- Experiment: `experiments/i5_20_semantic_permutation_specificity.py`
+- Test: `tests/test_i5_20_semantic_permutation_specificity.py`
+- Verified workflow: **37058932661**, artifact **11249457646**.
+- 24 replicates; 100% t0 match; 100% semantic multiset preservation.
+- Absolute-AUC specificity gap **+0.71459**, p=0.00005; future-action specificity gap **+0.07292**, p=0.00005; signed-AUC gap non-significant.
+- Global lag×specificity interaction non-significant for all three endpoints.
+- Next: I5.21 phase-local semantic permutation control.
