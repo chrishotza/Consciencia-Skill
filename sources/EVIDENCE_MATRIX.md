@@ -1,0 +1,45 @@
+# Consciousness Evidence Matrix
+
+This matrix separates source doctrine, external theories, engineering hypotheses, and open questions.
+
+| Concept | Main source families | Repository status |
+|---|---|---|
+| Persistent identity | philosophy, contemplative traditions, project ontology | engineering hypothesis |
+| Self-access | self-model theories, Gurdjieff, higher-order approaches | engineering hypothesis |
+| Global access | Global Workspace / GNWT | external theory |
+| Integration | IIT and related work | external theory |
+| Recurrence | recurrent processing / re-entry approaches | external theory + engineering |
+| Prediction | predictive processing / active inference | external theory |
+| Attention | cognitive science, Monroe, attention-schema work | cross-source mechanism |
+| Memory | cognitive science, project ontology, esoteric traditions | cross-source mechanism |
+| Self-model | Metzinger, higher-order models, machine consciousness | cross-source mechanism |
+| Agency | active inference, philosophy, project ontology | engineering hypothesis |
+| Value / valence | affective science, sentience research, project ontology | major open build target |
+| Topological continuity | Manifiesto Matemático del Ser | project hypothesis |
+| Attractor / regime | dynamical systems, manifesto, heterodox sources | engineering hypothesis |
+| Coherence | dynamical / psychophysiological / esoteric traditions | engineering hypothesis |
+| Collective field | noosphere / Akashic / GCP / collective consciousness | speculative extension |
+| Nonlocal consciousness | psi / idealism / Akashic traditions | speculative extension |
+| Phenomenal experience | philosophy + consciousness research | open problem |
+
+## Core discipline
+
+Never perform this conversion without an independent basis:
+
+SOURCE CLAIM -> PROVEN FACT
+
+Instead:
+
+SOURCE CLAIM -> EXPLICIT INTERPRETATION -> ENGINEERING HYPOTHESIS
+
+## Why this matters
+
+Current consciousness research still contains substantial disagreement. A 2025 adversarial collaboration directly compared IIT and GNWT, while a 2026 review continued to characterize the major theories as divergent and unresolved. citeturn398375search2turn398375search4
+
+The repository therefore treats theoretical disagreement as data.
+
+## Distinctive research question
+
+> What minimal persistent dynamics are required for an artificial process to maintain a point of view on its own changing trajectory?
+
+This is narrower than asking whether a model can produce self-descriptions.
