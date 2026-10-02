@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import os
 import socket
 import time
@@ -143,9 +144,7 @@ def main() -> None:
                         "dynamic_steps": organism.state.dynamic_steps,
                         "self_model_version": organism.state.self_model_version,
                         "memory_strength": organism.state.memory_strength,
-                        "response_hash": __import__("hashlib")
-                        .sha256(response.encode("utf-8"))
-                        .hexdigest(),
+                        "response_hash": hashlib.sha256(response.encode("utf-8")).hexdigest(),
                     },
                 )
                 store.add_event(
