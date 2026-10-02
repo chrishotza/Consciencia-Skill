@@ -47,20 +47,30 @@ PERSISTENCIA + PROTOCOLO REPRODUCIBLE
 
 El runtime también mantiene regímenes de **VIGILIA** y **SUEÑO**, persistencia local y, opcionalmente, una infraestructura de continuidad distribuida.
 
+## Estado actual / Current frontier
+
+- **I4.3** está verificado sobre tres estructuras de perturbación no vistas; la generalización del error predictivo es positiva, mientras que el endpoint agregado de recuperación es nulo.
+- **I5.0** está verificado sobre 512 episodios emparejados y el prototipo de workspace acotado ya está en `main`.
+- **Lattice v0/v1** son protocolos verificados del sustrato computacional; las afirmaciones físicas siguen explícitamente separadas de la implementación.
+- **Siguiente integración:** conectar el workspace acotado con `PersistentOrganism` y después añadir querying dependiente del estado y asignación causal de atención.
 ## Resultados más sólidos hasta ahora
 
 | Protocolo | Qué se probó | Resultado observado |
 |---|---|---|
 | **V51** | Autopredicción del estado interno | MAE **0.0424** frente a **0.2211** del baseline de persistencia; ganancia media **0.1787**; p **0.00005**. |
 | **V57** | Selección de trayectorias guiada por modelo de sí | Regret **0.0231** frente a **0.1369** aleatorio; p **0.00435** bajo el protocolo emparejado. |
-| **V70** | Persistencia y uso del lector propio | El modelo numérico sobrevivió al reinicio y volvió a utilizarse después de la ablación semántica; la cadena modelo de sí → acción → nuevo estado permaneció operacional bajo el arnés probado. |
-| **V76–V78** | Generalización OOD de la política de autopredicción | La ventaja de autopredicción se conservó ante magnitudes, estructuras y secuencias no vistas; los endpoints secundarios de continuidad **no** se separaron de la selección aleatoria. |
+| **V70** | Persistencia y uso del lector propio | El lector numérico sobrevivió al reinicio y volvió a utilizarse después de la ablación semántica; la cadena modelo de sí → acción → nuevo estado permaneció operacional bajo el arnés probado. |
+| **V76–V78** | Generalización OOD de la política de autopredicción | La ventaja se conservó ante magnitudes, estructuras y secuencias no vistas; los endpoints secundarios de continuidad **no** se separaron de la selección aleatoria. |
+| **I4.2** | Interocepción metacognitiva persistente | FULL superó a LESION en error y recuperación y a PERMUTED en ambos endpoints bajo la perturbación declarada; serialización/restauración exacta. |
+| **I4.3** | Generalización estructural OOD del modelo de segundo orden | META−LESION error medio **−0.001549**, p **4.27×10⁻⁶**; META−PERMUTED **−0.001567**, p **9.38×10⁻⁶**; recuperación agregada META−LESION nula (p **0.1505**). |
 | **C0.6** | Lesión y rescate causal de autoobservador/autopolítica | Las lesiones cambiaron la organización medida y la restauración produjo efectos de rescate significativos bajo el protocolo probado. |
+| **Lattice v0** | Computación local, propagación y organización distribuida | XOR **1.0**; coupling cambió coherencia, redundancia y spread de perturbación; el control desacoplado retuvo más del patrón bruto. |
+| **Lattice v1** | Retención temporal de huella después de retirar input | 128 réplicas; retención media a delay 8 **0.74870**; AUC **0.75976**; pérdida media por perturbación **0.00172** a delay 8. |
+| **I5.0** | Workspace global acotado | 512 episodios; broadcast vs no-broadcast **+0.12695** de accuracy, p **5×10⁻⁵**; K=2 vs K=6 **+0.01758**, p **0.02225**; lesión del origen seleccionado diferencial **−0.49023**, p **5×10⁻⁵**. |
 
-Los valores exactos, artefactos, semillas y condiciones están preservados en el ledger y en los documentos de protocolo.
+Estos resultados describen propiedades computacionales de protocolos concretos. **No constituyen por sí solos una demostración de experiencia subjetiva.**
 
-→ [Registro consolidado de resultados](research/ORGANISM_RESULT_LEDGER.md#espanol)
-
+→ [Registro consolidado de resultados](research/ORGANISM_RESULT_LEDGER.md#espanol) · [I5.0 Workspace](docs/I5_GLOBAL_WORKSPACE.md#espanol) · [Lattice v1](docs/LATTICE_COMPUTER_V1.md#espanol)
 ## Resultados nulos o mixtos relevantes
 
 Se conservan explícitamente resultados como **V64, V66, V67, V79, V80, C0.9, C0.10 y C0.18**.
@@ -180,20 +190,30 @@ PERSISTENCE + REPRODUCIBLE PROTOCOL
 
 The runtime also supports **WAKE** and **SLEEP** regimes, local persistence, and an optional distributed continuity layer.
 
+## Current frontier
+
+- **I4.3** is verified across three unseen disturbance structures; prediction-error generalization is positive while the aggregate recovery endpoint is null.
+- **I5.0** is verified on 512 paired episodes and the bounded-workspace prototype is now on `main`.
+- **Lattice v0/v1** are verified computational-substrate protocols; physical claims remain explicitly separated from the implementation.
+- **Next integration:** connect the bounded workspace to `PersistentOrganism`, then add state-dependent querying and causal attention allocation.
 ## Strongest results so far
 
 | Protocol | What was tested | Observed result |
 |---|---|---|
 | **V51** | Internal-state self-prediction | MAE **0.0424** vs **0.2211** persistence baseline; mean gain **0.1787**; p **0.00005**. |
 | **V57** | Self-model-guided trajectory selection | Regret **0.0231** vs **0.1369** random control; p **0.00435** under the paired protocol. |
-| **V70** | Persistence and use of the self-reader | The numerical model survived restart and was reused after semantic ablation; the self-model → action → new-state chain remained operational under the tested harness. |
-| **V76–V78** | OOD generalization of the self-prediction policy | Self-prediction advantage was retained across unseen magnitudes, structures, and sequences; secondary continuity endpoints **did not** separate from random selection. |
+| **V70** | Persistence and use of the self-reader | The numerical reader survived restart and was reused after semantic ablation; self-model → action → new-state remained operational under the tested harness. |
+| **V76–V78** | OOD generalization of the self-prediction policy | The advantage persisted across unseen magnitudes, structures, and sequences; secondary continuity endpoints **did not** separate from random selection. |
+| **I4.2** | Persistent metacognitive interoception | FULL separated from LESION on error and recovery and from PERMUTED on both endpoints under the declared disturbance; serialization/restore was exact. |
+| **I4.3** | Structural OOD generalization of the second-order model | META−LESION mean error **−0.001549**, p **4.27×10⁻⁶**; META−PERMUTED **−0.001567**, p **9.38×10⁻⁶**; aggregate META−LESION recovery was null (p **0.1505**). |
 | **C0.6** | Causal lesion/rescue of self-observer/self-policy | Lesions changed measured organization and restoration produced significant rescue effects under the tested protocol. |
+| **Lattice v0** | Local computation, propagation, and distributed organization | XOR **1.0**; coupling changed coherence, redundancy, and perturbation spread; the decoupled control retained more raw pattern. |
+| **Lattice v1** | Temporal trace retention after input removal | 128 replicates; mean retention at delay 8 **0.74870**; AUC **0.75976**; mean perturbation loss **0.00172** at delay 8. |
+| **I5.0** | Bounded global workspace | 512 episodes; broadcast vs no-broadcast accuracy **+0.12695**, p **5×10⁻⁵**; K=2 vs K=6 **+0.01758**, p **0.02225**; selected-source lesion differential **−0.49023**, p **5×10⁻⁵**. |
 
-Exact values, artifacts, seeds, and conditions remain in the ledger and protocol documents.
+These results describe computational properties under concrete protocols. **They do not by themselves demonstrate subjective experience.**
 
-→ [Consolidated results ledger](research/ORGANISM_RESULT_LEDGER.md#english)
-
+→ [Consolidated results ledger](research/ORGANISM_RESULT_LEDGER.md#english) · [I5.0 Workspace](docs/I5_GLOBAL_WORKSPACE.md#english) · [Lattice v1](docs/LATTICE_COMPUTER_V1.md#english)
 ## Relevant null and mixed results
 
 The project explicitly preserves **V64, V66, V67, V79, V80, C0.9, C0.10, and C0.18** as null or mixed results.
