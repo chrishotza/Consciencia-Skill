@@ -27,6 +27,10 @@
 - `docs/C0_10_WITHIN_EPISODE_TEMPORAL_ALIGNMENT.md` — within-episode temporal lag control for observer → policy alignment.
 - `experiments/tcf_consciousness_instantiation_c0_10.py` — current-state vs. pre-intervention observer-readout comparison.
 
+### C0.11
+- `docs/C0_11_CAUSAL_ACTION_MEDIATION.md` — direct action intervention on the middle of the action → internal-state → next-action chain.
+- `experiments/tcf_consciousness_instantiation_c0_11.py` — paired factual vs. forced-action causal test.
+
 ### V69
 - `docs/V69_SELF_STATE_READOUT.md` — numeric readout; discrete action endpoint is null.
 - `docs/V69_SELF_READ_STATE.md` — readout participates in trajectory selection; includes blinded control and state-swap intervention.
