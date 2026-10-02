@@ -161,3 +161,12 @@ Result ledger: research/ORGANISM_RESULT_LEDGER.md
 Status: verified on frozen I5.23 data; workflow 37066787603 / artifact 11253435918.
 Result: matched-magnitude sign-coupling was null for signed AUC (p=0.43118) and highly significant for absolute AUC and future action (both p<0.00005).
 Next: I6.1 causal closure of the self-model.
+
+
+## I6.1 verified
+Protocol: docs/I6_1_CAUSAL_SELF_MODEL_LOOP.md
+Experiment: experiments/i6_1_causal_self_model_loop.py
+Result ledger: research/ORGANISM_RESULT_LEDGER.md
+Status: verified on workflow 37068670875 / artifact 11253574021.
+Result: intact self-model-guided selection reduced counterfactual regret versus prediction lesion; primary contrast −0.15766, p<0.00005; frozen-update contrast −0.06372, p<0.00005.
+Next: I6.2 persistent self-model and continuity loop.
