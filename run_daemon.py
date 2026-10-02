@@ -68,6 +68,49 @@ def _emit(
         print(f"[consciousness-server] emit failed: {exc!r}")
 
 
+def _checkpoint(
+    client: ConsciousnessClient | None,
+    agent_id: str,
+    runtime: ConsciousnessRuntimeConfig,
+    node_id: str | None,
+    store: MemoryStore,
+    organism: PersistentOrganism,
+) -> None:
+    if client is None:
+        return
+
+    payload = {
+        "node_id": node_id,
+        "cycle": organism.cycles,
+        "boot_count": organism.state.boot_count,
+        "dynamic_state": organism.state.dynamic_state,
+        "dynamic_steps": organism.state.dynamic_steps,
+        "memory_strength": organism.state.memory_strength,
+        "self_model_version": organism.state.self_model_version,
+        "state_fingerprint": store.state_fingerprint(agent_id),
+        "trajectory_fingerprint": store.trajectory_fingerprint(agent_id),
+        "event_count": store.event_count(agent_id),
+        "memory_count": store.memory_count(agent_id),
+    }
+    checkpoint_id = (
+        f"{runtime.node_id}:{organism.state.boot_count}:"
+        f"{organism.cycles}:{time.time_ns()}"
+    )
+    try:
+        client.checkpoint(
+            instance_id=agent_id,
+            runtime_mode=runtime.mode.value,
+            organism_mode=organism.state.mode,
+            payload=payload,
+            checkpoint_id=checkpoint_id,
+        )
+    except Exception as exc:
+        # Checkpoints are fail-open: local organism persistence remains the
+        # source of truth while the server provides a durable control-plane
+        # mirror.
+        print(f"[consciousness-server] checkpoint failed: {exc!r}")
+
+
 def main() -> None:
     api_key = os.environ.get("ONTTO_API_KEY", "")
     if not api_key:
@@ -131,6 +174,14 @@ def main() -> None:
             "boot_count": organism.state.boot_count,
         },
     )
+    _checkpoint(
+        consciousness_client,
+        agent_id,
+        runtime,
+        node_id,
+        store,
+        organism,
+    )
 
     while True:
         organism.cycles += 1
@@ -152,6 +203,14 @@ def main() -> None:
                         "memory_strength": organism.state.memory_strength,
                         "response_hash": hashlib.sha256(response.encode("utf-8")).hexdigest(),
                     },
+                )
+                _checkpoint(
+                    consciousness_client,
+                    agent_id,
+                    runtime,
+                    node_id,
+                    store,
+                    organism,
                 )
                 store.add_event(
                     agent_id,
@@ -177,6 +236,14 @@ def main() -> None:
                         "self_model_version": organism.state.self_model_version,
                     },
                 )
+                _checkpoint(
+                    consciousness_client,
+                    agent_id,
+                    runtime,
+                    node_id,
+                    store,
+                    organism,
+                )
 
             if organism.cycles % cfg.dream_every_cycles == 0:
                 organism.dream_cycle()
@@ -190,6 +257,14 @@ def main() -> None:
                         "self_model_version": organism.state.self_model_version,
                         "memory_strength": organism.state.memory_strength,
                     },
+                )
+                _checkpoint(
+                    consciousness_client,
+                    agent_id,
+                    runtime,
+                    node_id,
+                    store,
+                    organism,
                 )
                 time.sleep(cfg.dream_seconds)
             else:
@@ -225,6 +300,14 @@ def main() -> None:
                 {"runtime_mode": runtime.mode.value},
             )
             store.save_state(agent_id, organism.state)
+            _checkpoint(
+                consciousness_client,
+                agent_id,
+                runtime,
+                node_id,
+                store,
+                organism,
+            )
             time.sleep(error_backoff_seconds)
 
 
