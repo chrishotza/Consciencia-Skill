@@ -23,12 +23,13 @@
       "research/ORGANISM_RESULT_LEDGER.md",
       "docs/C0_18_AUTONOMOUS_SECOND_ORDER_LESION_RESCUE.md",
       "docs/I5_6_PERSISTENT_QUERY_TASK.md",
-      "docs/I5_7_RECURRENT_SELF_ACCESS.md"
+      "docs/I5_7_RECURRENT_SELF_ACCESS.md",
+      "docs/I5_8_ACTION_CLAMP_REENTRY.md"
     ],
     "experimental_next": [
-      "I5.7 recurrent self-access and state re-entry",
-      "test whether one-cycle query perturbations propagate into later state/query/action cycles",
-      "compare pulse perturbation against persistent perturbation and FULL restoration",
+      "I5.8 action-clamp mediation of recurrent self-access",
+      "test whether query perturbation propagates through query → action → state",
+      "compare pulse, action-clamped pulse, and persistent perturbation controls",
       "C0 campaign G2-G8"
     ]
   },
@@ -62,9 +63,9 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.7 recurrent self-access and state re-entry",
-    "test whether one-cycle query perturbations propagate into later state/query/action cycles",
-    "compare pulse perturbation against persistent perturbation and FULL restoration",
+    "I5.8 action-clamp mediation of recurrent self-access",
+    "test whether query perturbation propagates through query → action → state",
+    "compare pulse, action-clamped pulse, and persistent perturbation controls",
     "C0 campaign G2-G8"
   ]
 }
