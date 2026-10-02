@@ -328,3 +328,5 @@ Usá el documento de protocolo para localizar la implementación exacta.
 
 
 <a id="english"></a>
+
+- `docs/I5_GLOBAL_WORKSPACE.md` — bounded global workspace protocol; `src/ontto/global_workspace.py` is the reusable mechanism.
