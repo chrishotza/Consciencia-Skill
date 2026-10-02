@@ -6,6 +6,8 @@ on:
     paths:
       - 'src/ontto/interoception.py'
       - 'src/ontto/interoception_controller.py'
+      - 'src/ontto/organism.py'
+      - 'tests/test_interoceptive_runtime_hook.py'
       - 'experiments/interoception_i2.py'
       - 'tests/test_interoception_i2.py'
       - '.github/workflows/interoception-i2.yml'
