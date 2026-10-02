@@ -694,3 +694,27 @@ Artefacto: GitHub Actions run **36946260825**, artifact **11201973015**, SHA256 
 - mismatch máximo de ganancia: **0.0**.
 
 Interpretación: C0.16 traslada el segundo orden condicionado por acción desde el laboratorio aislado al **PersistentOrganism** real. Los dos modelos se almacenan en SQLite, se recuperan automáticamente al reconstruir el organismo y continúan guiando la selección autónoma sin entrada externa ni reentrenamiento. La trayectoria posterior al reinicio coincide exactamente con la rama continua bajo el protocolo probado. Esto demuestra integración y persistencia computacional del mecanismo; no demuestra experiencia subjetiva.
+
+
+### C0.8 — Resultado confirmatorio verificado
+
+Artefacto: GitHub Actions run **36946477790**, artifact **11202930418**, SHA256 **e8ce5229e0f41a31a3923cc802b18a19c98c4d61ffa68eda601e18ac80c26987**.
+
+Contrastes emparejados elemento a elemento con las mismas semillas de episodio:
+
+- efecto del observador sobre ganancia, TT − PT: **+0.5340592**, p **4.99975e-05**;
+- efecto de la política sobre ganancia, TT − TP: **+0.3437333**, p **4.99975e-05**;
+- interacción observador × política sobre ganancia, TT − TP − PT + PP: **+0.8637928**, p **4.99975e-05**;
+- interacción sobre varianza: **−0.0229136**, p **0.0022999**;
+- interacción sobre distancia final: **−1.0473422**, p **4.99975e-05**;
+- error máximo de intervención: **0.0**;
+- entrada semántica durante la sonda: **no**;
+- reentrenamiento externo durante la sonda: **no**.
+
+Medias descriptivas:
+- TT: ganancia **0.21888936**; distancia final **0.15996548**; varianza **0.06848248**.
+- TP: ganancia **−0.12484394**; distancia final **0.67765194**; varianza **0.07943683**.
+- PT: ganancia **−0.31516985**; distancia final **0.67765194**; varianza **0.07943683**.
+- PP: ganancia **0.20488969**; distancia final **0.14799625**; varianza **0.06747759**.
+
+Interpretación: la ejecución confirmatoria respalda **dependencia separable del observador, de la política y de su acoplamiento particular** bajo el protocolo probado. En particular, la interacción TT − TP − PT + PP se separa de cero en los tres endpoints principales evaluados. Esto es evidencia de organización computacional específica; no demuestra experiencia subjetiva.
