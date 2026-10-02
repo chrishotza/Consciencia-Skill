@@ -57,4 +57,4 @@ Experiments measure computational properties of an architecture and its experime
 
 </details>
 
-> 🌐 Language convention: [docs/LANGUAGE.md](LANGUAGE.md)
+> 🌐 Language convention: [docs/LANGUAGE.md](../docs/LANGUAGE.md)
