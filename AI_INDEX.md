@@ -145,6 +145,15 @@
 - `tests/test_i5_17_phase_resolved_bridge_mediation_map.py`
 - Protocol pending verification: same 15-cycle, seven-phase pure-phase construction as I5.16, with bridge ON and OFF for every lag ±1, ±2, ±3; phase-resolved bridge-effect and +k/-k symmetry endpoints.
 
+### I5.19 — Independent bridge replication
+- `docs/I5_19_INDEPENDENT_BRIDGE_REPLICATION.md`
+- `experiments/i5_19_independent_bridge_replication.py`
+- `tests/test_i5_19_independent_bridge_replication.py`
+- Verified: research-lab **37056574657** / artifact **11247979913**; 24 replicates, 24 warmup cycles, 15 cycles, 20,000 permutations; tests/package/research workflows all successful.
+- Independent seed **20261019** reproduced a non-zero average bridge ON−OFF effect for signed AUC (**-1.39819**, p=0.00030), absolute AUC (**-0.73065**, p=0.00190), and future-action change (**-0.11806**, p=0.00110).
+- Global phase × bridge interaction remained non-significant for all three endpoints.
+- Boundary: independent computational replication under the frozen protocol; no consciousness claim.
+
 ### I5.3 — Causal attention allocation
 - `docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md`
 - `src/ontto/attention_controller.py`
