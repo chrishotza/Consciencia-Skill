@@ -59,6 +59,12 @@
 - `tests/test_i5_7_recurrent_self_access.py`
 - Protocol added; no I5.7 result is claimed yet.
 
+### I5.8 — Action-clamp mediation of recurrent self-access
+- `docs/I5_8_ACTION_CLAMP_REENTRY.md`
+- `experiments/i5_8_action_clamp_reentry.py`
+- `tests/test_i5_8_action_clamp_reentry.py`
+- Protocol added; no I5.8 result is claimed yet.
+
 
 ### I5.3 — Causal attention allocation
 - `docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md`
