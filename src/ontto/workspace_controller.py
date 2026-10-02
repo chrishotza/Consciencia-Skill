@@ -69,12 +69,6 @@ class WorkspaceTrajectoryController:
             raise ValueError('at least one candidate is required')
         selection = self.select(state)
         vectors, _ = self.module_vectors(state)
-        integrated = self.workspace.integrate(
-            vectors,
-            selection,
-            broadcast_enabled=self.cfg.broadcast_enabled,
-            selected_lesion=self.cfg.lesion_index,
-        )
         if self.cfg.broadcast_enabled:
             if self.cfg.lesion_index is None:
                 broadcast = selection.broadcast
@@ -82,7 +76,7 @@ class WorkspaceTrajectoryController:
                 selected = [i for i in selection.indices if i != self.cfg.lesion_index]
                 if selected:
                     weights = selection.salience[selected] + 1e-12
-                    broadcast = np.average(integrated[selected], axis=0, weights=weights)
+                    broadcast = np.average(vectors[selected], axis=0, weights=weights)
                 else:
                     broadcast = np.zeros(2, dtype=float)
         else:
