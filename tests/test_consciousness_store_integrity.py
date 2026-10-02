@@ -10,7 +10,7 @@ from src.consciousness_server.core import ConsciousnessStore
 def test_replay_batch_is_atomic_on_late_event_conflict(tmp_path):
     store = ConsciousnessStore(tmp_path / "atomic-replay.db")
     try:
-        store.create_instance("agent", "atomic-agent")
+        store.create_instance(identity="atomic-agent", instance_id="agent")
         store.append_event(
             "agent",
             "WAKE",
@@ -65,7 +65,7 @@ def test_replay_batch_is_atomic_on_late_event_conflict(tmp_path):
 def test_store_serializes_concurrent_writes(tmp_path):
     store = ConsciousnessStore(tmp_path / "concurrent.db")
     try:
-        store.create_instance("agent", "concurrent-agent")
+        store.create_instance(identity="concurrent-agent", instance_id="agent")
         worker_count = 12
         barrier = threading.Barrier(worker_count)
         errors: list[BaseException] = []
