@@ -224,6 +224,12 @@ Use the protocol document to find the exact implementation.
 - `tests/test_i5_7_recurrent_self_access.py`
 - Protocolo agregado; todavía no se reclama ningún resultado de I5.7.
 
+### I5.8 — Mediación por action-clamp del acceso recurrente
+- `docs/I5_8_ACTION_CLAMP_REENTRY.md`
+- `experiments/i5_8_action_clamp_reentry.py`
+- `tests/test_i5_8_action_clamp_reentry.py`
+- Protocolo agregado; todavía no se reclama ningún resultado de I5.8.
+
 
 
 ### Lattice Computer v0/v1
