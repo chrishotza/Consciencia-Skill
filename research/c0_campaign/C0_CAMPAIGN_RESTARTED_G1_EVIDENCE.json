@@ -1,0 +1,80 @@
+{
+  "experiment": "tcf_consciousness_campaign",
+  "protocol_version": "C0-CAMPAIGN-1.0",
+  "status": "partial_campaign",
+  "campaign_target_executions": 32,
+  "completed_executions": 4,
+  "completed_groups": ["G1"],
+  "pending_groups": ["G2", "G3", "G4", "G5", "G6", "G7", "G8"],
+  "workflow_run_id": 36955261246,
+  "workflow_run_number": 33,
+  "workflow_run_conclusion": "success",
+  "workflow_head_sha": "0587915bf90d44872fa950bdbd62ffaaae6d7ec7",
+  "criterion": "C3_causal_self_reference",
+  "control": "information_matched_state_shuffle",
+  "replicates": [
+    {
+      "group": "G1",
+      "replicate": 1,
+      "artifact_id": 11205791665,
+      "zip_sha256": "computed_from_downloaded_artifact",
+      "seed_base": 101100,
+      "effect": 0.0625,
+      "p": 0.3849807509624519,
+      "own_gap_mean": 0.9921875,
+      "matched_gap_mean": 0.9296875,
+      "episodes": 64,
+      "train_episodes": 64,
+      "observer_samples": 512
+    },
+    {
+      "group": "G1",
+      "replicate": 2,
+      "artifact_id": 11205378393,
+      "zip_sha256": "computed_from_downloaded_artifact",
+      "seed_base": 101200,
+      "effect": 0.046875,
+      "p": 0.49912504374781264,
+      "own_gap_mean": 0.9921875,
+      "matched_gap_mean": 0.9453125,
+      "episodes": 64,
+      "train_episodes": 64,
+      "observer_samples": 512
+    },
+    {
+      "group": "G1",
+      "replicate": 3,
+      "artifact_id": 11206041359,
+      "zip_sha256": "computed_from_downloaded_artifact",
+      "seed_base": 101300,
+      "effect": 0.01953125,
+      "p": 0.8499575021248937,
+      "own_gap_mean": 0.94140625,
+      "matched_gap_mean": 0.921875,
+      "episodes": 64,
+      "train_episodes": 64,
+      "observer_samples": 512
+    },
+    {
+      "group": "G1",
+      "replicate": 4,
+      "artifact_id": 11205626944,
+      "zip_sha256": "computed_from_downloaded_artifact",
+      "seed_base": 101400,
+      "effect": 0.08984375,
+      "p": 0.13454327283635817,
+      "own_gap_mean": 1.04296875,
+      "matched_gap_mean": 0.953125,
+      "episodes": 64,
+      "train_episodes": 64,
+      "observer_samples": 512
+    }
+  ],
+  "descriptive": {
+    "mean_effect": 0.0546875,
+    "mean_own_gap": 0.9921875,
+    "mean_matched_gap": 0.9375,
+    "replicates_with_p_below_0_05": 0
+  },
+  "interpretation_boundary": "These four G1 replicates are a partial campaign record. They do not constitute a 32-run campaign result and no composite campaign inference is recorded here."
+}
