@@ -262,3 +262,13 @@ The V47–V80 files retain their canonical identifiers and terminology for repro
 - Absolute-AUC specificity gap **+0.71459**, p=0.00005; future-action specificity gap **+0.07292**, p=0.00005; signed-AUC gap non-significant.
 - Global lag×specificity interaction non-significant for all three endpoints.
 - Next: I5.21 phase-local semantic permutation control.
+
+## I5.21 — Phase-local semantic permutation
+- Protocol: `docs/I5_21_PHASE_LOCAL_SEMANTIC_PERMUTATION.md`
+- Experiment: `experiments/i5_21_phase_local_semantic_permutation.py`
+- Test: `tests/test_i5_21_phase_local_semantic_permutation.py`
+- Verified workflow: **37059465725**, artifact **11249378346**.
+- 24 replicates; 100% t0 match; 100% global and within-period semantic multiset preservation.
+- AUC absolute specificity gap **+0.44740**, p=0.00010; future-action specificity gap **+0.04663**, p=0.00100; signed-AUC gap null.
+- Phase×specificity interaction significant for absolute AUC and future action.
+- Next: I5.22 cyclic semantic phase-shift control.
