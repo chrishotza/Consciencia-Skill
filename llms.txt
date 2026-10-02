@@ -77,3 +77,10 @@ Read only the smallest relevant set: ledger → protocol → experiment → test
 Do not recursively crawl research/, experiments/, tests/, or .github/workflows/.
 
 </details>
+
+## I5.17 verified
+Protocol: docs/I5_17_PHASE_RESOLVED_BRIDGE_MEDIATION_MAP.md
+Experiment: experiments/i5_17_phase_resolved_bridge_mediation_map.py
+Result ledger: research/ORGANISM_RESULT_LEDGER.md
+Status: verified on workflow 37047719727 / artifact 11244733803.
+Next: I5.18 global phase-by-bridge interaction with multiplicity-controlled contrasts.
