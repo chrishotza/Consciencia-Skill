@@ -30,3 +30,16 @@ Intervention integrity is checked explicitly.
 ## Interpretation
 
 A paired gain difference would indicate sensitivity to the causal correspondence at the observer → policy interface. It is a computational organizational result, not a demonstration of phenomenal consciousness.
+
+
+## Verified result
+
+GitHub Actions run **36944916227**; artifact **11200913836**; SHA256 **287f52b0074a8599be74ae0d36bfbbc930cdb892cb48d0cde96a5e649af5f3d6**.
+
+- Donor readout gap: **0.1975998565**
+- Signed action contrast: **0.0**, p **1.0**
+- Signed gain contrast: **0.0**, p **1.0**
+- Signed next-state contrast: **0.0**, p **1.0**
+- Maximum intervention error: **0.0**
+
+The donor shuffle changed the observer readout but did not change the selected action, immediate self-prediction gain, or next state under this protocol. Therefore C0.9 is **null for behavioral dependence on the tested observer→policy correspondence**.
