@@ -51,12 +51,9 @@ def permute_schedule(schedule: list[str]) -> tuple[list[str], list[int]]:
 
 
 def pair_specificity(
-    base: list[dict],
-    matched_on: list[dict],
-    permuted_on: list[dict],
+    matched: dict[str, float],
+    permuted: dict[str, float],
 ) -> dict[str, float]:
-    matched = metrics(base, matched_on)
-    permuted = metrics(base, permuted_on)
     return {
         key: float(matched[key] - permuted[key])
         for key in METRICS
