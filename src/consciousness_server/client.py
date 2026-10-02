@@ -69,6 +69,32 @@ class ConsciousnessClient:
             },
         )
 
+    def get_node(self, node_id: str) -> dict[str, Any]:
+        return self._request("GET", f"/nodes/{node_id}")
+
+    def list_nodes(self, stale_after_seconds: float = 30.0) -> dict[str, Any]:
+        return self._request(
+            "GET",
+            f"/nodes?stale_after_seconds={float(stale_after_seconds)}",
+        )
+
+    def heartbeat(
+        self,
+        node_id: str,
+        endpoint: str | None = None,
+        capabilities: list[str] | None = None,
+    ) -> dict[str, Any]:
+        body: dict[str, Any] = {}
+        if endpoint is not None:
+            body["endpoint"] = endpoint
+        if capabilities is not None:
+            body["capabilities"] = list(capabilities)
+        return self._request(
+            "POST",
+            f"/nodes/{node_id}/heartbeat",
+            body,
+        )
+
     def emit(
         self,
         instance_id: str,
