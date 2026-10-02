@@ -535,3 +535,14 @@ Usá el documento de protocolo para localizar la implementación exacta.
 - Absolute AUC: matched-magnitude sign-coupling global p<0.00005.
 - Future action: matched-magnitude sign-coupling global p<0.00005.
 - Next: I6.1 causal closure of the self-model.
+
+
+### I6.1 — Causal closure of the self-model
+- docs/I6_1_CAUSAL_SELF_MODEL_LOOP.md
+- experiments/i6_1_causal_self_model_loop.py
+- tests/test_i6_1_causal_self_model_loop.py
+- Verified workflow **37068670875** / artifact **11253574021**; tests **37068670840** and package **37068670844** successful.
+- Primary intact−prediction-lesion regret contrast **−0.15766**, p<0.00005.
+- Frozen-update contrast **−0.06372**, p<0.00005.
+- Interpretation: self-model use is a causal operational component of trajectory selection in the deterministic harness; no consciousness claim.
+- Next: I6.2 persistent self-model and continuity loop.
