@@ -37,6 +37,8 @@ The server now exposes a deterministic replay boundary through:
 The replay protocol is documented in [Deterministic event replay](DETERMINISTIC_EVENT_REPLAY.md).
 
 
+<a id="espanol"></a>
+
 <details>
 <summary>🇪🇸 Español — abrir</summary>
 
