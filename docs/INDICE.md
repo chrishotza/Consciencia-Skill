@@ -82,6 +82,7 @@
 - [C0.12 second-order self-monitoring](C0_12_SECOND_ORDER_SELF_MONITORING.md) — segundo orden: modelado del error del propio modelo de sí y control causal de la selección.
 - [C0.13 action-conditioned second-order self-model](C0_13_ACTION_CONDITIONED_META_MODEL.md) — segundo orden condicionado por la acción candidata y su predicción de primer orden.
 - [C0.14 persistent second-order self-model](C0_14_PERSISTENT_SECOND_ORDER_SELF_MODEL.md) — prueba de continuidad del segundo orden después de serialización y reinicio.
+- [C0.15 lesion/rescue of persistent second-order selector](C0_15_SECOND_ORDER_LESION_RESCUE.md) — lesión y restauración del segundo orden persistente.
 
 [Registro consolidado](../research/ORGANISM_RESULT_LEDGER.md).
 
