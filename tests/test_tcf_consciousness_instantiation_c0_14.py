@@ -22,6 +22,7 @@ def test_c0_14_schema(tmp_path):
     summary = json.loads(result.stdout)
     assert summary["experiment"] == "tcf_consciousness_instantiation_c0_14"
     assert summary["protocol_version"] == "C0.14"
+    assert summary["analysis_note"].startswith("Continuous and restart")
     assert summary["matched_design"]["same_serialized_observer_and_meta_model"] is True
     assert summary["phenomenal_consciousness_claimed"] is False
     assert summary["analysis_note"].startswith("Continuous and restart")
