@@ -69,7 +69,13 @@
 - `docs/I5_9_ACTION_REPLAY_SUFFICIENCY.md`
 - `experiments/i5_9_action_replay_sufficiency.py`
 - `tests/test_i5_9_action_replay_sufficiency.py`
-- Protocol added; no I5.9 result is claimed yet.
+- Verified: exact action replay produced zero PULSE-vs-REPLAY state divergence; t+1 and AUC both p=1.0.
+
+### I5.10 — Semantic re-entry under action replay
+- `docs/I5_10_SEMANTIC_REENTRY_ACTION_REPLAY.md`
+- `experiments/i5_10_semantic_reentry_under_action_replay.py`
+- `tests/test_i5_10_semantic_reentry_action_replay.py`
+- Protocol added; no I5.10 result is claimed yet.
 
 
 ### I5.3 — Causal attention allocation
@@ -240,7 +246,13 @@ Use the protocol document to find the exact implementation.
 - `docs/I5_9_ACTION_REPLAY_SUFFICIENCY.md`
 - `experiments/i5_9_action_replay_sufficiency.py`
 - `tests/test_i5_9_action_replay_sufficiency.py`
-- Protocolo agregado; todavía no se reclama ningún resultado de I5.9.
+- Verificado: el action replay exacto produjo divergencia de estado PULSE-vs-REPLAY igual a cero; t+1 y AUC dieron p=1.0.
+
+### I5.10 — Reentrada semántica bajo action replay
+- `docs/I5_10_SEMANTIC_REENTRY_ACTION_REPLAY.md`
+- `experiments/i5_10_semantic_reentry_under_action_replay.py`
+- `tests/test_i5_10_semantic_reentry_action_replay.py`
+- Protocolo agregado; todavía no se reclama ningún resultado de I5.10.
 
 
 
