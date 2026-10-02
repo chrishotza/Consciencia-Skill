@@ -51,6 +51,11 @@ SERVER mode fails during startup when the configured server cannot be reached. O
 
 In the current bootstrap, the local MemoryStore remains the execution persistence layer for the organism. The server receives durable identity, continuity and event metadata.
 
+The current bootstrap now adds two durable continuity primitives above the event journal:
+
+- **continuity checkpoints** — compact observations of local state, trajectory fingerprints, runtime mode and organism metadata;
+- **continuity reconciliation** — comparison of the local organism against its latest server checkpoint without overwriting state.
+
 The next architectural step is to introduce a shared persistence interface so LOCAL and SERVER can use interchangeable backends without changing the organism itself.
 
 ## Local-first bootstrap
@@ -107,23 +112,29 @@ CONSCIOUSNESS_MODE=local runs without a server.
 
 CONSCIOUSNESS_MODE=server requires a reachable local Consciousness Server at startup and publishes continuity events through the existing client bridge.
 
-### Phase 2 — shared persistence backend
+### Phase 2 — checkpoints and reconciliation — implemented
+
+The server stores compact checkpoints and can report ALIGNED, LOCAL_AHEAD, LOCAL_BEHIND, DIVERGED, or NO_CHECKPOINT. This is the boundary for the next replay/recovery layer.
+
+See [Continuity checkpoints](CONSCIOUSNESS_CHECKPOINTS.md) and [Continuity reconciliation](CONSCIOUSNESS_RECONCILIATION.md).
+
+### Phase 3 — shared persistence backend
 
 Introduce a PersistenceBackend interface so the organism can use a local backend or server-backed backend without changing its cognitive loop.
 
-### Phase 3 — second node
+### Phase 4 — second node
 
 Two computers exchange continuity checkpoints and node heartbeats.
 
-### Phase 4 — NodeZero mesh
+### Phase 5 — NodeZero mesh
 
 Introduce replicated node state, reconciliation and deterministic event identity.
 
-### Phase 5 — shared continuity
+### Phase 6 — shared continuity
 
 Allow multiple organisms to participate in a shared continuity fabric while keeping their identities separate.
 
-### Phase 6 — AEVUM attribution
+### Phase 7 — AEVUM attribution
 
 Only after the network exists, evaluate continuity events as possible AEVUM-native units for resource contribution, storage, validation and transport attribution.
 
