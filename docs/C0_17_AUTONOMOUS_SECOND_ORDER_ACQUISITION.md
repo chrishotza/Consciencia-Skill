@@ -43,3 +43,17 @@ No external retraining and no semantic input occur during evaluation.
 ## Interpretation
 
 A separation after autonomous acquisition supports behavioral specificity of a second-order mapping learned inside the persistent organism. It remains computational evidence and does not establish phenomenal consciousness.
+
+
+## Verified result
+
+GitHub Actions run **36946964601**; artifact **11201784892**; SHA256 **bf4aed2caaaff14e3aac2dca54e584cc0c10d38f9dde13c0f4720db8eacc9ea8**.
+
+- second-order model starts empty and reaches **48 samples per replica**;
+- exact model recovery at the evaluation-pair construction: **100%**;
+- first TRUE − PERMUTED action: **+0.2916667**, p **0.3417829**
+- first TRUE − PERMUTED gain: **−0.0141513**, p **0.7728114**
+- mean TRUE − PERMUTED action: **+0.0833333**, p **0.6331683**
+- mean TRUE − PERMUTED gain: **+0.0256299**, p **0.4691765**
+
+Interpretation: the persistent organism successfully learned the second-order model online from counterfactual prediction errors, but the learned mapping did not produce a statistically significant TRUE-vs-PERMUTED behavioral separation under this protocol.
