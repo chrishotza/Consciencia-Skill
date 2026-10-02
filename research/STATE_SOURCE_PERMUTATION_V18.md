@@ -1,3 +1,34 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V18 — Control de fuente/permutación del estado
+
+## Pregunta
+
+V17 mostró que el state del donante por sí solo puede transferir identidad histórica cuando memory y pressure del receptor son comunes. V18 pregunta si la identidad de continuación sigue específicamente a la **fuente del state** en lugar de a una etiqueta nominal del receptor.
+
+## Protocolo
+
+Se utilizan seis puntos ciegos V12, tres historias distintas por seed, diez seeds de ruido emparejados por punto, input futuro exactamente cero y un receptor cuyo memory y pressure son la media común de las tres historias.
+
+El receptor recibe state de una historia fuente a la vez. La identidad de fuente se clasifica frente a tres continuaciones de referencia intactas. State se prueba a precisión completa y a 3, 4 y 6 bits.
+
+Un control de permutación repite el test cambiando la etiqueta nominal del receptor. Como todo contexto no-state es común, un verdadero portador de fuente-state debería conservar la clasificación de la fuente del state independientemente de esa etiqueta nominal.
+
+## Regla de interpretación
+
+Accuracy alta de clasificación de fuente y predicción sin cambios cuando se permuta el receptor nominal constituirían un test limpio de seguimiento de fuente: la identidad histórica está unida al state recurrente transferido y no al contexto receptor.
+
+Junto con V17, esto prueba suficiencia causal y especificidad de fuente del state recurrente compacto.
+
+Sigue siendo un resultado dinámico computacional y no establece experiencia subjetiva.
+
+</details>
+
+<a id="english"></a>
+
 # V18 — State Source / Permutation Control
 
 ## Question
