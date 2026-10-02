@@ -32,11 +32,12 @@
       "docs/I5_16_COUNTERBALANCED_PURE_PHASE_TEMPORAL_CONTROL.md",
       "docs/I5_17_PHASE_RESOLVED_BRIDGE_MEDIATION_MAP.md",
       "docs/I5_18_GLOBAL_PHASE_BRIDGE_INTERACTION.md",
-      "docs/I5_19_INDEPENDENT_BRIDGE_REPLICATION.md"
+      "docs/I5_19_INDEPENDENT_BRIDGE_REPLICATION.md",
+      "docs/I5_20_SEMANTIC_PERMUTATION_SPECIFICITY.md"
     ],
     "experimental_next": [
-      "I5.20 bridge specificity under semantic permutation control",
-      "test whether the replicated bridge main effect depends on semantic correspondence rather than bridge activation alone",
+      "I5.21 phase-local semantic permutation",
+      "separate phase-content correspondence from the broader effect of disrupting temporal order",
       "C0 campaign G2-G8"
     ]
   },
@@ -70,8 +71,8 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.20 bridge specificity under semantic permutation control",
-    "test whether the replicated bridge main effect depends on semantic correspondence rather than bridge activation alone",
+    "I5.21 phase-local semantic permutation",
+    "separate phase-content correspondence from the broader effect of disrupting temporal order",
     "C0 campaign G2-G8"
   ]
 }
