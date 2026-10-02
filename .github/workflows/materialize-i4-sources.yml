@@ -1,0 +1,35 @@
+name: materialize-i4-sources
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/materialize-i4-sources.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Materialize pinned I4 sources
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p src/ontto experiments tests
+          gh api repos/${GITHUB_REPOSITORY}/git/blobs/660614e86b7fc296d9bcfa2b1ea7f2ebd22113c5 --jq .content | base64 --decode > src/ontto/interoceptive_meta_observer.py
+          gh api repos/${GITHUB_REPOSITORY}/git/blobs/a6981faa73e48574d52dc2f0f544167775b3e3fd --jq .content | base64 --decode > experiments/interoception_i4.py
+          gh api repos/${GITHUB_REPOSITORY}/git/blobs/b251404620f715b80ad8be296930476dbd0d8093 --jq .content | base64 --decode > tests/test_interoceptive_meta_observer.py
+          python -m py_compile src/ontto/interoceptive_meta_observer.py experiments/interoception_i4.py tests/test_interoceptive_meta_observer.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/ontto/interoceptive_meta_observer.py experiments/interoception_i4.py tests/test_interoceptive_meta_observer.py
+          if git diff --cached --quiet; then
+            echo "I4 sources already materialized"
+            exit 0
+          fi
+          git commit -m "chore: materialize I4 experimental sources"
+          git push
