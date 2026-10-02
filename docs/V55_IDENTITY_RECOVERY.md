@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V55 — Recuperación de identidad bajo perturbación
 
 ## Motivación
@@ -39,3 +41,53 @@ La recuperación con conservación de identidad apoya una forma operacional de r
 Una ventaja de la selección mediante modelo de sí indicaría además que el modelo interno mejora la recuperación, en lugar de limitarse a describirla.
 
 Ninguno de estos resultados establece consciencia subjetiva.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V55 — Identity Recovery under Perturbation
+
+## Motivation
+
+The Mathematical Manifesto of Being describes life as sustained dynamics able to absorb perturbation and reorganize without losing identity. AEVUMARD research distinguishes state from event and emphasizes feedback, resilience, self-adjustment, and attractor structure.
+
+V55 turns that requirement into a longitudinal experiment.
+
+## Protocol
+
+Each organism first establishes a matched trajectory.
+
+Its persisted numerical state is then perturbed to one of:
+
+- +0.95;
+- -0.95;
+
+while persistent memories and the self-model remain intact.
+
+Recovery is observed over subsequent autonomous cycles.
+
+Two matched arms are run:
+
+- self-model selection disabled;
+- self-model selection enabled.
+
+## Primary observables
+
+- recovery time to the pre-perturbation state band;
+- final dynamic-state error;
+- fraction of runs recovering within the horizon;
+- identity-fingerprint preservation;
+- comparison of recovery with and without causal self-model selection.
+
+## Interpretation
+
+Recovery while preserving identity supports an operational form of reconfiguration with continuity.
+
+An advantage from self-model selection would further indicate that the internal model improves recovery rather than merely describing it.
+
+None of these results establishes subjective consciousness.
+
+</details>
