@@ -180,13 +180,14 @@ class LatticeComputer:
         steps: int = 6,
         threshold: float = 1e-3,
     ) -> dict[str, float]:
-        baseline = self.state.copy()
+        baseline = self.copy()
         perturbed = self.copy()
         perturbed.state[row, col] += float(amplitude)
         for _ in range(steps):
+            baseline.step()
             perturbed.step()
 
-        delta = np.abs(perturbed.state - baseline)
+        delta = np.abs(perturbed.state - baseline.state)
         self.state = perturbed.state
         self.step_count = perturbed.step_count
         affected = int(np.count_nonzero(delta > threshold))
