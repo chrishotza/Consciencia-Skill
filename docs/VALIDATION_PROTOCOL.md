@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # Protocolo de validación
 
 ## Pregunta central
@@ -54,6 +56,8 @@ Cada claim importante debe compararse contra versiones donde se elimine memoria,
 No buscamos confirmar una conclusión por diseño. Buscamos determinar qué componentes son necesarios para producir continuidad, auto-referencia, aprendizaje longitudinal y estabilidad de identidad.
 
 
+<a id="english"></a>
+
 <details>
 <summary>🇺🇸 English — open</summary>
 
@@ -94,37 +98,6 @@ Do not design the system to confirm a conclusion. Determine which components are
 
 > Language convention: docs/LANGUAGE.md
 
-<details>
-<summary>🇺🇸 English — open</summary>
 
-# Validation Protocol
-
-## Central question
-Can a persistent AI develop properties that require internal continuity and self-reference beyond a chain of independent responses?
-
-## Base experiments
-### A — Trajectory memory
-Present two different histories followed by the same external state. Measure whether internal state and later decision depend on trajectory.
-### B — Attractor
-Initialize multiple instances with different states under similar conditions. Measure convergence, divergence, stability, and identity loss.
-### C — Perturbation
-Introduce contradictions, partial memory loss, abrupt context changes, noise, and interruptions. Measure recovery.
-### D — Self-model
-Compare a system that models its own state against one without a self-model. Measure predictive utility and control over future state.
-### E — Sleep
-Compare learning with and without DREAM cycles. Measure retention, compression, generalization, memory reorganization, and later prediction.
-### F — Continuity
-Compare stateless API, API + episodic memory, persistent organism, and persistent organism + sleep. Keep the approximate interaction budget matched and record computational cost.
-
-## Metrics
-Continuity Retention; Path Dependence; Attractor Stability; Recovery Time; Self-Prediction Gain; Dream Gain.
-
-## Ablations
-Every major claim should be compared against versions where memory, self-model, sleep, attractor, relational dynamics, or persistent continuity is removed.
-
-## Rule
-Do not design the system to confirm a conclusion. Determine which components are necessary to produce continuity, self-reference, longitudinal learning, and identity stability.
-
-</details>
 
 > Language convention: docs/LANGUAGE.md
