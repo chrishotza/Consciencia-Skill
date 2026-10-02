@@ -257,6 +257,6 @@ def main():
     parser.add_argument('--permutations',type=int,default=PERMUTATIONS)
     parser.add_argument('--out',default='results/i6_1_causal_self_model_loop')
     args=parser.parse_args()
-    print(json.dumps(run(seed=args.seed,replicates=args.replicates,warmup_cycles=args.warmup_cycles,evaluation_cycles=args.evaluation_cycles,permutations=args.permutations,out=Path(args.out)),indent=2,ensure_ascii=False))
+    print(json.dumps(run(seed=args.seed,replicates=args.replicates,warmup_cycles=args.warmup,evaluation_cycles=args.evaluation_cycles,permutations=args.permutations,out=Path(args.out)),indent=2,ensure_ascii=False))
 
 if __name__=='__main__': main()
