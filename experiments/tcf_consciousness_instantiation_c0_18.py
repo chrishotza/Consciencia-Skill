@@ -99,13 +99,25 @@ def train_online(
         organism.autonomous_wake_cycle()
 
     learned = organism.action_conditioned_meta_observer.to_dict()
-    digest = model_digest(
-        organism.self_observer,
-        organism.action_conditioned_meta_observer,
-    )
     samples = len(organism.action_conditioned_meta_observer.targets)
     store.conn.execute("PRAGMA wal_checkpoint(FULL)")
     store.conn.close()
+
+    # The reference digest is computed from the persisted model, not from the
+    # in-memory objects, so the recovery criterion tests serialization itself.
+    persisted_store = MemoryStore(db)
+    persisted_observer = persisted_store.load_self_observer_model("agent")
+    persisted_meta = persisted_store.load_action_conditioned_meta_observer_model(
+        "agent"
+    )
+    if persisted_observer is None or persisted_meta is None:
+        persisted_store.conn.close()
+        raise RuntimeError("training did not persist both first- and second-order models")
+    digest = model_digest(
+        SelfObserver.from_dict(persisted_observer),
+        ActionConditionedMetaObserver.from_dict(persisted_meta),
+    )
+    persisted_store.conn.close()
     return learned, digest, samples
 
 
