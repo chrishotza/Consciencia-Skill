@@ -57,6 +57,11 @@
 - `docs/C0_17_AUTONOMOUS_SECOND_ORDER_ACQUISITION.md`
 - `experiments/tcf_consciousness_instantiation_c0_17.py`
 
+### C0 Campaign
+- `docs/C0_CAMPAIGN_32_RUNS.md`
+- `research/c0_campaign/C0_CAMPAIGN_RESTARTED_G1_EVIDENCE.json`
+- Verified: **G1 completed, 4/32 executions; G2–G8 pending; G1 p-values all > 0.05**.
+
 ### C0.18
 - `docs/C0_18_AUTONOMOUS_SECOND_ORDER_LESION_RESCUE.md`
 - `experiments/tcf_consciousness_instantiation_c0_18.py`
