@@ -29,8 +29,8 @@
       "docs/I5_13_SEMANTIC_CORRESPONDENCE_CAUSAL_SPECIFICITY.md"
     ],
     "experimental_next": [
-      "I5.14 phase-matched temporal specificity control",
-      "separate one-cycle correspondence effects from generic semantic sequence displacement with matched temporal controls",
+      "I5.15 bidirectional temporal-lag response map",
+      "measure a controlled lag sweep beyond one cycle to characterize temporal phase sensitivity before making stronger causal-specificity claims",
       "C0 campaign G2-G8"
     ]
   },
@@ -64,8 +64,8 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.14 phase-matched temporal specificity control",
-    "separate one-cycle correspondence effects from generic semantic sequence displacement with matched temporal controls",
+    "I5.15 bidirectional temporal-lag response map",
+    "measure a controlled lag sweep beyond one cycle to characterize temporal phase sensitivity before making stronger causal-specificity claims",
     "C0 campaign G2-G8"
   ]
 }

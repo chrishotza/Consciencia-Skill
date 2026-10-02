@@ -934,6 +934,20 @@ Interpretación: el desplazamiento exacto de un ciclo de la secuencia semántica
 
 Nota de control metodológico: una primera ejecución de I5.13 fue descartada porque el parser de `query_module` estaba incorrectamente escapado y producía una condición degenerada. El resultado registrado aquí corresponde únicamente a la implementación corregida y reproducida en CI.
 
+### I5.14 — Control fase-matcheado de especificidad temporal — resultado verificado
+
+Workflow: **37042551701** (run **778**); artifact **11243190387**; commit verificado **ef73dc339bf9fe8821ad5f6e461f5c97842f552e**; seed **20261014**; **24** réplicas; **24** ciclos de warmup; **8** ciclos experimentales.
+
+- coincidencia de acción aplicada en t0: **100%** para SHIFT+1 y SHIFT-1;
+- coincidencia de distribución de SELF_MODEL: **100%** para SHIFT+1 y SHIFT-1;
+- cambio medio de acción futura: **11.90%** para SHIFT+1 y **44.64%** para SHIFT-1; ambos p **4.99975×10⁻⁵**;
+- AUC BASE vs SHIFT+1: **0.2414241371**, p **4.99975×10⁻⁵**;
+- AUC BASE vs SHIFT-1: **1.9526574097**, p **4.99975×10⁻⁵**;
+- AUC SHIFT+1 vs SHIFT-1: **1.9346491472**, p **4.99975×10⁻⁵**;
+- AUC SHIFT+1 bridge ON vs OFF: **2.1221765870**, p **4.99975×10⁻⁵**.
+
+Interpretación: ambos corrimientos preservaron t0 y la distribución completa de SELF_MODEL, pero produjeron efectos posteriores muy distintos. El arnés muestra sensibilidad dependiente de la dirección del orden temporal y debilita una explicación genérica basada en cualquier reordenamiento semántico. No demuestra consciencia ni experiencia subjetiva.
+
 ## Estado de campaña C0
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.

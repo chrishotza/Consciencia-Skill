@@ -95,6 +95,12 @@
 - `tests/test_i5_13_semantic_correspondence_causal_specificity.py`
 - Verified: run 37042091184 / artifact 11242354548; 100% t0 applied-action match and 100% self-model distribution match; future action change 46.43%, p=4.99975e-05; state AUC 2.1867184440, p=4.99975e-05; bridge ON-vs-OFF AUC 2.6656102772, p=4.99975e-05.
 
+### I5.14 — Phase-matched temporal specificity control
+- `docs/I5_14_PHASE_MATCHED_TEMPORAL_SPECIFICITY.md`
+- `experiments/i5_14_phase_matched_temporal_specificity_control.py`
+- `tests/test_i5_14_phase_matched_temporal_specificity.py`
+- Verified: run 37042551701 / artifact 11243190387; 100% t0 action match and 100% SELF_MODEL distribution match; SHIFT+1 future action change 11.90%, SHIFT-1 44.64%, both p=4.99975e-05; BASE-vs-SHIFT+1 AUC 0.2414241371, BASE-vs-SHIFT-1 AUC 1.9526574097; SHIFT+1 bridge ON-vs-OFF AUC 2.1221765870, all p=4.99975e-05.
+
 
 ### I5.3 — Causal attention allocation
 - `docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md`
@@ -289,6 +295,12 @@ Use the protocol document to find the exact implementation.
 - `experiments/i5_13_semantic_correspondence_causal_specificity.py`
 - `tests/test_i5_13_semantic_correspondence_causal_specificity.py`
 - Verificado: run 37042091184 / artifact 11242354548; 100% de coincidencia de acción aplicada en t0 y 100% de coincidencia de distribución de SELF_MODEL; cambio de acción futura 46.43%, p=4.99975e-05; AUC de estado 2.1867184440, p=4.99975e-05; AUC bridge ON-vs-OFF 2.6656102772, p=4.99975e-05.
+
+### I5.14 — Control fase-matcheado de especificidad temporal
+- `docs/I5_14_PHASE_MATCHED_TEMPORAL_SPECIFICITY.md`
+- `experiments/i5_14_phase_matched_temporal_specificity_control.py`
+- `tests/test_i5_14_phase_matched_temporal_specificity.py`
+- Verificado: run 37042551701 / artifact 11243190387; 100% de coincidencia de acción t0 y 100% de coincidencia de distribución de SELF_MODEL; cambio de acción futura SHIFT+1 11.90% y SHIFT-1 44.64%, ambos p=4.99975e-05; AUC BASE-vs-SHIFT+1 0.2414241371, BASE-vs-SHIFT-1 1.9526574097; AUC SHIFT+1 bridge ON-vs-OFF 2.1221765870, todos p=4.99975e-05.
 
 
 
