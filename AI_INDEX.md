@@ -38,6 +38,13 @@
 - Verified standalone GWT-4 mechanism over 512 episodes.
 - FULL−SHUFFLED query accuracy: +1.0, p=4.99975e-05; FULL−LESION: +0.763671875, p=4.99975e-05.
 
+### I5.3 — Causal attention allocation
+- `docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md`
+- `src/ontto/attention_controller.py`
+- `experiments/i5_3_causal_attention_allocation.py`
+- Verified standalone attention-allocation mechanism over 512 episodes.
+- FULL−SHUFFLED target attention mass: +0.9768188958, p=4.99975e-05; FULL−LESION: +0.7345638420, p=4.99975e-05.
+
 ### I5.0 — Bounded global workspace
 - `docs/I5_GLOBAL_WORKSPACE.md`
 - `src/ontto/global_workspace.py`
