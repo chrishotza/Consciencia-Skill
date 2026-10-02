@@ -523,7 +523,7 @@ Las inferencias primarias son contrastes firmados y emparejados por episodio par
 
 No se permite entrada semántica ni reentrenamiento externo durante la sonda.
 
-Estado: **implementado; ejecución pendiente de verificación**.
+Estado: **implementado; ejecución verificada**.
 
 
 ### C0.11 — Mediación causal acción → estado interno → siguiente acción
@@ -592,3 +592,19 @@ El primer orden predice el siguiente estado propio. C0.12 añade un segundo mode
 La inferencia primaria es emparejada por episodio y prueba si el segundo orden verdadero cambia la acción y la ganancia de autopredicción frente a ambos controles. También se evalúa la capacidad del segundo orden para predecir el error del primer orden en muestras reservadas.
 
 Estado: **implementado; ejecución pendiente de verificación**.
+
+
+### C0.12 — Resultado verificado
+
+Artefacto: GitHub Actions run **36945173829**, artifact **11201243817**, SHA256 **6fa8bdf64401a96d79f1d47b03dc4ac242c6456fba9c8e6957e44d52aa2448f4**.
+
+- TRUE − PERMUTED, acción: **0.0**, p **1.0**;
+- TRUE − PERMUTED, ganancia: **0.0**, p **1.0**;
+- TRUE − BLIND, acción: **−1.0**, p **4.99975e-05**;
+- TRUE − BLIND, ganancia: **+0.2733195**, p **4.99975e-05**;
+- ventaja de MAE del segundo orden sobre baseline constante en muestras reservadas: **+0.00697175**, p **0.00079996**;
+- MAE segundo orden: **0.04131592**;
+- MAE baseline constante: **0.04828767**;
+- error máximo de intervención: **0.0**.
+
+Interpretación: el segundo modelo **sí aprendió información predictiva sobre el error del primer modelo de sí** y su uso cambia la acción frente al baseline constante. Sin embargo, al permutar los targets del segundo modelo y conservar su multiconjunto, la acción y la ganancia permanecieron idénticas. Por tanto, C0.12 demuestra **segundo orden predictivo**, pero no demuestra todavía **especificidad causal del mapeo segundo orden → acción**.
