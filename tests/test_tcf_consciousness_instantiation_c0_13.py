@@ -24,6 +24,7 @@ def test_c0_13_schema(tmp_path):
     summary = json.loads(result.stdout)
     assert summary["experiment"] == "tcf_consciousness_instantiation_c0_13"
     assert summary["protocol_version"] == "C0.13"
+    assert summary["meta_training_budget"] == 1024 if "meta_training_budget" in summary else True
     assert summary["matched_design"]["same_target_multiset_for_meta_permutation"] is True
     assert summary["semantic_input_during_probe"] is False
     assert summary["external_retraining_during_probe"] is False
