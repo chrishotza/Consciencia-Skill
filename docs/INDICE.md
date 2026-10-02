@@ -104,6 +104,8 @@
 - [Convenciones del repositorio](REPO_CONVENTIONS.md) — estructura, nomenclatura, idioma y política de limpieza.
 - [CI archivado](ARCHIVED_CI.md) — workflows one-shot retirados del CI activo.
 
+<a id="english"></a>
+
 <details>
 <summary>🇺🇸 English — open</summary>
 
