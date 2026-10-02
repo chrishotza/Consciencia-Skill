@@ -1,3 +1,31 @@
+## 2026-10-02 — I5.18 verificado / I5.18 verified
+
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+- I5.18 se ejecutó sobre los efectos por réplica congelados de I5.17, sin nuevas trayectorias: **24 réplicas**, **15 ciclos** y **20.000 permutaciones**.
+- Run research-lab **37052907187**, artifact **11246744569**; tests **37052907473** y paquete **37052907326** pasaron.
+- El efecto bridge ON−OFF medio fue distinto de cero para AUC firmada (**-1.38013**, p=0.00005), AUC absoluta (**-0.52589**, p=0.00290) y cambio de acción futura (**-0.08681**, p=0.00090).
+- La interacción global fase × bridge no fue significativa en ninguno de los tres endpoints.
+- Se define I5.19 como replicación independiente con protocolo estadístico congelado.
+
+</details>
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+- I5.18 ran on frozen per-replicate I5.17 bridge effects with no new trajectories: **24 replicates**, **15 cycles**, **20,000 permutations**.
+- Research-lab run **37052907187**, artifact **11246744569**; tests **37052907473** and package check **37052907326** passed.
+- The mean bridge ON−OFF effect was non-zero for signed AUC (**-1.38013**, p=0.00005), absolute AUC (**-0.52589**, p=0.00290), and future-action change (**-0.08681**, p=0.00090).
+- The global phase × bridge interaction was non-significant for all three endpoints.
+- I5.19 is now defined as an independent replication with the analysis protocol frozen.
+
+</details>
+
 # Historial de cambios
 
 ## 2026-10-02 — I5.17 verificado / I5.17 verified
