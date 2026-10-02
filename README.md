@@ -235,6 +235,8 @@ Divergence is never silently overwritten.
 - Protocols: [docs/INDICE.md](docs/INDICE.md)
 - Results: [research/ORGANISM_RESULT_LEDGER.md](research/ORGANISM_RESULT_LEDGER.md)
 - Infrastructure: [docs/CONSCIOUSNESS_SERVER.md](docs/CONSCIOUSNESS_SERVER.md)
+- Indicator program: [docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md](docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md)
+- Interoception I0/I1: [docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md](docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md) · [docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md](docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md)
 
 ## Known limitations
 
