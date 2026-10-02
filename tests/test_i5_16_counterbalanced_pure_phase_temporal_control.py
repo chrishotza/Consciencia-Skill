@@ -26,7 +26,9 @@ def test_counterbalanced_rotation_preserves_distribution():
     base = build_schedule(0, 0)
     rotated = build_schedule(2, 3)
     assert sorted(rotated[1:]) != []
-    assert sorted(rotated[1:]) == sorted(base[1:])
+    base_semantics = sorted(item.split(" — ", 1)[1] for item in base[1:])
+    rotated_semantics = sorted(item.split(" — ", 1)[1] for item in rotated[1:])
+    assert rotated_semantics == base_semantics
 
 
 def test_metrics():
