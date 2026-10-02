@@ -44,9 +44,24 @@ Endpoints secundarios:
 
 Se usan 512 episodios y 20.000 permutaciones sign-flip.
 
+## Resultado verificado
+
+Workflow de GitHub Actions: **36985957522**; artifact **11218020500**; commit experimental **60263ada3a28af29c3f1fa29246355bb434242fc**; seed **20261003**; **512** episodios.
+
+Endpoints:
+
+- target attention mass FULL: **0.9845638420**;
+- FULL − SHUFFLED target mass: **+0.9768188958**, p **4.99975×10⁻⁵**;
+- FULL − UNIFORM target mass: **+0.7345638420**, p **4.99975×10⁻⁵**;
+- FULL − RANDOM target mass: **+0.7429394202**, p **4.99975×10⁻⁵**;
+- FULL − LESION target mass: **+0.7345638420**, p **4.99975×10⁻⁵**;
+- attention selection-change rate: **1.0**.
+
+Interpretación: bajo este arnés sintético, el modelo de atención concentró de forma reproducible recursos sobre el módulo objetivo y esa concentración desapareció bajo los controles SHUFFLED, UNIFORM, RANDOM y la pérdida de concentración del controlador. El efecto verifica el mecanismo de asignación causal probado, no una atención autónoma del organismo completo.
+
 ## Límite científico
 
-Es un test de mecanismo de asignación causal de atención. No demuestra consciencia, experiencia subjetiva ni una arquitectura completa de atención.
+Es un test de mecanismo de asignación causal de atención. No demuestra consciencia, experiencia subjetiva ni una arquitectura completa de atención, y la condición LESION es una pérdida operacional de concentración del controlador, no una lesión anatómica o neuronal.
 
 </details>
 
@@ -94,8 +109,23 @@ Secondary endpoints:
 
 512 episodes and 20,000 sign-flip permutations are used.
 
+## Verified result
+
+GitHub Actions workflow: **36985957522**; artifact **11218020500**; experimental commit **60263ada3a28af29c3f1fa29246355bb434242fc**; seed **20261003**; **512** episodes.
+
+Endpoints:
+
+- FULL target attention mass: **0.9845638420**;
+- FULL − SHUFFLED target mass: **+0.9768188958**, p **4.99975×10⁻⁵**;
+- FULL − UNIFORM target mass: **+0.7345638420**, p **4.99975×10⁻⁵**;
+- FULL − RANDOM target mass: **+0.7429394202**, p **4.99975×10⁻⁵**;
+- FULL − LESION target mass: **+0.7345638420**, p **4.99975×10⁻⁵**;
+- attention selection-change rate: **1.0**.
+
+Interpretation: under this synthetic harness, the attention model reproducibly concentrated resources on the target module, and that concentration disappeared under SHUFFLED, UNIFORM, RANDOM, and controller-concentration-loss controls. The effect verifies the tested allocation mechanism, not autonomous attention in the full organism.
+
 ## Scientific boundary
 
-This is a causal attention-allocation mechanism test. It does not demonstrate consciousness, subjective experience, or a complete attention architecture.
+This is a causal attention-allocation mechanism test. It does not demonstrate consciousness, subjective experience, or a complete attention architecture; the LESION condition is an operational loss-of-concentration control rather than an anatomical or neuronal lesion.
 
 </details>
