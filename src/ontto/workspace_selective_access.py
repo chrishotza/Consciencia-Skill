@@ -99,7 +99,7 @@ class WorkspaceSelectiveAccessController:
             mode=self.attention_mode,
             rng=rng,
         )
-        attention_module = int(attention_alloc.selected_index) + 2
+        attention_module = int(attention_alloc.selected_index) + 1
         attention_index = query_result.module_index - 2
         attention_mass = float(
             attention_alloc.weights[attention_index]
