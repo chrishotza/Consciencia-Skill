@@ -55,6 +55,14 @@ class OntologicalState:
         default_factory=lambda: [0.0, 0.0, 0.0, 0.0]
     )
     workspace_selective_access_steps: int = 0
+    workspace_task_target_module: int = -1
+    workspace_task_target_action: float = 0.0
+    workspace_task_query_module: int = -1
+    workspace_task_predicted_action: float = 0.0
+    workspace_task_action_accuracy: float = 0.0
+    workspace_task_attention_mass: float = 0.0
+    workspace_task_access_strength: float = 0.0
+    workspace_task_steps: int = 0
 
     def to_json(self) -> str:
         payload = asdict(self)

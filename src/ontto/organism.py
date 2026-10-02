@@ -20,6 +20,7 @@ from .interoception import InteroceptiveProbe
 from .interoception_controller import InteroceptiveController
 from .workspace_controller import WorkspaceRuntimeConfig, WorkspaceTrajectoryController
 from .workspace_selective_access import WorkspaceSelectiveAccessController
+from .workspace_query_task import PersistentQueryTaskController
 
 
 @dataclass
@@ -79,6 +80,14 @@ class OrganismConfig:
     workspace_selective_access_query_mode: str = "full"
     workspace_selective_access_attention_mode: str = "full"
     workspace_selective_access_weight: float = 0.35
+    workspace_query_task_enabled: bool = False
+    workspace_query_task_query_mode: str = "full"
+    workspace_query_task_attention_mode: str = "full"
+    workspace_query_task_weight: float = 0.35
+    workspace_query_task_threshold: float = 0.20
+    workspace_query_task_bottleneck_enabled: bool = True
+    workspace_query_task_lesion_target: bool = False
+    workspace_query_task_seed_offset: int = 0
 
 
 class PersistentOrganism:
@@ -158,6 +167,15 @@ class PersistentOrganism:
                 access_weight=cfg.workspace_selective_access_weight,
             )
             if cfg.workspace_selective_access_enabled
+            else None
+        )
+        self.workspace_query_task_controller = (
+            PersistentQueryTaskController(
+                threshold=cfg.workspace_query_task_threshold,
+                task_weight=cfg.workspace_query_task_weight,
+                seed_offset=cfg.workspace_query_task_seed_offset,
+            )
+            if cfg.workspace_query_task_enabled
             else None
         )
         if cfg.self_observer_enabled and persisted_self_model is None:
@@ -584,6 +602,7 @@ class PersistentOrganism:
         counterfactual_meta_samples_added = 0
         interoceptive_control = None
         workspace_control = None
+        persistent_query_task = None
         if self.cfg.interoceptive_control_enabled:
             chosen_signal, interoceptive_control = self._choose_interoceptive_signal()
         elif self.cfg.self_selection_enabled and self.cfg.self_observer_enabled:
@@ -696,6 +715,40 @@ class PersistentOrganism:
                     float(x) for x in workspace_control["broadcast"]
                 ]
                 self.state.workspace_steps += 1
+            if self.workspace_query_task_controller is not None:
+                chosen, persistent_query_task = (
+                    self.workspace_query_task_controller.choose(
+                        self.state,
+                        candidates,
+                        seed=self.cfg.dynamic_seed + self.state.dynamic_steps,
+                        query_mode=self.cfg.workspace_query_task_query_mode,
+                        attention_mode=self.cfg.workspace_query_task_attention_mode,
+                        bottleneck_enabled=self.cfg.workspace_query_task_bottleneck_enabled,
+                        lesion_target=self.cfg.workspace_query_task_lesion_target,
+                    )
+                )
+                self.state.workspace_task_target_module = int(
+                    persistent_query_task.target_module
+                )
+                self.state.workspace_task_target_action = float(
+                    persistent_query_task.target_action
+                )
+                self.state.workspace_task_query_module = int(
+                    persistent_query_task.query_module
+                )
+                self.state.workspace_task_predicted_action = float(
+                    persistent_query_task.predicted_action
+                )
+                self.state.workspace_task_action_accuracy = float(
+                    persistent_query_task.action_accuracy
+                )
+                self.state.workspace_task_attention_mass = float(
+                    persistent_query_task.attention_mass
+                )
+                self.state.workspace_task_access_strength = float(
+                    persistent_query_task.access_strength
+                )
+                self.state.workspace_task_steps += 1
             chosen_signal = chosen.signal
 
         dynamic = self._advance_dynamic(
@@ -755,6 +808,30 @@ class PersistentOrganism:
                             "access_weight": float(self.cfg.workspace_selective_access_weight),
                         }
                         if self.workspace_selective_access_controller is not None
+                        else None
+                    ),
+                    "persistent_query_task": (
+                        {
+                            "enabled": True,
+                            "query_mode": self.cfg.workspace_query_task_query_mode,
+                            "attention_mode": self.cfg.workspace_query_task_attention_mode,
+                            "bottleneck_enabled": bool(
+                                self.cfg.workspace_query_task_bottleneck_enabled
+                            ),
+                            "lesion_target": bool(self.cfg.workspace_query_task_lesion_target),
+                            "target_module": int(persistent_query_task.target_module),
+                            "target_action": float(persistent_query_task.target_action),
+                            "query_module": int(persistent_query_task.query_module),
+                            "query_accuracy": float(persistent_query_task.query_accuracy),
+                            "attention_module": int(persistent_query_task.attention_module),
+                            "attention_mass": float(persistent_query_task.attention_mass),
+                            "predicted_action": float(persistent_query_task.predicted_action),
+                            "action_accuracy": float(persistent_query_task.action_accuracy),
+                            "access_strength": float(persistent_query_task.access_strength),
+                            "task_weight": float(self.cfg.workspace_query_task_weight),
+                            "task_threshold": float(self.cfg.workspace_query_task_threshold),
+                        }
+                        if self.workspace_query_task_controller is not None
                         else None
                     ),
                     "candidates": [
