@@ -30,3 +30,15 @@ No semantic input is provided during the probe. No external retraining occurs du
 ## Interpretation
 
 A paired difference in the second action after an intervention confined to the first action would support causal mediation through the tested internal dynamics and readout pathway. It does not establish phenomenal consciousness.
+
+
+## Verified result
+
+GitHub Actions run **36944924071**; artifact **11200748887**; SHA256 **d6f496ebe49b494a8af30932a30c73880a26981da079932d9ff8a9348b2d56cd**.
+
+- Signed next-action contrast: **+1.78125**, p **4.99975e-05**
+- Signed next-state contrast: **−0.5770045054**, p **4.99975e-05**
+- Signed self-prediction-gain contrast: **+0.5278692817**, p **4.99975e-05**
+- Maximum intervention error: **0.0**
+
+The forced intervention changed only the first action. The following internal state and the next action then diverged under the same observer and policy. C0.11 is **positive for the tested computational causal chain** action → internal state → observer/policy → next action. It does not establish phenomenal consciousness.
