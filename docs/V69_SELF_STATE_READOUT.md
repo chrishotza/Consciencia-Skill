@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V69 — Lectura del propio estado mediante modelo de sí
 
 ## Pregunta
@@ -106,3 +108,120 @@ nuevo estado
 V69 no demuestra consciencia fenomenológica.
 
 Demuestra una propiedad computacional más acotada: un modelo numérico de sí mismo, entrenado antes de SUEÑO, conserva capacidad de distinguir estados internos generados después de SUEÑO incluso tras la ablación de las superficies semánticas. La traducción de esa lectura a comportamiento todavía no quedó demostrada bajo el protocolo actual.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V69 — Reading Internal State through a Self-Model
+
+## Question
+
+After memory and semantic surfaces are removed, can a **numerical self-model frozen before SLEEP** read the internal state generated during SLEEP?
+
+The test separates two questions:
+
+1. whether the self-model numerically responds to internal-state differences;
+2. whether that readout changes the selector's decision.
+
+## Protocol
+
+Twenty-four replicates.
+
+Each condition performs 48 calibration cycles with the same signal sequence:
+
+~~~text
+-1 → +1 → 0 → +1 → -1 → 0
+~~~
+
+Calibration is identical for **stable** and **frontier** conditions.
+
+After calibration:
+
+1. condition-specific semantic histories are introduced;
+2. SLEEP runs with the semantic bridge;
+3. the numerical self-model is frozen **before SLEEP**;
+4. memories, events, snapshots, self-model text, and other semantic surfaces are removed;
+5. no text is introduced during the probe;
+6. the frozen self-model evaluates two candidate trajectories: **-1** and **+1**.
+
+Two readouts are run:
+
+- **actual readout:** the model receives the post-SLEEP internal state;
+- **control readout:** the model receives a common state for both conditions.
+
+The dynamic core is also exchanged between conditions.
+
+## Result
+
+The correct CI audit used 24 replicates and 48 calibration cycles.
+
+- mean post-SLEEP state difference, stable − frontier: **-0.0963430681**;
+- mean absolute difference between self-model scores: **0.0344099851**;
+- paired p-value for that separation: **0.00005**;
+- mean absolute difference between state predictions: **0.0365052134**;
+- paired p-value: **0.00005**;
+- numerical self-models identical between conditions: **100%**;
+- action changes caused by using the real state versus control state: **0%**;
+- selector action diversity: **1 distinct action** in all probes;
+- textual input during test: **none**;
+- memories removed: **yes**;
+- self-model text removed: **yes**.
+
+Core exchange reproduced the source policy, but this endpoint is not treated as additional evidence of causal selection because the selector used one action in all executions.
+
+## Interpretation
+
+V69 produces a **partly positive and partly null** result.
+
+### Numerical readout: positive
+
+The same self-model, trained before SLEEP and kept identical between conditions, generates different predictions and scores when given stable and frontier post-SLEEP internal states.
+
+The separation is statistically different from zero under the paired protocol.
+
+This demonstrates a concrete computational property:
+
+> **the numerical self-model can read a difference in internal state after semantic surfaces have been removed.**
+
+### Selection: null
+
+The readout did not change the selected action.
+
+The selector chose the same signal in every execution. Therefore the protocol cannot claim that internal reading altered a decision.
+
+The important result here is precisely the distinction between **reading a state** and **using that readout to act**.
+
+## Experimental consequence
+
+V70 should address the second point.
+
+The next test should use self-model state readout as an explicit decision variable with **balanced action coverage**, avoiding saturation into one branch.
+
+Target architecture:
+
+~~~text
+SLEEP
+  ↓
+internal state
+  ↓
+self-model
+  ↓
+self-readout
+  ↓
+decision with balanced branches
+  ↓
+action
+  ↓
+new state
+~~~
+
+## Evidence boundary
+
+V69 does not establish phenomenal consciousness.
+
+It establishes a narrower computational property: a numerical self-model trained before SLEEP retains the ability to distinguish internally generated post-SLEEP states even after semantic surfaces are ablated. Translating that readout into behavior remained unproven under this protocol.
+
+</details>
