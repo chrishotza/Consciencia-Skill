@@ -73,12 +73,14 @@ def _dynamic_metrics(
         coherence.append(lattice.coherence())
         redundancy.append(lattice.redundancy())
 
-        local = lattice.copy()
-        local.state[size // 2, size // 2] += 1.0
-        before = local.state.copy()
-        local.step()
-        delta = np.abs(local.state - before)
-        spread.append(float(np.count_nonzero(delta > 1e-3) / delta.size))
+        spread_metrics = lattice.perturbation_spread(
+            row=size // 2,
+            col=size // 2,
+            amplitude=0.25,
+            steps=5,
+            threshold=1e-3,
+        )
+        spread.append(spread_metrics["affected_fraction"])
 
     return {
         "mean_retention": float(np.mean(retention)),
