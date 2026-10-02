@@ -1,0 +1,55 @@
+name: i5-2-state-dependent-query
+
+on:
+  push:
+    paths:
+      - "src/ontto/workspace_query.py"
+      - "src/ontto/global_workspace.py"
+      - "experiments/i5_2_state_dependent_query.py"
+      - "tests/test_workspace_query.py"
+      - "tests/test_i5_2_state_dependent_query.py"
+      - "docs/I5_2_STATE_DEPENDENT_QUERY.md"
+      - ".github/workflows/i5-2-state-dependent-query.yml"
+  pull_request:
+    paths:
+      - "src/ontto/workspace_query.py"
+      - "src/ontto/global_workspace.py"
+      - "experiments/i5_2_state_dependent_query.py"
+      - "tests/test_workspace_query.py"
+      - "tests/test_i5_2_state_dependent_query.py"
+      - "docs/I5_2_STATE_DEPENDENT_QUERY.md"
+      - ".github/workflows/i5-2-state-dependent-query.yml"
+  workflow_dispatch:
+
+jobs:
+  i5-2:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+      - name: Tests
+        run: pytest -q tests/test_workspace_query.py tests/test_i5_2_state_dependent_query.py
+      - name: Run I5.2
+        run: python experiments/i5_2_state_dependent_query.py --episodes 512 --out results/i5_2_state_dependent_query
+      - name: Manifest
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          Path("results/i5_2_state_dependent_query/manifest.json").write_text(json.dumps({"repository": os.environ["GITHUB_REPOSITORY"], "sha": os.environ["GITHUB_SHA"], "run_id": os.environ["GITHUB_RUN_ID"], "workflow": os.environ["GITHUB_WORKFLOW"]}, indent=2), encoding="utf-8")
+          PY
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: i5-2-state-dependent-query-${{ github.sha }}
+          path: results/i5_2_state_dependent_query/
+          if-no-files-found: error
