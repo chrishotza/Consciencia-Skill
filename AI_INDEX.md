@@ -51,6 +51,10 @@
 - `docs/C0_16_INTEGRATED_SECOND_ORDER_ORGANISM.md` — integrated second-order selector inside the real persistent organism lifecycle.
 - `experiments/tcf_consciousness_instantiation_c0_16.py` — SQLite-backed continuous vs. restart organism sequence.
 
+### C0.17
+- `docs/C0_17_AUTONOMOUS_SECOND_ORDER_ACQUISITION.md` — online counterfactual acquisition of the action-conditioned second-order model inside PersistentOrganism.
+- `experiments/tcf_consciousness_instantiation_c0_17.py` — learned-inside-organism vs. target-permuted evaluation.
+
 ### V69
 - `docs/V69_SELF_STATE_READOUT.md` — numeric readout; discrete action endpoint is null.
 - `docs/V69_SELF_READ_STATE.md` — readout participates in trajectory selection; includes blinded control and state-swap intervention.
