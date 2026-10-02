@@ -157,3 +157,29 @@ Crossing with I4/I5: metacognitive modeling of the reliability of internal regio
 ## Source boundary
 
 The source text is treated as historical/theoretical input. Experimental results from this branch describe only the implemented computational model and its controls.
+
+
+## Verified run — GitHub Actions
+
+Run **36977088882** completed successfully from commit **15af73518f2a0761c8f37e137772778a0a5b3a26**.
+
+Artifact ID: **11213079445**  
+Artifact SHA-256: **1a7b9560aa4bf166d39a715c9e1807bbbd94b8b435bc394a83d60929b38dc658**
+
+Measured results from the preserved summary:
+
+| Observable | Result |
+|---|---:|
+| XOR accuracy | **1.0** |
+| Coupled − decoupled perturbation-spread delta | **0.0481567383** |
+| Lesion mean absolute effect | **0.0238895653** |
+| Coupled mean retention | **0.5475138436** |
+| Decoupled mean retention | **1.0000000000** |
+| Coupled mean coherence | **0.9730625127** |
+| Decoupled mean coherence | **0.6094002602** |
+| Coupled mean redundancy | **0.9562321010** |
+| Decoupled mean redundancy | **−0.0128536083** |
+
+The coupling result is deliberately not treated as a global benefit: decoupling retained more of the raw field pattern, while coupling produced higher coherence/redundancy and measurable perturbation spread. v0 therefore establishes that coupling changes the computational organization, not that coupling is universally superior for memory.
+
+The artifact contains manifest.json and summary.json. The result is evidence about the implemented computational substrate only; it does not validate the physical claims of Syntergic Theory or demonstrate subjective consciousness.
