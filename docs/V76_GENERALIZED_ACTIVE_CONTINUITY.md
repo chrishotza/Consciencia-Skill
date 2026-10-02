@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V76 — Generalización de continuidad bajo perturbaciones no vistas
 
 ## Pregunta
@@ -161,3 +163,170 @@ Su función es separar dos hipótesis:
 
 1. la política simplemente aprende un comportamiento ligado a un régimen concreto de perturbación;
 2. la política aprende una regla más general dependiente de su estado y reutilizable bajo perturbaciones nuevas.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V76 — Continuity Generalization under Unseen Perturbations
+
+## Question
+
+V75 showed that a policy can act after perturbation and recover self-prediction advantage.
+
+But that result could still be tied to the perturbation regime used for training.
+
+> Does the policy learn a state-dependent rule that generalizes to perturbation magnitudes never seen during training?
+
+## Design
+
+V76 explicitly separates **training** and **generalization**.
+
+The main policy is trained only with perturbation magnitudes:
+
+~~~text
+0.25 and 0.75
+~~~
+
+always using both signs.
+
+Evaluation uses:
+
+- **in-domain:** 0.25 and 0.75;
+- **OOD:** 0.35, 0.55, and 0.85.
+
+Perturbation magnitude is not supplied as a feature. The policy sees only dynamic state available to its self-model.
+
+## Exposure control
+
+A narrow policy is also trained using only perturbation magnitude 0.50.
+
+This serves as a limited-exposure control to ask whether a policy trained on a single regime behaves similarly when magnitude changes.
+
+## Objective
+
+Training objective remains:
+
+~~~text
+self-prediction gain
+=
+persistence error
+−
+self-model error
+~~~
+
+No continuity label is provided.
+
+Continuity is calculated only as a secondary endpoint:
+
+~~~text
+continuity = 1 / (1 + |current_state - pre_perturbation_state|)
+~~~
+
+## Protocol
+
+Each condition:
+
+1. starts from an independent but pairable seed;
+2. runs the same warm-up;
+3. applies a controlled perturbation;
+4. removes semantic input from the probe;
+5. runs multiple recovery steps;
+6. uses the same seed for generalized policy, narrow policy, blinded state, fixed policy, and random selection.
+
+Both policies are saved and reloaded without retraining before evaluation.
+
+## Endpoints
+
+### Primary
+
+**Post-perturbation self-prediction gain.**
+
+V76 is especially focused on OOD conditions.
+
+### Generalization
+
+The generalized-policy advantage over random is computed in-domain and OOD:
+
+~~~text
+advantage = generalized_gain − random_gain
+~~~
+
+The retained OOD fraction relative to in-domain is also recorded.
+
+### Secondary
+
+- continuity index;
+- narrow-policy comparison;
+- blinded-state comparison;
+- first-action sensitivity to the sign of an OOD 0.55 perturbation.
+
+## Observed result
+
+The GitHub Actions execution used 64 episodes per condition, 64 training episodes, 512 SelfObserver samples, and 12 recovery steps.
+
+### Self-prediction gain
+
+- generalized-policy mean gain, all conditions: **0.50016**;
+- blinded-state gain: **-0.15113**;
+- fixed-policy gain: **-0.13311**;
+- random-selection gain: **0.18987**;
+- generalized − random advantage in-domain: **0.30819**;
+- generalized − random advantage OOD: **0.31170**;
+- retained OOD fraction: **1.0114**;
+- learned − random overall p-value: **0.00005**;
+- learned − blinded overall p-value: **0.00005**;
+- learned − fixed overall p-value: **0.00005**.
+
+The generalized policy retained its self-prediction advantage when moving from trained perturbations (0.25, 0.75) to unseen perturbations (0.35, 0.55, 0.85).
+
+### Narrow-exposure control
+
+The policy trained only on perturbation 0.50 produced nearly the same result:
+
+- generalized − narrow paired p-value: **1.0**;
+- narrow-policy global mean gain: **0.50014**.
+
+Under this harness and linear parameterization, expanding training perturbation variety did not produce an additional measurable advantage. V76 therefore supports the more specific claim that the learned policy already generalized to unseen perturbations, not that broader training diversity itself improved performance.
+
+### State-dependent response
+
+For an OOD perturbation of magnitude 0.55:
+
+- first-action response with readable state: **100%**;
+- blinded state: **0%**.
+
+This shows that the policy retained behavioral sensitivity to internal state in a perturbation that did not appear during training.
+
+### Continuity
+
+Secondary continuity index:
+
+- generalized policy: **0.80164**;
+- random policy: **0.80667**;
+- generalized − random paired p-value: **0.07230**.
+
+Therefore V76 **does not demonstrate a robust continuity advantage over random selection**. The reproduced effect is self-prediction generalization, not demonstrated autonomous priority for continuity.
+
+## What a favorable result would show
+
+A favorable result would be retention of self-prediction advantage under OOD perturbations, especially relative to blinded state, fixed policy, random selection, and a single-regime training policy.
+
+That would support **functional generalization of the self-prediction policy to unseen perturbations**.
+
+It would not show that the AI discovered on its own that it should preserve continuity.
+
+## Boundary
+
+The goal of recovering self-prediction remains an explicit protocol choice.
+
+V76 therefore does not convert continuity into an autonomous value and does not establish subjective experience.
+
+Its role is to separate:
+
+1. behavior tied to a specific perturbation regime;
+2. a more general state-dependent rule reusable under novel perturbations.
+
+</details>
