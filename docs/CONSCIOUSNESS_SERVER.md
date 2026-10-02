@@ -56,9 +56,10 @@ The current bootstrap now adds four durable continuity primitives above the even
 - **continuity checkpoints** — compact observations of local state, trajectory fingerprints, runtime mode and organism metadata;
 - **continuity reconciliation** — comparison of the local organism against its latest server checkpoint without overwriting state;
 - **continuity bundles** — portable, hash-verified organism backups for migration and recovery;
-- **continuity recovery planning** — non-destructive decision logic that blocks silent overwrite on divergence and identifies the safe next recovery action.
+- **continuity recovery planning** — non-destructive decision logic that blocks silent overwrite on divergence and identifies the safe next recovery action;
+- **deterministic event replay** — transferable event deltas with identity, parent-chain verification, and idempotent replay.
 
-The next architectural step is to introduce deterministic event identity and a real replay/transfer protocol.
+Phase 4 is now implemented: deterministic event identity, ordered event deltas, verified replay boundaries, idempotent retransmission, and divergence guards.
 
 ## Local-first bootstrap
 
@@ -126,9 +127,11 @@ The runtime can create hash-verified portable bundles and produce a non-destruct
 
 See [Continuity bundles](CONTINUITY_BUNDLES.md) and [Continuity recovery](CONTINUITY_RECOVERY.md).
 
-### Phase 4 — deterministic replay / transfer
+### Phase 4 — deterministic replay / transfer — implemented
 
-Introduce deterministic event identity, replay boundaries and an API for transferring verified continuity deltas without silently overwriting divergent state.
+Events now carry deterministic SHA-256 identities, logical revisions and parent-chain links. The server exposes verified delta export and replay endpoints. Replays require a matching base revision and may optionally require a matching base state hash. Exact retransmission is idempotent and divergent branches are rejected.
+
+See [Deterministic event replay](DETERMINISTIC_EVENT_REPLAY.md).
 
 ### Phase 5 — shared persistence backend
 
