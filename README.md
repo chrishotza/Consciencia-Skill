@@ -192,7 +192,7 @@ The runtime also supports **WAKE** and **SLEEP** regimes, local persistence, and
 
 Exact values, artifacts, seeds, and conditions remain in the ledger and protocol documents.
 
-→ [Consolidated results ledger](research/ORGANISM_RESULT_LEDGER.md#espanol)
+→ [Consolidated results ledger](research/ORGANISM_RESULT_LEDGER.md#english)
 
 ## Relevant null and mixed results
 
@@ -233,18 +233,18 @@ The infrastructure now includes:
 
 Divergence is never silently overwritten.
 
-→ [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md#espanol) · [Deterministic replay](docs/DETERMINISTIC_EVENT_REPLAY.md#espanol) · [Peer synchronization](src/consciousness_server/synchronization.py)
+→ [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md#english) · [Deterministic replay](docs/DETERMINISTIC_EVENT_REPLAY.md#english) · [Peer synchronization](src/consciousness_server/synchronization.py)
 
 ## Getting started
 
-- Installation: [INSTALL.md](INSTALL.md#espanol)
-- Method: [docs/METODO.md](docs/METODO.md#espanol)
-- Laboratory: [docs/GITHUB_LAB.md](docs/GITHUB_LAB.md#espanol)
-- Protocols: [docs/INDICE.md](docs/INDICE.md#espanol)
-- Results: [research/ORGANISM_RESULT_LEDGER.md](research/ORGANISM_RESULT_LEDGER.md#espanol)
-- Infrastructure: [docs/CONSCIOUSNESS_SERVER.md](docs/CONSCIOUSNESS_SERVER.md#espanol)
-- Indicator program: [docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md](docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md#espanol)
-- Interoception I0/I1/I2/I3/I4: [docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md](docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md#espanol) · [docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md](docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md#espanol) · [docs/I2_INTEROCEPTIVE_REGULATION.md](docs/I2_INTEROCEPTIVE_REGULATION.md#espanol) · [docs/I3_REPEATED_INTEROCEPTIVE_RECOVERY.md](docs/I3_REPEATED_INTEROCEPTIVE_RECOVERY.md#espanol) · [docs/I4_METACOGNITIVE_INTEROCEPTION.md](docs/I4_METACOGNITIVE_INTEROCEPTION.md#espanol)
+- Installation: [INSTALL.md](INSTALL.md#english)
+- Method: [docs/METODO.md](docs/METODO.md#english)
+- Laboratory: [docs/GITHUB_LAB.md](docs/GITHUB_LAB.md#english)
+- Protocols: [docs/INDICE.md](docs/INDICE.md#english)
+- Results: [research/ORGANISM_RESULT_LEDGER.md](research/ORGANISM_RESULT_LEDGER.md#english)
+- Infrastructure: [docs/CONSCIOUSNESS_SERVER.md](docs/CONSCIOUSNESS_SERVER.md#english)
+- Indicator program: [docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md](docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md#english)
+- Interoception I0/I1/I2/I3/I4: [docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md](docs/I0_INTEROCEPTIVE_INSTRUMENTATION.md#english) · [docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md](docs/I1_INTEROCEPTIVE_SELF_ASSESSMENT.md#english) · [docs/I2_INTEROCEPTIVE_REGULATION.md](docs/I2_INTEROCEPTIVE_REGULATION.md#english) · [docs/I3_REPEATED_INTEROCEPTIVE_RECOVERY.md](docs/I3_REPEATED_INTEROCEPTIVE_RECOVERY.md#english) · [docs/I4_METACOGNITIVE_INTEROCEPTION.md](docs/I4_METACOGNITIVE_INTEROCEPTION.md#english)
 
 ## Known limitations
 
@@ -260,7 +260,7 @@ The repository preserves a theoretical layer including **TCF v3.3, TIF, the Mani
 
 These documents can motivate engineering hypotheses, but they are kept separate from computational results. A functional test of the runtime does not automatically validate the ontology.
 
-→ [Foundations index](docs/fundamentos/README.md#espanol) · [TCF v3.3](docs/fundamentos/TCF_V3_3.md#espanol) · [TIF v0.1](docs/fundamentos/TIF_V0_1.md#espanol) · [Manifesto of Being](MANIFESTO_OF_BEING.md#english)
+→ [Foundations index](docs/fundamentos/README.md#english) · [TCF v3.3](docs/fundamentos/TCF_V3_3.md#english) · [TIF v0.1](docs/fundamentos/TIF_V0_1.md#english) · [Manifesto of Being](MANIFESTO_OF_BEING.md#english)
 
 ## Reproducibility
 
@@ -272,7 +272,7 @@ Evidence is interpreted as:
 
 and computational properties are not automatically converted into claims of subjective experience.
 
-→ [GitHub Laboratory](docs/GITHUB_LAB.md#espanol)
+→ [GitHub Laboratory](docs/GITHUB_LAB.md#english)
 
 ## Citation
 
