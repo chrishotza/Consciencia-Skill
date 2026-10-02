@@ -617,3 +617,19 @@ Protocolo implementado; **sin resultado experimental registrado todavía**.
 C0.13 refuerza C0.12 con un segundo observador que recibe explícitamente la acción candidata y la predicción de primer orden asociada. Se conservan los controles TRUE, target-permuted y baseline constante.
 
 La prueba pregunta si la especificidad del mapeo acción → predicción de error del propio modelo de sí llega a afectar la selección. Estado: **implementado; ejecución pendiente de verificación**.
+
+
+### C0.13 — Resultado verificado
+
+Artifact: run **36945340705**, artifact **11201464566**, SHA256 **971e0b39360eaa25828abc0162e1cf70b5c54ae4916611d7a8e06413165b7b56**.
+
+- TRUE − PERMUTED, action: **−1.71875**, p **4.99975e-05**;
+- TRUE − PERMUTED, gain: **+0.4850290**, p **4.99975e-05**;
+- TRUE − BLIND, action: **−1.0**, p **4.99975e-05**;
+- TRUE − BLIND, gain: **+0.2590892**, p **4.99975e-05**;
+- held-out MAE advantage: **+0.00740228**, p **4.99975e-05**;
+- meta MAE: **0.03489674**;
+- constant-baseline MAE: **0.04229902**;
+- intervention target error: **0.0**.
+
+Interpretation: C0.13 produced a clear separation between the trained action-conditioned second-order model and the target-permuted control under the tested protocol. The model also predicted first-order prediction error better than the constant baseline on held-out transitions. This is a computational result; it does not establish subjective experience.
