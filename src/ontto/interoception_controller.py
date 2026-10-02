@@ -7,6 +7,7 @@ import numpy as np
 
 from .bridge import DynamicStateBridge
 from .storage import OntologicalState
+from .interoception import InteroceptiveProbe, InteroceptiveSnapshot
 
 
 @dataclass(frozen=True)
