@@ -18,6 +18,7 @@ from .meta_observer import MetaSelfObserver
 from .action_conditioned_meta_observer import ActionConditionedMetaObserver
 from .interoception import InteroceptiveProbe
 from .interoception_controller import InteroceptiveController
+from .workspace_controller import WorkspaceRuntimeConfig, WorkspaceTrajectoryController
 
 
 @dataclass
@@ -66,6 +67,13 @@ class OrganismConfig:
     dream_semantic_bridge_enabled: bool = False
     dream_semantic_bridge_scale: float = 1.0
     dream_semantic_bridge_importance: float = 0.65
+    workspace_enabled: bool = False
+    workspace_capacity: int = 2
+    workspace_broadcast_gain: float = 0.65
+    workspace_local_gain: float = 0.35
+    workspace_influence_weight: float = 0.35
+    workspace_broadcast_enabled: bool = True
+    workspace_lesion_index: int | None = None
 
 
 class PersistentOrganism:
@@ -123,6 +131,20 @@ class PersistentOrganism:
         self.interoceptive_controller = InteroceptiveController(
             InteroceptiveProbe(memory_limit=cfg.memory_limit),
             memory_count=cfg.interoceptive_control_memory_count,
+        )
+        self.workspace_controller = (
+            WorkspaceTrajectoryController(
+                WorkspaceRuntimeConfig(
+                    capacity=cfg.workspace_capacity,
+                    broadcast_gain=cfg.workspace_broadcast_gain,
+                    local_gain=cfg.workspace_local_gain,
+                    influence_weight=cfg.workspace_influence_weight,
+                    broadcast_enabled=cfg.workspace_broadcast_enabled,
+                    lesion_index=cfg.workspace_lesion_index,
+                )
+            )
+            if cfg.workspace_enabled
+            else None
         )
         if cfg.self_observer_enabled and persisted_self_model is None:
             for row in store.self_observer_trajectory(cfg.agent_id):
@@ -547,6 +569,7 @@ class PersistentOrganism:
         candidates = ()
         counterfactual_meta_samples_added = 0
         interoceptive_control = None
+        workspace_control = None
         if self.cfg.interoceptive_control_enabled:
             chosen_signal, interoceptive_control = self._choose_interoceptive_signal()
         elif self.cfg.self_selection_enabled and self.cfg.self_observer_enabled:
@@ -621,6 +644,18 @@ class PersistentOrganism:
                 raise ValueError(
                     f"unknown self_selection_policy={self.cfg.self_selection_policy!r}"
                 )
+            if self.workspace_controller is not None:
+                chosen, workspace_control = self.workspace_controller.choose(
+                    self.state,
+                    candidates,
+                )
+                self.state.workspace_last_selected_module = int(
+                    workspace_control["selected_modules"][0]
+                ) if workspace_control["selected_modules"] else -1
+                self.state.workspace_last_broadcast = [
+                    float(x) for x in workspace_control["broadcast"]
+                ]
+                self.state.workspace_steps += 1
             chosen_signal = chosen.signal
 
         dynamic = self._advance_dynamic(
@@ -663,6 +698,7 @@ class PersistentOrganism:
                     ),
                     "counterfactual_meta_samples_added": counterfactual_meta_samples_added,
                     "chosen_signal": chosen_signal,
+                    "workspace_control": workspace_control,
                     "candidates": [
                         {
                             "signal": candidate.signal,
