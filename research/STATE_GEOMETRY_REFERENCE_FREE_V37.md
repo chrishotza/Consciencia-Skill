@@ -1,3 +1,30 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V37 — Decoder cross-history sin referencia
+
+V37 elimina las referencias de continuación A/B dentro de historia usadas en V33–V35.
+
+Un decoder logístico se entrena únicamente con trayectorias de las otras nueve history-seeds y se evalúa sobre la history-seed reservada. Las propias trayectorias de prueba nunca se comparan contra una continuación generada desde la misma historia.
+
+El decoder recibe 12 observables fijos de trayectoria calculados solo a partir de la continuación de prueba:
+
+mean, standard deviation, mean absolute state, range, mean velocity, velocity standard deviation, mean absolute velocity, acceleration standard deviation, mean absolute acceleration, endpoint displacement, early-window mean y late-window mean.
+
+El test contiene seis puntos paramétricos fijos, cuatro estratos history-pair, nueve contextos memory/pressure, ángulos 0°, 30° y 150°, input futuro cero y seeds de continuación disjuntas.
+
+Análisis primario: diferencia de accuracy held-out entre 30° y 150°.
+
+La inferencia usa sign-flip emparejado sobre los diez bloques history-seed reservados.
+
+La interpretación se restringe a geometría computacional de trayectorias. Los resultados positivos no establecen consciencia ni experiencia subjetiva.
+
+</details>
+
+<a id="english"></a>
+
 # V37 — Reference-Free Cross-History Decoder
 
 V37 removes the within-history A/B continuation references used in V33–V35.
