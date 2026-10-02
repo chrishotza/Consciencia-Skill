@@ -895,6 +895,19 @@ Workflow: **37038527924**; artifact **11240619196**; seed **20261010**; **24** r
 
 Interpretación: con las acciones aplicadas igualadas, la diferencia de query produjo divergencia semántica persistente y, cuando el semantic self-model bridge estuvo activo, esa diferencia volvió a entrar en la dinámica. Esto respalda la ruta computacional query → self-model → semantic bridge → state bajo el harness probado. No demuestra consciencia ni experiencia subjetiva. La siguiente prueba debe medir si esa diferencia modifica la selección de trayectorias futuras.
 
+### I5.11 — Reentrada semántica en selección de trayectorias — resultado verificado
+
+Workflow: **37038961982**; artifact **11241544037**; seed **20261011**; **24** réplicas; **24** ciclos de warmup; **8** ciclos experimentales.
+
+- coincidencia de acción aplicada en t0: **100%**;
+- cambio de acción seleccionada en ciclos 1–7: **55.95%**, p **4.99975×10⁻⁵**;
+- Δ estado en t+1: **0.49647**, p **4.99975×10⁻⁵**;
+- AUC de divergencia post-pulso: **2.23957**, p **4.99975×10⁻⁵**;
+- AUC ACTION_MATCH bridge ON vs OFF: **2.63688**, p **4.99975×10⁻⁵**;
+- divergencia post-pulso de modelo de sí: **50.0%**.
+
+Interpretación: después de igualar la acción aplicada en t0, la perturbación de query siguió modificando el estado y la selección de trayectorias futuras; el bridge ON-vs-OFF separó adicionalmente la transmisión semántica. Esto respalda bajo el harness la cadena query → self-model → semantic bridge → state → future selection. No demuestra consciencia ni experiencia subjetiva.
+
 ## Estado de campaña C0
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.
@@ -1393,6 +1406,19 @@ Workflow: **37038527924**; artifact **11240619196**; seed **20261010**; **24** r
 - mean maximum self-model-version difference: **2.29**.
 
 Interpretation: with applied actions matched, the query difference produced persistent semantic divergence and, when the semantic self-model bridge was enabled, that difference re-entered dynamics. This supports the computational pathway query → self-model → semantic bridge → state under the tested harness. It does not demonstrate consciousness or subjective experience. The next test should measure whether this difference changes future trajectory selection.
+
+### I5.11 — Semantic re-entry into future trajectory selection — verified result
+
+Workflow: **37038961982**; artifact **11241544037**; seed **20261011**; **24** replicates; **24** warmup cycles; **8** experimental cycles.
+
+- t0 applied-action match: **100%**;
+- selected-action change across cycles 1–7: **55.95%**, p **4.99975×10⁻⁵**;
+- state delta at t+1: **0.49647**, p **4.99975×10⁻⁵**;
+- post-pulse divergence AUC: **2.23957**, p **4.99975×10⁻⁵**;
+- ACTION_MATCH bridge ON vs OFF AUC: **2.63688**, p **4.99975×10⁻⁵**;
+- post-pulse self-model divergence: **50.0%**.
+
+Interpretation: after matching the applied t0 action, the query perturbation still changed state and future trajectory selection; the bridge ON-vs-OFF contrast further separated semantic transmission. Under the tested harness this supports query → self-model → semantic bridge → state → future selection. It does not demonstrate consciousness or subjective experience.
 
 ## C0 campaign and causal controls
 
