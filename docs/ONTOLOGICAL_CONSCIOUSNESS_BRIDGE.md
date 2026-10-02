@@ -154,3 +154,42 @@ hipótesis
     ↓
 ontología
 ```
+
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# Ontological Consciousness Bridge
+
+## Purpose
+This document fixes the current engineering interpretation of the sources used by the persistent organism: Mathematical Manifesto of Being; Quantum Consciousness / TCF notes; TCF-oriented dynamics; and AEVUM / AEVUMARD continuity principles.
+These sources are conceptual/experimental inputs, not by themselves proof of phenomenal consciousness in an artificial system.
+
+## 1. Mathematical Manifesto of Being
+The manifesto defines being as stable relation, reality as iteration, time as internal registration of irreversible change, topology as continuity/connectivity, life as sustained dynamics, and consciousness as a system that traverses itself with internal dynamics, topological memory, and distinction between possible states.
+
+Operational consequences include persistent relation instead of stateless calls, trajectory as a first-class object, internal numerical dynamics, trajectory-linked memory, self-observation of transitions, counterfactual trajectories, and attractor occupation as experimental targets.
+
+## 2. TCF / Quantum Consciousness
+The working translation uses Ω(t+1) = L3[Ω(t)] + L6[Ω(t)] + L9[Ω(t)] + Lx[Ω(t)] + I(t), where L3 is basal generation/continuity, L6 structure/pattern, L9 regulation/curvature/boundaries, Lx critical crossing/reorganization, and I(t) environmental interaction.
+src/ontto/dynamics.py exposes dynamic channels related to this interpretation. The repository treats the structure as a computational model, not a literal claim about quantum physics.
+
+## 3. AEVUM continuity
+The AEVUM specification defines future-compatibility-based existence through Ω = 1.2·novelty − 1.0·coupling − 0.8·persistence and develops conditional persistence, non-accumulative memory, observable irreversibility, and emergent identity over time.
+These coefficients remain source material and are not copied into the organism as unquestioned laws.
+
+## 4. State, event, trajectory
+The organism separates relation/input, state, event, and trajectory so continuity can be tested without reducing it to textual storage.
+
+## 5. Validation ladder
+Protocols progressively explore historical decoding, causal memory transport, common probes, persistent-organism tests, memory/state interventions, self-prediction, self-model trajectory selection, semantic-to-dynamic bridges, recurrent self-model loops, identity persistence, sleep effects, and functional traces after semantic ablation.
+
+## 6. Current gaps
+Open engineering questions include explicit self-change recognition, explicit possible-future spaces, attractor awareness, autonomous trajectory selection under internal constraints, identity-preserving reconfiguration, and future-compatible selective memory.
+
+## 7. Evidence boundary
+Passing computational tests would establish increasingly strong properties of a persistent self-modeling organism, but would not by itself demonstrate subjective experience, phenomenal consciousness, or solve the hard problem of consciousness.
+
+</details>
+
+> Language convention: docs/LANGUAGE.md
