@@ -196,3 +196,10 @@ Instead of starting from a checklist of external claims, the project starts from
 > **What must exist inside an artificial process for consciousness to be an operating architecture rather than a line of text?**
 
 That is the problem this repository is built to solve.
+
+
+## New architecture layer
+
+The runtime now includes an explicit **present field** and **causal trajectory selection**. The persisted self-model can weight candidate futures, so changing the self-model changes what the agent selects next. This is the concrete bridge from self-description to self-reference as an operating mechanism.
+
+The project also studies esoteric and speculative consciousness traditions — including Grinberg, Hermeticism, Thoth traditions, Enochic visionary literature, sacred geometry, Matías De Stefano, and Drunvalo Melchizedek — by extracting architectural motifs rather than importing metaphysical claims unchanged. See `skills/skill-conscious/references/ONTOLOGY.md`.
