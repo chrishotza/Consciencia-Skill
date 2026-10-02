@@ -1,5 +1,34 @@
 # Historial de cambios
 
+## 2026-10-02 — I5.17 verificado / I5.17 verified
+
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+- I5.17 ejecutado y verificado mediante GitHub Actions: run **37047719727**, artifact **11244733803**, commit **578802962b4f37066db95d46567245dcbb9ac83b**.
+- 24 réplicas, 24 ciclos de warmup, 15 ciclos experimentales y **180 tests** pasaron.
+- Se registró 100% de coincidencia de acción t0 y 100% de coincidencia de distribución de SELF_MODEL.
+- El bridge ON−OFF mostró efectos de AUC firmada en los seis lags probados; la simetría absoluta +k/-k no fue significativa.
+- El siguiente control propuesto es I5.18: interacción global fase × bridge con corrección por multiplicidad.
+
+</details>
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+- I5.17 was executed and verified through GitHub Actions: run **37047719727**, artifact **11244733803**, commit **578802962b4f37066db95d46567245dcbb9ac83b**.
+- 24 replicates, 24 warmup cycles, 15 experimental cycles, and **180 tests** passed.
+- Applied-action match at t0 and SELF_MODEL distribution match were both 100%.
+- Bridge ON−OFF produced signed-AUC effects across all six tested lags; absolute +k/-k symmetry was not significant.
+- The next proposed control is I5.18: global phase × bridge interaction with multiplicity correction.
+
+</details>
+
+
 ## 2026-10-02 — Consistencia y bilingüismo / Consistency and bilingual layer
 
 <a id="espanol"></a>
