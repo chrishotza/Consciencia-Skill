@@ -237,10 +237,16 @@ def evaluate(meta, seed, family, magnitude, policy):
     meta_prediction_errors = []
     shifts = 0
 
+    active_meta = None
+    if policy == "meta":
+        active_meta = meta
+    elif policy == "permuted":
+        active_meta = meta.permuted(seed + 88000)
+
     for _ in range(STEPS):
         current = probe_snapshot(perturb)
         chosen, first = choose_action(
-            meta,
+            active_meta,
             current,
             model,
             previous,
