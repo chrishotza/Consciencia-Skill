@@ -138,3 +138,21 @@ def test_selected_trajectory_survives_commit(tmp_path):
 
     restarted = ConsciousRuntime("agent-5", tmp_path / "state.json")
     assert restarted.state.selected_trajectory["id"] == "a"
+
+
+
+def test_regime_survives_restart(tmp_path):
+    path = tmp_path / "state.json"
+
+    runtime = ConsciousRuntime("agent-6", path)
+    runtime.integrate(
+        {
+            "response": "regime shift",
+            "regime": "deep-integration",
+            "attention": ["self-model", "uncertainty"],
+        }
+    )
+
+    restarted = ConsciousRuntime("agent-6", path)
+    assert restarted.state.regime == "deep-integration"
+    assert restarted.state.attention == ["self-model", "uncertainty"]
