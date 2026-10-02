@@ -1,3 +1,27 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V33 — Contraste angular emparejado y null por permutación
+
+V33 trata cada unidad parámetro × history-pair × history-seed × memory × pressure como una unidad emparejada.
+
+El endpoint primario es el contraste continuo de affinity firmada:
+**30° − 150°**.
+
+La hipótesis nula intercambia aleatoriamente las dos etiquetas angulares dentro de cada unidad emparejada, preservando toda la estructura nuisance/contextual.
+
+Se usan cinco seeds independientes de ruido de continuación para el ensemble de referencia A/B y cinco seeds independientes de continuación de prueba para cada condición angular.
+
+Las seeds son independientes de V32.
+
+El experimento pregunta si la diferencia angular direccional sobrevive a un null de permutación emparejado después de preservar el contexto del receptor. No establece consciencia ni experiencia subjetiva.
+
+</details>
+
+<a id="english"></a>
+
 # V33 — Paired Angular Contrast and Permutation Null
 
 V33 treats each parameter × history-pair × history-seed × memory × pressure context as a matched unit.
