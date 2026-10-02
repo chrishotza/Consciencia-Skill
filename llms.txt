@@ -12,11 +12,13 @@
 - docs/REPO_CONVENTIONS.md — consistencia y limpieza.
 
 ## Evidencia actual
-- Current frontier: I4.3 OOD metacognition, I5.0 bounded global workspace, Lattice v0/v1, C0 campaign G1=4/32.
-- Current I5 result: 512 paired episodes; broadcast +0.126953125 (p=4.99975e-05); bounded K=2 vs K=6 +0.017578125 (p=0.0222489).
+- Current frontier: I4.3 OOD metacognition, I5.0 bounded global workspace, I5.1 PersistentOrganism integration (behavioral null under tested mapping), I5.2 state-dependent query (standalone verified), Lattice v0/v1, C0 campaign G1=4/32.
+- I5.2 result: 512 paired episodes; FULL−SHUFFLED +1.0 (p=4.99975e-05); FULL−LESION +0.763671875 (p=4.99975e-05).
 - Lattice v1: 128 paired trials; delay-8 retention 0.7486968980; AUC 0.7597552199.
 - research/ORGANISM_RESULT_LEDGER.md
 - docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md
+- docs/I5_1_PERSISTENT_ORGANISM_WORKSPACE.md
+- docs/I5_2_STATE_DEPENDENT_QUERY.md
 - docs/GITHUB_LAB.md
 
 ## Arquitectura
