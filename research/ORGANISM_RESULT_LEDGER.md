@@ -608,3 +608,12 @@ Artefacto: GitHub Actions run **36945173829**, artifact **11201243817**, SHA256 
 - error máximo de intervención: **0.0**.
 
 Interpretación: el segundo modelo **sí aprendió información predictiva sobre el error del primer modelo de sí** y su uso cambia la acción frente al baseline constante. Sin embargo, al permutar los targets del segundo modelo y conservar su multiconjunto, la acción y la ganancia permanecieron idénticas. Por tanto, C0.12 demuestra **segundo orden predictivo**, pero no demuestra todavía **especificidad causal del mapeo segundo orden → acción**.
+
+
+### C0.13 — Segundo orden condicionado por acción
+
+Protocolo implementado; **sin resultado experimental registrado todavía**.
+
+C0.13 refuerza C0.12 con un segundo observador que recibe explícitamente la acción candidata y la predicción de primer orden asociada. Se conservan los controles TRUE, target-permuted y baseline constante.
+
+La prueba pregunta si la especificidad del mapeo acción → predicción de error del propio modelo de sí llega a afectar la selección. Estado: **implementado; ejecución pendiente de verificación**.
