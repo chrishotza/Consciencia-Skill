@@ -140,6 +140,9 @@ Use the protocol document to find the exact implementation.
 - `src/ontto/lattice.py` — locally coupled distributed substrate.
 - `experiments/lattice_v0.py` — storage, local computation, perturbation spread, lesion, coherence and redundancy protocol.
 - `tests/test_lattice.py` — deterministic harness for the substrate.
+- `docs/LATTICE_COMPUTER_V1.md` — temporal trace retention under perturbation.
+- `experiments/lattice_v1.py` — temporal memory/retention protocol.
+- `tests/test_lattice_v1.py` — Lattice-1 harness tests.
 
 ## Evidence hierarchy
 
