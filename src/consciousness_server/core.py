@@ -597,7 +597,62 @@ class ConsciousnessStore:
             "last_seen_at": now,
         }
 
-    def list_nodes(self) -> list[dict[str, Any]]:
+    def get_node(self, node_id: str) -> dict[str, Any] | None:
+        row = self.conn.execute(
+            "SELECT node_id,endpoint,capabilities_json,status,last_seen_at FROM nodes WHERE node_id=?",
+            (node_id,),
+        ).fetchone()
+        if row is None:
+            return None
+        return {
+            "node_id": row["node_id"],
+            "endpoint": row["endpoint"],
+            "capabilities": json.loads(row["capabilities_json"]),
+            "status": row["status"],
+            "last_seen_at": row["last_seen_at"],
+        }
+
+    def heartbeat_node(self, node_id: str, endpoint: str | None = None, capabilities: list[str] | None = None) -> dict[str, Any]:
+        existing = self.get_node(node_id)
+        if existing is None:
+            return self.register_node(node_id=node_id, endpoint=endpoint, capabilities=capabilities or [])
+        now = now_iso()
+        resolved_endpoint = endpoint if endpoint is not None else existing["endpoint"]
+        resolved_capabilities = capabilities if capabilities is not None else existing["capabilities"]
+        self.conn.execute(
+            "UPDATE nodes SET endpoint=?, capabilities_json=?, status='ONLINE', last_seen_at=? WHERE node_id=?",
+            (resolved_endpoint, json.dumps(resolved_capabilities, ensure_ascii=False), now, node_id),
+        )
+        self.conn.commit()
+        return self.get_node(node_id) or {
+            "node_id": node_id, "endpoint": resolved_endpoint, "capabilities": resolved_capabilities,
+            "status": "ONLINE", "last_seen_at": now,
+        }
+
+    def mark_stale_nodes(self, stale_after_seconds: float = 30.0) -> int:
+        threshold = datetime.now(timezone.utc).timestamp() - max(0.0, float(stale_after_seconds))
+        rows = self.conn.execute("SELECT node_id,last_seen_at FROM nodes WHERE status='ONLINE'").fetchall()
+        stale_ids: list[str] = []
+        for row in rows:
+            try:
+                last_seen = datetime.fromisoformat(str(row["last_seen_at"])).timestamp()
+            except ValueError:
+                stale_ids.append(str(row["node_id"]))
+                continue
+            if last_seen < threshold:
+                stale_ids.append(str(row["node_id"]))
+        if not stale_ids:
+            return 0
+        self.conn.executemany(
+            "UPDATE nodes SET status='STALE' WHERE node_id=?",
+            [(node_id,) for node_id in stale_ids],
+        )
+        self.conn.commit()
+        return len(stale_ids)
+
+    def list_nodes(self, stale_after_seconds: float | None = 30.0) -> list[dict[str, Any]]:
+        if stale_after_seconds is not None:
+            self.mark_stale_nodes(stale_after_seconds)
         rows = self.conn.execute(
             "SELECT node_id,endpoint,capabilities_json,status,last_seen_at FROM nodes ORDER BY node_id"
         ).fetchall()
