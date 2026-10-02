@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V74 — Política basada en autopredicción
 
 ## Pregunta
@@ -46,3 +48,62 @@ Ahora se prueba si puede aprender una regla de selección cuyo criterio operativ
 El criterio de autopredicción sigue siendo una decisión del protocolo. Por tanto, V74 no demuestra que el organismo haya inventado su propio objetivo ni que exista experiencia subjetiva.
 
 El resultado, positivo o nulo, debe interpretarse como evidencia sobre una propiedad computacional concreta: **selección de trayectorias guiada por ganancia de autopredicción**.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V74 — Self-Prediction Policy
+
+## Question
+
+V72 learned a policy for a utility function defined by an external continuity objective.
+
+V73 moved that policy into the persistent organism.
+
+V74 removes the external attractor from the primary objective.
+
+> Can a policy select trajectories using how much the self-model improves prediction of its next state over a persistence baseline as its training criterion?
+
+## Objective
+
+Primary utility is:
+
+~~~text
+self-prediction gain
+=
+persistence error
+−
+self-model error
+~~~
+
+An external attractor distance is not used as the primary objective.
+
+## Controls
+
+Evaluation compares:
+
+- learned policy with self-state access;
+- the same policy with state blinded;
+- existing fixed policy;
+- random selection.
+
+The policy is saved and reloaded without retraining before evaluation.
+
+## What changes
+
+The question is no longer only whether the system can use an imposed objective to exploit its self-model.
+
+It now asks whether it can learn a selection rule whose operational criterion is built from its own predictive capability.
+
+## Boundary
+
+The self-prediction criterion remains a protocol decision.
+
+Therefore V74 does not show that the organism invented its own objective or that subjective experience exists.
+
+A valid result is narrower: evidence about **trajectory selection guided by self-prediction gain**.
+
+</details>
