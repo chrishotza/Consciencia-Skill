@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "skill-conscious"
 version = "0.1.0"
-description = "Persistent AI organism for research into artificial consciousness."
+description = "Local-first consciousness infrastructure, persistent AI organisms, and reproducible research."
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [
@@ -52,6 +52,7 @@ AgentSkill = "https://github.com/chrishotza/Skill-Conscious/tree/main/skills/ski
 [project.scripts]
 skill-conscious = "run_daemon:main"
 consciencia-organismo = "run_daemon:main"
+consciousness-server = "src.consciousness_server.cli:main"
 
 [tool.setuptools]
 include-package-data = true
