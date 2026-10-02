@@ -169,6 +169,15 @@ jobs:
             --permutations 20000 \
             --out results/i5_20_semantic_permutation_specificity
 
+      - name: Run I5.21 phase-local semantic permutation
+        run: |
+          python experiments/i5_21_phase_local_semantic_permutation.py \
+            --seed 20261021 \
+            --replicates 24 \
+            --warmup 24 \
+            --permutations 20000 \
+            --out results/i5_21_phase_local_semantic_permutation
+
       - name: Write run manifest
         run: |
           mkdir -p results
