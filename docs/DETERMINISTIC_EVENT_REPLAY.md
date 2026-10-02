@@ -75,6 +75,8 @@ This phase transfers control-plane continuity events. It does not yet replace th
 
 The next layer is to connect verified replay boundaries with portable organism bundles and a server-backed persistence abstraction.
 
+<a id="espanol"></a>
+
 <details>
 <summary>🇪🇸 Español — abrir</summary>
 
