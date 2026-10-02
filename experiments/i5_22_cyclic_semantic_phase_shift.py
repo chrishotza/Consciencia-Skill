@@ -51,7 +51,9 @@ def shifted_schedule(lag: int, rotation: int, shift: int = SHIFT) -> list[str]:
         shifted.append(f"{label} — {mapping[label]}")
     if shifted[0] != matched[0]:
         raise AssertionError("t0 must remain identical")
-    if sorted(shifted[1:]) != sorted(matched[1:]):
+    matched_content = sorted(entry.split(" — ", 1)[1] for entry in matched[1:])
+    shifted_content = sorted(entry.split(" — ", 1)[1] for entry in shifted[1:])
+    if shifted_content != matched_content:
         raise AssertionError("cyclic shift must preserve the post-t0 semantic multiset")
     return shifted
 
