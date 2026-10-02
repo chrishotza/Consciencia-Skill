@@ -14,6 +14,7 @@ from .trajectory_selector import TrajectorySelector
 from .memory_policy import ContinuityMemoryPolicy
 from .self_policy import SelfPolicy
 from .meta_observer import MetaSelfObserver
+from .action_conditioned_meta_observer import ActionConditionedMetaObserver
 
 
 @dataclass
@@ -36,6 +37,9 @@ class OrganismConfig:
     meta_self_observer_enabled: bool = False
     meta_self_observer_ridge: float = 1e-3
     meta_self_observer_max_samples: int = 2048
+    action_conditioned_meta_observer_enabled: bool = False
+    action_conditioned_meta_observer_ridge: float = 1e-3
+    action_conditioned_meta_observer_max_samples: int = 2048
     self_selection_enabled: bool = True
     self_selection_attractor_weight: float = 0.70
     self_selection_coherence_weight: float = 0.30
@@ -83,6 +87,17 @@ class PersistentOrganism:
         self.meta_observer = MetaSelfObserver(
             ridge=cfg.meta_self_observer_ridge,
             max_samples=cfg.meta_self_observer_max_samples,
+        )
+        persisted_action_meta = (
+            store.load_action_conditioned_meta_observer_model(cfg.agent_id)
+        )
+        self.action_conditioned_meta_observer = (
+            ActionConditionedMetaObserver.from_dict(persisted_action_meta)
+            if persisted_action_meta is not None
+            else ActionConditionedMetaObserver(
+                ridge=cfg.action_conditioned_meta_observer_ridge,
+                max_samples=cfg.action_conditioned_meta_observer_max_samples,
+            )
         )
         self.trajectory_selector = TrajectorySelector(
             attractor_weight=cfg.self_selection_attractor_weight,
@@ -205,6 +220,30 @@ class PersistentOrganism:
                 self.meta_observer.observe(
                     features=observer_features,
                     prediction_error=prediction_error,
+                )
+            if self.cfg.action_conditioned_meta_observer_enabled:
+                action_meta_features = (
+                    ActionConditionedMetaObserver.features_for(
+                        previous_state=self.state.dynamic_prev_state,
+                        state=self.state.dynamic_state,
+                        memory=self.state.dynamic_memory,
+                        pressure=self.state.dynamic_pressure,
+                        last_input=signal,
+                        attractor_distance=self.state.dynamic_attractor_distance,
+                        steps_delta=steps,
+                        predicted_state=prediction.predicted_state,
+                        predicted_displacement=abs(
+                            prediction.predicted_state - self.state.dynamic_state
+                        ),
+                    )
+                )
+                self.action_conditioned_meta_observer.observe(
+                    features=action_meta_features,
+                    prediction_error=prediction_error,
+                )
+                self.store.save_action_conditioned_meta_observer_model(
+                    self.cfg.agent_id,
+                    self.action_conditioned_meta_observer.to_dict(),
                 )
             samples = len(self.self_observer.targets)
             confidence = min(1.0, samples / 32.0)
@@ -418,7 +457,33 @@ class PersistentOrganism:
                     else None
                 ),
             )
-            if self.cfg.self_policy_enabled:
+            elif self.cfg.action_conditioned_meta_observer_enabled:
+                scored = []
+                for candidate in candidates:
+                    prediction_error = self.action_conditioned_meta_observer.predict_error(
+                        previous_state=self.state.dynamic_prev_state,
+                        state=self.state.dynamic_state,
+                        memory=self.state.dynamic_memory,
+                        pressure=self.state.dynamic_pressure,
+                        last_input=float(candidate.signal),
+                        attractor_distance=self.state.dynamic_attractor_distance,
+                        steps_delta=self.cfg.dynamic_autonomous_steps,
+                        predicted_state=float(candidate.prediction.predicted_state),
+                        predicted_displacement=float(candidate.displacement),
+                    )
+                    scored.append(
+                        (
+                            float(prediction_error),
+                            abs(float(candidate.signal)),
+                            candidate,
+                            float(prediction_error),
+                        )
+                    )
+                _, _, chosen, _ = min(
+                    scored,
+                    key=lambda row: (row[0], row[1]),
+                )
+            elif self.cfg.self_policy_enabled:
                 policy_candidates = [
                     {
                         "current_state": float(self.state.dynamic_state),
@@ -477,6 +542,23 @@ class PersistentOrganism:
                             "predicted_displacement": candidate.displacement,
                             "predicted_error": candidate.predicted_error,
                             "score": candidate.score,
+                            "action_conditioned_predicted_error": (
+                                float(
+                                    self.action_conditioned_meta_observer.predict_error(
+                                        previous_state=self.state.dynamic_prev_state,
+                                        state=self.state.dynamic_state,
+                                        memory=self.state.dynamic_memory,
+                                        pressure=self.state.dynamic_pressure,
+                                        last_input=float(candidate.signal),
+                                        attractor_distance=self.state.dynamic_attractor_distance,
+                                        steps_delta=self.cfg.dynamic_autonomous_steps,
+                                        predicted_state=float(candidate.prediction.predicted_state),
+                                        predicted_displacement=float(candidate.displacement),
+                                    )
+                                )
+                                if self.cfg.action_conditioned_meta_observer_enabled
+                                else None
+                            ),
                             "samples": candidate.prediction.samples,
                             "confidence": candidate.prediction.confidence,
                         }
