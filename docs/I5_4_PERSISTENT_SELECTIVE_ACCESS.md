@@ -58,11 +58,26 @@ Endpoints secundarios:
 
 Se usan 24 réplicas, 24 ciclos de warmup, señales candidatas `(-1, +1)` y 20.000 permutaciones sign-flip por contraste.
 
-## Límite científico
+## Resultado verificado
 
-I5.4 prueba integración causal de mecanismos computacionales concretos dentro del runtime persistente.
+Workflow: **36986823516**; artifact: **11217906875**; commit experimental: **27f08ab3d84633986a609a7981429cf6f3fe0cf5**; seed **20261004**; 24 réplicas; 24 ciclos de warmup.
 
-No demuestra consciencia ni experiencia subjetiva.
+Endpoints:
+
+- SHUFFLED_QUERY regret cost: **0.0**, p **1.0**; action-change **0%**;
+- SHUFFLED_ATTENTION regret cost: **+0.0280384**, p **0.5022**; action-change **20.83%**;
+- ZERO_QUERY regret cost: **0.0**, p **1.0**; action-change **0%**;
+- RANDOM_QUERY regret cost: **0.0**, p **1.0**; action-change **0%**;
+- LESION_QUERY regret cost: **0.0**, p **1.0**; action-change **0%**;
+- FULL attention mass mean: **0.69550**;
+- FULL selective-access strength mean: **0.30500**;
+- exact persistence of I5.4 observables: **100%**.
+
+Interpretación: **resultado nulo/mixto bajo el protocolo probado**. El mecanismo integrado es operativo y sus observables persisten exactamente, pero los controles de consulta no cambiaron la selección de trayectoria ni el regret. La reasignación de atención sí cambió la acción en 20.83% de las réplicas, pero el costo de regret no fue significativo. Por tanto, la cadena completa estado→consulta→atención→acceso→acción no mostró una separación funcional robusta en este harness.
+
+### Límite científico
+
+I5.4 demuestra integración computacional y persistencia de los mecanismos probados, pero no una necesidad funcional de la consulta para la conducta bajo este mapeo. No demuestra consciencia ni experiencia subjetiva.
 
 </details>
 
@@ -124,10 +139,25 @@ Secondary endpoints:
 
 The protocol uses 24 replicates, 24 warmup cycles, candidate signals `(-1, +1)`, and 20,000 sign-flip permutations per contrast.
 
-## Scientific boundary
+## Verified result
 
-I5.4 tests causal integration of concrete computational mechanisms inside the persistent runtime.
+Workflow: **36986823516**; artifact: **11217906875**; experimental commit: **27f08ab3d84633986a609a7981429cf6f3fe0cf5**; seed **20261004**; 24 replicates; 24 warmup cycles.
 
-It does not demonstrate consciousness or subjective experience.
+Endpoints:
+
+- SHUFFLED_QUERY regret cost: **0.0**, p **1.0**; action-change **0%**;
+- SHUFFLED_ATTENTION regret cost: **+0.0280384**, p **0.5022**; action-change **20.83%**;
+- ZERO_QUERY regret cost: **0.0**, p **1.0**; action-change **0%**;
+- RANDOM_QUERY regret cost: **0.0**, p **1.0**; action-change **0%**;
+- LESION_QUERY regret cost: **0.0**, p **1.0**; action-change **0%**;
+- FULL mean attention mass: **0.69550**;
+- FULL mean selective-access strength: **0.30500**;
+- exact I5.4 observable persistence: **100%**.
+
+Interpretation: **null/mixed result under the tested protocol**. The integrated mechanism is operational and its observables persist exactly, but query controls did not change trajectory selection or regret. Attention reassignment changed the action in 20.83% of replicates, but regret cost was not significant. Therefore the full state→query→attention→access→action chain did not show a robust functional separation in this harness.
+
+### Scientific boundary
+
+I5.4 demonstrates computational integration and persistence of the tested mechanisms, but not functional necessity of state-dependent querying for behavior under this mapping. It does not demonstrate consciousness or subjective experience.
 
 </details>
