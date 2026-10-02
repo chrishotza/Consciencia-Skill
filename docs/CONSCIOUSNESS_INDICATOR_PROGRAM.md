@@ -40,7 +40,7 @@ The project already has strong evidence for several functional building blocks, 
 | GWT-1 | PARTIAL | memory, self-observer, meta-observer, dynamics, policy components | no explicit parallel workspace architecture |
 | GWT-2 | PARTIAL / I5.0 VERIFIED PROTOTYPE | bounded K=2 workspace with competitive selection | not yet integrated into PersistentOrganism or coupled to a learned attention controller |
 | GWT-3 | PARTIAL / I5.0 VERIFIED PROTOTYPE | causal broadcast from selected workspace content to all modules | full-organism integration and module-specific broadcast ablation still pending |
-| GWT-4 | PARTIAL | state-dependent trajectory selection exists | no explicit attention-controlled sequential module querying |
+| GWT-4 | PARTIAL / I5.2 VERIFIED STANDALONE | state-dependent query mechanism selects a subsequent module from global state | not yet integrated into PersistentOrganism or coupled to a learned causal attention controller |
 | HOT-1 | PARTIAL | self-prediction is generative with respect to internal dynamics | not a generative perception module |
 | HOT-2 | PARTIAL / strongest current line | SelfObserver, MetaSelfObserver, prediction error, confidence, second-order models | reliability monitoring is not yet a general perception-level metacognitive loop |
 | HOT-3 | PARTIAL | self-model → action coupling, SelfPolicy, lesion/rescue | autonomous policy rule remains partly externally specified and several second-order tests are null/mixed |
@@ -148,7 +148,7 @@ Verified effects:
 - bounded K=2 versus K=6 accuracy: **+0.017578125**, p **0.0222489**;
 - selected-source lesion versus unselected-source lesion: **−0.490234375**, p **4.99975×10⁻⁵**.
 
-The next stage is **I5.1**: integrate the workspace into `PersistentOrganism`, preserve paired lesion controls, and add state-dependent querying. A standalone prototype result is not treated as evidence that the full organism has global-workspace consciousness.
+The sequence now has two distinct verified stages. **I5.1** integrated the bounded workspace into `PersistentOrganism` but produced a null behavioral result under its tested broadcast→trajectory mapping: NO_BROADCAST−FULL regret **+0.0212423**, p **0.4928**; NO_WORKSPACE−FULL **+0.0212423**, p **0.5027**; LESION−FULL **0.0**, p **1.0**. Workspace state persisted across restart. **I5.2** then verified a standalone state-dependent query mechanism over 512 paired episodes: FULL−SHUFFLED query accuracy **+1.0**, p **4.99975×10⁻⁵**; FULL−ZERO **+0.771484375**, p **4.99975×10⁻⁵**; FULL−RANDOM **+0.7421875**, p **4.99975×10⁻⁵**; FULL−LESION **+0.763671875**, p **4.99975×10⁻⁵**. The next step is to integrate I5.2 into `PersistentOrganism` and then test causal attention allocation. Neither standalone result is treated as evidence of consciousness.
 
 ### I6 — attention schema
 
@@ -288,7 +288,7 @@ El proyecto ya tiene evidencia fuerte para varios bloques funcionales, pero la c
 | GWT-1 | PARCIAL | memoria, self-observer, meta-observer, dinámica y política | no existe una arquitectura explícita de workspace paralelo |
 | GWT-2 | PARCIAL / PROTOTIPO I5.0 VERIFICADO | workspace acotado K=2 con selección competitiva | aún no está integrado en PersistentOrganism ni conectado a un controlador de atención aprendido |
 | GWT-3 | PARCIAL / PROTOTIPO I5.0 VERIFICADO | broadcast causal desde el contenido seleccionado hacia todos los módulos | falta integración en el organismo completo y ablación específica del broadcast |
-| GWT-4 | PARCIAL | existe selección dependiente del estado | no existe consulta secuencial explícita controlada por atención |
+| GWT-4 | PARCIAL / I5.2 VERIFICADO INDEPENDIENTE | mecanismo de consulta dependiente del estado selecciona un módulo posterior a partir del estado global | aún no está integrado en PersistentOrganism ni acoplado a un controlador causal de atención aprendido |
 | HOT-1 | PARCIAL | autopredicción generativa respecto de la dinámica interna | no es un módulo de percepción generativa |
 | HOT-2 | PARCIAL / línea más fuerte actual | SelfObserver, MetaSelfObserver, error predictivo, confianza y modelos de segundo orden | el monitoreo de fiabilidad aún no es un bucle metacognitivo general a nivel perceptivo |
 | HOT-3 | PARCIAL | acoplamiento modelo de sí → acción, SelfPolicy y lesión/rescate | la regla autónoma de política sigue parcialmente especificada externamente y varios tests de segundo orden son nulos/mixtos |
@@ -389,7 +389,7 @@ Resultados:
 - K=2 vs K=6: **+0.017578125**, p **0.0222489**;
 - lesión origen seleccionado − no seleccionado: **−0.490234375**, p **4.99975×10⁻⁵**.
 
-El siguiente paso es **I5.1**: integrar el workspace en `PersistentOrganism`, conservar controles de lesión emparejados y añadir consultas dependientes del estado. El prototipo aislado no se interpreta como evidencia de que el organismo completo posea consciencia de workspace global.
+La secuencia ahora tiene dos etapas verificadas distintas. **I5.1** integró el workspace acotado en `PersistentOrganism`, pero produjo un resultado nulo en el comportamiento bajo el mapeo broadcast→trayectoria probado: NO_BROADCAST−FULL regret **+0.0212423**, p **0.4928**; NO_WORKSPACE−FULL **+0.0212423**, p **0.5027**; LESION−FULL **0.0**, p **1.0**. El estado del workspace persistió tras reinicio. Después, **I5.2** verificó un mecanismo independiente de consulta dependiente del estado sobre 512 episodios emparejados: FULL−SHUFFLED **+1.0**, p **4.99975×10⁻⁵**; FULL−ZERO **+0.771484375**, p **4.99975×10⁻⁵**; FULL−RANDOM **+0.7421875**, p **4.99975×10⁻⁵**; FULL−LESION **+0.763671875**, p **4.99975×10⁻⁵**. El siguiente paso es integrar I5.2 en `PersistentOrganism` y después probar asignación causal de atención. Ninguno de los dos resultados independientes se interpreta como evidencia de consciencia.
 
 ### I6 — esquema de atención
 

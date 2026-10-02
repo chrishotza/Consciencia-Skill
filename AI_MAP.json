@@ -13,14 +13,16 @@
     "frontier": [
       "docs/I4_3_STRUCTURAL_OOD_METACOGNITIVE_GENERALIZATION.md",
       "docs/I5_GLOBAL_WORKSPACE.md",
+      "docs/I5_1_PERSISTENT_ORGANISM_WORKSPACE.md",
+      "docs/I5_2_STATE_DEPENDENT_QUERY.md",
       "docs/LATTICE_COMPUTER_V1.md",
       "docs/CONSCIOUSNESS_INDICATOR_PROGRAM.md",
       "research/ORGANISM_RESULT_LEDGER.md",
       "docs/C0_18_AUTONOMOUS_SECOND_ORDER_LESION_RESCUE.md"
     ],
     "experimental_next": [
-      "I4.3 structural OOD metacognitive generalization",
-      "I5 global-workspace integration design"
+      "I5.2 PersistentOrganism integration",
+      "I5.3 causal attention allocation / attention schema"
     ]
   },
   "architecture": {
@@ -53,8 +55,7 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.1 persistent-organism workspace integration",
-    "I5.2 state-dependent workspace querying",
+    "I5.2 PersistentOrganism integration",
     "I5.3 causal attention allocation / attention schema",
     "Lattice-2 causal influence map",
     "C0 campaign G2-G8"

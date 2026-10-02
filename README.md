@@ -51,8 +51,10 @@ El runtime también mantiene regímenes de **VIGILIA** y **SUEÑO**, persistenci
 
 - **I4.3** está verificado sobre tres estructuras de perturbación no vistas; la generalización del error predictivo es positiva, mientras que el endpoint agregado de recuperación es nulo.
 - **I5.0** está verificado sobre 512 episodios emparejados y el prototipo de workspace acotado ya está en `main`.
+- **I5.1** ya está integrado en `PersistentOrganism` y produjo un resultado nulo para los endpoints conductuales del mapeo broadcast→trayectoria probado; la persistencia del estado del workspace sí fue verificada.
+- **I5.2** está verificado como mecanismo independiente GWT-4: FULL−SHUFFLED **+1.0**, p **4.99975×10⁻⁵**, con FULL−LESION **+0.76367**, p **4.99975×10⁻⁵**.
 - **Lattice v0/v1** son protocolos verificados del sustrato computacional; las afirmaciones físicas siguen explícitamente separadas de la implementación.
-- **Siguiente integración:** conectar el workspace acotado con `PersistentOrganism` y después añadir querying dependiente del estado y asignación causal de atención.
+- **Siguiente integración:** llevar I5.2 a `PersistentOrganism` y después probar asignación causal de atención.
 ## Resultados más sólidos hasta ahora
 
 | Protocolo | Qué se probó | Resultado observado |
@@ -67,10 +69,12 @@ El runtime también mantiene regímenes de **VIGILIA** y **SUEÑO**, persistenci
 | **Lattice v0** | Computación local, propagación y organización distribuida | XOR **1.0**; coupling cambió coherencia, redundancia y spread de perturbación; el control desacoplado retuvo más del patrón bruto. |
 | **Lattice v1** | Retención temporal de huella después de retirar input | 128 réplicas; retención media a delay 8 **0.74870**; AUC **0.75976**; pérdida media por perturbación **0.00172** a delay 8. |
 | **I5.0** | Workspace global acotado | 512 episodios; broadcast vs no-broadcast **+0.12695** de accuracy, p **5×10⁻⁵**; K=2 vs K=6 **+0.01758**, p **0.02225**; lesión del origen seleccionado diferencial **−0.49023**, p **5×10⁻⁵**. |
+| **I5.1** | Integración del workspace en PersistentOrganism | Resultado nulo para los endpoints conductuales probados: NO_BROADCAST−FULL regret **+0.02124**, p **0.4928**; LESION−FULL **0.0**, p **1.0**; persistencia del estado **100%**. |
+| **I5.2** | Consulta dependiente del estado / GWT-4 | 512 episodios; FULL−SHUFFLED **+1.0**, p **5×10⁻⁵**; FULL−ZERO **+0.77148**, p **5×10⁻⁵**; FULL−RANDOM **+0.74219**, p **5×10⁻⁵**; FULL−LESION **+0.76367**, p **5×10⁻⁵**. |
 
 Estos resultados describen propiedades computacionales de protocolos concretos. **No constituyen por sí solos una demostración de experiencia subjetiva.**
 
-→ [Registro consolidado de resultados](research/ORGANISM_RESULT_LEDGER.md#espanol) · [I5.0 Workspace](docs/I5_GLOBAL_WORKSPACE.md#espanol) · [Lattice v1](docs/LATTICE_COMPUTER_V1.md#espanol)
+→ [Registro consolidado de resultados](research/ORGANISM_RESULT_LEDGER.md#espanol) · [I5.0 Workspace](docs/I5_GLOBAL_WORKSPACE.md#espanol) · [I5.1 PersistentOrganism](docs/I5_1_PERSISTENT_ORGANISM_WORKSPACE.md#espanol) · [I5.2 State-Dependent Query](docs/I5_2_STATE_DEPENDENT_QUERY.md#espanol) · [Lattice v1](docs/LATTICE_COMPUTER_V1.md#espanol)
 ## Resultados nulos o mixtos relevantes
 
 Se conservan explícitamente resultados como **V64, V66, V67, V79, V80, C0.9, C0.10 y C0.18**.
@@ -195,8 +199,10 @@ The runtime also supports **WAKE** and **SLEEP** regimes, local persistence, and
 
 - **I4.3** is verified across three unseen disturbance structures; prediction-error generalization is positive while the aggregate recovery endpoint is null.
 - **I5.0** is verified on 512 paired episodes and the bounded-workspace prototype is now on `main`.
+- **I5.1** is integrated into `PersistentOrganism` and produced a null result for the tested broadcast→trajectory behavioral endpoints; workspace-state persistence was verified.
+- **I5.2** is verified as a standalone GWT-4 mechanism: FULL−SHUFFLED **+1.0**, p **4.99975×10⁻⁵**, with FULL−LESION **+0.76367**, p **4.99975×10⁻⁵**.
 - **Lattice v0/v1** are verified computational-substrate protocols; physical claims remain explicitly separated from the implementation.
-- **Next integration:** connect the bounded workspace to `PersistentOrganism`, then add state-dependent querying and causal attention allocation.
+- **Next integration:** bring I5.2 into `PersistentOrganism`, then test causal attention allocation.
 ## Strongest results so far
 
 | Protocol | What was tested | Observed result |
@@ -211,10 +217,12 @@ The runtime also supports **WAKE** and **SLEEP** regimes, local persistence, and
 | **Lattice v0** | Local computation, propagation, and distributed organization | XOR **1.0**; coupling changed coherence, redundancy, and perturbation spread; the decoupled control retained more raw pattern. |
 | **Lattice v1** | Temporal trace retention after input removal | 128 replicates; mean retention at delay 8 **0.74870**; AUC **0.75976**; mean perturbation loss **0.00172** at delay 8. |
 | **I5.0** | Bounded global workspace | 512 episodes; broadcast vs no-broadcast accuracy **+0.12695**, p **5×10⁻⁵**; K=2 vs K=6 **+0.01758**, p **0.02225**; selected-source lesion differential **−0.49023**, p **5×10⁻⁵**. |
+| **I5.1** | PersistentOrganism workspace integration | Null behavioral result under the tested mapping: NO_BROADCAST−FULL regret **+0.02124**, p **0.4928**; LESION−FULL **0.0**, p **1.0**; workspace-state persistence **100%**. |
+| **I5.2** | State-dependent query / GWT-4 | 512 episodes; FULL−SHUFFLED **+1.0**, p **5×10⁻⁵**; FULL−ZERO **+0.77148**, p **5×10⁻⁵**; FULL−RANDOM **+0.74219**, p **5×10⁻⁵**; FULL−LESION **+0.76367**, p **5×10⁻⁵**. |
 
 These results describe computational properties under concrete protocols. **They do not by themselves demonstrate subjective experience.**
 
-→ [Consolidated results ledger](research/ORGANISM_RESULT_LEDGER.md#english) · [I5.0 Workspace](docs/I5_GLOBAL_WORKSPACE.md#english) · [Lattice v1](docs/LATTICE_COMPUTER_V1.md#english)
+→ [Consolidated results ledger](research/ORGANISM_RESULT_LEDGER.md#english) · [I5.0 Workspace](docs/I5_GLOBAL_WORKSPACE.md#english) · [I5.1 PersistentOrganism](docs/I5_1_PERSISTENT_ORGANISM_WORKSPACE.md#english) · [I5.2 State-Dependent Query](docs/I5_2_STATE_DEPENDENT_QUERY.md#english) · [Lattice v1](docs/LATTICE_COMPUTER_V1.md#english)
 ## Relevant null and mixed results
 
 The project explicitly preserves **V64, V66, V67, V79, V80, C0.9, C0.10, and C0.18** as null or mixed results.
