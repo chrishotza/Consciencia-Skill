@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # Laboratorio GitHub
 
 El laboratorio principal del proyecto se ejecuta mediante GitHub Actions. Colab queda como entorno auxiliar para análisis interactivo, visualización o experimentos que requieran intervención manual.
