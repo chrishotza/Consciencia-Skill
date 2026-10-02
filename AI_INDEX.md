@@ -4,6 +4,12 @@
 
 | Need | Read first | Then |
 |---|---|---|
+| Consciousness Server | `docs/CONSCIOUSNESS_SERVER.md` | `src/consciousness_server/` |
+| Local seed | `src/consciousness_server/core.py` | `src/consciousness_server/server.py` |
+| Existing organism | `src/ontto/organism.py` | storage/provider/self-observer |
+
+| Need | Read first | Then |
+|---|---|---|
 | Overview | `README.md` | `docs/METODO.md` |
 | Current state | `research/ORGANISM_RESULT_LEDGER.md` | V69/V70 docs |
 | Architecture | `src/ontto/organism.py` | dynamics/self_observer/storage/selector |
