@@ -147,6 +147,10 @@ Los resultados positivos, nulos y negativos se conservan.
 
 → [Leer TCF v3.3](docs/fundamentos/TCF_V3_3.md) · [Zenodo](https://zenodo.org/doi/10.5281/zenodo.23074332)
 
+**Teoría de la Iteración Fuente (TIF) v0.1** — hipótesis de recurrencia de segundo orden basada en configuración/predicción, memoria/contexto y reentrada/reparación/fase.
+
+→ [Leer TIF v0.1](docs/fundamentos/TIF_V0_1.md) · [Índice de fundamentos](docs/fundamentos/README.md)
+
 ## Evidencia
 
 El proyecto separa:
