@@ -166,6 +166,18 @@
 - Boundary: computational semantic-correspondence specificity; no consciousness claim.
 - Next: I5.21 phase-local semantic permutation.
 
+### I5.21 — Phase-local semantic permutation
+- `docs/I5_21_PHASE_LOCAL_SEMANTIC_PERMUTATION.md`
+- `experiments/i5_21_phase_local_semantic_permutation.py`
+- `tests/test_i5_21_phase_local_semantic_permutation.py`
+- Verified: research-lab **37059465725** / artifact **11249378346**; tests **37059465807** and package check **37059465643** successful.
+- 24 replicates; 100% t0 match; 100% global and within-period semantic multiset preservation.
+- Signed-AUC specificity gap **+0.02155**, p=0.85726; absolute-AUC gap **+0.44740**, p=0.00010; future-action gap **+0.04663**, p=0.00100.
+- Global lag×specificity interaction: signed p=0.29069, absolute p=0.00030, action p<0.00005.
+- max-T any-lag p: signed **0.35483**, absolute **0.00065**, action **0.00100**.
+- Boundary: computational semantic-correspondence specificity; no consciousness claim.
+- Next: I5.22 cyclic semantic phase-shift control.
+
 ### I5.3 — Causal attention allocation
 - `docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md`
 - `src/ontto/attention_controller.py`
