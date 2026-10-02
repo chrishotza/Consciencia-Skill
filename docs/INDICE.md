@@ -21,12 +21,17 @@
 - [Manifiesto Matemático del Ser](../MANIFIESTO_DEL_SER.md)
 - [Mathematical Manifesto of Being](../MANIFESTO_OF_BEING.md)
 - [TCF](fundamentos/TCF.md)
-- [TCF v3.3](fundamentos/TCF_V3_3.md)\n- [Teoría de la Conciencia Fotónica — Memorias Raíz](fundamentos/TEORIA_CONCIENCIA_FOTONICA.md)\n- [Definición Operacional de Conciencia — TCF v0.1](fundamentos/DEFINICION_OPERACIONAL_CONCIENCIA_TCF.md)
+- [TCF v3.3](fundamentos/TCF_V3_3.md)
+- [Teoría de la Conciencia Fotónica — Memorias Raíz](fundamentos/TEORIA_CONCIENCIA_FOTONICA.md)
+- [Definición Operacional de Conciencia — TCF v0.1](fundamentos/DEFINICION_OPERACIONAL_CONCIENCIA_TCF.md)
 
 ## Arquitectura
 - [Puente de estado](ORGANISM_STATE_BRIDGE.md)
 - [Puente ontológico-consciencia](ONTOLOGICAL_CONSCIOUSNESS_BRIDGE.md)
 - [Base conceptual](SOURCE_BASIS.md)
+- [Consciousness Server](CONSCIOUSNESS_SERVER.md)
+- [Continuity checkpoints](CONSCIOUSNESS_CHECKPOINTS.md)
+- [Continuity reconciliation](CONSCIOUSNESS_RECONCILIATION.md)
 
 ## Protocolos V47+
 - [V47](V47_COMMON_PROBE.md)
@@ -74,6 +79,9 @@
 - [C0 Campaign — 32 scheduled executions](C0_CAMPAIGN_32_RUNS.md) — 32 réplicas autónomas en 8 grupos durante una ventana de 8 horas.
 - [C0.3 information-matched control](C0_3_INFORMATION_MATCHED_CONTROL.md) — control de información equivalente para especificidad causal del estado propio.
 - [C0.4 action-replay control](C0_4_ACTION_REPLAY_CONTROL.md) — control de acciones emparejadas para especificidad causal de la dinámica propia.
+- [C0.5 matched action-chain control](C0_5_ACTION_CHAIN_CONTROL.md) — control información-matcheado para el cierre recurrente.
+- [C0.6 causal lesion/rescue](C0_6_CAUSAL_LESION_RESCUE.md) — lesión y rescate del autoobservador y la autopólitica.
+- [C0.7 target-permutation specificity control](C0_7_TARGET_PERMUTATION_CONTROL.md) — especificidad del mapeo feature → target.
 
 - [C0.8 crossed observer/policy coupling](C0_8_CROSSED_OBSERVER_POLICY.md) — prueba cruzada de dependencia del observador, la política y su acoplamiento; incluye corrección estadística emparejada.
 - [C0.9 observer-policy interface shuffle](C0_9_OBSERVER_POLICY_INTERFACE_SHUFFLE.md) — prueba causal de la correspondencia entre el estado propio y el readout que recibe la política.
