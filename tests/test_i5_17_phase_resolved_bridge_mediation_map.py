@@ -1,3 +1,5 @@
+import pytest
+
 from experiments.i5_17_phase_resolved_bridge_mediation_map import (
     CYCLES,
     LAGS,
@@ -23,12 +25,20 @@ def test_phase_schedule_distribution_is_paired():
 
 
 def test_bridge_delta():
-    on = {"state_auc_abs": 5.0, "state_auc_signed": -1.0, "future_action_change_rate": 0.6}
-    off = {"state_auc_abs": 3.0, "state_auc_signed": -0.5, "future_action_change_rate": 0.4}
+    on = {
+        "state_auc_abs": 5.0,
+        "state_auc_signed": -1.0,
+        "future_action_change_rate": 0.6,
+    }
+    off = {
+        "state_auc_abs": 3.0,
+        "state_auc_signed": -0.5,
+        "future_action_change_rate": 0.4,
+    }
     delta = bridge_delta(on, off)
     assert delta["abs_auc_delta"] == 2.0
     assert delta["signed_auc_delta"] == -0.5
-    assert delta["future_action_change_delta"] == 0.2
+    assert delta["future_action_change_delta"] == pytest.approx(0.2)
 
 
 def test_metrics():
