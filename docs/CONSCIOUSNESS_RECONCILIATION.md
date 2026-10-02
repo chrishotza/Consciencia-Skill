@@ -38,3 +38,39 @@ The checkpoint protocol answers **what was last observed**.
 Reconciliation answers **whether the local organism still matches that observation**.
 
 The next layer is peer synchronization: using the durable event boundary to transfer only the missing deterministic delta, while blocking equal-revision divergence and verifying the post-replay boundary.
+
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# Reconciliación de continuidad
+
+La reconciliación compara el organismo local en ejecución con el último checkpoint observado por Consciousness Server.
+No sobrescribe estado ni inventa datos faltantes. Informa si el organismo está alineado, adelantado, atrasado o divergente respecto del último checkpoint.
+
+## Estados
+- ALIGNED — fingerprints y conteos local/remoto coinciden.
+- LOCAL_AHEAD — el journal local avanzó desde el checkpoint.
+- LOCAL_BEHIND — el journal local contiene menos eventos o memorias registradas que el checkpoint.
+- DIVERGED — los conteos coinciden pero los fingerprints difieren.
+- NO_CHECKPOINT — todavía no existe checkpoint para esa instancia.
+
+LOCAL_AHEAD es normal entre checkpoints y se vuelve accionable cuando un nodo se reconecta después de una interrupción prolongada.
+
+## Runtime
+SERVER reconcilia durante el arranque después del registro de instancia/nodo y emite un evento RECONCILE. LOCAL no contacta al servidor.
+
+## Diagnóstico
+```bash
+python -m src.consciousness_server.cli reconcile \
+  --server http://127.0.0.1:8787 \
+  --instance consciencia-001 \
+  --local-db data/ontto.db
+```
+
+El comando emite un reporte JSON adecuado para logs, automatización y futura reconciliación NodeZero.
+
+## Por qué importa
+El protocolo de checkpoints responde qué fue observado por última vez. La reconciliación responde si el organismo local todavía coincide con esa observación.
+
+</details>
