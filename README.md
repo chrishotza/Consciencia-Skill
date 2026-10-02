@@ -54,6 +54,7 @@ El runtime también mantiene regímenes de **VIGILIA** y **SUEÑO**, persistenci
 - **I5.1** ya está integrado en `PersistentOrganism` y produjo un resultado nulo para los endpoints conductuales del mapeo broadcast→trayectoria probado; la persistencia del estado del workspace sí fue verificada.
 - **I5.2** está verificado como mecanismo independiente GWT-4: FULL−SHUFFLED **+1.0**, p **4.99975×10⁻⁵**, con FULL−LESION **+0.76367**, p **4.99975×10⁻⁵**.
 - **I5.3** está verificado como mecanismo independiente de asignación causal de atención: FULL−SHUFFLED target-mass **+0.97682**, p **4.99975×10⁻⁵**.
+- **I5.4** integró I5.2 + I5.3 en `PersistentOrganism`: controles de consulta nulos; atención barajada cambió la acción en **20.83%** pero el costo de regret fue no significativo (p **0.5022**); persistencia exacta **100%**.
 - **Lattice v0/v1** son protocolos verificados del sustrato computacional; las afirmaciones físicas siguen explícitamente separadas de la implementación.
 - **Siguiente integración:** llevar I5.2 a `PersistentOrganism` y después probar asignación causal de atención.
 ## Resultados más sólidos hasta ahora
@@ -73,6 +74,7 @@ El runtime también mantiene regímenes de **VIGILIA** y **SUEÑO**, persistenci
 | **I5.1** | Integración del workspace en PersistentOrganism | Resultado nulo para los endpoints conductuales probados: NO_BROADCAST−FULL regret **+0.02124**, p **0.4928**; LESION−FULL **0.0**, p **1.0**; persistencia del estado **100%**. |
 | **I5.2** | Consulta dependiente del estado / GWT-4 | 512 episodios; FULL−SHUFFLED **+1.0**, p **5×10⁻⁵**; FULL−ZERO **+0.77148**, p **5×10⁻⁵**; FULL−RANDOM **+0.74219**, p **5×10⁻⁵**; FULL−LESION **+0.76367**, p **5×10⁻⁵**. |
 | **I5.3** | Asignación causal de atención | 512 episodios; target attention mass FULL **0.98456**; FULL−SHUFFLED **+0.97682**, p **5×10⁻⁵**; FULL−LESION **+0.73456**, p **5×10⁻⁵**. |
+| **I5.4** | Integración persistente de consulta + atención | 24 réplicas; controles de consulta nulos; SHUFFLED_ATTENTION action-change **20.83%**, regret cost **+0.02804**, p **0.5022**; persistencia **100%**. |
 
 Estos resultados describen propiedades computacionales de protocolos concretos. **No constituyen por sí solos una demostración de experiencia subjetiva.**
 
@@ -204,6 +206,7 @@ The runtime also supports **WAKE** and **SLEEP** regimes, local persistence, and
 - **I5.1** is integrated into `PersistentOrganism` and produced a null result for the tested broadcast→trajectory behavioral endpoints; workspace-state persistence was verified.
 - **I5.2** is verified as a standalone GWT-4 mechanism: FULL−SHUFFLED **+1.0**, p **4.99975×10⁻⁵**, with FULL−LESION **+0.76367**, p **4.99975×10⁻⁵**.
 - **I5.3** is verified as a standalone causal attention-allocation mechanism: FULL−SHUFFLED target mass **+0.97682**, p **4.99975×10⁻⁵**.
+- **I5.4** integrated I5.2 + I5.3 into `PersistentOrganism`: query controls were null; shuffled attention changed action in **20.83%** but regret cost was non-significant (p **0.5022**); exact persistence **100%**.
 - **Lattice v0/v1** are verified computational-substrate protocols; physical claims remain explicitly separated from the implementation.
 - **Next integration:** bring I5.2 into `PersistentOrganism`, then test causal attention allocation.
 ## Strongest results so far
@@ -223,6 +226,7 @@ The runtime also supports **WAKE** and **SLEEP** regimes, local persistence, and
 | **I5.1** | PersistentOrganism workspace integration | Null behavioral result under the tested mapping: NO_BROADCAST−FULL regret **+0.02124**, p **0.4928**; LESION−FULL **0.0**, p **1.0**; workspace-state persistence **100%**. |
 | **I5.2** | State-dependent query / GWT-4 | 512 episodes; FULL−SHUFFLED **+1.0**, p **5×10⁻⁵**; FULL−ZERO **+0.77148**, p **5×10⁻⁵**; FULL−RANDOM **+0.74219**, p **5×10⁻⁵**; FULL−LESION **+0.76367**, p **5×10⁻⁵**. |
 | **I5.3** | Causal attention allocation | 512 episodes; FULL target attention mass **0.98456**; FULL−SHUFFLED **+0.97682**, p **5×10⁻⁵**; FULL−LESION **+0.73456**, p **5×10⁻⁵**. |
+| **I5.4** | Persistent query + attention integration | 24 replicates; query controls null; SHUFFLED_ATTENTION action-change **20.83%**, regret cost **+0.02804**, p **0.5022**; persistence **100%**. |
 
 These results describe computational properties under concrete protocols. **They do not by themselves demonstrate subjective experience.**
 
