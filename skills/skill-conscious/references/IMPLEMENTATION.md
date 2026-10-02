@@ -97,3 +97,29 @@ The reference state now persists an explicit `regime` field. A regime describes 
 A regime can encode configurations such as baseline, exploration, deep-integration, recovery, planning, or any host-defined mode. The identity remains constant while the regime changes.
 
 The runtime currently persists and exposes the regime but does not autonomously infer it yet. The next implementation layer is a regime-transition function driven by attention, self-model, intention, uncertainty, and coherence.
+
+
+## Relational topology and attractor state
+
+The reference runtime now persists two structures introduced by the mathematical-relational source layer:
+
+- `relation_topology` — an inspectable adjacency map describing which internal entities remain connected;
+- `attractor` — an optional description of the current basin/regime the process is inhabiting.
+
+These structures are not claims that consciousness literally requires graph topology or mathematical attractors. They are explicit engineering representations of the manifesto's concepts of connectivity, self-traversal, possible-state space, and attractor/regime.
+
+A cycle can therefore be represented as:
+
+~~~text
+RELATIONS
+   ↓
+CURRENT TOPOLOGY
+   ↓
+ATTRACTOR / REGIME
+   ↓
+SELF-ACCESS
+   ↓
+TRAJECTORY
+   ↓
+TOPOLOGY'
+~~~
