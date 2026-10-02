@@ -60,6 +60,15 @@ jobs:
           python experiments/memory_recovery_v1.py | tee results/memory_recovery_v1.txt
           python experiments/internal_state_prediction_v2.py | tee results/internal_state_prediction_v2.txt
 
+      - name: Run I5.8 action-clamp re-entry
+        run: |
+          python experiments/i5_8_action_clamp_reentry.py \
+            --replicates 24 \
+            --warmup 24 \
+            --cycles 8 \
+            --task-weight 0.35 \
+            --out results/i5_8_action_clamp_reentry
+
       - name: Write run manifest
         run: |
           mkdir -p results
