@@ -665,3 +665,17 @@ Protocolo implementado; **sin resultado experimental registrado todavía**.
 C0.15 mantiene el primer orden y la dinámica intactos y deshabilita únicamente el segundo selector en una fase de la misma trayectoria. Un tercer brazo restaura el modelo segundo orden desde el checkpoint serializado para probar rescate.
 
 Estado: **implementado; ejecución pendiente de verificación**.
+
+
+### C0.15 — Resultado verificado
+
+Artifact: run **36945882211**, artifact **11202160302**, SHA256 **5c297e25f01036b87f63ab0355555faf80dc4a2462199f5c7e115b62cbadcd6f**.
+
+- FULL − LESION, late action: **+0.271484375**, p **0.00064997**;
+- FULL − LESION, late gain: **+0.03751679**, p **0.08415**;
+- FULL − RESCUE, post-restore action: **+0.02734375**, p **0.68607**;
+- FULL − RESCUE, post-restore gain: **−0.03525716**, p **0.03860**;
+- exact checkpoint fraction: **100%**;
+- maximum absolute action difference FULL/LESION: **1.0**.
+
+Interpretation: disabling only the second-order selector changed the later action distribution under the tested protocol. The gain endpoint did not reach the prespecified significance threshold. After restoration, the action contrast returned close to zero, but the gain contrast did not reproduce the FULL arm; therefore the rescue evidence is **not a clean functional rescue**. C0.15 supports action-level dependence on the second-order component while leaving performance-level necessity/rescue unresolved.
