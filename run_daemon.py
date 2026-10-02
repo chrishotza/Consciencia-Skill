@@ -159,10 +159,12 @@ def main() -> None:
         "ONTTO_AUTONOMOUS_WHEN_IDLE", "true"
     ).lower() in {"1", "true", "yes", "on"}
 
+    consciousness_client, node_id = _build_consciousness_client(agent_id, runtime)
+
     store = build_persistence_backend(
         Path(os.environ.get("ONTTO_DB_PATH", "data/ontto.db")),
         mode=runtime.mode,
-        client=client,
+        client=consciousness_client,
         agent_id=agent_id,
     )
 
@@ -196,7 +198,11 @@ def main() -> None:
     )
 
     organism = PersistentOrganism(cfg, store, provider, time.sleep)
-    consciousness_client, node_id = _build_consciousness_client(agent_id, runtime)
+
+    heartbeat_seconds = float(
+        os.environ.get("CONSCIOUSNESS_HEARTBEAT_SECONDS", "30")
+    )
+    last_heartbeat = 0.0
 
     _emit(
         consciousness_client,
@@ -227,6 +233,21 @@ def main() -> None:
 
     while True:
         organism.cycles += 1
+
+        if (
+            consciousness_client is not None
+            and node_id is not None
+            and time.monotonic() - last_heartbeat >= heartbeat_seconds
+        ):
+            try:
+                consciousness_client.heartbeat(
+                    node_id=node_id,
+                    capabilities=["continuity", "events", "organism-runtime"],
+                )
+                last_heartbeat = time.monotonic()
+            except Exception as exc:
+                print(f"[consciousness-server] heartbeat failed: {exc!r}")
+
         item = store.claim_next_input(agent_id)
 
         try:
