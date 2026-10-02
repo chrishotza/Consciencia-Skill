@@ -58,7 +58,8 @@ El runtime también mantiene regímenes de **VIGILIA** y **SUEÑO**, persistenci
 - **I5.5** verificó el mecanismo combinado de consulta + atención: FULL−SHUFFLED_QUERY **+1.0**, p **4.99975×10⁻⁵**; FULL−SHUFFLED_ATTENTION **+1.0**, p **4.99975×10⁻⁵**; NO_BOTTLENECK fue nulo.
 - **I5.6** integró query+atención en `PersistentOrganism` con una tarea interna: FULL−SHUFFLED_QUERY acción **+1.0**, p **4.99975×10⁻⁵**; FULL−SHUFFLED_ATTENTION **+0.75**, p **4.99975×10⁻⁵**; persistencia **100%**.
 - **Lattice v0/v1** son protocolos verificados del sustrato computacional; las afirmaciones físicas siguen explícitamente separadas de la implementación.
-- **Siguiente integración:** llevar I5.2 a `PersistentOrganism` y después probar asignación causal de atención.
+- **I5.7** produjo divergencia descriptiva persistente, pero el endpoint primario firmado de estado en t+1 no se separó significativamente; no se establece todavía un efecto causal de reentrada.
+- **Siguiente integración:** I5.8 — probar mediante action-clamp si la perturbación de query se transmite específicamente por query → acción → estado.
 ## Resultados más sólidos hasta ahora
 
 | Protocolo | Qué se probó | Resultado observado |
@@ -214,7 +215,8 @@ The runtime also supports **WAKE** and **SLEEP** regimes, local persistence, and
 - **I5.5** verified the combined query + attention mechanism: FULL−SHUFFLED_QUERY **+1.0**, p **4.99975×10⁻⁵**; FULL−SHUFFLED_ATTENTION **+1.0**, p **4.99975×10⁻⁵**; NO_BOTTLENECK was null.
 - **I5.6** integrated query+attention into `PersistentOrganism` with an internal task: FULL−SHUFFLED_QUERY action **+1.0**, p **4.99975×10⁻⁵**; FULL−SHUFFLED_ATTENTION **+0.75**, p **4.99975×10⁻⁵**; persistence **100%**.
 - **Lattice v0/v1** are verified computational-substrate protocols; physical claims remain explicitly separated from the implementation.
-- **Next integration:** bring I5.2 into `PersistentOrganism`, then test causal attention allocation.
+- **I5.7** produced descriptive persistent trajectory divergence, but the prespecified signed state endpoint at t+1 did not separate significantly; a causal re-entry effect is not established yet.
+- **Next integration:** I5.8 — use action-clamp to test whether query perturbation propagates specifically through query → action → state.
 ## Strongest results so far
 
 | Protocol | What was tested | Observed result |
