@@ -123,9 +123,11 @@ La traducción del marco teórico al software se considera una hipótesis de ing
 
 El repositorio se encuentra en investigación activa.
 
-La frontera experimental actual incluye **C0.18** en verificación. C0.17 sigue siendo el último resultado científico completado: verificó adquisición autónoma del segundo orden como aprendizaje/persistencia de modelo, pero no encontró especificidad conductual TRUE vs PERMUTED bajo el protocolo probado.
+La frontera experimental incluye ahora **C0.18 verificado**. C0.17 sigue aportando evidencia de adquisición/persistencia autónoma del segundo orden, pero sin especificidad conductual TRUE vs PERMUTED bajo su protocolo.
 
-C0.18 extiende esa línea a una prueba emparejada de **lesión/rescate**. Su ingeniería de preflight ya fue corregida; todavía no se incorpora un resultado científico hasta completar las 24 réplicas.
+C0.18 extendió esa línea a una prueba emparejada de **lesión/rescate** con 24 réplicas. La adquisición y persistencia del modelo se reprodujeron, pero los contrastes FULL − LESION y RESCUE − LESION fueron nulos bajo el protocolo probado.
+
+Por tanto, C0.18 reduce la interpretación causal del segundo orden: la persistencia del modelo no fue suficiente para demostrar necesidad conductual ni rescate funcional en esta prueba.
 
 La campaña C0 de 32 ejecuciones fue reiniciada con una ruta de artifacts más segura. Sus resultados no se consideran evidencia hasta validar cada réplica.
 
