@@ -120,3 +120,30 @@ def test_reconciliation_statuses(tmp_path):
     )
     assert ahead.status is ReconciliationStatus.LOCAL_AHEAD
     store.close()
+
+
+def test_reconciliation_detects_divergence(tmp_path):
+    from src.consciousness_server.reconciliation import (
+        ReconciliationStatus,
+        reconcile,
+    )
+
+    report = reconcile(
+        local_state_fingerprint="local-state",
+        local_trajectory_fingerprint="local-trajectory",
+        local_event_count=5,
+        local_memory_count=2,
+        checkpoints=[
+            {
+                "checkpoint_id": "cp-diverged",
+                "payload": {
+                    "state_fingerprint": "remote-state",
+                    "trajectory_fingerprint": "remote-trajectory",
+                    "event_count": 5,
+                    "memory_count": 2,
+                },
+            }
+        ],
+    )
+
+    assert report.status is ReconciliationStatus.DIVERGED
