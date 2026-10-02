@@ -37,4 +37,4 @@ The checkpoint protocol answers **what was last observed**.
 
 Reconciliation answers **whether the local organism still matches that observation**.
 
-The next layer is replay/recovery: using a durable event boundary to determine exactly what must be re-applied or transferred when a node reconnects.
+The next layer is peer synchronization: using the durable event boundary to transfer only the missing deterministic delta, while blocking equal-revision divergence and verifying the post-replay boundary.
