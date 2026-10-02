@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # Laboratorio de investigación
 
 Esta carpeta contiene protocolos, implementaciones experimentales y registros que sostienen la línea de investigación de Consciencia-Skill.
@@ -24,6 +26,8 @@ Un resultado positivo o negativo solo debe incorporarse al registro consolidado 
 
 Los experimentos miden propiedades computacionales de una arquitectura y de sus arneses experimentales. No deben presentarse como demostraciones directas de experiencia subjetiva.
 
+
+<a id="english"></a>
 
 <details>
 <summary>🇺🇸 English — open</summary>
