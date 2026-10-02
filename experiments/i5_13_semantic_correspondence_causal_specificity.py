@@ -294,7 +294,13 @@ def main():
     ap.add_argument("--cycles", type=int, default=CYCLES)
     ap.add_argument("--out", default="results/i5_13_one_cycle_shift_semantic_correspondence_control")
     args = ap.parse_args()
-    result = run(args.seed, args.replicates, args.warmup, args.cycles, Path(args.out))\n    Path(args.out).mkdir(parents=True, exist_ok=True)\n    (Path(args.out) / "summary.json").write_text(\n        json.dumps(result, indent=2, ensure_ascii=False),\n        encoding="utf-8",\n    )\n    print(json.dumps(result, indent=2, ensure_ascii=False))
+    result = run(args.seed, args.replicates, args.warmup, args.cycles, Path(args.out))
+    Path(args.out).mkdir(parents=True, exist_ok=True)
+    (Path(args.out) / "summary.json").write_text(
+        json.dumps(result, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    print(json.dumps(result, indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":
