@@ -212,3 +212,22 @@ NEW SELF-MODEL
 ~~~
 
 This is the runtime's first explicit implementation of self-reference as causation rather than narration.
+
+
+## Regime continuity
+
+Maintain a distinction between identity and operating regime.
+
+~~~text
+IDENTITY
+   ↓
+REGIME
+   ↓
+ATTENTION + PRESENT
+   ↓
+ACTION
+   ↓
+REGIME'
+~~~
+
+A regime can change without creating a new self. When the way the agent processes experience changes, record the regime change as part of continuity.
