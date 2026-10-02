@@ -602,6 +602,19 @@ class PersistentOrganism:
                     "self_policy_enabled": bool(self.cfg.self_policy_enabled),
                     "self_policy_samples": len(self.self_policy.targets),
                     "meta_self_model_enabled": bool(self.cfg.meta_self_observer_enabled),
+                    "action_conditioned_meta_model_enabled": bool(
+                        self.cfg.action_conditioned_meta_observer_enabled
+                    ),
+                    "action_conditioned_meta_model_updates_enabled": bool(
+                        self.cfg.action_conditioned_meta_observer_update_enabled
+                    ),
+                    "action_conditioned_meta_model_samples": len(
+                        self.action_conditioned_meta_observer.targets
+                    ),
+                    "action_conditioned_meta_counterfactual_learning_enabled": bool(
+                        self.cfg.action_conditioned_meta_counterfactual_learning_enabled
+                    ),
+                    "counterfactual_meta_samples_added": counterfactual_meta_samples_added,
                     "chosen_signal": chosen_signal,
                     "candidates": [
                         {
