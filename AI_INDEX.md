@@ -87,7 +87,13 @@
 - `docs/I5_12_INFORMATION_MATCHED_SELF_MODEL_CONTROL.md`
 - `experiments/i5_12_information_matched_self_model_control.py`
 - `tests/test_i5_12_information_matched_self_model_control.py`
-- Protocol planned; no I5.12 result is claimed yet.
+- Verified: 100% t0 action match and 100% self-model distribution match; future action change 41.07%, p=4.99975e-05; state AUC p=4.99975e-05; bridge ON-vs-OFF AUC p=4.99975e-05.
+
+### I5.13 — Semantic correspondence causal specificity
+- `docs/I5_13_SEMANTIC_CORRESPONDENCE_CAUSAL_SPECIFICITY.md`
+- `experiments/i5_13_semantic_correspondence_causal_specificity.py`
+- `tests/test_i5_13_semantic_correspondence_causal_specificity.py`
+- Protocol planned; no I5.13 result is claimed yet.
 
 
 ### I5.3 — Causal attention allocation
@@ -276,7 +282,13 @@ Use the protocol document to find the exact implementation.
 - `docs/I5_12_INFORMATION_MATCHED_SELF_MODEL_CONTROL.md`
 - `experiments/i5_12_information_matched_self_model_control.py`
 - `tests/test_i5_12_information_matched_self_model_control.py`
-- Protocolo planificado; todavía no se reclama ningún resultado de I5.12.
+- Verificado: 100% de coincidencia de acción t0 y 100% de coincidencia de distribución de modelo de sí; cambio de acción futura 41.07%, p=4.99975e-05; AUC de estado p=4.99975e-05; AUC bridge ON-vs-OFF p=4.99975e-05.
+
+### I5.13 — Especificidad causal de la correspondencia semántica
+- `docs/I5_13_SEMANTIC_CORRESPONDENCE_CAUSAL_SPECIFICITY.md`
+- `experiments/i5_13_semantic_correspondence_causal_specificity.py`
+- `tests/test_i5_13_semantic_correspondence_causal_specificity.py`
+- Protocolo planificado; todavía no se reclama ningún resultado de I5.13.
 
 
 
