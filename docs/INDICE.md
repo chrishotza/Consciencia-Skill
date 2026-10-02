@@ -109,4 +109,5 @@ Los experimentos anteriores a V47 forman parte del historial científico y de in
 - [Programa de indicadores de conciencia](CONSCIOUSNESS_INDICATOR_PROGRAM.md)
 - [I0 — Instrumentación interoceptiva](I0_INTEROCEPTIVE_INSTRUMENTATION.md)
 - [I1 — Autoevaluación interoceptiva](I1_INTEROCEPTIVE_SELF_ASSESSMENT.md)
+- [I2 — Regulación interoceptiva](I2_INTEROCEPTIVE_REGULATION.md)
 
