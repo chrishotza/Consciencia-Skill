@@ -98,7 +98,7 @@ Los resultados positivos, nulos y negativos se conservan.
 | C0.10 | Alineación temporal observador → política | **Nulo: brecha de readout sin efecto conductual** |
 | C0.11 | Mediación causal acción → estado → siguiente acción | **Positivo: intervención sobre acción cambia estado y siguiente acción** |
 | C0.12 | Segundo orden: modelo del error del propio modelo de sí | **Mixto: predice el error, pero sin especificidad TRUE vs permutado** |
-| C0.13 | Segundo orden condicionado por acción | **Implementado; ejecución pendiente** |
+| C0.13 | Segundo orden condicionado por acción | **Resultado verificado** |
 | C0 Campaign | 32 ejecuciones en 8 grupos | **Ejecutada: 32 workflows; fallo técnico en el archivado de artifacts** |
 
 ## Fundamentos
