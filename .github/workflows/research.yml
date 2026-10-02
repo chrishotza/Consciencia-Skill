@@ -102,6 +102,14 @@ jobs:
             --cycles 8 \
             --out results/i5_12_information_matched_self_model_control
 
+      - name: Run I5.13 one-cycle semantic correspondence control
+        run: |
+          python experiments/i5_13_semantic_correspondence_causal_specificity.py \
+            --replicates 24 \
+            --warmup 24 \
+            --cycles 8 \
+            --out results/i5_13_one_cycle_shift_semantic_correspondence_control
+
       - name: Write run manifest
         run: |
           mkdir -p results
