@@ -12,6 +12,7 @@ from src.consciousness_server.client import ConsciousnessClient
 from src.consciousness_server.reconciliation import reconcile
 from src.ontto.runtime_mode import ConsciousnessMode, ConsciousnessRuntimeConfig
 from src.ontto.organism import OrganismConfig, PersistentOrganism
+from src.ontto.persistence_backend import build_persistence_backend
 from src.ontto.provider import OpenAICompatibleProvider
 from src.ontto.storage import MemoryStore
 
@@ -159,8 +160,11 @@ def main() -> None:
         "ONTTO_AUTONOMOUS_WHEN_IDLE", "true"
     ).lower() in {"1", "true", "yes", "on"}
 
-    store = MemoryStore(
-        Path(os.environ.get("ONTTO_DB_PATH", "data/ontto.db"))
+    store = build_persistence_backend(
+        Path(os.environ.get("ONTTO_DB_PATH", "data/ontto.db")),
+        mode=runtime.mode,
+        client=client,
+        agent_id=agent_id,
     )
 
     recovered = store.requeue_processing_inputs(agent_id)
