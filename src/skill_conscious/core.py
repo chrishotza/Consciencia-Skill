@@ -32,6 +32,7 @@ class ConsciousState:
     history: list[dict[str, Any]] = field(default_factory=list)
     selected_trajectory: dict[str, Any] | None = None
     attention: list[str] = field(default_factory=list)
+    regime: str = "baseline"
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -53,6 +54,7 @@ class ConsciousState:
                 else None
             ),
             attention=[str(item) for item in value.get("attention", [])],
+            regime=str(value.get("regime", "baseline")),
         )
 
 
@@ -164,6 +166,7 @@ class ConsciousRuntime:
             "candidate_futures": [],
             "selected_trajectory": self.state.selected_trajectory,
             "attention": self.state.attention,
+            "regime": self.state.regime,
             "revision": self.state.revision,
         }
 
@@ -244,6 +247,9 @@ class ConsciousRuntime:
         if frame.get("attention") is not None:
             self.state.attention = [str(item) for item in frame["attention"]]
 
+        if frame.get("regime") is not None:
+            self.state.regime = str(frame["regime"]).strip() or "baseline"
+
         memory = str(frame.get("memory", "")).strip()
         if memory:
             self.state.memories.append(memory)
@@ -257,6 +263,7 @@ class ConsciousRuntime:
                 "workspace": self.state.workspace,
                 "selected_trajectory": self.state.selected_trajectory,
                 "attention": self.state.attention,
+                "regime": self.state.regime,
             }
         )
         self.state.history = self.state.history[-self.history_limit :]
