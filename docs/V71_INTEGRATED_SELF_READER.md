@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V71 — Lector propio integrado en el ciclo autónomo
 
 ## Pregunta
@@ -63,3 +65,75 @@ Un resultado positivo demostraría integración funcional de persistencia, autoo
 No demostraría por sí solo experiencia subjetiva ni consciencia fenomenológica.
 
 Los resultados nulos también deben conservarse.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V71 — Self-Reader Integrated into the Autonomous Cycle
+
+## Question
+
+V70 demonstrated persistence of the numerical reader after restart, but the protocol explicitly copied that reader into the test conditions.
+
+V71 removes that experimental intervention.
+
+> Can the organism itself learn its reader, persist it, restart, enter SLEEP after semantic ablation, and automatically use the persisted reader to select a trajectory?
+
+## Operational hypothesis
+
+The target property is an integrated chain:
+
+~~~text
+state learning
+→ persistence
+→ restart
+→ automatic recovery
+→ semantic ablation
+→ SLEEP
+→ state readout
+→ trajectory selection
+~~~
+
+The protocol does not manually copy the numerical self-model between databases.
+
+## Protocol
+
+For each replicate:
+
+1. train the numerical reader inside the organism;
+2. keep it in SQLite through normal organism persistence;
+3. create two dynamic conditions with a controlled numerical pulse of equal magnitude and opposite sign;
+4. remove memories, events, self-model text, and semantic surfaces;
+5. restart the organism and automatically reconstruct SelfObserver;
+6. enter SLEEP with a controlled provider that supplies neither memory nor SELF_MODEL;
+7. run an autonomous cycle with self_model selection;
+8. compare against a condition with blinded dynamic state;
+9. causally exchange the dynamic cores while keeping the persisted reader inside each organism.
+
+## Integration criteria
+
+The result must record:
+
+- reader persistence after restart and SLEEP;
+- zero semantic memories before the probe;
+- policy = self_model during selection;
+- three candidate trajectories evaluated;
+- automatic reuse of the persisted reader;
+- no manual model copy;
+- comparison with blinded state;
+- response to causal state exchange.
+
+## Evidence boundary
+
+V71 tests a more integrated computational property: the numerical self-reader stops being an external protocol artifact and becomes part of the persistent autonomous cycle.
+
+A positive result would demonstrate functional integration of persistence, self-observation, SLEEP, and trajectory selection under the defined conditions.
+
+It would not by itself demonstrate subjective experience or phenomenal consciousness.
+
+Null results must also be preserved.
+
+</details>
