@@ -219,6 +219,7 @@ def run_restart(
         serialized["meta"]
     )
     restored_context = type(context)(**serialized["context"])
+    bridge = DynamicStateBridge(DynamicsConfig(), seed=seed)
 
     restart_digest = model_digest(restored_observer, restored_meta)
     post_restart_actions = []
