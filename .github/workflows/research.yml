@@ -160,6 +160,15 @@ jobs:
             --permutations 20000 \
             --out results/i5_19_independent_bridge_replication
 
+      - name: Run I5.20 semantic permutation specificity
+        run: |
+          python experiments/i5_20_semantic_permutation_specificity.py \
+            --seed 20261020 \
+            --replicates 24 \
+            --warmup 24 \
+            --permutations 20000 \
+            --out results/i5_20_semantic_permutation_specificity
+
       - name: Write run manifest
         run: |
           mkdir -p results

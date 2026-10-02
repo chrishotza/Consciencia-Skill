@@ -1,3 +1,33 @@
+## 2026-10-02 — I5.20 verificado / I5.20 verified
+
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+- I5.20 ejecutó 24 réplicas con semilla **20261020**, 24 warmup, 15 ciclos y 20.000 permutaciones.
+- Run **37058932661**, artifact **11249457646**; tests **37058932554** y paquete **37058932500** pasaron.
+- El control preservó 100% del t0 y 100% del multiconjunto semántico post-t0.
+- El gap matched−permuted fue nulo para AUC firmada, pero significativo para AUC absoluta y cambio de acción futura.
+- La interacción global por lag fue no significativa en los tres endpoints.
+- Siguiente control: I5.21, permutación semántica local por período.
+
+</details>
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+- I5.20 ran 24 replicates with seed **20261020**, 24 warmup cycles, 15 cycles, and 20,000 permutations.
+- Run **37058932661**, artifact **11249457646**; tests **37058932554** and package check **37058932500** passed.
+- The control preserved 100% of t0 and 100% of the post-t0 semantic multiset.
+- The matched−permuted gap was null for signed AUC but significant for absolute AUC and future-action change.
+- Global lag interaction was non-significant for all three endpoints.
+- Next control: I5.21, phase-local semantic permutation.
+
+</details>
+
 ## 2026-10-02 — I5.19 verificado / I5.19 verified
 
 <a id="espanol"></a>

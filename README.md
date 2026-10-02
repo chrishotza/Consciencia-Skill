@@ -217,7 +217,7 @@ The runtime also supports **WAKE** and **SLEEP** regimes, local persistence, and
 - **I5.6** integrated query+attention into `PersistentOrganism` with an internal task: FULL−SHUFFLED_QUERY action **+1.0**, p **4.99975×10⁻⁵**; FULL−SHUFFLED_ATTENTION **+0.75**, p **4.99975×10⁻⁵**; persistence **100%**.
 - **Lattice v0/v1** are verified computational-substrate protocols; physical claims remain explicitly separated from the implementation.
 - **I5.7** produced descriptive persistent trajectory divergence, but the prespecified signed state endpoint at t+1 did not separate significantly; a causal re-entry effect is not established yet.
-- **Next integration:** I5.20 — bridge specificity under semantic permutation control.
+- **Next integration:** I5.21 — phase-local semantic permutation control.
 ## Strongest results so far
 
 | Protocol | What was tested | Observed result |
@@ -336,3 +336,6 @@ I5.18 verified the frozen I5.17 bridge effects with a global phase × bridge per
 
 ### I5.19 — Independent bridge replication
 I5.19 reran the I5.17 acquisition protocol with independent seed **20261019** and applied the frozen I5.18 analysis. The average bridge ON−OFF effect reproduced for signed AUC (**-1.39819**, p=0.00030), absolute AUC (**-0.73065**, p=0.00190), and future-action change (**-0.11806**, p=0.00110). The global phase × bridge interaction remained non-significant across all three endpoints.
+
+### I5.20 — Semantic permutation specificity control
+I5.20 preserved the exact post-t0 semantic multiset and t0 action while disrupting temporal correspondence. The matched−permuted gap was null for signed AUC (**-0.10367**, p=0.24169) but positive for absolute AUC (**+0.71459**, p=0.00005) and future-action change (**+0.07292**, p=0.00005). Global lag×specificity interaction was non-significant across all three endpoints.

@@ -154,6 +154,18 @@
 - Global phase × bridge interaction remained non-significant for all three endpoints.
 - Boundary: independent computational replication under the frozen protocol; no consciousness claim.
 
+### I5.20 — Semantic permutation specificity control
+- `docs/I5_20_SEMANTIC_PERMUTATION_SPECIFICITY.md`
+- `experiments/i5_20_semantic_permutation_specificity.py`
+- `tests/test_i5_20_semantic_permutation_specificity.py`
+- Verified: research-lab **37058932661** / artifact **11249457646**; tests **37058932554** and package check **37058932500** successful.
+- 24 replicates; t0 action and post-t0 semantic multiset both preserved at **100%**.
+- Semantic specificity gap: signed AUC **-0.10367**, p=0.24169; absolute AUC **+0.71459**, p=0.00005; future-action change **+0.07292**, p=0.00005.
+- Global lag×specificity interaction was non-significant for all three endpoints.
+- max-T global any-lag p: **0.65022** signed AUC, **0.01060** absolute AUC, **0.01110** future action.
+- Boundary: computational semantic-correspondence specificity; no consciousness claim.
+- Next: I5.21 phase-local semantic permutation.
+
 ### I5.3 — Causal attention allocation
 - `docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md`
 - `src/ontto/attention_controller.py`

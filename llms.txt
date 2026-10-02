@@ -101,3 +101,11 @@ Result ledger: research/ORGANISM_RESULT_LEDGER.md
 Status: verified on workflow 37056574657 / artifact 11247979913.
 Result: independent seed 20261019 reproduced a non-zero average bridge ON−OFF effect for signed AUC, absolute AUC, and future-action change; global phase × bridge interaction remained non-significant.
 Next: I5.20 bridge specificity under semantic permutation control.
+
+## I5.20 verified
+Protocol: docs/I5_20_SEMANTIC_PERMUTATION_SPECIFICITY.md
+Experiment: experiments/i5_20_semantic_permutation_specificity.py
+Result ledger: research/ORGANISM_RESULT_LEDGER.md
+Status: verified on workflow 37058932661 / artifact 11249457646.
+Result: semantic-correspondence specificity was positive for absolute AUC and future-action change, null for signed AUC; global lag×specificity interaction remained non-significant.
+Next: I5.21 phase-local semantic permutation.
