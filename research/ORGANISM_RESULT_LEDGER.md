@@ -1,4 +1,4 @@
-# Registro de resultados experimentales del organismo — V47 → V78
+# Registro de resultados experimentales del organismo — V47 → V80
 
 ## Resultados positivos fuertes
 
@@ -735,3 +735,11 @@ Artefacto: GitHub Actions run **36946964601**, artifact **11201784892**, SHA256 
 - reentrenamiento externo durante la evaluación: **no**.
 
 Interpretación: **resultado mixto/nulo bajo el protocolo probado**. El organismo persistente sí adquirió un modelo de segundo orden desde cero usando errores de predicción contrafactuales generados dentro del propio ciclo autónomo. Sin embargo, al congelar ese modelo y compararlo con un control target-permuted, no apareció una separación estadísticamente significativa en acción ni en ganancia. Por tanto, la adquisición autónoma está demostrada a nivel de aprendizaje/persistencia del modelo, pero su especificidad causal conductual no quedó demostrada.
+
+
+## Estado de campaña C0
+
+La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.
+
+**Estado documental actual:** la nueva ventana de ejecución está definida en [C0 Campaign](../docs/C0_CAMPAIGN_32_RUNS.md). Los resultados de esa ejecución no se incorporan automáticamente a este ledger: cada réplica debe validarse y sus resultados científicos deben registrarse por separado. Un fallo técnico de infraestructura no se convierte en un resultado nulo.
+
