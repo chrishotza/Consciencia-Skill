@@ -46,6 +46,13 @@
 - FULL−SHUFFLED_QUERY: +1.0 accuracy, p=4.99975e-05; FULL−SHUFFLED_ATTENTION: +1.0, p=4.99975e-05.
 - NO_BOTTLENECK was null, so bottleneck necessity is not established.
 
+### I5.6 — Recurrent self-access and re-entry
+- `docs/I5_6_RECURRENT_SELF_ACCESS.md`
+- `experiments/i5_6_recurrent_self_access.py`
+- `tests/test_i5_6_recurrent_self_access.py`
+- Protocol added; no result is claimed yet.
+- Primary design: one-cycle query perturbation, FULL restoration, and an 8-cycle re-entry horizon.
+
 ### I5.3 — Causal attention allocation
 - `docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md`
 - `src/ontto/attention_controller.py`
@@ -190,6 +197,13 @@ Use the protocol document to find the exact implementation.
 - `experiments/i5_global_workspace_v1.py`
 - `tests/test_global_workspace.py`
 - Verificado: run 36982788159; 512 episodios; broadcast, capacidad y lesión del origen seleccionado separados bajo el protocolo sintético.
+
+### I5.6 — Acceso recurrente al propio estado y reentrada
+- `docs/I5_6_RECURRENT_SELF_ACCESS.md`
+- `experiments/i5_6_recurrent_self_access.py`
+- `tests/test_i5_6_recurrent_self_access.py`
+- Protocolo agregado; todavía no se reclama ningún resultado.
+- Diseño principal: perturbación de query durante un solo ciclo, restauración a FULL y horizonte de reentrada de 8 ciclos.
 
 ### Lattice Computer v0/v1
 - `docs/LATTICE_COMPUTER_V0.md`
