@@ -90,3 +90,64 @@ Los resultados científicos no se escriben automáticamente en el ledger; se inc
 ## Estado
 
 **C0.18: verificado, resultado nulo bajo el protocolo probado.**
+
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# C0.18 — Autonomous Second-Order Acquisition and Lesion/Rescue
+
+## Question
+After the organism autonomously acquires an action-conditioned second-order model, does removing that model change selection from the same initial state, and does restoring it recover behavior?
+
+C0.18 extends C0.17 from model acquisition/persistence to a causal necessity/rescue test.
+
+## Matched design
+Twenty-four replicates were run. Each replicate constructs:
+- a previously trained first-order self-model;
+- an initially empty action-conditioned second-order model;
+- autonomous acquisition for 12 cycles;
+- three copies of the same post-acquisition database.
+
+Conditions:
+| Condition | Second order |
+|---|---|
+| FULL | autonomously acquired model present |
+| LESION | replaced with an empty model |
+| RESCUE | acquired model restored from the post-acquisition state |
+
+The probe uses no semantic input and no external retraining.
+
+## Critical invariant
+The first-order self-model remains frozen during the probe with self_observer_update_enabled = False.
+The reference digest is computed from models persisted in SQLite, so exact recovery tests serialization of the actual stored state.
+
+## Verified result
+The GitHub Actions artifact records:
+- 24 replicates;
+- 12 autonomous acquisition cycles per replicate;
+- 48 learned second-order samples on average;
+- 100% exact recovery of the persisted model.
+
+Primary contrasts were all null under the tested sign-flip procedure:
+| Contrast | Mean | p |
+|---|---:|---:|
+| FULL − LESION, action | −0.2916667 | 0.1177441 |
+| FULL − LESION, gain | +0.0114104 | 0.7404130 |
+| RESCUE − LESION, action | −0.2916667 | 0.1183441 |
+| RESCUE − LESION, gain | +0.0114104 | 0.7332633 |
+
+## Interpretation
+**Null result under the tested protocol.**
+
+The organism acquired and persisted the second-order model, but lesioning it did not produce a statistically significant change in action or prediction gain, and restoring it did not produce significant functional recovery relative to LESION.
+
+C0.18 therefore does not demonstrate causal necessity or functional rescue of the autonomously acquired second-order mechanism in this harness.
+
+This does not invalidate C0.17's acquisition/persistence result. It adds a stronger constraint: acquisition and persistence were not sufficient to produce behavioral dependency under this lesion/rescue test.
+
+No claim of subjective experience is made.
+
+</details>
+
+> Language convention: docs/LANGUAGE.md
