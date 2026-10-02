@@ -217,7 +217,7 @@ The runtime also supports **WAKE** and **SLEEP** regimes, local persistence, and
 - **I5.6** integrated query+attention into `PersistentOrganism` with an internal task: FULL−SHUFFLED_QUERY action **+1.0**, p **4.99975×10⁻⁵**; FULL−SHUFFLED_ATTENTION **+0.75**, p **4.99975×10⁻⁵**; persistence **100%**.
 - **Lattice v0/v1** are verified computational-substrate protocols; physical claims remain explicitly separated from the implementation.
 - **I5.7** produced descriptive persistent trajectory divergence, but the prespecified signed state endpoint at t+1 did not separate significantly; a causal re-entry effect is not established yet.
-- **Next integration:** I5.26 — matched-magnitude sign-coupling control.
+- **Next integration:** I6.1 — causal closure of the self-model.
 ## Strongest results so far
 
 | Protocol | What was tested | Observed result |
@@ -358,3 +358,7 @@ I5.24 tested the frozen I5.23 6×6 specificity surface. The global shift×lag in
 
 ### I5.25 — Shift×lag orientation and symmetry control
 I5.25 shows that the frozen I5.23 surface is asymmetric under simultaneous sign reversal and enriched on lag=−shift for absolute AUC and future-action change (permutation p=0.00005 for each; Bonferroni 0.00030). Signed AUC remains null.
+
+
+### I5.26 — Matched-magnitude sign-coupling control
+I5.26 matched |shift| and |lag| and still found strong opposite-sign coupling for absolute AUC and future-action change (both global p<0.00005), while signed AUC remained null (p=0.43118). This closes the descriptive shift×lag control sequence; the next frontier is a causal self-model intervention.
