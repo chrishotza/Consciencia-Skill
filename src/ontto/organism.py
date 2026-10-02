@@ -546,7 +546,10 @@ class PersistentOrganism:
         chosen_signal = 0.0
         candidates = ()
         counterfactual_meta_samples_added = 0
-        if self.cfg.self_selection_enabled and self.cfg.self_observer_enabled:
+        interoceptive_control = None
+        if self.cfg.interoceptive_control_enabled:
+            chosen_signal, interoceptive_control = self._choose_interoceptive_signal()
+        elif self.cfg.self_selection_enabled and self.cfg.self_observer_enabled:
             candidates = self.trajectory_selector.evaluate(
                 self.self_observer,
                 current_state=self.state.dynamic_state,
@@ -630,6 +633,7 @@ class PersistentOrganism:
             "autonomous",
             {
                 "dynamic": dynamic,
+                "interoceptive_control": interoceptive_control,
                 "self_selection": {
                     "enabled": bool(self.cfg.self_selection_enabled and self.cfg.self_observer_enabled),
                     "policy": (
