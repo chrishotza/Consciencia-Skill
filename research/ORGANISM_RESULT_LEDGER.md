@@ -908,6 +908,18 @@ Workflow: **37038961982**; artifact **11241544037**; seed **20261011**; **24** r
 
 Interpretación: después de igualar la acción aplicada en t0, la perturbación de query siguió modificando el estado y la selección de trayectorias futuras; el bridge ON-vs-OFF separó adicionalmente la transmisión semántica. Esto respalda bajo el harness la cadena query → self-model → semantic bridge → state → future selection. No demuestra consciencia ni experiencia subjetiva.
 
+### I5.12 — Control informacionalmente emparejado del modelo de sí — resultado verificado
+
+Workflow: **37039376914**; artifact **11242065231**; seed **20261012**; **24** réplicas; **24** ciclos de warmup; **8** ciclos experimentales.
+
+- coincidencia de acción aplicada en t0: **100%**;
+- coincidencia de distribución de contenido del modelo de sí: **100%**;
+- cambio de acción futura en ciclos 1–7: **41.07%**, p **4.99975×10⁻⁵**;
+- AUC de divergencia de estado post-pulso: **1.94052**, p **4.99975×10⁻⁵**;
+- AUC bridge ON-vs-OFF: **2.45520**, p **4.99975×10⁻⁵**.
+
+Interpretación: incluso preservando la distribución completa de contenidos semánticos y la acción inicial, romper la correspondencia temporal query → self-model mantuvo una separación significativa de estado y selección futura. Bajo el harness, esto aporta especificidad causal adicional al circuito. No demuestra consciencia ni experiencia subjetiva.
+
 ## Estado de campaña C0
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.
@@ -1419,6 +1431,18 @@ Workflow: **37038961982**; artifact **11241544037**; seed **20261011**; **24** r
 - post-pulse self-model divergence: **50.0%**.
 
 Interpretation: after matching the applied t0 action, the query perturbation still changed state and future trajectory selection; the bridge ON-vs-OFF contrast further separated semantic transmission. Under the tested harness this supports query → self-model → semantic bridge → state → future selection. It does not demonstrate consciousness or subjective experience.
+
+### I5.12 — Information-matched semantic self-model control — verified result
+
+Workflow: **37039376914**; artifact **11242065231**; seed **20261012**; **24** replicates; **24** warmup cycles; **8** experimental cycles.
+
+- t0 applied-action match: **100%**;
+- self-model content-distribution match: **100%**;
+- future action change across cycles 1–7: **41.07%**, p **4.99975×10⁻⁵**;
+- post-pulse state-divergence AUC: **1.94052**, p **4.99975×10⁻⁵**;
+- bridge ON-vs-OFF AUC: **2.45520**, p **4.99975×10⁻⁵**.
+
+Interpretation: even while preserving the full semantic-content distribution and the initial action, breaking the temporal query → self-model correspondence retained significant state and future-selection separation. Under the harness, this adds causal specificity to the circuit. It does not demonstrate consciousness or subjective experience.
 
 ## C0 campaign and causal controls
 
