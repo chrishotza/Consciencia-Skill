@@ -24,6 +24,12 @@
 - `experiments/interoception_i4_3.py`
 - Verified run: 36974947476; aggregate META−LESION mean-error p=4.27e-06; aggregate recovery null (p=0.1505).
 
+### I5.1 — PersistentOrganism workspace integration
+- `docs/I5_1_PERSISTENT_ORGANISM_WORKSPACE.md`
+- `src/ontto/workspace_controller.py`
+- `experiments/i5_1_persistent_organism_workspace.py`
+- Opt-in integration of I5.0 into the real persistent runtime.
+
 ### I5.0 — Bounded global workspace
 - `docs/I5_GLOBAL_WORKSPACE.md`
 - `src/ontto/global_workspace.py`
