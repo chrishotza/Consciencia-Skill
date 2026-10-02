@@ -84,6 +84,7 @@
 - `src/ontto/trajectory_selector.py` — trajectory/action selection.
 - `src/ontto/memory_policy.py` — memory handling.
 - `src/ontto/storage.py` — persistence/restart state.
+- `src/ontto/continuity_bundle.py` — portable organism backup and migration artifact.
 - `src/ontto/continuity.py` — continuity primitives.
 - `src/ontto/bridge.py` — semantic ↔ internal-state bridge.
 - `src/ontto/provider.py` — model-provider contract.
@@ -94,9 +95,12 @@
 - `src/consciousness_server/cli.py` — local server launcher.
 - `src/consciousness_server/client.py` — optional fail-open bridge for the organism runtime.
 - `src/consciousness_server/reconciliation.py` — checkpoint comparison and continuity status.
+- `src/consciousness_server/recovery.py` — non-destructive recovery planning.
 - `docs/CONSCIOUSNESS_SERVER.md` — architecture and roadmap.
 - `docs/CONSCIOUSNESS_CHECKPOINTS.md` — durable checkpoint protocol.
 - `docs/CONSCIOUSNESS_RECONCILIATION.md` — local-vs-server reconciliation.
+- `docs/CONTINUITY_BUNDLES.md` — portable organism backup and restore.
+- `docs/CONTINUITY_RECOVERY.md` — recovery planning boundary.
 - `docs/ZENODO_RELEASE.md` — publication/versioning plan.
 
 ## Experiment trace
