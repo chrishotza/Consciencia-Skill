@@ -508,6 +508,37 @@ class PersistentOrganism:
         )
         return len(candidates)
 
+    def _choose_interoceptive_signal(self) -> tuple[float, dict[str, object]]:
+        candidates = self.interoceptive_controller.evaluate(
+            self.dynamic_bridge,
+            previous_state=self.state.dynamic_prev_state,
+            state=self.state.dynamic_state,
+            memory=self.state.dynamic_memory,
+            pressure=self.state.dynamic_pressure,
+            signals=self.cfg.self_selection_signals,
+            step_index=self.state.dynamic_steps,
+            mode=self.cfg.interoceptive_control_mode,
+            shuffle_seed=self.cfg.dynamic_seed + self.state.dynamic_steps + 71000,
+        )
+        chosen = self.interoceptive_controller.choose(
+            candidates,
+            seed=self.cfg.dynamic_seed,
+        )
+        return float(chosen.signal), {
+            "mode": self.cfg.interoceptive_control_mode,
+            "chosen_signal": float(chosen.signal),
+            "chosen_score": float(chosen.score),
+            "candidates": [
+                {
+                    "signal": float(candidate.signal),
+                    "score": float(candidate.score),
+                    "operating_condition": float(
+                        candidate.predicted_snapshot.operating_condition
+                    ),
+                }
+                for candidate in candidates
+            ],
+        }
     def autonomous_wake_cycle(self) -> dict[str, float | int] | None:
         self.state.mode = "WAKE"
         self.state.lifetime_wake_cycles += 1
