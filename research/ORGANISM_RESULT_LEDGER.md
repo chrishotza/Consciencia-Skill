@@ -767,6 +767,21 @@ Workflow verificado: **36984675391**; artifact **11216743506**; commit experimen
 
 Interpretación: **resultado positivo para el mecanismo computacional probado**. El estado global implementado controló la selección del siguiente módulo y la lesión del origen seleccionado redujo fuertemente la accuracy de consulta. El resultado sigue siendo un mecanismo GWT-4 independiente bajo un arnés sintético; no demuestra consciencia ni experiencia subjetiva ni sustituye una integración causal dentro de PersistentOrganism.
 
+## I5.3 — Asignación causal de atención — resultado verificado
+
+Workflow verificado: **36985957522**; artifact **11218020500**; commit experimental **60263ada3a28af29c3f1fa29246355bb434242fc**.
+
+- seed **20261003**;
+- **512** episodios;
+- target attention mass FULL: **0.9845638420**;
+- FULL − SHUFFLED target mass: **+0.9768188958**, p=**4.99975×10⁻⁵**;
+- FULL − UNIFORM target mass: **+0.7345638420**, p=**4.99975×10⁻⁵**;
+- FULL − RANDOM target mass: **+0.7429394202**, p=**4.99975×10⁻⁵**;
+- FULL − LESION target mass: **+0.7345638420**, p=**4.99975×10⁻⁵**;
+- tasa de cambio de selección: **1.0**.
+
+Interpretación: **resultado positivo para el mecanismo computacional probado**. El modelo de atención concentró recursos sobre el módulo objetivo de forma reproducible y los controles eliminan esa concentración. La condición LESION es una pérdida operacional de concentración del controlador, no una lesión anatómica.
+
 ## Estado de campaña C0
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.
@@ -1137,6 +1152,21 @@ Verified workflow: **36984675391**; artifact **11216743506**; experimental commi
 - state-dependent query-change rate: **1.0**.
 
 Interpretation: **positive result for the tested computational mechanism**. The implemented global state controlled selection of the next module, and lesioning the selected source sharply reduced query accuracy. This remains a standalone GWT-4 mechanism result under a synthetic harness; it does not demonstrate consciousness or subjective experience and does not replace causal integration into PersistentOrganism.
+
+## I5.3 — Causal attention allocation — verified result
+
+Verified workflow: **36985957522**; artifact **11218020500**; experimental commit **60263ada3a28af29c3f1fa29246355bb434242fc**.
+
+- seed **20261003**;
+- **512** episodes;
+- FULL target attention mass: **0.9845638420**;
+- FULL − SHUFFLED target mass: **+0.9768188958**, p=**4.99975×10⁻⁵**;
+- FULL − UNIFORM target mass: **+0.7345638420**, p=**4.99975×10⁻⁵**;
+- FULL − RANDOM target mass: **+0.7429394202**, p=**4.99975×10⁻⁵**;
+- FULL − LESION target mass: **+0.7345638420**, p=**4.99975×10⁻⁵**;
+- attention selection-change rate: **1.0**.
+
+Interpretation: **positive result for the tested computational mechanism**. The attention model reproducibly concentrated resources on the target module and the controls removed that concentration. The LESION condition is an operational loss-of-concentration control, not an anatomical lesion.
 
 ## C0 campaign and causal controls
 
