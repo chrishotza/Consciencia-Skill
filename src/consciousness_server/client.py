@@ -95,21 +95,6 @@ class ConsciousnessClient:
             body,
         )
 
-    def emit(
-        self,
-        instance_id: str,
-        event_type: str,
-        payload: dict[str, Any] | None = None,
-    ) -> dict[str, Any]:
-        return self._request(
-            "POST",
-            f"/instances/{instance_id}/events",
-            {
-                "event_type": event_type,
-                "payload": payload or {},
-            },
-        )
-
     @staticmethod
     def deterministic_event_id(
         instance_id: str,
