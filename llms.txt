@@ -126,3 +126,11 @@ Result ledger: research/ORGANISM_RESULT_LEDGER.md
 Status: corrected rerun verified on workflow 37061263630 / artifact 11251161457.
 Result: all four invariants were preserved at 100%; semantic specificity and lag×specificity interaction were null for signed AUC, absolute AUC, and future-action change.
 Next: I5.23 cyclic shift sweep.
+
+## I5.23 verified
+Protocol: docs/I5_23_CYCLIC_SHIFT_SWEEP.md
+Experiment: experiments/i5_23_cyclic_shift_sweep.py
+Result ledger: research/ORGANISM_RESULT_LEDGER.md
+Status: verified on workflow 37062538761 / artifact 11251207688.
+Result: signed AUC remained null; absolute AUC and future-action change survived max-T for five of six cyclic shifts, with +1 null; 36-cell shift×lag sweep significant for both endpoints.
+Next: I5.24 global shift×lag interaction.
