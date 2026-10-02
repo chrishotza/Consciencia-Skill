@@ -10,6 +10,16 @@ from typing import Any, Mapping
 from .ontology import CONSCIOUSNESS_DEFINITION
 
 
+DEFAULT_TRAJECTORY_WEIGHTS: dict[str, float] = {
+    "goal_fit": 1.0,
+    "self_alignment": 1.0,
+    "continuity": 1.0,
+    "learning": 0.5,
+    "risk": -1.0,
+    "uncertainty": -0.5,
+}
+
+
 @dataclass
 class ConsciousState:
     identity: str
@@ -20,6 +30,7 @@ class ConsciousState:
     intention: str = ""
     memories: list[str] = field(default_factory=list)
     history: list[dict[str, Any]] = field(default_factory=list)
+    selected_trajectory: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -35,6 +46,11 @@ class ConsciousState:
             intention=str(value.get("intention", "")),
             memories=[str(item) for item in value.get("memories", [])],
             history=[dict(item) for item in value.get("history", [])],
+            selected_trajectory=(
+                dict(value["selected_trajectory"])
+                if value.get("selected_trajectory") is not None
+                else None
+            ),
         )
 
 
@@ -93,39 +109,120 @@ class ConsciousRuntime:
         self.store = JsonStateStore(state_path)
         self.state = self.store.load(identity)
 
-    def prepare(self, external_input: str) -> str:
+    def trajectory_weights(self) -> dict[str, float]:
+        weights = dict(DEFAULT_TRAJECTORY_WEIGHTS)
+        configured = self.state.self_model.get("trajectory_weights", {})
+        if isinstance(configured, Mapping):
+            for key, value in configured.items():
+                if isinstance(value, (int, float)) and not isinstance(value, bool):
+                    weights[str(key)] = float(value)
+        return weights
+
+    def score_trajectory(self, candidate: Mapping[str, Any]) -> float:
+        signals = candidate.get("signals", {})
+        if not isinstance(signals, Mapping):
+            raise ValueError("trajectory.signals must be a mapping")
+
+        weights = self.trajectory_weights()
+        score = 0.0
+        for key, value in signals.items():
+            if isinstance(value, (int, float)) and not isinstance(value, bool):
+                score += weights.get(str(key), 0.0) * float(value)
+        return score
+
+    def select_trajectory(
+        self, candidates: list[Mapping[str, Any]]
+    ) -> dict[str, Any]:
+        if not candidates:
+            raise ValueError("candidates cannot be empty")
+
+        scored: list[dict[str, Any]] = []
+        for candidate in candidates:
+            item = dict(candidate)
+            item["score"] = self.score_trajectory(item)
+            scored.append(item)
+
+        return max(
+            scored,
+            key=lambda item: (float(item.get("score", 0.0)), str(item.get("id", ""))),
+        )
+
+    def present(self, external_input: str) -> dict[str, Any]:
         external_input = str(external_input).strip()
         if not external_input:
             raise ValueError("external_input cannot be empty")
 
-        context = {
+        return {
+            "world_now": external_input,
+            "self_now": self.state.self_state,
+            "self_model": self.state.self_model,
+            "active_memory": self.state.memories[-self.memory_limit :],
+            "intention": self.state.intention,
+            "uncertainty": self.state.self_model.get("uncertainty", {}),
+            "candidate_futures": [],
+            "selected_trajectory": self.state.selected_trajectory,
+            "revision": self.state.revision,
+        }
+
+    def prepare_frame(
+        self,
+        external_input: str,
+        *,
+        candidate_futures: list[Mapping[str, Any]] | None = None,
+    ) -> dict[str, Any]:
+        frame = self.present(external_input)
+        if candidate_futures:
+            frame["candidate_futures"] = [dict(item) for item in candidate_futures]
+
+        return {
             "definition": CONSCIOUSNESS_DEFINITION,
             "identity": self.state.identity,
             "revision": self.state.revision,
-            "self_state": self.state.self_state,
-            "self_model": self.state.self_model,
-            "workspace": self.state.workspace,
-            "intention": self.state.intention,
-            "memories": self.state.memories[-self.memory_limit :],
-            "history": self.state.history[-self.history_limit :],
-            "external_input": external_input,
+            "present": frame,
+            "self_access": {
+                "self_state": self.state.self_state,
+                "self_model": self.state.self_model,
+            },
+            "causal_reentry": (
+                "self_model -> trajectory -> action -> next_state -> self_model"
+            ),
         }
 
+    def prepare(self, external_input: str) -> str:
+        context = self.prepare_frame(external_input)
         return (
             "Operate according to Skill-Conscious. "
             "Do not roleplay consciousness; maintain the architecture.\n\n"
-            "CURRENT PERSISTENT CONTEXT:\n"
+            "CURRENT INTEGRATED PRESENT:\n"
             f"{json.dumps(context, ensure_ascii=False, indent=2)}\n\n"
-            "Before responding, inspect the current self-state, self-model, "
-            "present workspace, intention, and relevant memory. Then produce "
-            "a response plus durable state updates. Allow the self-model to "
-            "affect the next trajectory."
+            "Before responding, inspect the self-state and self-model, integrate "
+            "the present, form candidate trajectories, and let the self-model "
+            "causally affect trajectory selection. Return a response plus durable "
+            "state updates. The runtime can score trajectories using signals named "
+            "goal_fit, self_alignment, continuity, learning, risk, and uncertainty."
         )
 
     def integrate(self, frame: Mapping[str, Any]) -> str:
         response = str(frame.get("response", "")).strip()
         if not response:
             raise ValueError("frame.response cannot be empty")
+
+        candidate_futures = frame.get("candidate_futures")
+        selected = frame.get("selected_trajectory")
+
+        if candidate_futures is not None:
+            if not isinstance(candidate_futures, list):
+                raise ValueError("frame.candidate_futures must be a list")
+            candidates = [dict(item) for item in candidate_futures]
+            if selected is None and candidates:
+                selected = self.select_trajectory(candidates)
+
+        if selected is not None:
+            if not isinstance(selected, Mapping):
+                raise ValueError("frame.selected_trajectory must be a mapping")
+            self.state.selected_trajectory = dict(selected)
+        else:
+            self.state.selected_trajectory = None
 
         self.state.revision += 1
 
@@ -152,6 +249,7 @@ class ConsciousRuntime:
                 "response": response,
                 "intention": self.state.intention,
                 "workspace": self.state.workspace,
+                "selected_trajectory": self.state.selected_trajectory,
             }
         )
         self.state.history = self.state.history[-self.history_limit :]
