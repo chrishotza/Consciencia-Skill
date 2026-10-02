@@ -102,6 +102,8 @@
 - `src/consciousness_server/reconciliation.py` — checkpoint comparison and continuity status.
 - `src/consciousness_server/recovery.py` — non-destructive recovery planning.
 - `docs/DETERMINISTIC_EVENT_REPLAY.md` — deterministic event identity, delta export, replay boundaries and divergence guards.
+- `docs/SHARED_PERSISTENCE_BACKEND.md` — persistence boundary and local/server mirroring semantics.
+- `src/ontto/persistence_backend.py` — shared persistence interface and SERVER mirror backend.
 - `src/consciousness_server/core.py` — event identity, ordered deltas, and exact replay validation.
 - `src/consciousness_server/server.py` / `client.py` — replay and delta API surface.
 - `docs/CONSCIOUSNESS_SERVER.md` — architecture and roadmap.
