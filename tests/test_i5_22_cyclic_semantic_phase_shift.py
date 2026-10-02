@@ -8,6 +8,7 @@ from experiments.i5_22_cyclic_semantic_phase_shift import (
     REPLICATES,
     SHIFT,
     WARMUP_CYCLES,
+    build_schedule,
     pair_specificity,
     shifted_schedule,
 )
@@ -28,7 +29,7 @@ def test_protocol_constants_are_frozen():
 
 
 def test_cyclic_shift_preserves_t0_multiset_and_phase_sequence():
-    matched = shifted_schedule(0, 0)
+    matched = build_schedule(0, 0)
     shifted = shifted_schedule(0, 0)
 
     assert matched[0] == shifted[0]
