@@ -134,3 +134,12 @@ Result ledger: research/ORGANISM_RESULT_LEDGER.md
 Status: verified on workflow 37062538761 / artifact 11251207688.
 Result: signed AUC remained null; absolute AUC and future-action change survived max-T for five of six cyclic shifts, with +1 null; 36-cell shift×lag sweep significant for both endpoints.
 Next: I5.24 global shift×lag interaction.
+
+
+## I5.24 verified
+Protocol: docs/I5_24_GLOBAL_SHIFT_LAG_INTERACTION.md
+Experiment: experiments/i5_24_global_shift_lag_interaction.py
+Result ledger: research/ORGANISM_RESULT_LEDGER.md
+Status: verified on frozen I5.23 data; workflow 37063264401 / artifact 11252345042.
+Result: signed AUC interaction p=0.89461; absolute AUC and future-action interaction p=0.00005 each; Bonferroni 0.00015.
+Next: I5.25 shift×lag orientation and symmetry control.
