@@ -29,8 +29,8 @@
       "docs/I5_13_SEMANTIC_CORRESPONDENCE_CAUSAL_SPECIFICITY.md"
     ],
     "experimental_next": [
-      "I5.13 one-cycle-shift semantic correspondence control",
-      "test whether a one-cycle temporal displacement changes re-entry while preserving semantic-content distribution",
+      "I5.14 phase-matched temporal specificity control",
+      "separate one-cycle correspondence effects from generic semantic sequence displacement with matched temporal controls",
       "C0 campaign G2-G8"
     ]
   },
@@ -64,8 +64,8 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I5.13 one-cycle-shift semantic correspondence control",
-    "test whether a one-cycle temporal displacement changes re-entry while preserving semantic-content distribution",
+    "I5.14 phase-matched temporal specificity control",
+    "separate one-cycle correspondence effects from generic semantic sequence displacement with matched temporal controls",
     "C0 campaign G2-G8"
   ]
 }
