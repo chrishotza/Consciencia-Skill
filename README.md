@@ -97,7 +97,7 @@ Los resultados positivos, nulos y negativos se conservan.
 | C0.9 | Interfaz causal observador → política | **Nulo: readout cambió, pero acción/ganancia no respondieron** |
 | C0.10 | Alineación temporal observador → política | **Nulo: brecha de readout sin efecto conductual** |
 | C0.11 | Mediación causal acción → estado → siguiente acción | **Positivo: intervención sobre acción cambia estado y siguiente acción** |
-| C0.12 | Segundo orden: modelo del error del propio modelo de sí | **Implementado; ejecución pendiente** |
+| C0.12 | Segundo orden: modelo del error del propio modelo de sí | **Mixto: predice el error, pero sin especificidad TRUE vs permutado** |
 | C0 Campaign | 32 ejecuciones en 8 grupos | **Ejecutada: 32 workflows; fallo técnico en el archivado de artifacts** |
 
 ## Fundamentos
@@ -228,7 +228,7 @@ Positive, null, and negative results are all kept.
 | C0.9 | Observer → policy causal interface | **Null: readout changed, but action/gain did not respond** |
 | C0.10 | Within-episode temporal observer → policy alignment | **Null: readout gap without behavioral effect** |
 | C0.11 | Causal action → state → next-action mediation | **Positive: action intervention changed state and next action** |
-| C0.12 | Second-order self-monitoring | **Implemented; run pending** |
+| C0.12 | Second-order self-monitoring | **Mixed: predicts first-order error, but no TRUE-vs-permuted specificity** |
 | C0 Campaign | 32 executions across 8 groups | **Executed: 32 workflows; technical artifact-archival failure** |
 
 ## Foundations
