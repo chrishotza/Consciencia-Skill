@@ -327,10 +327,10 @@ Positive, null, and negative results are all kept.
 | C0.12 | Second-order self-monitoring | **Mixed: predicts first-order error, but no TRUE-vs-permuted specificity** |
 | C0.13 | Action-conditioned second-order self-model | **Verified result** |
 | C0.14 | Persistent second-order self-model | **Positive: models and behavior survive restart** |
-| C0.15 | Lesion/rescue of persistent second-order selector | **Mixed: action necessity; rescue not confirmed** |
+| C0.15 | Lesion/rescue of persistent second-order selector | **Mixed: action-level necessity; rescue not confirmed** |
 | C0.16 | Integrated second-order selector inside persistent organism | **Positive: integration and restart persistence** |
 | C0.17 | Autonomous acquisition of the second-order model | **Mixed: model learns, but no TRUE-vs-permuted specificity** |
-| C0 Campaign | 32 executions across 8 groups | **Executed: 32 workflows; technical artifact-archival failure** |
+| C0 Campaign | 32 executions across 8 groups | **Restarted with artifact-safe execution; scientific result validation pending** |
 
 ## Foundations
 
@@ -362,6 +362,8 @@ This section is the **documentary entry point** to the complete research and inf
 
 **Core infrastructure**
 - [Consciousness Server](docs/CONSCIOUSNESS_SERVER.md)
+- [Continuity checkpoints](docs/CONSCIOUSNESS_CHECKPOINTS.md)
+- [Continuity reconciliation](docs/CONSCIOUSNESS_RECONCILIATION.md)
 - [24/7 protocol](docs/24_7_PROTOCOL.md)
 - [Longitudinal protocol](docs/LONGITUDINAL_PROTOCOL.md)
 - [Organism state bridge](docs/ORGANISM_STATE_BRIDGE.md)
