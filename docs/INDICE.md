@@ -242,3 +242,12 @@ The V47–V80 files retain their canonical identifiers and terminology for repro
 - Verified workflow: **37052907187**, artifact **11246744569**.
 - 24 replicates, 15 cycles, 20,000 permutations; mean bridge ON−OFF effect remained non-zero across lags, while global phase × bridge interaction was non-significant for all three endpoints.
 - Next: I5.19 independent replication with I5.17/I5.18 analysis frozen.
+
+
+## I5.19 — Independent bridge replication
+- Protocol: `docs/I5_19_INDEPENDENT_BRIDGE_REPLICATION.md`
+- Experiment: `experiments/i5_19_independent_bridge_replication.py`
+- Test: `tests/test_i5_19_independent_bridge_replication.py`
+- Verified workflow: **37056574657**, artifact **11247979913**.
+- Independent seed **20261019** reproduced the average bridge ON−OFF effect across all three endpoints; the global phase × bridge interaction remained non-significant.
+- Next: I5.20 bridge specificity under semantic permutation control.
