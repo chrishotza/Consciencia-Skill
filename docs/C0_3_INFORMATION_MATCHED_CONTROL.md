@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # C0.3 — Information-Matched Causal Self-Reference Control
 
 ## Objetivo
@@ -58,3 +60,50 @@ Interpretación: el control información-matcheado no mostró una separación es
 ## Estado
 
 **Ejecutado y archivado.** El resultado debe tratarse como control de especificidad causal para C3, no como puntuación global de conciencia.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# C0.3 — Information-Matched Causal Self-Reference Control
+
+## Objective
+C0.2 showed that selected action changes when own state is masked. C0.3 asks whether the policy is specifically sensitive to its current own state or merely to state values drawn from the same empirical distribution.
+
+The control preserves the same policy snapshot and empirical state distribution but breaks episode/state correspondence.
+
+## Design
+For 64 FULL trajectories using the C0.2 training base:
+1. compute action from the real own state;
+2. compute action from a state taken from another episode via a fixed-point-free permutation;
+3. repeat with a second independent permutation;
+4. compare the real-versus-mixed gap with the gap between two mixed states.
+
+Per-replicate contrast:
+Delta_i = |a(s_i)-a(s_pi1(i))| - |a(s_pi1(i))-a(s_pi2(i))|.
+A positive mean indicates that substituting the current own state changes action more than swapping two matched non-own states. Sign-permutation testing is applied to Delta.
+
+## Controls
+- same self-observer;
+- same trained policy;
+- same snapshot;
+- no semantic input;
+- no external retraining;
+- control states drawn from the organism’s own empirical trajectory distribution.
+
+## Audited result
+GitHub Actions run 36838675864; artifact 11150238362; commit 413e70499977d759e9effb50505c4db6174925c8.
+- own-state → mixed-state gap: +1.06640625;
+- gap between two mixed states: 1.00000000;
+- contrast: +0.06640625;
+- sign-permutation p-value: 0.3140343;
+- real-action vs mixed-state discrepancy: 0.5332031.
+
+Interpretation: the information-matched control did not show statistically detectable separation between sensitivity to the current own state and sensitivity to other states from the same empirical distribution. C0.3 therefore does not confirm episode-specific causal dependence under this stricter criterion.
+
+## Boundary
+This is an operational causal-specificity control, not a global consciousness score and not evidence of phenomenal experience.
+
+</details>
