@@ -524,3 +524,19 @@ Las inferencias primarias son contrastes firmados y emparejados por episodio par
 No se permite entrada semántica ni reentrenamiento externo durante la sonda.
 
 Estado: **implementado; ejecución pendiente de verificación**.
+
+
+### C0.11 — Mediación causal acción → estado interno → siguiente acción
+
+Protocolo implementado; **sin resultado experimental registrado todavía**.
+
+Después de que la política selecciona una primera acción, un brazo FACTUAL ejecuta esa acción y un brazo FORCED reemplaza únicamente esa primera acción por otra señal candidata. Ambos parten del mismo estado post-intervención, usan el mismo autoobservador, la misma autopólitica y la misma semilla dinámica. Después del primer paso, la política vuelve a decidir en ambos estados utilizando el mismo lector.
+
+Las inferencias primarias son contrastes firmados y emparejados por episodio para:
+- acción siguiente FACTUAL − FORCED;
+- estado siguiente FACTUAL − FORCED;
+- ganancia de autopredicción FACTUAL − FORCED.
+
+No se permite entrada semántica ni reentrenamiento externo durante la sonda.
+
+Estado: **implementado; ejecución pendiente de verificación**.
