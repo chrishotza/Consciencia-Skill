@@ -72,6 +72,16 @@ G8 is a criterion vector, not a global consciousness score.
 
 ## Current status
 
+Verified on 2026-10-02 from GitHub Actions: the restarted campaign has **4/32 executions completed**, all four in **G1**. The successful workflow run is **36955261246** (run #33), with four successful replica jobs and four preserved slot artifacts.
+
+G1 tests **C3 causal self-reference** against the **information-matched state-shuffle** control. The four replicate effects are **0.0625, 0.046875, 0.01953125, and 0.08984375**, with p-values **0.38498075096, 0.49912504375, 0.84995750212, and 0.13454327284** respectively. No G1 replicate crosses p < 0.05.
+
+Descriptive G1 means: effect **0.0546875**, own-gap **0.9921875**, matched-gap **0.9375**. These are descriptive partial-campaign statistics only; **no 32-run composite inference is recorded**.
+
+**Pending:** G2–G8 (28 executions). No scientific conclusion is entered for the full campaign until those executions are actually produced and validated.
+
+## Current status
+
 The original 32-run campaign is retained as historical evidence with a technical artifact-archival failure.
 
 The restarted campaign uses the artifact-safe workflow and the eight four-job waves listed above. Scientific results are **not** copied into the result ledger automatically. Each produced artifact must first be validated for completeness and provenance.
