@@ -110,7 +110,7 @@ def test_reconciliation_statuses(tmp_path):
     )
     assert aligned.status is ReconciliationStatus.ALIGNED
 
-    store.add_event(state.instance_id, "DYNAMIC_UPDATE", {"delta": 1.0})
+    store.append_event(state.instance_id, "DYNAMIC_UPDATE", {"delta": 1.0})
     ahead = reconcile(
         local_state_fingerprint="local-state-002",
         local_trajectory_fingerprint="local-trajectory-002",
