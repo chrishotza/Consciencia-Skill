@@ -14,6 +14,7 @@ from src.ontto.provider import LLMResponse
 from src.ontto.storage import MemoryStore
 
 CYCLES = 8
+# CI validation marker for semantic re-entry research execution.
 CANDIDATE_SIGNALS = (-1.0, 1.0)
 
 BASE_SELF_MODEL = "Mantengo una identidad persistente entre ciclos."
@@ -129,7 +130,7 @@ def run_arm(
     )
 
     original_advance = organism._advance_dynamic
-    index = {"value": 0}
+    dynamic_call_index = {"value": 0}
     applied_actions: list[float] = []
 
     if "ACTION_REPLAY" in condition:
@@ -137,20 +138,30 @@ def run_arm(
             raise ValueError("replay_actions required for replay conditions")
 
         def replay_advance(self, signal, steps):
-            action = float(replay_actions[index["value"]])
+            idx = dynamic_call_index["value"]
+            cycle = idx // 2
+            is_autonomous = (idx % 2) == 1
+            if is_autonomous:
+                action = float(replay_actions[cycle])
+            else:
+                action = float(signal)
             applied_actions.append(action)
-            index["value"] += 1
+            dynamic_call_index["value"] += 1
             return original_advance(action, steps)
 
         organism._advance_dynamic = MethodType(replay_advance, organism)
     else:
         def tracked_advance(self, signal, steps):
+            idx = dynamic_call_index["value"]
+            is_autonomous = (idx % 2) == 1
             action = float(signal)
-            applied_actions.append(action)
-            index["value"] += 1
+            if is_autonomous:
+                applied_actions.append(action)
+            dynamic_call_index["value"] += 1
             return original_advance(action, steps)
 
         organism._advance_dynamic = MethodType(tracked_advance, organism)
+
 
     rows: list[dict[str, object]] = []
 
