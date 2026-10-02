@@ -35,6 +35,13 @@ DEFINICION_OPERACIONAL_CONCIENCIA_TCF.md
 
 Traduce parte del marco ontológico a propiedades candidatas observables, intervenibles y falsables para una organización artificial.
 
+## Continuidad e infraestructura
+
+### AeVUMARD — Continuidad como infraestructura
+AEVUMARD_CONTINUIDAD.md
+
+Integra la arquitectura de NodeZero, continuidad distribuida, AeVUMARD AI y la capa económica futura sin mezclar economía con el Core.
+
 ## Infraestructura derivada
 
 Los documentos anteriores alimentan el diseño de:
