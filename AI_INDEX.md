@@ -39,6 +39,10 @@
 - `docs/C0_13_ACTION_CONDITIONED_META_MODEL.md` — action-conditioned second-order self-model using first-order predicted state.
 - `experiments/tcf_consciousness_instantiation_c0_13.py` — true/permuted/blind action-conditioned meta control.
 
+### C0.14
+- `docs/C0_14_PERSISTENT_SECOND_ORDER_SELF_MODEL.md` — persistence of first- and second-order self-models across a restart boundary.
+- `experiments/tcf_consciousness_instantiation_c0_14.py` — matched continuous vs. restart autonomous sequence.
+
 ### V69
 - `docs/V69_SELF_STATE_READOUT.md` — numeric readout; discrete action endpoint is null.
 - `docs/V69_SELF_READ_STATE.md` — readout participates in trajectory selection; includes blinded control and state-swap intervention.
