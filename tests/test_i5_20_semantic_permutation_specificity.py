@@ -34,28 +34,17 @@ def test_semantic_permutation_preserves_multiset_and_changes_order():
 
 
 def test_pair_specificity_is_matched_minus_permuted():
-    base = [
-        {
-            "future_action_change_rate": 0.0,
-            "state_auc_abs": 0.0,
-            "state_auc_signed": 0.0,
-        }
-    ]
-    matched = [
-        {
-            "future_action_change_rate": 0.5,
-            "state_auc_abs": 2.0,
-            "state_auc_signed": -1.0,
-        }
-    ]
-    permuted = [
-        {
-            "future_action_change_rate": 0.2,
-            "state_auc_abs": 1.0,
-            "state_auc_signed": -0.25,
-        }
-    ]
-    result = pair_specificity(base, matched, permuted)
+    matched = {
+        "future_action_change_delta": 0.5,
+        "abs_auc_delta": 2.0,
+        "signed_auc_delta": -1.0,
+    }
+    permuted = {
+        "future_action_change_delta": 0.2,
+        "abs_auc_delta": 1.0,
+        "signed_auc_delta": -0.25,
+    }
+    result = pair_specificity(matched, permuted)
 
     assert result["future_action_change_delta"] == 0.3
     assert result["abs_auc_delta"] == 1.0
@@ -63,23 +52,18 @@ def test_pair_specificity_is_matched_minus_permuted():
 
 
 def test_permutation_specificity_is_zero_when_conditions_match():
-    base = [
-        {
-            "future_action_change_rate": 0.0,
-            "state_auc_abs": 0.0,
-            "state_auc_signed": 0.0,
-        }
-    ]
-    rows = [
-        {
-            "future_action_change_rate": 0.3,
-            "state_auc_abs": 1.0,
-            "state_auc_signed": -0.5,
-        }
-    ]
-    result = pair_specificity(base, rows, rows)
+    rows = {
+        "future_action_change_delta": 0.3,
+        "abs_auc_delta": 1.0,
+        "signed_auc_delta": -0.5,
+    }
+    result = pair_specificity(rows, rows)
 
     assert np.allclose(
-        [result["future_action_change_delta"]],
-        [0.0],
+        [
+            result["future_action_change_delta"],
+            result["abs_auc_delta"],
+            result["signed_auc_delta"],
+        ],
+        [0.0, 0.0, 0.0],
     )
