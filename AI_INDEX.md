@@ -86,7 +86,9 @@
 - `src/consciousness_server/core.py` — durable identity, continuity state, events and node registry.
 - `src/consciousness_server/server.py` — local HTTP control plane.
 - `src/consciousness_server/cli.py` — local server launcher.
+- `src/consciousness_server/client.py` — optional fail-open bridge for the organism runtime.
 - `docs/CONSCIOUSNESS_SERVER.md` — architecture and roadmap.
+- `docs/ZENODO_RELEASE.md` — publication/versioning plan.
 
 ## Experiment trace
 
