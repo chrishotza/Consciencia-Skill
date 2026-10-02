@@ -46,6 +46,19 @@
 - FULL−SHUFFLED_QUERY: +1.0 accuracy, p=4.99975e-05; FULL−SHUFFLED_ATTENTION: +1.0, p=4.99975e-05.
 - NO_BOTTLENECK was null, so bottleneck necessity is not established.
 
+### I5.6 — Persistent query-task integration
+- `docs/I5_6_PERSISTENT_QUERY_TASK.md`
+- `src/ontto/workspace_query_task.py`
+- `experiments/i5_6_persistent_query_task.py`
+- Verified task-level integration in PersistentOrganism.
+- FULL−SHUFFLED_QUERY action: +1.0, p=4.99975e-05; persistence 100%; NO_BOTTLENECK was null.
+  
+### I5.7 — Recurrent self-access and re-entry
+- `docs/I5_7_RECURRENT_SELF_ACCESS.md`
+- `experiments/i5_7_recurrent_self_access.py`
+- `tests/test_i5_7_recurrent_self_access.py`
+- Protocol added; no I5.7 result is claimed yet.
+
 
 ### I5.3 — Causal attention allocation
 - `docs/I5_3_CAUSAL_ATTENTION_ALLOCATION.md`
@@ -191,6 +204,20 @@ Use the protocol document to find the exact implementation.
 - `experiments/i5_global_workspace_v1.py`
 - `tests/test_global_workspace.py`
 - Verificado: run 36982788159; 512 episodios; broadcast, capacidad y lesión del origen seleccionado separados bajo el protocolo sintético.
+
+### I5.6 — Integración de tarea de consulta persistente
+- `docs/I5_6_PERSISTENT_QUERY_TASK.md`
+- `src/ontto/workspace_query_task.py`
+- `experiments/i5_6_persistent_query_task.py`
+- Verificada la integración de query + atención a nivel de tarea dentro de PersistentOrganism.
+- FULL−SHUFFLED_QUERY acción: +1.0, p=4.99975e-05; persistencia 100%; NO_BOTTLENECK fue nulo.
+
+### I5.7 — Acceso recurrente y reentrada
+- `docs/I5_7_RECURRENT_SELF_ACCESS.md`
+- `experiments/i5_7_recurrent_self_access.py`
+- `tests/test_i5_7_recurrent_self_access.py`
+- Protocolo agregado; todavía no se reclama ningún resultado de I5.7.
+
 
 
 ### Lattice Computer v0/v1
