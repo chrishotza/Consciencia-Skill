@@ -141,9 +141,9 @@ See [Shared Persistence Backend](SHARED_PERSISTENCE_BACKEND.md).
 
 The abstraction intentionally does not pretend that every cognitive SQLite table is remotely replicated yet; model artifacts, dream records and input queues remain local until their transfer semantics are validated.
 
-### Phase 6 — second node
+### Phase 6 — second node — interoperability probe implemented
 
-Two computers exchange continuity checkpoints and node heartbeats.
+A two-server integration test now exercises the real HTTP delta/replay path between two independent SQLite-backed nodes and verifies exact state/event recovery plus divergence blocking. Physical two-machine deployment and heartbeats remain the next operational step.
 
 ### Phase 7 — NodeZero mesh
 
