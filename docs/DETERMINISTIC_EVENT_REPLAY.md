@@ -67,6 +67,8 @@ A replay request is rejected on:
 
 An exact retransmission of an already-applied event delta is idempotent.
 
+Replay of a multi-event delta is atomic: if any event in the batch is rejected, the server rolls back the entire batch instead of leaving a partially applied prefix. Concurrent access to the local SQLite control plane is serialized at the store boundary.
+
 The server never overwrites a divergent local branch automatically.
 
 ## Scope
@@ -131,6 +133,8 @@ Una petición de replay se rechaza por:
 - colisión de identidad de evento con contenido diferente.
 
 Una retransmisión exacta de un delta ya aplicado es idempotente.
+
+El replay de un delta de varios eventos es atómico: si un evento del lote es rechazado, el servidor revierte el lote completo en lugar de dejar aplicado un prefijo parcial. El acceso concurrente al plano de control SQLite local se serializa en el límite del store.
 
 El servidor nunca sobrescribe automáticamente una rama local divergente.
 
