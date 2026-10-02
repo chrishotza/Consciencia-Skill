@@ -36,3 +36,36 @@ consciousness-bundle restore --bundle bundles/consciencia-001 --db data/ontto-re
 Restore refuses to overwrite an existing database unless `--overwrite` is supplied.
 
 The bundle deliberately stops before replay/merge. Reconciliation remains the gate that decides whether a restored organism is aligned, ahead, behind or divergent.
+
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# Bundles de continuidad
+
+Un Continuity Bundle es un backup portable de un organismo persistente.
+
+Contiene organism.sqlite3 y manifest.json con identidad, observables de persistencia e integridad SHA-256.
+
+## Flujo
+checkpoint → bundle → desconectar/migrar → verificar → restaurar → reconciliar.
+
+El bundle es un artifact local portable. No es una réplica de servidor ni una fusión de trayectorias divergentes.
+
+## Crear
+```bash
+consciousness-bundle create --db data/ontto.db --agent consciencia-001 --out bundles/consciencia-001
+```
+## Verificar
+```bash
+consciousness-bundle verify --bundle bundles/consciencia-001
+```
+## Restaurar
+```bash
+consciousness-bundle restore --bundle bundles/consciencia-001 --db data/ontto-restored.db
+```
+
+Restore se niega a sobrescribir una base existente salvo que se use --overwrite.
+La capa bundle se detiene deliberadamente antes de replay/merge; reconciliación decide si el organismo restaurado está alineado, adelantado, atrasado o divergente.
+
+</details>
