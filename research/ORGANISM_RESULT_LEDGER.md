@@ -920,6 +920,20 @@ Workflow: **37039376914**; artifact **11242065231**; seed **20261012**; **24** r
 
 Interpretación: incluso preservando la distribución completa de contenidos semánticos y la acción inicial, romper la correspondencia temporal query → self-model mantuvo una separación significativa de estado y selección futura. Bajo el harness, esto aporta especificidad causal adicional al circuito. No demuestra consciencia ni experiencia subjetiva.
 
+### I5.13 — Especificidad causal temporal de la correspondencia semántica — resultado verificado
+
+Workflow: **37042091184** (run **770**); artifact **11242354548**; commit verificado **8b2c9626952aa93d2025b30aa2b318c0c8ca1e45**; seed **20261013**; **24** réplicas; **24** ciclos de warmup; **8** ciclos experimentales.
+
+- coincidencia de acción aplicada en t0: **100%**;
+- coincidencia de distribución de SELF_MODEL: **100%**;
+- cambio medio de acción futura en ciclos 1–7: **46.43%**, p **4.99975×10⁻⁵**;
+- AUC media de divergencia de estado post-pulso: **2.1867184440**, p **4.99975×10⁻⁵**;
+- AUC media bridge ON vs OFF: **2.6656102772**, p **4.99975×10⁻⁵**.
+
+Interpretación: el desplazamiento exacto de un ciclo de la secuencia semántica, manteniendo la acción aplicada en t0 y la distribución completa del modelo de sí, produjo una separación reproducible de la trayectoria posterior y de la selección de acciones futuras. El protocolo aporta un control temporal más estricto que I5.12 para evaluar la especificidad de la correspondencia semántica dentro del arnés. No demuestra consciencia ni experiencia subjetiva.
+
+Nota de control metodológico: una primera ejecución de I5.13 fue descartada porque el parser de `query_module` estaba incorrectamente escapado y producía una condición degenerada. El resultado registrado aquí corresponde únicamente a la implementación corregida y reproducida en CI.
+
 ## Estado de campaña C0
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.
