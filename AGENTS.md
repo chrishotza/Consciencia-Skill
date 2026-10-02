@@ -1,5 +1,7 @@
 # Skill-Conscious — Agent Instructions
 
+<a id="espanol"></a>
+
 <details>
 <summary>🇪🇸 Español — abrir</summary>
 
@@ -39,6 +41,8 @@ Los resultados nulos permanecen nulos. No se modifica un protocolo histórico pa
 Cuando modifiques una capacidad: cambia primero la implementación mínima; agrega o ajusta el test; actualiza el experimento; actualiza el protocolo; actualiza el workflow solo si hace falta; actualiza el índice y el ledger cuando corresponda.
 
 </details>
+
+<a id="english"></a>
 
 <details>
 <summary>🇺🇸 English — open</summary>
