@@ -27,11 +27,11 @@ The command emits the reconciliation report plus the recovery plan as JSON.
 
 ## Boundary
 
-The current server does not yet expose a remote replay protocol. Therefore:
+The server now exposes a deterministic replay boundary through:
 
-- `EXPORT_LOCAL_DELTA` means prepare the local side for a future transfer;
-- `REQUEST_REMOTE_REPLAY` means the node must obtain a remote replay boundary before mutating local state;
-- `BLOCK_DIVERGENCE` explicitly prevents silent overwrite;
-- `INITIALIZE_CHECKPOINT` means establish a first known continuity boundary.
+- `GET /instances/{instance_id}/events/delta?after_revision=N`;
+- `POST /instances/{instance_id}/replay`.
 
-The next step is a deterministic event identity and replay API.
+`EXPORT_LOCAL_DELTA` can now produce a transferable event delta. `REQUEST_REMOTE_REPLAY` can use the verified replay endpoint once the local node is anchored to the declared base checkpoint. `BLOCK_DIVERGENCE` still prevents silent overwrite when the base revision, state hash, or parent event chain does not match.
+
+The replay protocol is documented in [Deterministic event replay](DETERMINISTIC_EVENT_REPLAY.md).
