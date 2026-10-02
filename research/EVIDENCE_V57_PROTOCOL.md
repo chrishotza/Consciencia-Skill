@@ -1,3 +1,29 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V57 — Protocolo de evidencia
+
+**Estado: protocolo implementado; resultado empírico pendiente.**
+
+Controles:
+
+1. historia de warmup idéntica dentro de cada par;
+2. conjunto candidato idéntico;
+3. selector self-model y selector random parten de estados persistidos idénticos;
+4. el oracle se calcula post hoc y no se expone durante la selección;
+5. las diferencias entre réplicas emparejadas se evalúan con test de permutación sign-flip;
+6. se conservan las predicciones candidatas crudas y los estados realizados.
+
+## Límite de evidencia
+
+V57 prueba la utilidad causal de un self-model interno para seleccionar futuras trayectorias.
+
+</details>
+
+<a id="english"></a>
+
 # V57 — Evidence Protocol
 
 **Status: protocol implemented; empirical result pending.**

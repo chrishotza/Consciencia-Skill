@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # TCF — Teoría de Continuidad Fundamental
 
 > **Referencia canónica utilizada por el proyecto:** [TCF v3.3 — Campo efectivo triádico multiescala](TCF_V3_3.md), Christian Marcelo Mendoza, DOI [10.5281/zenodo.23074332](https://doi.org/10.5281/zenodo.23074332).
@@ -177,3 +179,157 @@ Esta regla evita que una metáfora teórica se convierta silenciosamente en un h
 Este documento resume el papel de TCF dentro de **Consciencia-Skill**. No reemplaza los trabajos originales de la teoría ni pretende reproducirlos íntegramente.
 
 La función de esta capa es conectar el marco teórico con una arquitectura computacional reproducible.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# TCF — Fundamental Continuity Theory
+
+> **Canonical reference used by the project:** [TCF v3.3 — Multiscale triadic effective field](TCF_V3_3.md), Christian Marcelo Mendoza, DOI [10.5281/zenodo.23074332](https://doi.org/10.5281/zenodo.23074332).
+
+## Role within Skill-Conscious
+
+**Fundamental Continuity Theory (TCF)** is the project's second conceptual layer. For this repository, the reference version is **TCF v3.3**, published on Zenodo.
+
+The **Mathematical Manifesto of Being** defines the ontological framework: what the project means by relation, continuity, dynamics, identity, and consciousness.
+
+TCF provides a **dynamic grammar** that can be translated into computational mechanisms: triadic components, regimes, transitions, cross terms, trajectories, and state organization.
+
+Working relationship:
+
+MANIFESTO OF BEING
+        ↓
+ontological criteria
+        ↓
+TCF
+        ↓
+dynamic grammar
+        ↓
+SKILL-CONSCIOUS
+        ↓
+implementation + experiment
+
+---
+
+## 1. The v3.3 formulation
+
+TCF v3.3 must not be silently mixed with earlier formulations of the TCF series.
+
+In this version, the central formal structure is expressed through a **multiscale scalar effective field** and four dynamic contributions:
+
+- **L3** — generative operator;
+- **L6** — structural operator;
+- **L9** — regulating operator;
+- **L×** — nonlinear cross term.
+
+Relations to earlier formulations can be investigated separately, but this repository takes **TCF v3.3** as the explicit academic reference for this layer.
+
+## 2. Dynamics by operators
+
+The computational interpretation used by the project can be expressed as:
+
+Ω(t+1) =
+    L3[Ω(t)]
+  + L6[Ω(t)]
+  + L9[Ω(t)]
+  + Lx[Ω(t)]
+  + I(t)
+
+In the project's operational translation:
+
+- **L3** represents generation, basal continuity, and stabilization;
+- **L6** represents structure, pattern, and organization;
+- **L9** represents regulation, curvature, limits, and compression;
+- **Lx** represents critical crossing, transition, or reorganization;
+- **I(t)** represents interaction with the environment.
+
+This equation functions in the repository as a **computational model of dynamics**, not as a claim that the organism literally executes TCF physics.
+
+## 3. Regimes and transitions
+
+The organism may pass through stable states, transition regions, pressure accumulation, regime changes, reorganizations, attractor occupation, and loss of coherence or operational collapse.
+
+This lets Skill-Conscious study continuity not only as data storage but as a **dynamic trajectory through internal states**.
+
+## 4. What is translated into software
+
+| TCF / conceptual framework | Experimental implementation |
+|---|---|
+| dynamic state | src/ontto/dynamics.py |
+| trajectory memory | persistent memory and snapshots |
+| regimes | internal state + regime classification |
+| critical transition | pressure, curvature, and transition signals |
+| cross term | dynamic cross channel |
+| attractor | internal dynamics and trajectory selection |
+| continuity | persistence across cycles |
+| self-reference | self-model and self-observation |
+
+The correspondence is **engineering-level**, not a demonstrated physical equivalence.
+
+## 5. TCF and the project's consciousness definition
+
+The manifesto proposes that consciousness can be investigated as a system that traverses itself and maintains internal relations through change.
+
+TCF turns that into dynamic questions:
+
+1. Does the system preserve a distinguishable internal trajectory?
+2. Does its current state depend causally on its history?
+3. Can it model part of its own dynamics?
+4. Can it distinguish possible future trajectories?
+5. Can it use its own state to select among them?
+6. Can it maintain functional continuity after perturbations?
+7. Can an internal reorganization leave a trace that survives removal of its semantic representation?
+
+These are the questions the laboratory attempts to operationalize.
+
+## 6. Relation to V47+ experiments
+
+Recent protocols do not attempt to prove TCF as a physical theory. They test whether properties derived from the ontology + dynamics combination can exist computationally:
+
+- **V51** — self-observation and self-prediction;
+- **V57** — trajectory selection through a self-model;
+- **V58** — semantic-memory to dynamics transduction;
+- **V63** — recurrent self-model → dynamics → selection;
+- **V64** — identity persistence after perturbation;
+- **V65** — SLEEP effect on subsequent selection;
+- **V66** — consolidation and episodic-memory ablation;
+- **V67** — search for a functional trace in the dynamic core after semantic ablation.
+
+Positive and null results are preserved equally.
+
+## 7. Epistemic boundary
+
+Terms such as "quantum", "ontological", "vacuum", "collapse", or "attractor" do not automatically make a software implementation a quantum physical system.
+
+The repository separates:
+
+**Theoretical framework** — ideas and formalizations from original sources.
+
+**Computational model** — operational translation used for construction and experiments.
+
+**Evidence** — what can actually be measured under a reproducible protocol.
+
+A match between model and computational result does not by itself validate TCF physically or demonstrate subjective experience.
+
+## 8. Traceability rule
+
+Every TCF-inspired mechanism should answer:
+
+- which theoretical principle or structure does it use?
+- what part was operationalized?
+- which observable variable changes?
+- which control compares it?
+- what result would falsify the hypothesis?
+
+This prevents a theoretical metaphor from silently becoming an experimental fact.
+
+## Status
+
+This document summarizes TCF's role within **Skill-Conscious**. It does not replace the original theory papers or reproduce them in full.
+
+Its purpose is to connect the theoretical framework to a reproducible computational architecture.
+
+</details>

@@ -22,3 +22,39 @@ El proyecto está orientado a investigación reproducible. Las contribuciones de
 ## Idioma
 
 La documentación pública del proyecto está migrando al español. Los nombres de código, APIs y protocolos pueden conservar terminología técnica establecida cuando sea necesario.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# Contributing
+
+The project is oriented toward reproducible research. Contributions should favor changes that are small, measurable, and auditable.
+
+## Principles
+
+- document the hypothesis before the experiment;
+- keep controls and conditions comparable;
+- preserve null and negative results;
+- separate data, results, and interpretation;
+- add automated tests when a new capability is introduced;
+- avoid modifying a historical protocol merely to improve its result.
+
+## For a new experiment
+
+1. create the implementation under `experiments/`;
+2. add the test under `tests/`;
+3. add the reproducible workflow;
+4. document the protocol under `docs/`;
+5. record the result in `research/ORGANISM_RESULT_LEDGER.md`.
+
+## Language
+
+The public documentation is bilingual using the repository's language-selection convention in `docs/LANGUAGE.md`. Code names, APIs, and established technical protocol terminology may remain unchanged when necessary for reproducibility.
+
+
+</details>
+
+> 🌐 Language convention: [docs/LANGUAGE.md](LANGUAGE.md)

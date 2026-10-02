@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # Puente entre el organismo y el estado dinámico
 
 ## Propósito
@@ -80,3 +82,48 @@ La siguiente etapa no consiste en afirmar consciencia. Consiste en medir si un o
 - efectos de historia bajo sonda común;
 - efectos de intervención sobre la memoria;
 - diferencias entre VIGILIA y SUEÑO.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# Organism ↔ Dynamic-State Bridge
+
+## Purpose
+The persistent organism carries a small explicit numerical state alongside its memory and textual-event layer.
+This is an integration layer, not a claim that numerical state models subjective experience.
+
+## State
+Persistent organism state includes dynamic_state, dynamic_prev_state, dynamic_memory, dynamic_pressure, dynamic_attractor_distance, dynamic_last_input, and dynamic_steps.
+Textual memory, event logs, self-model, and WAKE/SLEEP counters remain separate.
+
+## Transition
+The bridge uses the same transition function from src/ontto/dynamics.py used by research experiments.
+For an explicit WAKE input signal u:
+```
+x[t+1] = F(x[t], m[t], p[t], u[t])
+```
+The bridge advances dynamics from persisted state and writes the new state to SQLite.
+
+Random seed is derived from dynamic_seed + dynamic_steps + local_step_offset so restart does not reset the deterministic trajectory noise sequence.
+
+## Signal policy
+Default policy: external interaction during WAKE = +1.0; autonomous cycle = 0.0; SLEEP = 0.0.
+This is not semantic language encoding. It is a controlled event/regime signal connecting the real persistent organism to the same dynamic core studied in V43–V46.
+Changing the policy is a separate experiment.
+
+## What it enables
+Dynamic state becomes part of the serialized organism ontology and is visible to the LLM context, creating the bridge organism LLM ↔ SQLite persistent state ↔ research dynamics.
+
+## 24/7 behavior
+autonomous_wake_cycle() is implemented and closes an earlier gap in PersistentOrganism.run() and run_daemon.py. The autonomous cycle advances zero-input dynamics and records the result as an autonomous WAKE event.
+
+</details>
+
+> Language convention: docs/LANGUAGE.md
+
+
+
+> Language convention: docs/LANGUAGE.md

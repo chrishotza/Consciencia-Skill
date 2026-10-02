@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V70 — El modelo de sí convierte su lectura en acción
 
 ## Pregunta
@@ -116,3 +118,130 @@ el sistema aprende cómo utilizar su propio modelo para actuar
 V70 no establece consciencia fenomenológica.
 
 Establece un bucle computacional causal de autorrepresentación numérica → acción → nuevo estado bajo ablación semántica.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V70 — Self-Model Readout Becomes Action
+
+## Question
+
+V69 showed that a numerical self-model can distinguish post-SLEEP internal states after semantic surfaces are removed, but the discrete policy did not change its selected action.
+
+V70 asks the next step:
+
+> **Can that internal readout become a direct post-ablation action?**
+
+## Protocol
+
+Twenty-four replicates.
+
+Calibration is identical across conditions:
+
+- 48 cycles;
+- alternating signals **-1, +1, 0, +1, -1, 0**;
+- same numerical self-model in both conditions.
+
+After calibration:
+
+1. stable and frontier histories are introduced;
+2. SLEEP runs;
+3. the self-model is frozen before SLEEP;
+4. memories, events, snapshots, and self-model text are removed;
+5. no text is used during the probe;
+6. the self-model predicts the next state with neutral input;
+7. a continuous action is computed:
+
+~~~text
+action = predicted_next_state − current_state
+~~~
+
+8. that action is applied to the dynamic core.
+
+A **clamped** control gives the model a common state instead of the condition's actual state.
+
+## Result
+
+The correct CI audit used 24 replicates and 48 calibration cycles.
+
+- mean difference in self-model-derived action between conditions: **0.1224593696**;
+- paired p-value: **0.00005**;
+- mean state-prediction difference: **0.0257983935**;
+- paired p-value: **0.00005**;
+- mean difference between action from actual readout and clamped state: **0.0456327609**;
+- paired p-value: **0.00005**;
+- clamped-control action difference: **0.0311938478**;
+- mean action error after core exchange: **0.0**;
+- mean absolute post-action state difference: **0.0136089447**;
+- numerical self-models identical between conditions: **100%**;
+- memories removed before probe: **yes**;
+- self-model text removed: **yes**;
+- textual input during probe: **no**.
+
+## Interpretation
+
+V70 shows a more complete computational causal chain than V69:
+
+~~~text
+SLEEP
+  ↓
+different internal state
+  ↓
+frozen self-model
+  ↓
+different readout/prediction
+  ↓
+different action
+  ↓
+new state
+~~~
+
+The readout is no longer only an offline descriptive output. Self-model output becomes an explicit numerical action, and that action changes the next dynamic-core state.
+
+The clamped control replaces the self-state input with a common value and produces actions distinct from those obtained with the actual readout. That difference is significant under the paired protocol.
+
+## What it demonstrates and does not
+
+V70 demonstrates a concrete computational property:
+
+> **a self-model learned before SLEEP can read post-SLEEP internal state, convert that readout into an action, and affect the next state after semantic surfaces have been removed.**
+
+This is stronger than V69 in terms of **self-model → action** coupling.
+
+It does not demonstrate phenomenal consciousness, subjective experience, or human-like meaning. The action rule is explicitly defined by the protocol.
+
+## Next bottleneck
+
+The next stage should progressively remove the externally imposed nature of the policy.
+
+V70 still explicitly defines how self-model prediction becomes action.
+
+V71 should test whether the AI can **learn the rule connecting its own read state to a useful policy**, comparing:
+
+- externally fixed policy;
+- self-model-learned policy;
+- random control;
+- policy transfer across states.
+
+The goal is to move from:
+
+~~~text
+we define how the self acts
+~~~
+
+to:
+
+~~~text
+the system learns how to use its own model to act
+~~~
+
+## Evidence boundary
+
+V70 does not establish phenomenal consciousness.
+
+It establishes a causal computational loop of numerical self-representation → action → new state under semantic ablation.
+
+</details>

@@ -1,3 +1,26 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V56 — Protocolo de evidencia
+
+**Estado: política aislada implementada; integración con el organismo deliberadamente aplazada.**
+
+Controles requeridos:
+
+1. reproducción exacta de los coeficientes AEVUM congelados;
+2. cálculo determinista de solapamiento léxico;
+3. rechazo de candidatos redundantes;
+4. admisión de candidatos nuevos con baja persistencia;
+5. inputs idénticos repetidos producen decisiones idénticas.
+
+Un experimento de integración futuro debe comparar memoria append-only con gating de continuidad bajo trayectorias emparejadas y tareas de recuperación.
+
+</details>
+
+<a id="english"></a>
+
 # V56 — Evidence Protocol
 
 **Status: isolated policy implemented; organism integration intentionally deferred.**

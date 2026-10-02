@@ -1,5 +1,35 @@
 # Historial de cambios
 
+## 2026-10-02 — Consistencia y bilingüismo / Consistency and bilingual layer
+
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+- Convención única de selección de idioma para documentación humana.
+- Reglas explícitas de estructura, nomenclatura, evidencia y limpieza.
+- Nuevo AGENTS.md para orientar a agentes sobre la ruta mínima de lectura.
+- AI_MAP y llms.txt sincronizados con el estado actual y las rutas reales.
+- Workflows one-shot de materialización retirados del CI activo y su procedencia documentada.
+- Corrección de referencias obsoletas y de terminología inconsistente.
+
+</details>
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+- Single language-selection convention for human-facing documentation.
+- Explicit structure, naming, evidence, and cleanup rules.
+- New AGENTS.md guiding agents through the minimal retrieval route.
+- AI_MAP and llms.txt synchronized with current state and real paths.
+- One-shot materialization workflows removed from active CI and their provenance documented.
+- Obsolete references and inconsistent terminology corrected.
+
+</details>
+
 ## Próxima versión — 0.1.0
 
 ### Fundamento conceptual

@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V60 — Bucle cerrado de feedback semántico
 
 ## Pregunta
@@ -55,3 +57,60 @@ autoobservador
 ## Límite de evidencia
 
 V60 es un experimento operacional de sistemas. Su proveedor es determinista y sintético. El resultado se refiere a selección computacional y acoplamiento recurrente de estados, no a consciencia fenomenológica ni experiencia subjetiva.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V60 — Closed-Loop Semantic Feedback
+
+## Question
+
+Can the organism close a recurrent computational loop in which a selected internal trajectory changes the next semantic memory, that semantic memory is transduced back into internal dynamics, and the resulting state becomes the basis for the next trajectory selection?
+
+## Result
+
+The successful CI artifact contains 24 paired replicates with 24 evaluation cycles.
+
+- mean self-model regret: **-0.0842091465**;
+- mean random-control regret: **0.3028308773**;
+- self-model advantage: **0.3870400237** regret units;
+- cumulative advantage: **9.2889605698**;
+- paired sign-flip p-value: **0.00005**;
+- self-model oracle hit rate: **96.1806%**;
+- random-control oracle hit rate: **45.3125%**.
+
+The result shows that the self-model selector retained strong functional utility in the recurrent protocol while the next semantic memory was conditioned by the previously selected action.
+
+## Important limitation
+
+The self-model arm selected +1 in all 24 replicates. Consequently, the within-run secondary endpoint comparing semantic-bridge signals after negative versus positive actions had **zero runs containing both action branches**.
+
+The loop was exercised, but the experiment did not provide balanced bidirectional action coverage in the self-model arm. Therefore V60 supports recurrent causal coupling and functional self-model selection within this harness, but does not establish a bidirectional action-conditioned feedback effect.
+
+## Loop
+
+The deterministic protocol closes:
+
+self-model / random selection
+        ↓
+selected trajectory
+        ↓
+persistent event state
+        ↓
+next semantic memory
+        ↓
+continuity / semantic bridge
+        ↓
+internal dynamic state
+        ↓
+self-observer
+        ↺
+
+## Evidence boundary
+
+V60 is an operational systems experiment. Its provider is deterministic and synthetic. The result concerns computational selection and recurrent state coupling, not phenomenal consciousness or subjective experience.
+
+</details>

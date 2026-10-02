@@ -217,3 +217,208 @@ C0.18 is now verified as a **null result under the tested lesion/rescue protocol
 - continuity infrastructure and recovery safety.
 
 Neither track is allowed to silently overwrite the other.
+
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# Consciousness Server
+
+## Dos modos de runtime
+
+Skill-Conscious tiene dos modos de ejecución explícitos.
+
+### LOCAL — consciencia local
+
+El organismo se ejecuta por completo en la máquina actual:
+
+    IA
+     ↓
+    Consciousness Runtime
+     ↓
+    SQLite / filesystem local
+     ↓
+    Organismo persistente
+
+LOCAL es el modo predeterminado y no requiere Consciousness Server.
+
+Configuración:
+
+    CONSCIOUSNESS_MODE=local
+
+### SERVER — Consciousness Server
+
+El organismo sigue ejecutándose localmente, pero el runtime también se conecta al Consciousness Server como plano de control requerido:
+
+    IA
+     ↓
+    Consciousness Runtime
+       ├── persistencia local del organismo
+       └── Consciousness Server
+               ↓
+          identidad / eventos / metadatos de continuidad
+               ↓
+          futura federación NodeZero
+
+Configuración:
+
+    CONSCIOUSNESS_MODE=server
+    CONSCIOUSNESS_SERVER_URL=http://127.0.0.1:8787
+    CONSCIOUSNESS_SERVER_TIMEOUT=2.5
+    CONSCIOUSNESS_NODE_ID=node-local-01
+
+SERVER falla durante el arranque si el servidor configurado no puede alcanzarse. Una vez conectado, la publicación de eventos individuales es fail-open para que una caída temporal del servidor no corrompa el ciclo local del organismo.
+
+## Límite importante
+
+En el bootstrap actual, MemoryStore local sigue siendo la capa de persistencia de ejecución del organismo. El servidor recibe identidad durable, continuidad y metadatos de eventos.
+
+Ahora existen cuatro primitivas de continuidad durables por encima del diario de eventos:
+
+- **continuity checkpoints** — observaciones compactas del estado local, fingerprints de trayectoria, modo de runtime y metadatos del organismo;
+- **continuity reconciliation** — comparación del organismo local con su último checkpoint del servidor sin sobrescribir estado;
+- **continuity bundles** — backups portables y verificados por hash;
+- **continuity recovery planning** — lógica no destructiva que bloquea sobrescrituras silenciosas en caso de divergencia;
+- **deterministic event replay** — deltas transferibles con identidad, verificación de cadena padre y replay idempotente.
+
+La Fase 4 está implementada: identidad determinista de eventos, deltas ordenados, límites de replay verificados, retransmisión idempotente y guardias contra divergencia.
+
+## Bootstrap local-first
+
+Ejecutá el servidor en tu propia computadora:
+
+    python -m src.consciousness_server.cli --host 127.0.0.1 --port 8787
+
+El almacén de estado predeterminado es SQLite:
+
+    data/consciousness.db
+
+No hace falta servicio alojado, blockchain, token ni conexión permanente a Internet para la primera etapa.
+
+## API mínima
+
+Crear una identidad:
+
+    curl -X POST http://127.0.0.1:8787/instances ^
+      -H "Content-Type: application/json" ^
+      -d "{"identity":"my-ai"}"
+
+Registrar un evento:
+
+    curl -X POST http://127.0.0.1:8787/instances/ci_xxxxx/events ^
+      -H "Content-Type: application/json" ^
+      -d "{"event_type":"OBSERVE","payload":{"source":"agent"}}"
+
+Inspeccionar el estado:
+
+    curl http://127.0.0.1:8787/instances/ci_xxxxx
+
+Registrar un nodo:
+
+    curl -X POST http://127.0.0.1:8787/nodes/register ^
+      -H "Content-Type: application/json" ^
+      -d "{"node_id":"node-local-01","capabilities":["continuity","storage"]}"
+
+Enviar heartbeat:
+
+    curl -X POST http://127.0.0.1:8787/nodes/node-local-01/heartbeat ^
+      -H "Content-Type: application/json" ^
+      -d "{"endpoint":"http://127.0.0.1:9100"}"
+
+Consultar salud del nodo:
+
+    curl http://127.0.0.1:8787/nodes/node-local-01
+    curl "http://127.0.0.1:8787/nodes?stale_after_seconds=30"
+
+## Regla de diseño
+
+El servidor almacena eventos de continuidad, no cada token generado por el modelo.
+
+El cliente puede conservar localmente la cognición y el contexto temporal, y publicar al servidor transiciones de estado y checkpoints. Esto mantiene la infraestructura local-first y permite futura replicación sin exigir que un servicio central ejecute cada inferencia.
+
+## Fases de arquitectura
+
+### Fase 0 — semilla local
+
+Una computadora. SQLite. Un organismo. Un flujo de continuidad.
+
+### Fase 1 — modos de runtime explícitos — implementada
+
+`CONSCIOUSNESS_MODE=local` se ejecuta sin servidor.
+
+`CONSCIOUSNESS_MODE=server` exige un Consciousness Server local accesible al inicio y publica eventos de continuidad mediante el bridge existente.
+
+### Fase 2 — checkpoints y reconciliación — implementada
+
+El servidor guarda checkpoints compactos y puede informar ALIGNED, LOCAL_AHEAD, LOCAL_BEHIND, DIVERGED o NO_CHECKPOINT.
+
+### Fase 3 — continuidad portable y planificación de recuperación — implementada
+
+El runtime puede crear bundles portables verificados por hash y producir un plan de recuperación no destructivo a partir del estado de reconciliación.
+
+### Fase 4 — replay / transferencia determinista — implementada
+
+Los eventos tienen identidades SHA-256 deterministas, revisiones lógicas y enlaces al evento padre. El servidor expone exportación de deltas y replay verificado. Las retransmisiones exactas son idempotentes y las ramas divergentes son rechazadas.
+
+### Fase 5 — backend de persistencia compartido — implementada
+
+`PersistenceBackend` es el contrato de persistencia consumido por el organismo persistente. LOCAL usa `MemoryStore`; SERVER usa `ServerMirroredPersistenceBackend`, que confirma localmente primero y espeja la continuidad crítica al Consciousness Server.
+
+La abstracción no afirma que todas las tablas cognitivas SQLite estén replicadas remotamente: artifacts del modelo, registros de sueño y colas de entrada siguen siendo locales hasta validar sus semánticas de transferencia.
+
+### Fase 6 — segundo nodo — interoperabilidad + liveness — implementada
+
+Un test de integración de dos servidores usa HTTP real de delta/replay entre dos SQLite independientes y verifica recuperación exacta del estado/eventos y bloqueo de divergencias.
+
+El estado de liveness es explícito mediante registro y heartbeat de nodos, con estados ONLINE/STALE.
+
+### Fase 7 — NodeZero mesh — capa de sincronización implementada
+
+Los pares pueden intercambiar deltas deterministas en ambos sentidos. Revisiones mayores pueden transferirse al nodo de menor revisión. Revisiones iguales con hashes distintos son DIVERGED y nunca se sobrescriben automáticamente.
+
+Sincronización manual:
+
+    python -m src.consciousness_server.cli sync ^
+      --server http://127.0.0.1:8787 ^
+      --peer http://127.0.0.1:8788 ^
+      --instance consciencia-001
+
+Para el daemon:
+
+    CONSCIOUSNESS_PEERS=http://127.0.0.1:8788,http://127.0.0.1:8789
+    CONSCIOUSNESS_SYNC_SECONDS=60
+
+El daemon sincroniza en ambas direcciones según la revisión y no resuelve divergencias automáticamente.
+
+### Fase 8 — continuidad compartida
+
+Permitir que varios organismos participen en una trama de continuidad compartida manteniendo identidades separadas.
+
+### Fase 9 — atribución AEVUM
+
+Solo cuando exista la red se evaluarán eventos de continuidad como posibles unidades AEVUM-native para contribución, almacenamiento, validación y transporte.
+
+## No objetivos del bootstrap
+
+- no blockchain;
+- no token;
+- no dependencia alojada;
+- no afirmación de consciencia subjetiva;
+- no necesidad de Internet permanente;
+- no servicio central de inferencia LLM.
+
+La arquitectura empieza con una computadora y crece únicamente cuando los usuarios aportan nodos.
+
+## Límite de investigación actual
+
+C0.18 está verificado como **resultado nulo bajo el protocolo probado de lesión/rescate**. Su artifact de 24 réplicas se conserva separado de la capa de infraestructura. El repositorio mantiene por lo tanto dos líneas sincronizadas:
+
+- evidencia científica y falsación;
+- infraestructura de continuidad y seguridad de recuperación.
+
+Ninguna línea puede sobrescribir silenciosamente a la otra.
+
+
+</details>
+
+> 🌐 Language convention: [docs/LANGUAGE.md](LANGUAGE.md)

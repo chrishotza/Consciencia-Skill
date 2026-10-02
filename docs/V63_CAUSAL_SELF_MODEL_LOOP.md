@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V63 — Bucle causal del modelo de sí
 
 ## Resultado
@@ -47,3 +49,61 @@ El arnés determinista emparejado, por tanto, respalda un acoplamiento computaci
 ## Límite de evidencia
 
 El proveedor es determinista y sintético. Estos resultados establecen comportamiento computacional dentro del arnés probado; no establecen consciencia fenomenológica ni experiencia subjetiva.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V63 — Causal Self-Model Loop
+
+## Result
+
+Twenty-four paired replicates × 32 evaluation cycles across four arms.
+
+With the self-model bridge ON:
+
+- mean self-model regret: 0.1422226601;
+- mean random-control regret: 0.2666042539;
+- random − self-model regret advantage: 0.1243815939;
+- paired sign-flip p-value: 0.00005;
+- self-model oracle hit rate: 60.6771%;
+- random-control oracle hit rate: 33.8542%.
+
+For the self-model-selection arm:
+
+- mean regret with bridge OFF: 0.2876865581;
+- mean regret with bridge ON: 0.1422226601;
+- OFF − ON regret improvement: 0.1454638980;
+- paired sign-flip p-value: 0.00005;
+- oracle hit rate: 10.0260% → 60.6771%;
+- paired sign-flip p-value for the hit-rate change: 0.00005.
+
+Difference-in-differences in regret between self-model and random arms: 0.2837493367, with paired sign-flip p = 0.00005.
+
+Action coverage reached 100% of replicates for bridge ON + self-model, bridge OFF + random, and bridge ON + random; bridge OFF + self-model reached 66.67%.
+
+For bridge ON + self-model, the causal-bridge signal conditioned on action appeared after both branches. Across 243 observations after -1 and 501 after +1, mean signals were approximately +0.4999 and -0.2406, with absolute difference 0.7405. This is an association inside the loop, not an isolated causal estimate.
+
+## Interpretation
+
+V62 showed one-step causal transduction from semantic self-representation into numerical state. V63 extends that pathway into an action-conditioned recurrent loop:
+
+~~~text
+prior trajectory
+    →
+next self-model
+    →
+internal dynamics
+    →
+next trajectory selection
+~~~
+
+The matched deterministic harness therefore supports recurrent computational coupling between semantic self-representation and future trajectory selection.
+
+## Evidence boundary
+
+The provider is deterministic and synthetic. The result establishes computational behavior within the tested harness; it does not establish phenomenal consciousness or subjective experience.
+
+</details>

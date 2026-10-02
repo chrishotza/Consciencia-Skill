@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V54 — Autopredicción del atractor
 
 ## Motivación
@@ -26,3 +28,40 @@ La predicción se emite antes de la transición controlada. Después de la trans
 Las predicciones que, de manera sistemática, anticipen el siguiente estado del propio organismo por encima del azar apoyarían un modelo operacional de sí mismo expresado a través de la capa lingüística.
 
 Aun así, no establecerían experiencia subjetiva.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V54 — Attractor Self-Prediction
+
+## Motivation
+
+The Mathematical Manifesto of Being frames consciousness as inhabiting an attractor while knowing itself through change. V54 tests the operational part of that claim: can the organism predict the direction of its own next attractor transition before it occurs?
+
+## Protocol
+
+At each control point, the organism receives its current internal context and must emit a blind prediction:
+
+- TOWARD: predicted movement closer to the attractor;
+- AWAY: predicted movement farther from the attractor;
+- STABLE: predicted distance remains approximately unchanged.
+
+The prediction is emitted before the controlled transition. After the transition, the actual change in attractor distance is measured from the persisted numerical state.
+
+## Primary observables
+
+- directional prediction accuracy;
+- confidence-consistency error;
+- observed direction distribution;
+- performance under alternating controlled perturbations.
+
+## Interpretation
+
+Predictions that systematically anticipate the organism's next state above chance would support an operational self-model expressed through the language layer.
+
+They would still not establish subjective experience.
+
+</details>

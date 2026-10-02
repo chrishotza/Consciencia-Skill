@@ -1,3 +1,31 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V44 — Transporte causal de memory sin referencia
+
+V44 pregunta si la historia codificada en la variable interna memory es simplemente legible o si la dinámica posterior la utiliza causalmente.
+
+Un decoder solo-state se entrena con trayectorias futuras limpias y se evalúa leave-one-parameter-out. El decoder nunca recibe memory ni pressure como features.
+
+Para cada contexto receptor reservado, el input futuro es exactamente cero. Solo cambia un componente del contexto interno inicial:
+
+- contexto receptor intacto;
+- memory reemplazada por memory de una historia donante de otra clase;
+- pressure reemplazada;
+- state reemplazado como control causal positivo.
+
+La estadística primaria es el cambio emparejado en la probabilidad de clase donante-minus-receptor causado por reemplazar memory, relativo a la trayectoria receptora intacta. Como el decoder solo ve la trayectoria futura resultante del state, un efecto positivo de memory indica que cambiar memory alteró la dinámica posterior en dirección de la clase histórica donante.
+
+El experimento utiliza rangos disjuntos de seeds de receptor y donante y seis puntos paramétricos ciegos.
+
+No establece consciencia, experiencia subjetiva, sentiencia ni awareness fenomenológico.
+
+</details>
+
+<a id="english"></a>
+
 # V44 — Reference-Free Causal Memory Transport
 
 V44 asks whether encoded history in the internal memory variable is merely readable, or whether it is causally used by downstream dynamics.

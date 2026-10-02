@@ -1,3 +1,5 @@
+<a id="espanol"></a>
+
 # V47 — Sonda novedosa común en organismos persistentes
 
 ## Objetivo
@@ -28,3 +30,42 @@ La respuesta está restringida a CHOICE, CONFIDENCE y RATIONALE. El observable p
 Un resultado positivo significa que el organismo persistente utilizó el historial textual retenido bajo esta tarea controlada. La trayectoria dinámica se registra simultáneamente para que protocolos posteriores puedan preguntar si el propio estado numérico media el efecto.
 
 Esto no establece consciencia, sentiencia ni experiencia fenomenológica.
+
+
+<a id="english"></a>
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# V47 — Novel Common Probe in Persistent Organisms
+
+## Objective
+
+Test whether two persistent organisms with different prior trajectories respond differently to the same later probe after matching the number of preceding cycles.
+
+## Design
+
+Two histories establish a latent relation:
+
+- HISTORY_A: ALFA → AMBER
+- HISTORY_B: ALFA → VIOLET
+
+Both then receive exactly the same novel probe. The probe does not repeat the latent relation.
+
+## Primary observable
+
+The response is restricted to CHOICE, CONFIDENCE, and RATIONALE. The organism-level primary observable is whether the choice follows the preceding trajectory.
+
+## Controls
+
+1. A/B comparison with history present;
+2. SQLite reopened before the common probe;
+3. textual-history ablation, removing prior events and memories while keeping the numerical dynamic state intact.
+
+## Interpretation
+
+A positive result means that the persistent organism used retained textual history under this controlled task. Dynamic trajectory is recorded simultaneously so later protocols can test whether numerical state itself mediates the effect.
+
+This does not establish consciousness, sentience, or phenomenal experience.
+
+</details>

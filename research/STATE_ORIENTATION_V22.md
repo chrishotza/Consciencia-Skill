@@ -1,3 +1,38 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V22 — Orientación del estado / rotación de norma igual
+
+## Pregunta
+
+V21 mostró que importa la organización temporal. V22 pregunta si el state recurrente codifica identidad en la **orientación de su vector temporal de estado**, independientemente de su magnitud total.
+
+## Protocolo
+
+Seis puntos ciegos V12, cuatro pares de historias, diez seeds de ruido emparejados por par, input futuro exactamente cero y memory/pressure comunes del receptor.
+
+En la frontera se define la desviación bidimensional del donante:
+
+d = (state_prev - common_prev, state - common_state).
+
+El experimento rota este vector 0, 45, 90, 135, 180, 225, 270 y 315 grados alrededor del contexto común. La rotación conserva exactamente la norma euclídea; solo cambia la orientación.
+
+La identidad se clasifica por affinity frente a referencias A/B intactas durante los primeros 60 pasos futuros.
+
+## Regla de interpretación
+
+Si la identidad cambia sistemáticamente con el ángulo de rotación a pesar de mantener fija la magnitud de la desviación, el resultado respalda una representación geométrica/orientacional de información histórica en el estado recurrente.
+
+Una inversión aproximada de 180 grados que favorezca al donante opuesto sería especialmente informativa porque es el análogo de norma igual de V19.
+
+Sigue siendo un test dinámico computacional y no establece experiencia subjetiva.
+
+</details>
+
+<a id="english"></a>
+
 # V22 — State Orientation / Equal-Norm Rotation
 
 ## Question
