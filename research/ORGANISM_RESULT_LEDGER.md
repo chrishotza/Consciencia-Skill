@@ -818,6 +818,42 @@ Workflow verificado: **36987408988**; artifact **11218415785**; commit experimen
 
 Interpretación: **resultado positivo para el mecanismo combinado query+atención bajo este arnés sintético**. Las perturbaciones de query, atención y contenido objetivo eliminaron la accuracy. El control NO_BOTTLENECK fue nulo, por lo que no se establece necesidad funcional del bottleneck cuando la atención ya concentra los recursos sobre el objetivo.
 
+### I5.6 — Integración de tarea de consulta persistente — resultado verificado
+
+Workflow: **36988020361**; artifact **11217989623**; seed **20261006**; **24** réplicas; **24** ciclos de warmup.
+
+- accuracy de acción real FULL: **1.0**;
+- accuracy interna de predicción FULL: **1.0**;
+- accuracy de query FULL: **1.0**;
+- masa de atención FULL: **0.98630**;
+- persistencia exacta: **100%**;
+- FULL−SHUFFLED_QUERY acción: **+1.0**, p **4.99975×10⁻⁵**;
+- FULL−ZERO_QUERY: **+1.0**, p **4.99975×10⁻⁵**;
+- FULL−RANDOM_QUERY: **+0.8333333**, p **4.99975×10⁻⁵**;
+- FULL−SHUFFLED_ATTENTION: **+0.75**, p **4.99975×10⁻⁵**;
+- FULL−LESION_TARGET: **+0.75**, p **4.99975×10⁻⁵**;
+- FULL−NO_BOTTLENECK: **0.0**, p **1.0**.
+
+Interpretación: **resultado positivo para la integración a nivel de tarea de query + atención en PersistentOrganism bajo el arnés declarado**. NO_BOTTLENECK fue nulo, por lo que no se establece necesidad funcional del bottleneck.
+
+### I5.7 — Acceso recurrente y reentrada — resultado nulo/inconcluso
+
+Workflow: **37035390086**; artifact **11240100197**; seed **20261007**; **24** réplicas; **24** ciclos de warmup; **8** ciclos experimentales.
+
+- PULSE_SHUFFLED_QUERY: Δ estado firmado en t+1 **+0.1510**, p **0.14199**;
+- PULSE_ZERO_QUERY: Δ estado firmado en t+1 **+0.1510**, p **0.14114**;
+- PERSISTENT_SHUFFLED_QUERY: Δ estado firmado en t+1 **+0.00383**, p **0.9630**;
+- divergencia absoluta t+1 PULSE_SHUFFLED_QUERY: **0.4424**;
+- máxima divergencia absoluta posterior: **0.7267**;
+- re-entry amplification media: **2.1276**;
+- persistencia media: **7.0** ciclos;
+- AUC media de divergencia: **2.5792**;
+- cambio post-pulso de acción: **45.83%**;
+- cambio post-pulso de query: **74.40%**;
+- cambio post-pulso de target: **82.14%**.
+
+Interpretación: hubo divergencia descriptiva persistente entre trayectorias, pero el endpoint primario firmado no se separó significativamente. I5.7 **no establece todavía un efecto causal de reentrada**. La igualdad de los perfiles agregados de PULSE_SHUFFLED_QUERY y PULSE_ZERO_QUERY sugiere que la perturbación actual del query es demasiado gruesa para discriminar la ruta de transmisión.
+
 ## Estado de campaña C0
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.
@@ -1239,6 +1275,42 @@ Verified workflow: **36987408988**; artifact **11218415785**; experimental commi
 - FULL−NO_BOTTLENECK: **0.0**, p=**1.0**.
 
 Interpretation: **positive result for the combined query+attention mechanism under this synthetic harness**. Query, attention, and target-content perturbations eliminated accuracy. NO_BOTTLENECK was null, so bottleneck necessity is not established when attention already concentrates resources on the target.
+
+### I5.6 — Persistent query-task integration — verified result
+
+Workflow: **36988020361**; artifact **11217989623**; seed **20261006**; **24** replicates; **24** warmup cycles.
+
+- FULL actual action accuracy: **1.0**;
+- FULL internal prediction accuracy: **1.0**;
+- FULL query accuracy: **1.0**;
+- FULL attention mass: **0.98630**;
+- exact persistence: **100%**;
+- FULL−SHUFFLED_QUERY action: **+1.0**, p **4.99975×10⁻⁵**;
+- FULL−ZERO_QUERY: **+1.0**, p **4.99975×10⁻⁵**;
+- FULL−RANDOM_QUERY: **+0.8333333**, p **4.99975×10⁻⁵**;
+- FULL−SHUFFLED_ATTENTION: **+0.75**, p **4.99975×10⁻⁵**;
+- FULL−LESION_TARGET: **+0.75**, p **4.99975×10⁻⁵**;
+- FULL−NO_BOTTLENECK: **0.0**, p **1.0**.
+
+Interpretation: **positive result for task-level query + attention integration in PersistentOrganism under the declared harness**. NO_BOTTLENECK was null, so functional bottleneck necessity remains unestablished.
+
+### I5.7 — Recurrent self-access and re-entry — null/inconclusive result
+
+Workflow: **37035390086**; artifact **11240100197**; seed **20261007**; **24** replicates; **24** warmup cycles; **8** experimental cycles.
+
+- PULSE_SHUFFLED_QUERY: signed state delta at t+1 **+0.1510**, p **0.14199**;
+- PULSE_ZERO_QUERY: signed state delta at t+1 **+0.1510**, p **0.14114**;
+- PERSISTENT_SHUFFLED_QUERY: signed state delta at t+1 **+0.00383**, p **0.9630**;
+- PULSE_SHUFFLED_QUERY absolute divergence at t+1: **0.4424**;
+- maximum later absolute divergence: **0.7267**;
+- mean re-entry amplification: **2.1276**;
+- mean persistence: **7.0** cycles;
+- mean divergence AUC: **2.5792**;
+- post-pulse action change: **45.83%**;
+- post-pulse query change: **74.40%**;
+- post-pulse target change: **82.14%**.
+
+Interpretation: persistent trajectory divergence was descriptive, but the primary signed endpoint did not separate significantly. I5.7 **does not yet establish a causal re-entry effect**. The identical aggregate profiles of PULSE_SHUFFLED_QUERY and PULSE_ZERO_QUERY suggest that the current query perturbation is too coarse to discriminate the transmission pathway.
 
 ## C0 campaign and causal controls
 
