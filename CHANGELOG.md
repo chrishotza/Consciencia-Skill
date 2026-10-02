@@ -1,3 +1,11 @@
+## 2026-10-02 — I5.26 verificado / I5.26 verified
+
+- Frozen I5.23 analysis; no new trajectories.
+- Workflow **37066787603**, artifact **11253435918**; tests **37066787571** and package **37066787624** passed.
+- Signed AUC matched-magnitude coupling null: p=0.43118.
+- Absolute AUC and future-action matched-magnitude coupling global p<0.00005 each.
+- Next: I6.1 causal closure of the self-model.
+
 ## 2026-10-02 — I5.25 verificado / I5.25 verified
 
 - Frozen I5.23 analysis; no new trajectories.
