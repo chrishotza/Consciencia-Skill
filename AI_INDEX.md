@@ -75,7 +75,13 @@
 - `docs/I5_10_SEMANTIC_REENTRY_ACTION_REPLAY.md`
 - `experiments/i5_10_semantic_reentry_under_action_replay.py`
 - `tests/test_i5_10_semantic_reentry_action_replay.py`
-- Protocol added; no I5.10 result is claimed yet.
+- Verified: 100% action match; 45.83% post-pulse self-model divergence; PULSE-vs-REPLAY t+1 and AUC p=4.99975e-05; bridge ON-vs-OFF AUC p=4.99975e-05.
+
+### I5.11 — Semantic re-entry into future trajectory selection
+- `docs/I5_11_SEMANTIC_REENTRY_TRAJECTORY_SELECTION.md`
+- `experiments/i5_11_semantic_reentry_trajectory_selection.py`
+- `tests/test_i5_11_semantic_reentry_trajectory_selection.py`
+- Protocol added; no I5.11 result is claimed yet.
 
 
 ### I5.3 — Causal attention allocation
@@ -252,7 +258,13 @@ Use the protocol document to find the exact implementation.
 - `docs/I5_10_SEMANTIC_REENTRY_ACTION_REPLAY.md`
 - `experiments/i5_10_semantic_reentry_under_action_replay.py`
 - `tests/test_i5_10_semantic_reentry_action_replay.py`
-- Protocolo agregado; todavía no se reclama ningún resultado de I5.10.
+- Verificado: 100% de coincidencia de acciones; 45.83% de divergencia post-pulso de modelo de sí; t+1 y AUC PULSE-vs-REPLAY con p=4.99975e-05; AUC bridge ON-vs-OFF con p=4.99975e-05.
+
+### I5.11 — Reentrada semántica en selección de trayectorias futuras
+- `docs/I5_11_SEMANTIC_REENTRY_TRAJECTORY_SELECTION.md`
+- `experiments/i5_11_semantic_reentry_trajectory_selection.py`
+- `tests/test_i5_11_semantic_reentry_trajectory_selection.py`
+- Protocolo agregado; todavía no se reclama ningún resultado de I5.11.
 
 
 
