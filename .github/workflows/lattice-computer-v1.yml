@@ -1,0 +1,56 @@
+name: lattice-computer-v1
+
+on:
+  push:
+    paths:
+      - "src/ontto/lattice.py"
+      - "experiments/lattice_v1.py"
+      - "tests/test_lattice_v1.py"
+      - "docs/LATTICE_COMPUTER_V1.md"
+      - ".github/workflows/lattice-computer-v1.yml"
+  pull_request:
+    paths:
+      - "src/ontto/lattice.py"
+      - "experiments/lattice_v1.py"
+      - "tests/test_lattice_v1.py"
+      - "docs/LATTICE_COMPUTER_V1.md"
+      - ".github/workflows/lattice-computer-v1.yml"
+  workflow_dispatch:
+
+jobs:
+  lattice-v1:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+      - name: Tests
+        run: pytest -q tests/test_lattice.py tests/test_lattice_v1.py
+      - name: Run Lattice v1
+        run: python experiments/lattice_v1.py --output results/lattice_v1/summary.json
+      - name: Manifest
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          Path("results/lattice_v1/manifest.json").write_text(
+              json.dumps({"repository": os.environ["GITHUB_REPOSITORY"], "sha": os.environ["GITHUB_SHA"], "run_id": os.environ["GITHUB_RUN_ID"], "workflow": os.environ["GITHUB_WORKFLOW"]}, indent=2),
+              encoding="utf-8",
+          )
+          PY
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lattice-computer-v1-${{ github.sha }}
+          path: results/lattice_v1/
+          if-no-files-found: error
