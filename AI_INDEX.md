@@ -154,6 +154,8 @@ Use the protocol document to find the exact implementation.
 - Stop when the question is answered and evidence is traceable.
 
 
+<a id="espanol"></a>
+
 <details>
 <summary>🇪🇸 Español — abrir</summary>
 
@@ -314,3 +316,6 @@ Usá el documento de protocolo para localizar la implementación exacta.
 </details>
 
 > 🌐 Language convention: [docs/LANGUAGE.md](docs/LANGUAGE.md)
+
+
+<a id="english"></a>
