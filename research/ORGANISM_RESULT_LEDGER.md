@@ -882,6 +882,19 @@ Workflow: **37037747712**; artifact **11240278321**; seed **20261009**; **24** r
 
 Interpretación: la secuencia de acciones del pulso reconstruyó exactamente la trayectoria dinámica bajo query FULL. En este arnés, el efecto dinámico del query queda completamente explicado por la secuencia de acciones aplicadas. La siguiente etapa separará dinámica y estado semántico.
 
+### I5.10 — Reentrada semántica bajo action replay — resultado verificado
+
+Workflow: **37038527924**; artifact **11240619196**; seed **20261010**; **24** réplicas; **24** ciclos de warmup; **8** ciclos experimentales.
+
+- coincidencia exacta de acciones aplicadas PULSE vs ACTION_REPLAY: **100%**;
+- divergencia post-pulso de SELF_MODEL: **45.83%** de media;
+- Δ estado PULSE vs ACTION_REPLAY en t+1: **0.09551**, p **4.99975×10⁻⁵**;
+- AUC de divergencia PULSE vs ACTION_REPLAY: **0.93484**, p **4.99975×10⁻⁵**;
+- AUC ACTION_REPLAY_BRIDGE_ON vs BRIDGE_OFF: **1.29205**, p **4.99975×10⁻⁵**;
+- diferencia máxima media de versión del modelo de sí: **2.29**.
+
+Interpretación: con las acciones aplicadas igualadas, la diferencia de query produjo divergencia semántica persistente y, cuando el semantic self-model bridge estuvo activo, esa diferencia volvió a entrar en la dinámica. Esto respalda la ruta computacional query → self-model → semantic bridge → state bajo el harness probado. No demuestra consciencia ni experiencia subjetiva. La siguiente prueba debe medir si esa diferencia modifica la selección de trayectorias futuras.
+
 ## Estado de campaña C0
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.
@@ -1367,6 +1380,19 @@ Workflow: **37037747712**; artifact **11240278321**; seed **20261009**; **24** r
 - ACTION_REPLAY vs FULL AUC: **2.12790**.
 
 Interpretation: the pulse action sequence exactly reconstructed the dynamic trajectory under FULL query. In this harness, the dynamic effect of query is fully explained by the applied action sequence. The next stage separates dynamics from semantic state.
+
+### I5.10 — Semantic re-entry under action replay — verified result
+
+Workflow: **37038527924**; artifact **11240619196**; seed **20261010**; **24** replicates; **24** warmup cycles; **8** experimental cycles.
+
+- exact applied-action match PULSE vs ACTION_REPLAY: **100%**;
+- mean post-pulse SELF_MODEL divergence: **45.83%**;
+- PULSE vs ACTION_REPLAY state delta at t+1: **0.09551**, p **4.99975×10⁻⁵**;
+- PULSE vs ACTION_REPLAY divergence AUC: **0.93484**, p **4.99975×10⁻⁵**;
+- ACTION_REPLAY_BRIDGE_ON vs BRIDGE_OFF state AUC: **1.29205**, p **4.99975×10⁻⁵**;
+- mean maximum self-model-version difference: **2.29**.
+
+Interpretation: with applied actions matched, the query difference produced persistent semantic divergence and, when the semantic self-model bridge was enabled, that difference re-entered dynamics. This supports the computational pathway query → self-model → semantic bridge → state under the tested harness. It does not demonstrate consciousness or subjective experience. The next test should measure whether this difference changes future trajectory selection.
 
 ## C0 campaign and causal controls
 
