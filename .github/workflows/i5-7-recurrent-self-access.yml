@@ -28,6 +28,7 @@ on:
 jobs:
   i5-7:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     env:
       PYTHONPATH: .
     steps:
