@@ -13,6 +13,7 @@ from src.ontto.provider import LLMResponse
 from src.ontto.storage import MemoryStore
 
 CYCLES = 8
+# CI trigger: keep experiment path in the research-lab PR trigger set.
 CANDIDATE_SIGNALS = (-1.0, 1.0)
 
 
