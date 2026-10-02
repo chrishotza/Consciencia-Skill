@@ -57,7 +57,7 @@
 - `docs/I5_7_RECURRENT_SELF_ACCESS.md`
 - `experiments/i5_7_recurrent_self_access.py`
 - `tests/test_i5_7_recurrent_self_access.py`
-- Protocol added; no I5.7 result is claimed yet.
+- Verified null/inconclusive primary endpoint: signed state delta at t+1 did not separate significantly; no causal re-entry effect is claimed.
 
 ### I5.8 — Action-clamp mediation of recurrent self-access
 - `docs/I5_8_ACTION_CLAMP_REENTRY.md`
@@ -222,7 +222,7 @@ Use the protocol document to find the exact implementation.
 - `docs/I5_7_RECURRENT_SELF_ACCESS.md`
 - `experiments/i5_7_recurrent_self_access.py`
 - `tests/test_i5_7_recurrent_self_access.py`
-- Protocolo agregado; todavía no se reclama ningún resultado de I5.7.
+- Resultado nulo/inconcluso verificado en el endpoint primario: el Δ estado firmado en t+1 no se separó significativamente; no se reclama un efecto causal de reentrada.
 
 ### I5.8 — Mediación por action-clamp del acceso recurrente
 - `docs/I5_8_ACTION_CLAMP_REENTRY.md`
