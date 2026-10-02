@@ -1,0 +1,89 @@
+name: organism-c0-18-autonomous-second-order
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "experiments/tcf_consciousness_instantiation_c0_18.py"
+      - "tests/test_tcf_consciousness_instantiation_c0_18.py"
+      - "src/ontto/organism.py"
+      - "src/ontto/action_conditioned_meta_observer.py"
+      - "src/ontto/self_observer.py"
+      - "src/ontto/storage.py"
+      - "experiments/organism_repeated_active_continuity_v78.py"
+      - ".github/workflows/organism-c0-18-autonomous-second-order.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Run protocol schema test
+        run: pytest -q tests/test_tcf_consciousness_instantiation_c0_18.py
+
+      - name: Run C0.18 verification campaign
+        run: |
+          python experiments/tcf_consciousness_instantiation_c0_18.py             --episodes 24             --out results/tcf_consciousness_instantiation_c0_18
+
+      - name: Validate evidence bundle
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("results/tcf_consciousness_instantiation_c0_18")
+          summary = json.loads((root / "summary.json").read_text(encoding="utf-8"))
+          replicates = json.loads((root / "replicates.json").read_text(encoding="utf-8"))
+
+          assert summary["experiment"] == "tcf_consciousness_instantiation_c0_18"
+          assert summary["protocol_version"] == "C0.18"
+          assert summary["episodes"] == 24
+          assert len(replicates) == 24
+          assert all("seed" in row for row in replicates)
+          assert all("exact_learned_model_recovery" in row for row in replicates)
+          print("C0.18 evidence bundle validated: 24 replicates")
+          PY
+
+      - name: Write run manifest
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path("results/tcf_consciousness_instantiation_c0_18")
+          manifest = {
+              "repository": os.environ.get("GITHUB_REPOSITORY"),
+              "sha": os.environ.get("GITHUB_SHA"),
+              "ref": os.environ.get("GITHUB_REF"),
+              "run_id": os.environ.get("GITHUB_RUN_ID"),
+              "run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT"),
+              "workflow": os.environ.get("GITHUB_WORKFLOW"),
+              "protocol": "C0.18",
+              "episodes": 24,
+          }
+          (root / "run_manifest.json").write_text(
+              json.dumps(manifest, indent=2),
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Upload C0.18 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: organism-c0-18-autonomous-second-order-${{ github.sha }}
+          path: results/tcf_consciousness_instantiation_c0_18/
+          if-no-files-found: error
