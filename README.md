@@ -133,7 +133,7 @@ Los resultados positivos, nulos y negativos se conservan.
 | C0.16 | Integración del segundo orden dentro del organismo persistente | **Positivo: integración y persistencia tras reinicio** |
 | C0.17 | Adquisición autónoma del segundo orden | **Mixto: el modelo aprende, pero sin especificidad TRUE vs permutado** |
 | C0.18 | Adquisición autónoma + lesión/rescate del segundo orden | **Nulo: 24 réplicas; no se observó efecto significativo de lesión ni rescate** |
-| C0 Campaign | 32 ejecuciones en 8 grupos | **Campaña reiniciada con ejecución segura de artifacts; resultados científicos pendientes de validación** |
+| C0 Campaign | 32 ejecuciones en 8 grupos | **Parcial: G1 completado (4/32); las 4 réplicas de G1 tuvieron p > 0.05; G2–G8 pendientes** |
 ## Fundamentos
 
 Esta sección es la **puerta de entrada documental** al programa completo.
@@ -335,7 +335,7 @@ Positive, null, and negative results are all kept.
 | C0.16 | Integrated second-order selector inside persistent organism | **Positive: integration and restart persistence** |
 | C0.17 | Autonomous acquisition of the second-order model | **Mixed: model learns, but no TRUE-vs-permuted specificity** |
 | C0.18 | Autonomous acquisition + second-order lesion/rescue | **Null: 24 replicates; no significant lesion or rescue effect observed** |
-| C0 Campaign | 32 executions across 8 groups | **Restarted with artifact-safe execution; scientific result validation pending** |
+| C0 Campaign | 32 executions across 8 groups | **Partial: G1 completed (4/32); all 4 G1 replicates had p > 0.05; G2–G8 pending** |
 ## Foundations
 
 This section is the **documentary entry point** to the complete research and infrastructure program.
