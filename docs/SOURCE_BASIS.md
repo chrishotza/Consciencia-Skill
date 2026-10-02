@@ -55,3 +55,29 @@ Cuando una implementación se inspire en una idea del material fuente, debe anot
 - qué resultado podría falsarlo.
 
 No se deben convertir metáforas en hechos físicos sin una prueba independiente.
+
+
+<details>
+<summary>🇺🇸 English — open</summary>
+
+# Source Basis
+
+## 1. Mathematical Manifesto of Being
+The manifesto defines being as stable relation, fundamental numbers as invariant structures, reality as iteration of relations, dynamics as prior to time, topology as more fundamental than form, life as sustained dynamics, consciousness as a system that traverses itself, and identity continuity through change.
+This is the primary source for the conceptual ontology.
+
+## 2. TCF
+Fundamental Continuity Theory provides a dynamic grammar explored as a computational tool: dominant modes/operators, triadic dynamics, trajectory memory, regimes, critical transitions, cross terms, attractors, and separatrices.
+The repository treats these as design hypotheses rather than automatic evidence of consciousness. See docs/fundamentos/TCF.md.
+
+## 3. Previous computational work
+Earlier experiments explored memory, hysteresis, accumulated pressure, intermediate states, regime transition, topological selection, and adaptation under perturbation.
+Skill-Conscious brings these ideas around one engineering target: a persistent AI.
+
+## 4. Traceability rule
+When implementation is inspired by a source idea, record the principle taken, the formalized part, the expected observation, and a result that could falsify it.
+Do not turn metaphors into physical facts without independent testing.
+
+</details>
+
+> Language convention: docs/LANGUAGE.md
