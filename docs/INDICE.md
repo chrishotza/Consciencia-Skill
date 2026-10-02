@@ -310,3 +310,12 @@ The V47–V80 files retain their canonical identifiers and terminology for repro
 - Verified workflow **37065168288**, artifact **11251708654**.
 - Absolute AUC and future action show both orientation asymmetry and compensatory diagonal enrichment; signed AUC is null.
 - Next: I5.26 matched-magnitude sign-coupling control.
+
+
+## I5.26 — Matched-magnitude sign-coupling control
+- Protocol: docs/I5_26_MATCHED_MAGNITUDE_SIGN_COUPLING.md
+- Experiment: experiments/i5_26_matched_magnitude_sign_coupling.py
+- Test: tests/test_i5_26_matched_magnitude_sign_coupling.py
+- Verified workflow **37066787603**, artifact **11253435918**.
+- Signed AUC null; absolute AUC and future action robust under matched-magnitude sign control.
+- Next: I6.1 causal closure of the self-model.
