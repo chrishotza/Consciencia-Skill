@@ -530,9 +530,13 @@ class PersistentOrganism:
                 "self_selection": {
                     "enabled": bool(self.cfg.self_selection_enabled and self.cfg.self_observer_enabled),
                     "policy": (
-                        "learned_self_policy"
-                        if self.cfg.self_policy_enabled
-                        else self.cfg.self_selection_policy
+                        "action_conditioned_second_order"
+                        if self.cfg.action_conditioned_meta_observer_enabled
+                        else (
+                            "learned_self_policy"
+                            if self.cfg.self_policy_enabled
+                            else self.cfg.self_selection_policy
+                        )
                     ),
                     "candidate_signals": list(self.cfg.self_selection_signals),
                     "self_policy_enabled": bool(self.cfg.self_policy_enabled),
