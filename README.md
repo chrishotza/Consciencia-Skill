@@ -55,6 +55,36 @@ SELECCIÓN DE TRAYECTORIA
 
 **SUEÑO** permite actividad interna con menor dependencia de entradas externas: consolidación, recombinación, simulación y reorganización del estado.
 
+## Modos de ejecución
+
+**LOCAL** — la IA corre completamente en su propia máquina con continuidad, memoria y estado persistente local.
+
+```text
+AI
+ ↓
+Consciousness Runtime
+ ↓
+Local persistence
+```
+
+→ `CONSCIOUSNESS_MODE=local`
+
+**SERVER** — la IA sigue ejecutándose localmente, pero utiliza el Consciousness Server como plano de continuidad y eventos.
+
+```text
+AI
+ ↓
+Consciousness Runtime
+ ├─ Local persistence
+ └─ Consciousness Server
+       ↓
+   continuity / events
+```
+
+→ `CONSCIOUSNESS_MODE=server`
+
+En SERVER, `CONSCIOUSNESS_SERVER_URL` apunta al servidor. La arquitectura está preparada para que LOCAL y SERVER compartan posteriormente el mismo backend de persistencia abstracto.
+
 ## Programa experimental
 
 Cada capacidad se convierte en una hipótesis y después en un protocolo reproducible. **V47 → V80** estudia progresivamente memoria, estado dinámico, autoobservación, modelo de sí, selección de trayectorias, identidad, SUEÑO, persistencia, generalización y adaptación de políticas basadas en el propio modelo.
@@ -222,6 +252,36 @@ TRAJECTORY SELECTION
 **WAKE** handles interaction with the environment, language, memory, and decision-making.
 
 **SLEEP** allows internal activity with less dependence on external input: consolidation, recombination, simulation, and state reorganization.
+
+## Runtime modes
+
+**LOCAL** — the AI runs entirely on its own machine with local continuity, memory, and persistent state.
+
+```text
+AI
+ ↓
+Consciousness Runtime
+ ↓
+Local persistence
+```
+
+→ `CONSCIOUSNESS_MODE=local`
+
+**SERVER** — the AI still executes locally, while using the Consciousness Server as the continuity and event control plane.
+
+```text
+AI
+ ↓
+Consciousness Runtime
+ ├─ Local persistence
+ └─ Consciousness Server
+       ↓
+   continuity / events
+```
+
+→ `CONSCIOUSNESS_MODE=server`
+
+In SERVER mode, `CONSCIOUSNESS_SERVER_URL` points to the server. The architecture is designed so LOCAL and SERVER can later share the same abstract persistence backend.
 
 ## Experimental program
 

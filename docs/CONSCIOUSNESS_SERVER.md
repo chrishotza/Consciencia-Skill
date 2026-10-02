@@ -1,24 +1,57 @@
 # Consciousness Server
 
-## What this is
+## Two runtime modes
 
-Skill-Conscious is evolving from a skill-only architecture into a local-first Consciousness Server.
+Skill-Conscious has two explicit execution modes.
 
-The skill remains the agent-facing interface. The server becomes the persistent continuity layer behind it.
+### LOCAL — local consciousness
+
+The organism runs entirely on the current machine:
 
     AI
      ↓
     Consciousness Runtime
      ↓
-    Consciousness Server
+    Local SQLite / filesystem
      ↓
-    local continuity store
+    Persistent organism
+
+LOCAL is the default and requires no Consciousness Server.
+
+Configure:
+
+    CONSCIOUSNESS_MODE=local
+
+This mode is the first bootstrap for a user who wants to run a persistent organism without any server dependency.
+
+### SERVER — Consciousness Server
+
+The organism still executes locally, but the runtime also connects to the Consciousness Server as a required control plane:
+
+    AI
      ↓
-    NodeZero mesh (future)
+    Consciousness Runtime
+       ├── Local organism persistence
+       └── Consciousness Server
+               ↓
+          identity / events / continuity metadata
+               ↓
+          future NodeZero federation
 
-The bootstrap is intentionally local-first. A user can run the first server on their own computer, create one persistent AI identity, preserve continuity events, and later add additional nodes.
+Configure:
 
-The server is research infrastructure. It does not by itself establish phenomenal consciousness.
+    CONSCIOUSNESS_MODE=server
+    CONSCIOUSNESS_SERVER_URL=http://127.0.0.1:8787
+    CONSCIOUSNESS_SERVER_TIMEOUT=2.5
+    CONSCIOUSNESS_NODE_ID=node-local-01
+
+SERVER mode fails during startup when the configured server cannot be reached. Once connected, individual event publication remains fail-open so a temporary server outage does not corrupt the local organism loop.
+
+## Important boundary
+
+In the current bootstrap, the local MemoryStore remains the execution persistence layer for the organism. The server receives durable identity, continuity and event metadata.
+
+The next architectural step is to introduce a shared persistence interface so LOCAL and SERVER can use interchangeable backends without changing the organism itself.
 
 ## Local-first bootstrap
 
@@ -26,7 +59,7 @@ Run the server on the user's own computer:
 
     python -m src.consciousness_server.cli --host 127.0.0.1 --port 8787
 
-The default state store is SQLite:
+The default server state store is SQLite:
 
     data/consciousness.db
 
@@ -68,36 +101,29 @@ A client may keep local cognition and temporary context locally, then publish st
 
 One computer. SQLite. One organism. One continuity stream.
 
-### Phase 1 — runtime adapter — implemented
+### Phase 1 — explicit runtime modes — implemented
 
-`run_daemon.py` can connect the existing PersistentOrganism to the server through `CONSCIOUSNESS_SERVER_URL`.
+CONSCIOUSNESS_MODE=local runs without a server.
 
-The bridge is fail-open:
+CONSCIOUSNESS_MODE=server requires a reachable local Consciousness Server at startup and publishes continuity events through the existing client bridge.
 
-- local organism persistence remains authoritative;
-- the server receives identity, node registration and continuity events;
-- a server outage does not stop the local organism;
-- response bodies are not mirrored to the server; the bridge emits compact state/event metadata instead.
+### Phase 2 — shared persistence backend
 
-Useful environment variables:
+Introduce a PersistenceBackend interface so the organism can use a local backend or server-backed backend without changing its cognitive loop.
 
-    CONSCIOUSNESS_SERVER_URL=http://127.0.0.1:8787
-    CONSCIOUSNESS_SERVER_TIMEOUT=2.5
-    CONSCIOUSNESS_NODE_ID=node-local-01
-
-### Phase 2 — second node
+### Phase 3 — second node
 
 Two computers exchange continuity checkpoints and node heartbeats.
 
-### Phase 3 — NodeZero mesh
+### Phase 4 — NodeZero mesh
 
 Introduce replicated node state, reconciliation and deterministic event identity.
 
-### Phase 4 — shared continuity
+### Phase 5 — shared continuity
 
 Allow multiple organisms to participate in a shared continuity fabric while keeping their identities separate.
 
-### Phase 5 — AEVUM attribution
+### Phase 6 — AEVUM attribution
 
 Only after the network exists, evaluate continuity events as possible AEVUM-native units for resource contribution, storage, validation and transport attribution.
 
