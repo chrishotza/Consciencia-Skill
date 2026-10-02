@@ -36,12 +36,16 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Consciousness Server — local-first continuity runtime."
     )
+    parser.add_argument("--host", default="127.0.0.1")
+    parser.add_argument("--port", type=int, default=8787)
+    parser.add_argument("--db", default="data/consciousness.db")
+
     subparsers = parser.add_subparsers(dest="command")
 
-    serve_parser = subparsers.add_parser("serve")
-    serve_parser.add_argument("--host", default="127.0.0.1")
-    serve_parser.add_argument("--port", type=int, default=8787)
-    serve_parser.add_argument("--db", default="data/consciousness.db")
+    subparsers.add_parser(
+        "serve",
+        help="start the Consciousness Server",
+    )
 
     reconcile_parser = subparsers.add_parser(
         "reconcile",
@@ -56,9 +60,9 @@ def main() -> None:
 
     if args.command in (None, "serve"):
         serve(
-            host=getattr(args, "host", "127.0.0.1"),
-            port=getattr(args, "port", 8787),
-            db_path=getattr(args, "db", "data/consciousness.db"),
+            host=args.host,
+            port=args.port,
+            db_path=args.db,
         )
     elif args.command == "reconcile":
         run_reconcile(
