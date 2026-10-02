@@ -800,6 +800,24 @@ Workflow verificado: **36986823516**; artifact **11217906875**; commit experimen
 
 Interpretación: **resultado nulo/mixto bajo el protocolo probado**. La cadena integrada es operativa y sus observables persisten, pero los controles de consulta no cambiaron la acción ni el regret. La reasignación de atención sí cambió la acción en 20.83% de réplicas, aunque el costo de regret no fue significativo. La integración no demuestra necesidad funcional del acceso selectivo bajo este mapeo.
 
+## I5.5 — Cuello de botella causal de consulta — resultado verificado
+
+Workflow verificado: **36987408988**; artifact **11218415785**; commit experimental **906f67544517add411f1c97176042a253a3caa19**.
+
+- seed **20261005**;
+- **512** episodios;
+- accuracy de acción FULL: **1.0**;
+- accuracy de consulta FULL: **1.0**;
+- masa de atención FULL sobre objetivo: **0.98549**;
+- FULL−SHUFFLED_QUERY: **+1.0**, p=**4.99975×10⁻⁵**;
+- FULL−ZERO_QUERY: **+0.7578125**, p=**4.99975×10⁻⁵**;
+- FULL−RANDOM_QUERY: **+0.736328125**, p=**4.99975×10⁻⁵**;
+- FULL−SHUFFLED_ATTENTION: **+1.0**, p=**4.99975×10⁻⁵**;
+- FULL−LESION_TARGET: **+1.0**, p=**4.99975×10⁻⁵**;
+- FULL−NO_BOTTLENECK: **0.0**, p=**1.0**.
+
+Interpretación: **resultado positivo para el mecanismo combinado query+atención bajo este arnés sintético**. Las perturbaciones de query, atención y contenido objetivo eliminaron la accuracy. El control NO_BOTTLENECK fue nulo, por lo que no se establece necesidad funcional del bottleneck cuando la atención ya concentra los recursos sobre el objetivo.
+
 ## Estado de campaña C0
 
 La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.
@@ -1203,6 +1221,24 @@ Verified workflow: **36986823516**; artifact **11217906875**; experimental commi
 - exact persistence: **100%**.
 
 Interpretation: **null/mixed result under the tested protocol**. The integrated chain is operational and its observables persist, but query controls did not change action or regret. Attention reassignment changed the action in 20.83% of replicates, but regret cost was not significant. The integration therefore does not establish functional necessity of selective access under this mapping.
+
+## I5.5 — Causal query bottleneck — verified result
+
+Verified workflow: **36987408988**; artifact **11218415785**; experimental commit **906f67544517add411f1c97176042a253a3caa19**.
+
+- seed **20261005**;
+- **512** episodes;
+- FULL action accuracy: **1.0**;
+- FULL query accuracy: **1.0**;
+- FULL target attention mass: **0.98549**;
+- FULL−SHUFFLED_QUERY: **+1.0**, p=**4.99975×10⁻⁵**;
+- FULL−ZERO_QUERY: **+0.7578125**, p=**4.99975×10⁻⁵**;
+- FULL−RANDOM_QUERY: **+0.736328125**, p=**4.99975×10⁻⁵**;
+- FULL−SHUFFLED_ATTENTION: **+1.0**, p=**4.99975×10⁻⁵**;
+- FULL−LESION_TARGET: **+1.0**, p=**4.99975×10⁻⁵**;
+- FULL−NO_BOTTLENECK: **0.0**, p=**1.0**.
+
+Interpretation: **positive result for the combined query+attention mechanism under this synthetic harness**. Query, attention, and target-content perturbations eliminated accuracy. NO_BOTTLENECK was null, so bottleneck necessity is not established when attention already concentrates resources on the target.
 
 ## C0 campaign and causal controls
 
