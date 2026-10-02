@@ -121,4 +121,12 @@ La traducción del marco teórico al software se considera una hipótesis de ing
 
 ## Estado
 
-El repositorio se encuentra en investigación activa. V67 constituye la frontera actual del programa experimental.
+El repositorio se encuentra en investigación activa.
+
+La frontera experimental actual incluye **C0.18** en verificación. C0.17 sigue siendo el último resultado científico completado: verificó adquisición autónoma del segundo orden como aprendizaje/persistencia de modelo, pero no encontró especificidad conductual TRUE vs PERMUTED bajo el protocolo probado.
+
+C0.18 extiende esa línea a una prueba emparejada de **lesión/rescate**. Su ingeniería de preflight ya fue corregida; todavía no se incorpora un resultado científico hasta completar las 24 réplicas.
+
+La campaña C0 de 32 ejecuciones fue reiniciada con una ruta de artifacts más segura. Sus resultados no se consideran evidencia hasta validar cada réplica.
+
+En paralelo, la infraestructura ya incluye **LOCAL/SERVER runtime modes**, **Consciousness Server**, **continuity checkpoints** y **continuity reconciliation**. Esta capa permite pasar de persistencia local a un plano de continuidad verificable antes de implementar replay, recuperación y futura federación entre nodos.

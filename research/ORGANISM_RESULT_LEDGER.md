@@ -1,4 +1,4 @@
-# Registro de resultados experimentales del organismo — V47 → V78
+# Registro de resultados experimentales del organismo — V47 → V80
 
 ## Resultados positivos fuertes
 
@@ -422,7 +422,7 @@ Estos resultados establecen propiedades computacionales cada vez más específic
 
 No establecen consciencia fenomenológica ni experiencia subjetiva.
 
-El siguiente experimento en curso es C0.7: probar si los efectos organizacionales dependen de la **asignación específica feature → target** aprendida por el modelo de sí y no simplemente de la presencia de un modelo con el mismo volumen de memoria.
+C0.7 fue completado como control de especificidad; su resultado verificado aparece en la sección correspondiente más abajo.
 
 
 ### C0.5 — Control información-matcheado de cierre recurrente
@@ -658,13 +658,9 @@ Artefacto: GitHub Actions run **36945659490**, artifact **11201664192**, SHA256 
 Interpretación: el primer modelo de sí y el segundo modelo condicionado por acción fueron serializados, recuperados y reutilizados después de reconstruir el contexto y un nuevo puente dinámico, produciendo la misma secuencia posterior de acciones y ganancias que el brazo continuo bajo el protocolo probado. Esto respalda persistencia computacional del segundo orden a través de un reinicio.
 
 
-### C0.15 — Lesión/rescate del selector de segundo orden persistente
+### C0.15 — Nota de protocolo histórica
 
-Protocolo implementado; **sin resultado experimental registrado todavía**.
-
-C0.15 mantiene el primer orden y la dinámica intactos y deshabilita únicamente el segundo selector en una fase de la misma trayectoria. Un tercer brazo restaura el modelo segundo orden desde el checkpoint serializado para probar rescate.
-
-Estado: **implementado; ejecución pendiente de verificación**.
+Esta subsección conserva la descripción de implementación previa a la ejecución verificada. El resultado experimental final de C0.15 aparece inmediatamente después y es la referencia vigente.
 
 
 ### C0.15 — Resultado verificado
@@ -735,3 +731,23 @@ Artefacto: GitHub Actions run **36946964601**, artifact **11201784892**, SHA256 
 - reentrenamiento externo durante la evaluación: **no**.
 
 Interpretación: **resultado mixto/nulo bajo el protocolo probado**. El organismo persistente sí adquirió un modelo de segundo orden desde cero usando errores de predicción contrafactuales generados dentro del propio ciclo autónomo. Sin embargo, al congelar ese modelo y compararlo con un control target-permuted, no apareció una separación estadísticamente significativa en acción ni en ganancia. Por tanto, la adquisición autónoma está demostrada a nivel de aprendizaje/persistencia del modelo, pero su especificidad causal conductual no quedó demostrada.
+
+
+## Estado de campaña C0
+
+La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica con un fallo técnico en el archivado de artifacts. La campaña fue reiniciada con una ejecución por ondas de cuatro réplicas y una regla explícita de validación de archivos antes de publicar artifacts.
+
+**Estado documental actual:** la nueva ventana de ejecución está definida en [C0 Campaign](../docs/C0_CAMPAIGN_32_RUNS.md). Los resultados de esa ejecución no se incorporan automáticamente a este ledger: cada réplica debe validarse y sus resultados científicos deben registrarse por separado. Un fallo técnico de infraestructura no se convierte en un resultado nulo.
+
+
+
+## C0.18 — Estado de ingeniería del protocolo autónomo de segundo orden
+
+C0.18 extiende C0.17 hacia lesión/rescate del modelo de segundo orden adquirido dentro del organismo.
+
+El preflight inicial detectó un problema metodológico: el primer `SelfObserver` seguía actualizándose durante la sonda, por lo que el digest conjunto del modelo cambiaba y la recuperación exacta aparecía como 0.0. También se detectó un error en el test de reconciliación que atribuía fingerprints del organismo local a `ConsciousnessStore`.
+
+Ambos problemas fueron corregidos. C0.18 ahora congela explícitamente el primer orden durante FULL, LESION y RESCUE y mantiene las huellas locales en el `MemoryStore`.
+
+**No se registra todavía un resultado científico C0.18.** La validación requiere la ejecución completa de 24 réplicas y la inspección del `summary.json`.
+

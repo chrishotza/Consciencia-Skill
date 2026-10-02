@@ -83,3 +83,39 @@ class ConsciousnessClient:
                 "payload": payload or {},
             },
         )
+
+    def checkpoint(
+        self,
+        instance_id: str,
+        runtime_mode: str,
+        organism_mode: str,
+        payload: dict[str, Any] | None = None,
+        checkpoint_id: str | None = None,
+    ) -> dict[str, Any]:
+        body: dict[str, Any] = {
+            "runtime_mode": runtime_mode,
+            "organism_mode": organism_mode,
+            "payload": payload or {},
+        }
+        if checkpoint_id:
+            body["checkpoint_id"] = checkpoint_id
+        return self._request(
+            "POST",
+            f"/instances/{instance_id}/checkpoints",
+            body,
+        )
+
+    def list_checkpoints(
+        self,
+        instance_id: str,
+        limit: int = 50,
+    ) -> dict[str, Any]:
+        return self._request(
+            "GET",
+            f"/instances/{instance_id}/checkpoints?limit={max(1, min(int(limit), 1000))}",
+        )
+
+    def latest_checkpoint(self, instance_id: str) -> dict[str, Any] | None:
+        payload = self.list_checkpoints(instance_id, limit=1)
+        checkpoints = payload.get("checkpoints", [])
+        return checkpoints[-1] if checkpoints else None

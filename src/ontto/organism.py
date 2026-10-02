@@ -32,6 +32,7 @@ class OrganismConfig:
     dynamic_dream_steps: int = 5
     dynamic_autonomous_steps: int = 1
     self_observer_enabled: bool = True
+    self_observer_update_enabled: bool = True
     self_observer_ridge: float = 1e-3
     self_observer_max_samples: int = 2048
     meta_self_observer_enabled: bool = False
@@ -215,14 +216,15 @@ class PersistentOrganism:
             prediction_error = abs(snapshot.state - prediction.predicted_state)
             baseline_error = abs(snapshot.state - prediction.baseline_state)
             gain = baseline_error - prediction_error
-            self.self_observer.observe(
-                features=observer_features,
-                actual_state=snapshot.state,
-            )
-            self.store.save_self_observer_model(
-                self.cfg.agent_id,
-                self.self_observer.to_dict(),
-            )
+            if self.cfg.self_observer_update_enabled:
+                self.self_observer.observe(
+                    features=observer_features,
+                    actual_state=snapshot.state,
+                )
+                self.store.save_self_observer_model(
+                    self.cfg.agent_id,
+                    self.self_observer.to_dict(),
+                )
             if self.cfg.meta_self_observer_enabled:
                 self.meta_observer.observe(
                     features=observer_features,

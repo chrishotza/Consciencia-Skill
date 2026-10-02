@@ -9,6 +9,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from src.consciousness_server.client import ConsciousnessClient
+from src.consciousness_server.reconciliation import reconcile
 from src.ontto.runtime_mode import ConsciousnessMode, ConsciousnessRuntimeConfig
 from src.ontto.organism import OrganismConfig, PersistentOrganism
 from src.ontto.provider import OpenAICompatibleProvider
@@ -66,6 +67,80 @@ def _emit(
         # The server is an optional continuity control plane.
         # Local organism persistence must keep running if the server is down.
         print(f"[consciousness-server] emit failed: {exc!r}")
+
+
+def _reconcile(
+    client: ConsciousnessClient | None,
+    agent_id: str,
+    store: MemoryStore,
+) -> dict:
+    if client is None:
+        return {"status": "LOCAL_MODE"}
+
+    try:
+        checkpoints = client.list_checkpoints(agent_id, limit=1).get(
+            "checkpoints",
+            [],
+        )
+        report = reconcile(
+            local_state_fingerprint=store.state_fingerprint(agent_id),
+            local_trajectory_fingerprint=store.trajectory_fingerprint(agent_id),
+            local_event_count=store.event_count(agent_id),
+            local_memory_count=store.memory_count(agent_id),
+            checkpoints=checkpoints,
+        )
+        print(
+            "[consciousness-server] reconciliation="
+            f"{report.status.value} checkpoint={report.checkpoint_id}"
+        )
+        return report.to_dict()
+    except Exception as exc:
+        report = {"status": "ERROR", "error": repr(exc)}
+        print(f"[consciousness-server] reconciliation failed: {exc!r}")
+        return report
+
+
+def _checkpoint(
+    client: ConsciousnessClient | None,
+    agent_id: str,
+    runtime: ConsciousnessRuntimeConfig,
+    node_id: str | None,
+    store: MemoryStore,
+    organism: PersistentOrganism,
+) -> None:
+    if client is None:
+        return
+
+    payload = {
+        "node_id": node_id,
+        "cycle": organism.cycles,
+        "boot_count": organism.state.boot_count,
+        "dynamic_state": organism.state.dynamic_state,
+        "dynamic_steps": organism.state.dynamic_steps,
+        "memory_strength": organism.state.memory_strength,
+        "self_model_version": organism.state.self_model_version,
+        "state_fingerprint": store.state_fingerprint(agent_id),
+        "trajectory_fingerprint": store.trajectory_fingerprint(agent_id),
+        "event_count": store.event_count(agent_id),
+        "memory_count": store.memory_count(agent_id),
+    }
+    checkpoint_id = (
+        f"{runtime.node_id}:{organism.state.boot_count}:"
+        f"{organism.cycles}:{time.time_ns()}"
+    )
+    try:
+        client.checkpoint(
+            instance_id=agent_id,
+            runtime_mode=runtime.mode.value,
+            organism_mode=organism.state.mode,
+            payload=payload,
+            checkpoint_id=checkpoint_id,
+        )
+    except Exception as exc:
+        # Checkpoints are fail-open: local organism persistence remains the
+        # source of truth while the server provides a durable control-plane
+        # mirror.
+        print(f"[consciousness-server] checkpoint failed: {exc!r}")
 
 
 def main() -> None:
@@ -131,6 +206,21 @@ def main() -> None:
             "boot_count": organism.state.boot_count,
         },
     )
+    reconciliation = _reconcile(consciousness_client, agent_id, store)
+    _emit(
+        consciousness_client,
+        agent_id,
+        "RECONCILE",
+        reconciliation,
+    )
+    _checkpoint(
+        consciousness_client,
+        agent_id,
+        runtime,
+        node_id,
+        store,
+        organism,
+    )
 
     while True:
         organism.cycles += 1
@@ -163,6 +253,14 @@ def main() -> None:
                     },
                 )
                 store.complete_input(item["id"])
+                _checkpoint(
+                    consciousness_client,
+                    agent_id,
+                    runtime,
+                    node_id,
+                    store,
+                    organism,
+                )
             elif autonomous_when_idle:
                 dynamic = organism.autonomous_wake_cycle()
                 _emit(
@@ -177,6 +275,14 @@ def main() -> None:
                         "self_model_version": organism.state.self_model_version,
                     },
                 )
+                _checkpoint(
+                    consciousness_client,
+                    agent_id,
+                    runtime,
+                    node_id,
+                    store,
+                    organism,
+                )
 
             if organism.cycles % cfg.dream_every_cycles == 0:
                 organism.dream_cycle()
@@ -190,6 +296,14 @@ def main() -> None:
                         "self_model_version": organism.state.self_model_version,
                         "memory_strength": organism.state.memory_strength,
                     },
+                )
+                _checkpoint(
+                    consciousness_client,
+                    agent_id,
+                    runtime,
+                    node_id,
+                    store,
+                    organism,
                 )
                 time.sleep(cfg.dream_seconds)
             else:
@@ -225,6 +339,14 @@ def main() -> None:
                 {"runtime_mode": runtime.mode.value},
             )
             store.save_state(agent_id, organism.state)
+            _checkpoint(
+                consciousness_client,
+                agent_id,
+                runtime,
+                node_id,
+                store,
+                organism,
+            )
             time.sleep(error_backoff_seconds)
 
 

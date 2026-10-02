@@ -72,6 +72,22 @@ class ConsciousnessStore:
             CREATE INDEX IF NOT EXISTS idx_events_instance_id
             ON events(instance_id, id);
 
+            CREATE TABLE IF NOT EXISTS checkpoints (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                checkpoint_id TEXT UNIQUE NOT NULL,
+                instance_id TEXT NOT NULL,
+                local_revision INTEGER NOT NULL,
+                runtime_mode TEXT NOT NULL,
+                organism_mode TEXT NOT NULL,
+                payload_json TEXT NOT NULL,
+                state_hash TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                FOREIGN KEY(instance_id) REFERENCES instances(instance_id)
+            );
+
+            CREATE INDEX IF NOT EXISTS idx_checkpoints_instance_id
+            ON checkpoints(instance_id, id);
+
             CREATE TABLE IF NOT EXISTS nodes (
                 node_id TEXT PRIMARY KEY,
                 endpoint TEXT,
@@ -213,6 +229,88 @@ class ConsciousnessStore:
             (instance_id,),
         ).fetchone()
         return str(row["state_hash"]) if row else None
+
+    def create_checkpoint(
+        self,
+        instance_id: str,
+        runtime_mode: str,
+        organism_mode: str,
+        payload: dict[str, Any] | None = None,
+        checkpoint_id: str | None = None,
+    ) -> dict[str, Any]:
+        state = self.get_state(instance_id)
+        if state is None:
+            raise KeyError(f"unknown instance: {instance_id}")
+
+        checkpoint_id = checkpoint_id or f"cp_{uuid.uuid4().hex[:20]}"
+        now = now_iso()
+        state_hash = self._hash_state(state)
+        payload = payload or {}
+
+        self.conn.execute(
+            """
+            INSERT INTO checkpoints(
+                checkpoint_id, instance_id, local_revision,
+                runtime_mode, organism_mode, payload_json,
+                state_hash, created_at
+            ) VALUES(?,?,?,?,?,?,?,?)
+            """,
+            (
+                checkpoint_id,
+                instance_id,
+                state.revision,
+                str(runtime_mode),
+                str(organism_mode),
+                json.dumps(payload, ensure_ascii=False),
+                state_hash,
+                now,
+            ),
+        )
+        self.conn.commit()
+
+        return {
+            "checkpoint_id": checkpoint_id,
+            "instance_id": instance_id,
+            "local_revision": state.revision,
+            "runtime_mode": str(runtime_mode),
+            "organism_mode": str(organism_mode),
+            "payload": payload,
+            "state_hash": state_hash,
+            "created_at": now,
+        }
+
+    def list_checkpoints(
+        self,
+        instance_id: str,
+        limit: int = 50,
+    ) -> list[dict[str, Any]]:
+        rows = self.conn.execute(
+            """
+            SELECT
+                checkpoint_id, instance_id, local_revision,
+                runtime_mode, organism_mode, payload_json,
+                state_hash, created_at
+            FROM checkpoints
+            WHERE instance_id=?
+            ORDER BY id DESC
+            LIMIT ?
+            """,
+            (instance_id, max(1, min(int(limit), 1000))),
+        ).fetchall()
+
+        return [
+            {
+                "checkpoint_id": row["checkpoint_id"],
+                "instance_id": row["instance_id"],
+                "local_revision": int(row["local_revision"]),
+                "runtime_mode": row["runtime_mode"],
+                "organism_mode": row["organism_mode"],
+                "payload": json.loads(row["payload_json"]),
+                "state_hash": row["state_hash"],
+                "created_at": row["created_at"],
+            }
+            for row in reversed(rows)
+        ]
 
     def register_node(
         self,

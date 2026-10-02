@@ -60,6 +60,7 @@ def cfg(seed: int) -> OrganismConfig:
         self_selection_enabled=True,
         self_selection_policy="self_model",
         self_selection_signals=SIGNALS,
+        self_observer_update_enabled=False,
         action_conditioned_meta_observer_enabled=True,
         action_conditioned_meta_observer_update_enabled=False,
         action_conditioned_meta_counterfactual_learning_enabled=False,

@@ -14,16 +14,16 @@ The historical 32-run campaign is retained as executed evidence. The restarted c
 
 ## Groups
 
-| Group | Local time | Criterion / question | Control |
+| Group | Restarted wave (ART) | Criterion / question | Control |
 |---|---|---|---|
-| G1 | 06:15–07:00 | C3 causal self-reference | information-matched state shuffle |
-| G2 | 07:15–08:00 | C5 intrinsic dynamics | information-matched action replay |
-| G3 | 08:15–09:00 | C7 recurrent closure | information-matched action-chain shuffle |
-| G4 | 09:15–10:00 | C4 trajectory continuity | FULL − NO_PERSISTENCE |
-| G5 | 10:15–11:00 | C1 own-state persistence | FULL − NO_PERSISTENCE |
-| G6 | 11:15–12:00 | C2 self/environment differentiation | FULL − STATE_BLIND |
-| G7 | 12:15–13:00 | C6 reorganization | FULL − STATE_BLIND |
-| G8 | 13:15–14:00 | C0 confirmatory battery | strong controls for C3/C5/C7 + matched controls for C1/C2/C4/C6 |
+| G1 | 20:30 — 1 Oct | C3 causal self-reference | information-matched state shuffle |
+| G2 | 21:30 — 1 Oct | C5 intrinsic dynamics | information-matched action replay |
+| G3 | 22:30 — 1 Oct | C7 recurrent closure | information-matched action-chain shuffle |
+| G4 | 23:30 — 1 Oct | C4 trajectory continuity | FULL − NO_PERSISTENCE |
+| G5 | 00:30 — 2 Oct | C1 own-state persistence | FULL − NO_PERSISTENCE |
+| G6 | 01:30 — 2 Oct | C2 self/environment differentiation | FULL − STATE_BLIND |
+| G7 | 02:30 — 2 Oct | C6 reorganization | FULL − STATE_BLIND |
+| G8 | 03:30 — 2 Oct | C0 confirmatory battery | strong controls for C3/C5/C7 + matched controls for C1/C2/C4/C6 |
 
 ## Replica seeds
 
@@ -68,3 +68,12 @@ No composite consciousness score is produced.
 C0.3/C0.4/C0.5 controls are treated as stronger specificity controls for C3/C5/C7 respectively.
 
 G8 is a criterion vector, not a global consciousness score.
+
+
+## Current status
+
+The original 32-run campaign is retained as historical evidence with a technical artifact-archival failure.
+
+The restarted campaign uses the artifact-safe workflow and the eight four-job waves listed above. Scientific results are **not** copied into the result ledger automatically. Each produced artifact must first be validated for completeness and provenance.
+
+A technical failure is recorded as a technical failure, never as an experimental null.
