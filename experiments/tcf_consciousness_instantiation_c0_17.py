@@ -232,7 +232,11 @@ def main() -> None:
 
         perm_store = MemoryStore(permuted_db)
         perm_organism = PersistentOrganism(
-            cfg(seed, learn_second_order=False),
+            cfg(
+                seed,
+                learn_second_order=False,
+                update_second_order=False,
+            ),
             perm_store,
             AutonomousOnlyProvider(),
             lambda _: None,
