@@ -8,7 +8,8 @@ import numpy as np
 from .bridge import DynamicStateBridge
 from .dynamics import Config
 from .provider import OpenAICompatibleProvider
-from .storage import MemoryStore, OntologicalState
+from .storage import OntologicalState
+from .persistence_backend import PersistenceBackend
 from .self_observer import SelfObserver
 from .trajectory_selector import TrajectorySelector
 from .memory_policy import ContinuityMemoryPolicy
@@ -68,7 +69,7 @@ class PersistentOrganism:
     def __init__(
         self,
         cfg: OrganismConfig,
-        store: MemoryStore,
+        store: PersistenceBackend,
         provider: OpenAICompatibleProvider,
         sleep_fn: Callable[[float], None],
     ):
