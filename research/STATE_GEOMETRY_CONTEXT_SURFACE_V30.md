@@ -1,3 +1,38 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V30 — Superficie contextual independiente del donante
+
+## Pregunta
+
+¿Cómo cambia la respuesta direccional del state observada en V24–V27 al variar independientemente memory y pressure del receptor, sin depender de la identidad del donante?
+
+## Diseño
+
+- Seis puntos ciegos V12.
+- Cuatro pares de historias.
+- Seeds independientes 50–59.
+- State del receptor fijado al midpoint A/B.
+- Memory y pressure del receptor son valores sintéticos, fijos y predeclarados:
+  - memory: -0.8, -0.4, 0, 0.4, 0.8
+  - pressure: 0, 0.5, 1.0, 1.5, 2.0
+- Radio de desviación del state donante: 1.1.
+- Ángulos: 30°, 60°, 90°, 120°, 150°.
+- Input futuro: exactamente cero.
+- Noise: 0.01.
+
+Cada contexto nuisance del receptor es independiente de las historias donantes. Las continuaciones de referencia locales A/B se generan dentro del mismo contexto nuisance.
+
+El ángulo 180° se excluye porque, con el state del receptor fijado exactamente al midpoint A/B, una rotación de 180° mapea matemáticamente el donante A sobre B.
+
+El experimento estudia la interacción contexto × geometría y evita variables nuisance ligadas al donante. No establece consciencia ni experiencia subjetiva.
+
+</details>
+
+<a id="english"></a>
+
 # V30 — Donor-Independent Context Surface
 
 ## Question
