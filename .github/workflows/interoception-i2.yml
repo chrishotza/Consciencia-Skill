@@ -30,7 +30,7 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
       - name: Run I2 harness tests
-        run: pytest -q tests/test_interoception_unit.py tests/test_interoception_i1.py tests/test_interoception_i2.py
+        run: pytest -q tests/test_interoception_unit.py tests/test_interoception_i1.py tests/test_interoception_i2.py tests/test_interoceptive_runtime_hook.py
       - name: Run I2 protocol
         run: |
           mkdir -p results/i2
