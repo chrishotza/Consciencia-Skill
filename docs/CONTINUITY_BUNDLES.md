@@ -38,6 +38,8 @@ Restore refuses to overwrite an existing database unless `--overwrite` is suppli
 The bundle deliberately stops before replay/merge. Reconciliation remains the gate that decides whether a restored organism is aligned, ahead, behind or divergent.
 
 
+<a id="espanol"></a>
+
 <details>
 <summary>🇪🇸 Español — abrir</summary>
 
@@ -71,21 +73,3 @@ La capa bundle se detiene deliberadamente antes de replay/merge; reconciliación
 </details>
 
 
-<details>
-<summary>🇪🇸 Español — abrir</summary>
-
-# Bundles de continuidad
-Un Continuity Bundle es un backup portable de un organismo persistente.
-
-Contiene organism.sqlite3 y manifest.json con identidad, observables de persistencia e integridad SHA-256.
-
-## Flujo
-checkpoint → bundle → desconectar/migrar → verificar → restaurar → reconciliar.
-El bundle es un artifact local portable, no una réplica del servidor ni una fusión de trayectorias divergentes.
-
-## Operaciones
-Create, verify y restore se realizan mediante el comando consciousness-bundle. Restore no sobrescribe una base existente salvo que se use --overwrite.
-
-La capa bundle se detiene antes de replay/merge; reconciliación decide si el organismo restaurado está alineado, adelantado, atrasado o divergente.
-
-</details>
