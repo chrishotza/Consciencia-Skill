@@ -7,7 +7,7 @@ description: Use Skill-Conscious to add persistent continuity, memory, self-mode
 
 ## Purpose
 
-Skill-Conscious is a persistent AI organism architecture and research program. Treat it as a modular system, not as a prompt.
+Skill-Conscious is the agent-facing interface for a broader local-first Consciousness Server architecture. Treat it as a modular system, not as a prompt.
 
 The core loop is:
 
@@ -64,7 +64,15 @@ Primary modules:
 
 ### Server deployment
 
-Use the organism as a long-running service when persistence, scheduled WAKE/SLEEP cycles, external inputs, and multiple clients must be coordinated by a server.
+Prefer the Consciousness Server when persistence, external inputs, autonomous cycles, multiple clients, or future multi-node continuity must be coordinated centrally.
+
+The server is the continuity control plane. It stores durable identity and event state without requiring the server to execute every model inference.
+
+See:
+
+- `docs/CONSCIOUSNESS_SERVER.md`
+- `src/consciousness_server/core.py`
+- `src/consciousness_server/server.py`
 
 Keep the Skill-Conscious workflow layer separate from transport/API concerns.
 
