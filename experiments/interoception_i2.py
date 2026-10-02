@@ -55,8 +55,8 @@ def run_condition(seed: int, magnitude: float, mode: str) -> dict[str, float | i
         signal=perturbation_signal, steps=1, step_index=step_index,
     )
     previous, state, memory, pressure, step_index = (
-        perturbated.previous_state, perturbated.state, perturbated.memory,
-        perturbated.pressure, perturbated.steps,
+        perturbed.previous_state, perturbed.state, perturbed.memory,
+        perturbed.pressure, perturbed.steps,
     )
     pressure_trace = [pressure]
     operating_trace = []
