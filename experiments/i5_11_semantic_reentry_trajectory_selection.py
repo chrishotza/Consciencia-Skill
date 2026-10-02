@@ -14,6 +14,7 @@ from src.ontto.provider import LLMResponse
 from src.ontto.storage import MemoryStore
 
 CYCLES = 8
+# CI validation marker for future-selection re-entry execution.
 CANDIDATE_SIGNALS = (-1.0, 1.0)
 
 BASE_SELF_MODEL = "Mantengo una identidad persistente entre ciclos."
