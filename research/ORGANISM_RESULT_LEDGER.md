@@ -741,13 +741,28 @@ La primera campaña de 32 ejecuciones quedó archivada como evidencia histórica
 
 
 
-## C0.18 — Estado de ingeniería del protocolo autónomo de segundo orden
+## C0.18 — Adquisición autónoma y lesión/rescate del segundo orden — resultado verificado
 
-C0.18 extiende C0.17 hacia lesión/rescate del modelo de segundo orden adquirido dentro del organismo.
+Artifact de GitHub Actions:
 
-El preflight inicial detectó un problema metodológico: el primer `SelfObserver` seguía actualizándose durante la sonda, por lo que el digest conjunto del modelo cambiaba y la recuperación exacta aparecía como 0.0. También se detectó un error en el test de reconciliación que atribuía fingerprints del organismo local a `ConsciousnessStore`.
+- workflow run: **36960952961**;
+- artifact: **11208100038**;
+- SHA-256: **a7aa0554a81a3449175e37363e6fcd95ec6d5bc7d1354198f047ef888c1dbf98**;
+- commit experimental: **434b3a02ab64c9294c8113171ccbac1745caa053**;
+- 24 réplicas;
+- 12 ciclos de adquisición autónoma por réplica;
+- 48 muestras medias aprendidas por el segundo orden;
+- recuperación exacta del modelo persistido: **100%**.
 
-Ambos problemas fueron corregidos. C0.18 ahora congela explícitamente el primer orden durante FULL, LESION y RESCUE y mantiene las huellas locales en el `MemoryStore`.
+Contrastes primarios:
 
-**No se registra todavía un resultado científico C0.18.** La validación requiere la ejecución completa de 24 réplicas y la inspección del `summary.json`.
+- FULL − LESION, acción: **−0.2916667**, p=**0.1177441**;
+- FULL − LESION, ganancia: **+0.0114104**, p=**0.7404130**;
+- RESCUE − LESION, acción: **−0.2916667**, p=**0.1183441**;
+- RESCUE − LESION, ganancia: **+0.0114104**, p=**0.7332633**.
+
+Interpretación: **resultado nulo bajo el protocolo probado**. El organismo adquirió y persistió correctamente el segundo orden, pero la lesión no produjo un cambio estadísticamente significativo en acción o ganancia y el rescate tampoco produjo recuperación significativa respecto de LESION.
+
+C0.18, por tanto, no demuestra necesidad causal ni rescate funcional del segundo orden adquirido bajo este arnés. La adquisición/persistencia de C0.17 permanece como resultado separado.
+
 
