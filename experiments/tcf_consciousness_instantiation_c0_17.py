@@ -74,7 +74,7 @@ def seed_training_database(
     store.conn.close()
 
 
-def cfg(seed: int, *, learn_second_order: bool) -> OrganismConfig:
+def cfg(seed: int, *, learn_second_order: bool, update_second_order: bool) -> OrganismConfig:
     return OrganismConfig(
         agent_id="agent",
         dynamic_seed=seed,
@@ -85,6 +85,7 @@ def cfg(seed: int, *, learn_second_order: bool) -> OrganismConfig:
         self_selection_policy="self_model",
         self_selection_signals=SIGNALS,
         action_conditioned_meta_observer_enabled=True,
+        action_conditioned_meta_observer_update_enabled=update_second_order,
         action_conditioned_meta_counterfactual_learning_enabled=learn_second_order,
     )
 
@@ -161,7 +162,11 @@ def main() -> None:
 
         training_store = MemoryStore(base_db)
         trainer = PersistentOrganism(
-            cfg(seed, learn_second_order=True),
+            cfg(
+                seed,
+                learn_second_order=True,
+                update_second_order=True,
+            ),
             training_store,
             AutonomousOnlyProvider(),
             lambda _: None,
@@ -204,7 +209,11 @@ def main() -> None:
 
         true_store = MemoryStore(true_db)
         true_organism = PersistentOrganism(
-            cfg(seed, learn_second_order=False),
+            cfg(
+                seed,
+                learn_second_order=False,
+                update_second_order=False,
+            ),
             true_store,
             AutonomousOnlyProvider(),
             lambda _: None,
