@@ -60,73 +60,71 @@ One research core, multiple delivery surfaces:
 - local Python organism;
 - server/MCP deployment.
 
-
 <details>
-<summary>🇺🇸 English — open</summary>
+<summary>🇪🇸 Español — abrir</summary>
 
-# Installing Skill-Conscious
+# Instalación de Skill-Conscious
 
-Skill-Conscious is designed as two separately installable layers.
+Skill-Conscious está diseñado como dos capas instalables por separado.
 
 ## 1. Agent Skill
 
-The portable Agent Skill is:
+El Agent Skill portable se encuentra en:
 
 `skills/skill-conscious/`
 
-Its entrypoint is:
+Su punto de entrada es:
 
 `skills/skill-conscious/SKILL.md`
 
-Copy that folder into the skill directory supported by your AI agent.
+Copiá esa carpeta al directorio de skills compatible con tu agente de IA.
 
-The package is intentionally small. The agent should load references on demand instead of ingesting the entire research repository.
+El paquete está pensado para ser pequeño. El agente debe cargar referencias bajo demanda en lugar de incorporar todo el repositorio de investigación.
 
-## 2. Python organism runtime
+## 2. Runtime Python del organismo
 
-The repository also contains the persistent organism runtime.
+El repositorio también contiene el runtime del organismo persistente.
 
-Install the project in a Python environment:
+Instalá el proyecto en un entorno Python:
 
 ```bash
 pip install -e .
 ```
 
-Run the existing daemon entrypoint:
+Ejecutá el entrypoint del daemon existente:
 
 ```bash
 skill-conscious
 ```
 
-The legacy command `consciencia-organismo` remains available for compatibility.
+El comando heredado `consciencia-organismo` sigue disponible por compatibilidad.
 
-## 3. Server mode
+## 3. Modo servidor
 
-A future server distribution should keep the same boundary:
+Una futura distribución de servidor debería conservar el mismo límite:
 
 ```
 Agent Skill
     ↓
 workflow / routing
     ↓
-server or MCP
+server o MCP
     ↓
 PersistentOrganism
     ↓
 storage + model provider
 ```
 
-The server should expose controlled operations and status, while research protocols and evidence remain versioned in the repository.
+El servidor debe exponer operaciones y estado controlados, mientras los protocolos de investigación y la evidencia permanecen versionados en el repositorio.
 
-## Design goal
+## Objetivo de diseño
 
-One research core, multiple delivery surfaces:
+Un núcleo de investigación, múltiples superficies de entrega:
 
-- portable Agent Skill;
-- local Python organism;
-- server/MCP deployment.
-
+- Agent Skill portable;
+- organismo Python local;
+- despliegue server/MCP.
 
 </details>
 
-> 🌐 Language convention: [docs/LANGUAGE.md](LANGUAGE.md)
+> 🌐 Language convention: [docs/LANGUAGE.md](docs/LANGUAGE.md)
