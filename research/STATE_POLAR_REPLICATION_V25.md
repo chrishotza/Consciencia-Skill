@@ -1,3 +1,53 @@
+<a id="espanol"></a>
+
+<details>
+<summary>🇪🇸 Español — abrir</summary>
+
+# V25 — Réplica confirmatoria de la superficie polar del estado
+
+## Propósito
+
+V25 es el seguimiento confirmatorio de V24.
+
+V24 mapeó una superficie radio × ángulo usando seeds 0–9. V25 conserva los seis puntos ciegos V12 y el análisis exacto de affinity/identidad, pero utiliza seeds disjuntas 10–19 y una grilla más fina predeclarada.
+
+## Hipótesis
+
+Si el efecto direccional del estado de V24 es reproducible, una réplica con seeds independientes debería recuperar:
+
+1. baja discriminación de identidad cerca de radio cero;
+2. mayor discriminación en radios no nulos;
+3. máximo direccional cerca de la orientación original de la desviación;
+4. inversión antipodal cerca de 180°;
+5. ganancia radial no monótona en lugar de una relación basada solo en magnitud.
+
+## Diseño
+
+- Puntos paramétricos: p1–p6 exactamente como V24.
+- Pares de historias: 4.
+- Seeds independientes: 10–19.
+- Input futuro: exactamente cero.
+- Memory y pressure del receptor: midpoint A/B común.
+- Radios: 0.50 a 1.30 en incrementos de 0.10.
+- Ángulos: 0° a 350° en incrementos de 10°.
+- Métrica primaria: accuracy de identidad usando la misma regla de affinity de continuación que V24.
+
+## Disciplina de confirmación
+
+Los puntos paramétricos y la regla de análisis no cambian respecto de V24. Las seeds aleatorias son disjuntas. La grilla más fina está fijada en el script antes de observar resultados V25.
+
+V25 está pensado como réplica, no como nueva pasada de optimización. Cualquier zoom local o selección de parámetros posterior debe tratarse como experimento exploratorio separado.
+
+## Límite de interpretación
+
+Una réplica exitosa respaldaría que este modelo computacional contiene una representación interna reproducible, manipulable causalmente y sensible a la geometría.
+
+No establecería consciencia, experiencia subjetiva ni sentiencia.
+
+</details>
+
+<a id="english"></a>
+
 # V25 — Confirmatory State Polar Replication
 
 ## Purpose
