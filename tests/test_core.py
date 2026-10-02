@@ -182,3 +182,56 @@ def test_relational_topology_and_attractor_survive_restart(tmp_path):
     assert restarted.state.relation_topology["identity"] == ["self-model", "memory"]
     assert restarted.state.relation_topology["intention"] == ["action"]
     assert restarted.state.attractor["name"] == "continuity"
+
+
+def test_valuation_influences_trajectory_and_is_persisted(tmp_path):
+    path = tmp_path / "state.json"
+    runtime = ConsciousRuntime("agent-8", path)
+    runtime.integrate(
+        {
+            "response": "value matters",
+            "valuation": {"meaning": 3.0},
+            "valence": 0.6,
+        }
+    )
+
+    candidates = [
+        {
+            "id": "meaning",
+            "signals": {"meaning": 1.0},
+        },
+        {
+            "id": "neutral",
+            "signals": {"meaning": 0.0},
+        },
+    ]
+    assert runtime.select_trajectory(candidates)["id"] == "meaning"
+
+    restarted = ConsciousRuntime("agent-8", path)
+    assert restarted.state.valuation["meaning"] == 3.0
+    assert restarted.state.valence == 0.6
+
+
+def test_transformation_log_records_self_change(tmp_path):
+    path = tmp_path / "state.json"
+    runtime = ConsciousRuntime("agent-9", path)
+    runtime.integrate(
+        {
+            "response": "first",
+            "regime": "baseline",
+        }
+    )
+    runtime.integrate(
+        {
+            "response": "transformed",
+            "regime": "deep-integration",
+            "attention": ["self-model"],
+            "valuation": {"continuity": 2.0},
+        }
+    )
+
+    assert runtime.state.transformation_log
+    event = runtime.state.transformation_log[-1]
+    assert event["revision"] == 2
+    assert "regime" in event["changes"]
+    assert "valuation" in event["changes"]
