@@ -39,11 +39,12 @@
       "docs/I5_23_CYCLIC_SHIFT_SWEEP.md",
       "docs/I5_24_GLOBAL_SHIFT_LAG_INTERACTION.md",
       "docs/I5_25_SHIFT_LAG_ORIENTATION_SYMMETRY.md",
-      "docs/I5_26_MATCHED_MAGNITUDE_SIGN_COUPLING.md"
+      "docs/I5_26_MATCHED_MAGNITUDE_SIGN_COUPLING.md",
+      "docs/I6_1_CAUSAL_SELF_MODEL_LOOP.md"
     ],
     "experimental_next": [
-      "I6.1 causal closure of the self-model",
-      "make self-model-dependent trajectory selection causally necessary, then lesion it while keeping input/information exposure matched",
+      "I6.2 persistent self-model and continuity loop",
+      "move causal self-model use into the persistent organism runtime and test restart/lesion/recovery without changing external inputs",
       "C0 campaign G2-G8"
     ]
   },
@@ -77,8 +78,8 @@
   },
   "rule": "ledger -> protocol -> experiment -> test -> workflow; never crawl recursively",
   "experimental_next": [
-    "I6.1 causal closure of the self-model",
-    "make self-model-dependent trajectory selection causally necessary, then lesion it while keeping input/information exposure matched",
+    "I6.2 persistent self-model and continuity loop",
+    "move causal self-model use into the persistent organism runtime and test restart/lesion/recovery without changing external inputs",
     "C0 campaign G2-G8"
   ]
 }

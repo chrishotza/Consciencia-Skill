@@ -319,3 +319,12 @@ The V47–V80 files retain their canonical identifiers and terminology for repro
 - Verified workflow **37066787603**, artifact **11253435918**.
 - Signed AUC null; absolute AUC and future action robust under matched-magnitude sign control.
 - Next: I6.1 causal closure of the self-model.
+
+
+## I6.1 — Causal closure of the self-model
+- Protocol: docs/I6_1_CAUSAL_SELF_MODEL_LOOP.md
+- Experiment: experiments/i6_1_causal_self_model_loop.py
+- Test: tests/test_i6_1_causal_self_model_loop.py
+- Verified workflow **37068670875**, artifact **11253574021**.
+- Primary causal self-model contrast −0.15766, p<0.00005; frozen-update contrast −0.06372, p<0.00005.
+- Next: I6.2 persistent self-model and continuity loop.
