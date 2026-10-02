@@ -204,6 +204,14 @@ jobs:
             --permutations 20000 \
             --out results/i5_24_global_shift_lag_interaction
 
+      - name: Run I5.25 shift x lag orientation symmetry
+        run: |
+          python experiments/i5_25_shift_lag_orientation_symmetry.py \
+            --input results/i5_23_cyclic_shift_sweep/summary.json \
+            --seed 20261025 \
+            --permutations 20000 \
+            --out results/i5_25_shift_lag_orientation_symmetry
+
       - name: Write run manifest
         run: |
           mkdir -p results
