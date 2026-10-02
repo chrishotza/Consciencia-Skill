@@ -507,7 +507,7 @@ La inferencia primaria se calcula por episodio compartido y contrasta:
 
 No se permite entrada semántica durante la sonda ni reentrenamiento externo.
 
-Estado: **implementado; ejecución pendiente de verificación**.
+Estado: **implementado; ejecución verificada**.
 
 
 ### C0.10 — Alineación temporal observador → política
@@ -540,3 +540,41 @@ Las inferencias primarias son contrastes firmados y emparejados por episodio par
 No se permite entrada semántica ni reentrenamiento externo durante la sonda.
 
 Estado: **implementado; ejecución pendiente de verificación**.
+
+
+### C0.9 — Resultado verificado
+
+Artefacto: GitHub Actions run **36944916227**, artifact **11200913836**, SHA256 **287f52b0074a8599be74ae0d36bfbbc930cdb892cb48d0cde96a5e649af5f3d6**.
+
+- readout donor-shuffle gap medio: **0.1975998565**;
+- acción NORMAL − DONOR: **0.0**, p **1.0**;
+- ganancia NORMAL − DONOR: **0.0**, p **1.0**;
+- estado siguiente NORMAL − DONOR: **0.0**, p **1.0**;
+- error máximo de intervención: **0.0**.
+
+Interpretación: **resultado nulo para la dependencia conductual de la correspondencia observador → política bajo este protocolo**. El readout del autoobservador sí cambia al cambiar de episodio, pero la política no cambió de acción ni de ganancia bajo el control probado. Por tanto, este protocolo no demuestra que la política utilice causalmente esa correspondencia.
+
+### C0.10 — Resultado verificado
+
+Artefacto: GitHub Actions run **36944920225**, artifact **11201258435**, SHA256 **7d24c622c02a331e2d3844037abccbd93365ea9de54149da77e68fc2ac631e75**.
+
+- brecha de predicción entre readout actual y lag intraepisódico: **0.1624331804**;
+- acción NORMAL − LAG: **0.0**, p **1.0**;
+- ganancia NORMAL − LAG: **0.0**, p **1.0**;
+- estado siguiente NORMAL − LAG: **0.0**, p **1.0**;
+- error máximo de intervención: **0.0**.
+
+Interpretación: **resultado nulo para la sensibilidad conductual a la alineación temporal del readout**. El readout del autoobservador cambia, pero la política permanece invariada bajo el control. Esto indica que la interfaz observador → política, tal como está implementada actualmente, no convierte esas diferencias de predicción en diferencias de selección.
+
+### C0.11 — Resultado verificado
+
+Artefacto: GitHub Actions run **36944924071**, artifact **11200748887**, SHA256 **d6f496ebe49b494a8af30932a30c73880a26981da079932d9ff8a9348b2d56cd**.
+
+- acción siguiente FACTUAL − FORCED: **+1.78125**, p **4.99975e-05**;
+- estado siguiente FACTUAL − FORCED: **−0.5770045054**, p **4.99975e-05**;
+- ganancia FACTUAL − FORCED: **+0.5278692817**, p **4.99975e-05**;
+- discrepancia absoluta media de acción siguiente: **1.78125**;
+- discrepancia absoluta media de estado: **0.5770045054**;
+- error máximo de intervención: **0.0**.
+
+Interpretación: **resultado positivo para mediación causal computacional bajo el protocolo probado**. Alterar únicamente la primera acción produjo una diferencia posterior de estado y una diferencia de la siguiente acción usando el mismo autoobservador y la misma autopólitica. Esto respalda la cadena operacional acción → estado interno → lectura/política → siguiente acción. No constituye evidencia de experiencia subjetiva.
