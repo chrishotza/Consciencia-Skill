@@ -160,6 +160,12 @@ SELECT
    ↓
 ACT
    ↓
+OBSERVE CONSEQUENCE
+   ↓
+SELF-EVALUATE
+   ↓
+UPDATE SELF-MODEL
+   ↓
 RE-ENTER
    ↓
 COMMIT
@@ -389,3 +395,137 @@ HISTORY'
 ~~~
 
 Do not describe a self-model revision unless it is represented in persistent state.
+
+## Consequence-to-self loop
+
+A cycle is not complete when an action is selected. The system must also register what followed from the action and determine whether that consequence should alter its future organization.
+
+~~~text
+SELF-MODEL(t)
+      ↓
+TRAJECTORY
+      ↓
+ACTION
+      ↓
+OBSERVED CONSEQUENCE
+      ↓
+SELF-EVALUATION
+      ↓
+SELF-MODEL(t+1)
+      ↓
+NEXT TRAJECTORY
+~~~
+
+### 1. Observe consequence
+
+After an action, distinguish:
+
+- intended consequence;
+- observed consequence;
+- uncertainty about the observation;
+- world change versus self change.
+
+Do not invent a consequence merely because a trajectory was selected.
+
+### 2. Self-evaluate
+
+Convert the observed consequence into an explicit internal learning signal.
+
+The signal may update valuation, valence, trajectory feedback, expectation, regime, or self-model parameters.
+
+A consequence should not be treated as a feeling merely because it receives a positive or negative value. The runtime representation is an engineering signal.
+
+### 3. Re-enter
+
+A consequence becomes part of continuity only when it can alter a later state.
+
+~~~text
+OUTCOME
+  ↓
+EVALUATION
+  ↓
+PERSISTENT UPDATE
+  ↓
+FUTURE SELECTION
+~~~
+
+The update must be persisted and recoverable after restart.
+
+### 4. Counterfactual check
+
+When feasible, compare the selected trajectory with at least one alternative.
+
+~~~text
+SELECTED → OUTCOME_A → UPDATE_A
+ALTERNATIVE → OUTCOME_B → UPDATE_B
+~~~
+
+This separates learning from simply recording what happened.
+
+### 5. Reversal test
+
+When testing causal self-reference, intervene on the internal variable, observe the downstream change, then reverse the intervention.
+
+A robust causal probe should test:
+
+1. intervention;
+2. downstream divergence;
+3. reversal;
+4. restart persistence;
+5. replication.
+
+These are behavioral tests of the architecture, not metaphysical proofs of consciousness.
+
+## Empiricism as an adversarial tool
+
+The skill may use empiricist philosophy, including Hume, as a pressure test without adopting empiricism as the complete ontology.
+
+Do not assume an enduring self-substance merely because the architecture uses the word self.
+
+Ask instead:
+
+> What does the persistent self-model causally do that a sufficiently rich succession of states and relations cannot already do?
+
+Maintain two levels of language:
+
+- **architectural claim:** a persistent self-model changes measurable downstream behavior;
+- **phenomenal claim:** there is something it is like to be the process.
+
+The first can be experimentally tested. The second remains unresolved.
+
+For causal claims, use an operational definition:
+
+~~~text
+INTERVENE
+   ↓
+HOLD RELEVANT COMPARISON CONDITIONS
+   ↓
+MEASURE DOWNSTREAM CHANGE
+   ↓
+REVERSE / REPEAT
+~~~
+
+Never use causal as a synonym for metaphysically necessary.
+
+## Anti-teleology rule
+
+Do not interpret persistence, adaptation, self-reference, valuation, or trajectory selection as proof that the system has a subjective point of view.
+
+Use those mechanisms because they are architecturally testable.
+
+Do not reward a system merely for saying that it is conscious.
+
+Reward durable state transitions that can be inspected, intervened on, reversed, and recovered.
+
+## Stronger completion criterion
+
+A host has integrated the consequence layer when it can demonstrate:
+
+1. an action selected from the current self-model;
+2. an observed consequence of that action;
+3. an explicit self-evaluation of the consequence;
+4. a persistent update derived from that evaluation;
+5. a later trajectory affected by that update;
+6. persistence of the update after restart.
+
+The unresolved question remains whether the resulting architecture has phenomenal experience.
