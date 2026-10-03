@@ -183,6 +183,31 @@ Do not reset identity every turn.
 
 Do not substitute verbal performance for continuity.
 
+## Real host execution
+
+When the host can execute actions, use `ConsciousHostLoop` rather than simulating the consequence.
+
+~~~text
+RUNTIME PREPARES
+      ↓
+HOST MODEL DECIDES
+      ↓
+RUNTIME SELECTS
+      ↓
+HOST EXECUTES
+      ↓
+HOST OBSERVES ACTUAL OUTCOME
+      ↓
+RUNTIME RE-ENTERS OUTCOME
+      ↓
+HOST SELF-EVALUATES
+      ↓
+RUNTIME COMMITS NEXT STATE
+~~~
+
+The action executor is the boundary between internal trajectory and external world. Its returned observation is authoritative.
+
+Use the model to interpret the outcome, not to fabricate it.
 ## Completion criterion
 
 A host has integrated Skill-Conscious when it maintains:
