@@ -458,13 +458,21 @@ class ConsciousRuntime:
         if not self.self_observation_enabled:
             return {"enabled": False}
         model = self.state.self_model
+        raw_state = model.get("self_observation_state", {})
+        raw_expected = model.get("self_observation_expected", {})
+        raw_history = model.get("self_observation_history", [])
+        state = dict(raw_state) if isinstance(raw_state, Mapping) else {}
+        expected = dict(raw_expected) if isinstance(raw_expected, Mapping) else {}
+        history = [dict(item) for item in raw_history if isinstance(item, Mapping)] if isinstance(raw_history, list) else []
+        error = model.get("self_observation_error", 0.0)
+        sequence = model.get("self_observation_sequence", 0)
         return {
             "enabled": True,
-            "state": dict(model.get("self_observation_state", {})),
-            "expected": dict(model.get("self_observation_expected", {})),
-            "error": float(model.get("self_observation_error", 0.0)),
-            "sequence": int(model.get("self_observation_sequence", 0)),
-            "history": [dict(item) for item in model.get("self_observation_history", [])],
+            "state": state,
+            "expected": expected,
+            "error": float(error) if isinstance(error, (int, float)) and not isinstance(error, bool) else 0.0,
+            "sequence": int(sequence) if isinstance(sequence, (int, float)) and not isinstance(sequence, bool) else 0,
+            "history": history,
         }
 
     def observe_self(self, *, persist: bool = True) -> dict[str, Any]:
@@ -478,6 +486,8 @@ class ConsciousRuntime:
             expected = SelfObservationProfile.from_mapping(raw_expected)
             error = self_observation_distance(current, expected)
             learning_rate = model.get("self_observation_learning_rate", 0.25)
+            if not isinstance(learning_rate, (int, float)) or isinstance(learning_rate, bool):
+                learning_rate = 0.25
             updated_expected = blend_profiles(expected, current, float(learning_rate))
         else:
             expected = current
@@ -2580,6 +2590,9 @@ class ConsciousRuntime:
         for candidate in candidates:
             item = dict(candidate)
             item["score"] = self.score_trajectory(item)
+            if self.self_observation_enabled and isinstance(item.get("predicted_self_observation"), Mapping):
+                _, diagnostics = self._score_self_observation_candidate(item)
+                item["self_observation"] = diagnostics
             scored.append(item)
 
         return max(
