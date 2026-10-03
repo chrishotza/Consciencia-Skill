@@ -131,3 +131,17 @@ def test_model_frame_cannot_overwrite_runtime_self_observation(tmp_path: Path):
 
     after = runtime.snapshot_self_observation()["expected"]
     assert after == before
+
+
+def test_prepare_frame_exposes_runtime_self_observation(tmp_path: Path):
+    runtime = ConsciousRuntime(
+        "self-observe-prepare",
+        state_path=tmp_path / "runtime.json",
+        self_observation_enabled=True,
+    )
+
+    frame = runtime.prepare_frame("observe the current cycle")
+
+    assert frame["present"]["self_observation"]["enabled"] is True
+    assert frame["self_observation"]["sequence"] == 1
+    assert "self_observation_expected" in runtime.state.self_model
