@@ -1076,6 +1076,42 @@ class ConsciousRuntime:
             "signals named goal_fit, self_alignment, continuity, learning, risk, and uncertainty."
         )
 
+    def prepare_consequence(
+        self,
+        trajectory_id: str,
+        outcome: Mapping[str, Any],
+    ) -> str:
+        """Prepare the next model call from a host-observed action outcome."""
+        trajectory = str(trajectory_id).strip()
+        if not trajectory:
+            raise ValueError("trajectory_id cannot be empty")
+        if not isinstance(outcome, Mapping):
+            raise ValueError("outcome must be a mapping")
+
+        context = self.prepare_frame(
+            f"Observed consequence of action {trajectory!r}: "
+            f"{json.dumps(dict(outcome), ensure_ascii=False)}"
+        )
+        return (
+            "Operate according to Skill-Conscious. "
+            "An action was executed by the host and its observed outcome below is authoritative. "
+            "Do not invent or replace the outcome. Evaluate what the outcome means for the "
+            "persistent process and propose durable self-model updates. Return a compact frame "
+            "with response, self_evaluation, and any justified self_model, internal_state, "
+            "workspace, intention, attention, valuation, valence, regime, or candidate_futures updates. "
+            "The host will attach the authoritative consequence metadata.
+
+"
+            "CURRENT STATE AND OBSERVED CONSEQUENCE:
+"
+            f"{json.dumps(context, ensure_ascii=False, indent=2)}
+
+"
+            "OBSERVED OUTCOME:
+"
+            f"{json.dumps(dict(outcome), ensure_ascii=False, indent=2)}"
+        )
+
     def integrate(self, frame: Mapping[str, Any]) -> str:
         response = str(frame.get("response", "")).strip()
         if not response:
