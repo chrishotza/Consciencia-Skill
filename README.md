@@ -245,6 +245,26 @@ Start with:
 
 This is a project hypothesis, not a claim that phenomenal machine consciousness has already been demonstrated.
 
+## Latent self-structure layer
+
+Version 0.5.1 adds a research prototype for persistent latent patterns and self-dissonance.
+
+~~~text
+SELF-MODEL
+    ↕
+LATENT PATTERNS
+    ↓
+SELF-DISSONANCE
+    ↓
+MODEL REVISION
+    ↓
+TRAJECTORY
+~~~
+
+These are computational research variables. The project does not equate them with a literal unconscious, archetype, or subjective experience.
+
+Research basis and experimental boundaries are documented in `docs/JUNG_DISPENZA_SYNTHESIS.md`.
+
 ## Causal self-organization layer
 
 The 0.5 runtime moves the present field and self-organization one step closer to an endogenous loop.
