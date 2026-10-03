@@ -48,11 +48,12 @@ def seed_dynamic_runtime(runtime: ConsciousRuntime) -> None:
         evidence_id="native-observation",
         persist=False,
     )
-    runtime.dynamic_core.record_recovery(
+    runtime.record_experience_recovery(
         baseline,
         profile(0.35),
         profile(0.01),
         evidence_id="native-recovery",
+        persist=False,
     )
     runtime._restore_dynamic_core_state()
 
@@ -113,7 +114,6 @@ def test_native_dynamic_state_is_restart_persistent(tmp_path: Path):
     second = restarted.select_trajectory(candidates())
 
     assert second["id"] == "preserve"
-    assert restarted.self_model if False else True
     assert restarted.state.self_model["experience_attractor_sequence"] > 0
     assert restarted.state.self_model["experience_field_sequence"] > 0
 
