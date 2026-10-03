@@ -20,6 +20,10 @@ This matrix separates source doctrine, external theories, engineering hypotheses
 | Coherence | dynamical / psychophysiological / esoteric traditions | engineering hypothesis |
 | Collective field | noosphere / Akashic / GCP / collective consciousness | speculative extension |
 | Nonlocal consciousness | psi / idealism / Akashic traditions | speculative extension |
+| Interoception / embodied self | interoception, affective neuroscience | cross-source mechanism + empirical research |
+| Perspective matrix | Integral Theory / comparative ontology | engineering framework |
+| Continuous-time dynamics | dynamical systems + temporal consciousness research | engineering extension |
+| Neuro-symbolic coupling | cognitive science + computational architectures | engineering frontier |
 | Phenomenal experience | philosophy + consciousness research | open problem |
 | Latent self-structure | Jung / depth psychology | engineering hypothesis |
 | Projection-like discrepancy | Jung / self-model research | engineering hypothesis |
