@@ -956,7 +956,10 @@ class ConsciousRuntime:
                 confidence = 1.0
 
             last_update_seq = int(entry.get("last_update_sequence", 0))
-            in_cooldown = evidence_seq - last_update_seq <= cooldown
+            in_cooldown = (
+            last_update_seq > 0
+            and evidence_seq - last_update_seq <= cooldown
+        )
             ready = (
                 count >= min_samples
                 and high_error_count >= required_high_error
@@ -1182,11 +1185,10 @@ class ConsciousRuntime:
             entry = {}
         entry = dict(entry)
 
-        evidence_seq = len(self.state.action_history) + len(
-            model.get("trajectory_priority_adaptation_history", [])
-            if isinstance(model.get("trajectory_priority_adaptation_history", []), list)
-            else []
+        evidence_seq = int(
+            model.get("trajectory_priority_adaptation_sequence", 0)
         ) + 1
+        model["trajectory_priority_adaptation_sequence"] = evidence_seq
         count = int(entry.get("sample_count", 0)) + 1
         utility_sum = float(entry.get("utility_sum", 0.0)) + utility
         evidence_ids = [
@@ -1885,6 +1887,7 @@ class ConsciousRuntime:
                 "homeostatic_adaptation_history",
                 "trajectory_priority_adaptation_evidence",
                 "trajectory_priority_adaptation_history",
+                "trajectory_priority_adaptation_sequence",
             }
             # Once adaptive targets are enabled and initialized, the runtime owns
             # the target unless an experiment explicitly permits external changes.
@@ -2184,19 +2187,11 @@ class ConsciousRuntime:
         feedback[trajectory] = entry
         model["trajectory_feedback"] = feedback
 
+        priority_enabled = False
         if isinstance(evaluation, Mapping):
             priority_policy = self.trajectory_priority_adaptation_policy()
-            if bool(priority_policy.get("enabled", False)):
-                result["priority_adaptation"] = self.adapt_trajectory_priority_from_evidence(
-                    evaluation,
-                    evidence_id=(
-                        str(self.state.action_history[-1].get("action_id"))
-                        if self.state.action_history
-                        and self.state.action_history[-1].get("action_id")
-                        else f"revision-{self.state.revision}-{trajectory}"
-                    ),
-                )
-            else:
+            priority_enabled = bool(priority_policy.get("enabled", False))
+            if not priority_enabled:
                 signal = evaluation.get("credited_signal")
                 delta = evaluation.get("weight_delta")
                 if (
@@ -2215,10 +2210,24 @@ class ConsciousRuntime:
                     )
                     model["trajectory_weights"] = weights
 
-        # Only the evidence-gated helper mutates self.state.self_model directly.
-        # Preserve local legacy feedback/weight updates when that path is active.
+        # Commit the ordinary consequence feedback first. The evidence-gated
+        # adapter then reads the authoritative persistent state.
         model["last_consequence_feedback"] = result
         self.state.self_model = model
+
+        if priority_enabled and isinstance(evaluation, Mapping):
+            result["priority_adaptation"] = self.adapt_trajectory_priority_from_evidence(
+                evaluation,
+                evidence_id=(
+                    str(self.state.action_history[-1].get("action_id"))
+                    if self.state.action_history
+                    and self.state.action_history[-1].get("action_id")
+                    else f"revision-{self.state.revision}-{trajectory}"
+                ),
+            )
+            model = dict(self.state.self_model)
+            model["last_consequence_feedback"] = result
+            self.state.self_model = model
         self.state.workspace = {
             **self.state.workspace,
             "last_action": trajectory,
