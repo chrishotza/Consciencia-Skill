@@ -27,14 +27,14 @@ Make self-model changes alter future trajectory selection instead of functioning
 **Implemented: causal trajectory selection.**
 
 ### 5. Integrated present
-Unify world-state, self-state, relevant memory, goals, uncertainty, and candidate futures.
+Unify world-state, self-state, relevant memory, goals, uncertainty, attention, salience, layers, coherence, topology, and candidate futures.
 
-**Next frontier.**
+**Implemented: endogenous present-field construction.**
 
 ### 6. Agency
 Make intention and self-state participate explicitly in action selection.
 
-**Next frontier.**
+**Current frontier.**
 
 ### 7. Portable interface
 Make the Skill drop into other AI stacks through a small host contract.
