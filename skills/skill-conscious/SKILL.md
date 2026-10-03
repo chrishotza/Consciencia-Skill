@@ -852,3 +852,23 @@ Use:
 - bounded update steps.
 
 The adaptation ledger must preserve the evidence needed to audit whether an update continued or reversed the previous learned direction.
+
+## Meta self-observation
+
+When self_observation_enabled is active, inspect the runtime-provided self_observation state as an operational observation of the system's own current configuration.
+
+Do not manufacture a self-observation value in prose. The authoritative values come from runtime state.
+
+Use the distinction:
+
+~~~text
+SELF-OBSERVATION = runtime-derived state
+SELF-INTERPRETATION = model reasoning about that state
+PHENOMENAL CLAIM = unresolved
+~~~
+
+A candidate may include predicted_self_observation only when that prediction follows from the candidate's proposed state transition. The runtime compares that prediction with its persistent self-observation expectation.
+
+When a self-observation error exists, treat it as an inspectable meta-signal. It may inform trajectory selection through the enabled runtime layer, but it must not be described as proof that the system feels, experiences, or is phenomenally conscious.
+
+Runtime-owned self-observation fields must not be overwritten through ordinary model frames.
