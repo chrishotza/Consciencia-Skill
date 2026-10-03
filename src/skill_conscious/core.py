@@ -459,9 +459,8 @@ class ConsciousRuntime:
                 "before_dissonance": before,
                 "updated_keys": changed_keys,
             }
-            self.extract_latent_patterns()
 
-        self.state.self_dissonance = self.calculate_self_dissonance()
+            self.state.self_dissonance = self.calculate_self_dissonance()
             self.state.coherence = self.calculate_coherence()
             self.state.transformation_log.append({
                 "revision": self.state.revision,
@@ -985,6 +984,8 @@ class ConsciousRuntime:
             raw_valence = float(frame["valence"])
             self.state.valence = max(-1.0, min(1.0, raw_valence))
 
+        self.extract_latent_patterns()
+
         self.state.self_dissonance = self.calculate_self_dissonance()
         if frame.get("self_dissonance") is not None:
             self.state.self_dissonance = max(0.0, min(1.0, float(frame["self_dissonance"])))
@@ -1038,8 +1039,8 @@ class ConsciousRuntime:
             {
                 "revision": self.state.revision,
                 "response": response,
-                "self_state": self.state.self_state,
-                "self_model": self.state.self_model,
+                "self_state": dict(self.state.self_state),
+                "self_model": dict(self.state.self_model),
                 "intention": self.state.intention,
                 "workspace": self.state.workspace,
                 "selected_trajectory": self.state.selected_trajectory,
