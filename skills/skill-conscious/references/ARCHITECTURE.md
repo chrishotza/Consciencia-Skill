@@ -82,6 +82,30 @@ result = loop.step("current external situation")
 
 `execute_action` is authoritative for what actually happened. The model evaluates that outcome but does not invent or replace it.
 
+## Action boundary
+
+The host bridge now persists an explicit action lifecycle:
+
+~~~text
+SELECTED TRAJECTORY
+        ↓
+PENDING ACTION RECEIPT
+        ↓
+HOST EXECUTION
+        ↓
+COMPLETED / FAILED RECEIPT
+        ↓
+OBSERVED CONSEQUENCE
+        ↓
+SELF-EVALUATION
+        ↓
+NEXT STATE
+~~~
+
+`begin_action()` commits intent to cross the environment boundary.
+`complete_action()` records what actually happened.
+
+This prevents intention, execution, and consequence from being collapsed into one model-generated object.
 ## Persistence
 
 Persist at minimum:
