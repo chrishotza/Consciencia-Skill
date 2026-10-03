@@ -163,3 +163,31 @@ RE-ENTRY
 ~~~
 
 The extension remains an implementation hypothesis. It establishes testable state dynamics, not phenomenal consciousness.
+
+
+
+## Runtime 0.7 — self-model adaptation
+
+The model now distinguishes recurrence detection from self-model adaptation.
+
+An endogenous latent pattern may update a bounded `learned_self_state` only when new recurrence evidence arrives. The runtime also records `latent_tendencies`, making the origin of the learned self-model inspectable.
+
+The causal extension is:
+
+~~~text
+SELF-STATE HISTORY
+      ↓
+RECURRENCE
+      ↓
+LATENT PATTERN
+      ↓
+SELF-MODEL'
+      ↓
+SELF-ALIGNMENT
+      ↓
+REGIME / TRAJECTORY
+~~~
+
+`expected_self_state` remains separate from `learned_self_state`. The former expresses an explicit expectation used for self-dissonance; the latter is a learned estimate derived from recurrent internal state.
+
+This separates architectural self-model adaptation from claims about phenomenal experience.
