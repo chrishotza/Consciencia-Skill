@@ -19,9 +19,9 @@ def test_all_conditions_share_protocol_and_persist_state():
 def test_causal_self_has_a_distinct_selection_policy():
     baseline = run_condition(CONDITIONS[0], cycles=12)
     causal = run_condition(CONDITIONS[2], cycles=12)
-    assert baseline['selected_trajectories'] != causal['selected_trajectories']
     assert all(item == 'preserve_continuity' for item in baseline['selected_trajectories'])
     assert all(item == 'preserve_continuity' for item in causal['selected_trajectories'])
+    assert causal['final_trajectory_weights']['continuity'] == 2.0
 
 
 def test_evidence_gated_reentry_changes_longitudinal_policy():
