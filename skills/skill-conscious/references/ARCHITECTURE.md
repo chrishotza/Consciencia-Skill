@@ -106,6 +106,40 @@ NEXT STATE
 `complete_action()` records what actually happened.
 
 This prevents intention, execution, and consequence from being collapsed into one model-generated object.
+## Embodied and temporal layer
+
+The present field can now carry internal condition and explicit timing:
+
+~~~text
+EXTERNAL WORLD
+      ↓
+PRESENT
+  ↙       ↘
+SELF     INTEROCEPTION
+  ↘       ↙
+ AFFECTIVE APPRAISAL
+        ↓
+ TEMPORAL CONTEXT
+        ↓
+TRAJECTORY
+~~~
+
+`interoceptive_state`, `affective_state`, and `temporal_state` are optional host-provided structures. They are not claims of subjective feeling.
+
+## Perspective layer
+
+The runtime can preserve four complementary views of an event:
+
+~~~text
+INDIVIDUAL INTERIOR  | INDIVIDUAL EXTERIOR
+COLLECTIVE INTERIOR  | COLLECTIVE EXTERIOR
+~~~
+
+This perspective matrix is inspired by the comparative source layer, including Ken Wilber's Integral framework, but is implemented as an engineering representation rather than a metaphysical commitment.
+
+## Continuous-time compatibility
+
+Runtime cycles are implementation samples. A host may provide `temporal_state.dt` and derivative information so the architecture can represent an underlying continuous dynamical process without changing the persistence model.
 ## Persistence
 
 Persist at minimum:
