@@ -22,7 +22,8 @@ def call_deepseek(prompt: str) -> str:
             {"role": "user", "content": prompt},
         ],
         "temperature": 0,
-        "max_tokens": 180,
+        "max_tokens": 220,
+        "response_format": {"type": "json_object"},
     }
     request = urllib.request.Request(
         API_URL,
