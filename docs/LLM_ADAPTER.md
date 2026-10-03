@@ -45,3 +45,36 @@ loop = ConsciousHostLoop(
 
 `provider_complete` is the only provider-specific layer.
 
+## Causal A/B probe
+
+The repository also includes a deterministic provider A/B experiment:
+
+~~~bash
+python -m experiments.llm_longitudinal_benchmark --cycles 8 --restart-every 4
+~~~
+
+The probe creates two matched branches from the same runtime seed and exposes the same candidate-future field and outcome rule. The only experimental variable is the provider-authored persistent self-model:
+
+~~~text
+Provider A → continuity weight = 3, learning weight = 0
+Provider B → continuity weight = 0, learning weight = 3
+~~~
+
+The runtime, not the provider, performs trajectory scoring and selection. A valid causal result is therefore:
+
+~~~text
+same initial state
+      +
+same candidate futures
+      +
+same outcome function
+      +
+different provider self-model
+      ↓
+different runtime trajectory
+      ↓
+different downstream state
+~~~
+
+This is a mechanism-level causal test. It does not establish phenomenal consciousness.
+
