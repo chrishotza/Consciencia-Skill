@@ -615,7 +615,12 @@ class ConsciousRuntime:
         history = model.get("metacognitive_history", [])
         if not isinstance(history, list):
             history = []
-        history = [*history, dict(trace)][-self.history_limit:]
+        history = [dict(item) for item in history if isinstance(item, Mapping)]
+        if history and int(history[-1].get("sequence", -1)) == sequence:
+            history[-1] = dict(trace)
+        else:
+            history.append(dict(trace))
+        history = history[-self.history_limit:]
         model["metacognitive_trace"] = dict(trace)
         model["metacognitive_sequence"] = sequence
         model["metacognitive_history"] = history
@@ -2907,6 +2912,7 @@ class ConsciousRuntime:
 
         candidate_futures = frame.get("candidate_futures")
         selected = frame.get("selected_trajectory")
+        selected_from_host = selected is not None
 
         previous_snapshot = self.state.to_dict()
         self.state.revision += 1
@@ -3147,10 +3153,14 @@ class ConsciousRuntime:
         if selected is not None:
             if not isinstance(selected, Mapping):
                 raise ValueError("frame.selected_trajectory must be a mapping")
-            self.state.selected_trajectory = dict(selected)
-            raw_trace = selected.get("metacognition")
-            if isinstance(raw_trace, Mapping):
-                self._persist_metacognitive_trace(raw_trace)
+            selected_copy = dict(selected)
+            if selected_from_host:
+                selected_copy.pop("metacognition", None)
+            self.state.selected_trajectory = selected_copy
+            if not selected_from_host:
+                raw_trace = selected_copy.get("metacognition")
+                if isinstance(raw_trace, Mapping):
+                    self._persist_metacognitive_trace(raw_trace)
         else:
             self.state.selected_trajectory = None
 
