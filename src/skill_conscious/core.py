@@ -478,6 +478,57 @@ class ConsciousRuntime:
             "updated_keys": changed_keys,
         }
 
+    def generate_regime_candidates(self) -> list[dict[str, Any]]:
+        uncertainty = self.state.self_model.get("uncertainty", {})
+        uncertainty_values: list[float] = []
+        if isinstance(uncertainty, Mapping):
+            for value in uncertainty.values():
+                if isinstance(value, (int, float)) and not isinstance(value, bool):
+                    uncertainty_values.append(
+                        max(0.0, min(1.0, abs(float(value))))
+                    )
+
+        uncertainty_level = (
+            sum(uncertainty_values) / len(uncertainty_values)
+            if uncertainty_values
+            else 0.0
+        )
+        dissonance = self.state.self_dissonance
+        latent = self.latent_pattern_score()
+        coherence = self.calculate_coherence()
+
+        return [
+            {
+                "id": "baseline",
+                "signals": {
+                    "coherence": coherence,
+                    "stability": 1.0 - dissonance,
+                    "uncertainty": 1.0 - uncertainty_level,
+                    "latent_pattern": latent * 0.25,
+                },
+            },
+            {
+                "id": "exploration",
+                "signals": {
+                    "coherence": coherence * 0.7,
+                    "stability": 0.4 * (1.0 - dissonance),
+                    "uncertainty": uncertainty_level,
+                    "learning": 1.0,
+                },
+            },
+            {
+                "id": "integration",
+                "signals": {
+                    "coherence": coherence,
+                    "stability": 0.5 * (1.0 - dissonance),
+                    "uncertainty": 1.0 - uncertainty_level,
+                    "self_dissonance": dissonance,
+                    "latent_pattern": latent,
+                    "learning": 0.8,
+                },
+            },
+        ]
+
     def topology_diagnostics(self) -> dict[str, float | int]:
         nodes = set(self.state.relation_topology)
         edges = 0
