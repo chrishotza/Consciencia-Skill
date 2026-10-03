@@ -369,3 +369,80 @@ def test_integrate_consequence_updates_next_cycle(tmp_path):
     restarted = ConsciousRuntime("agent-integrated-consequence", path)
     assert restarted.state.selected_trajectory["id"] == "learn"
     assert restarted.state.history[-1]["self_evaluation"]["utility"] == -1.0
+
+
+def test_conscious_host_executes_action_and_reenters_observed_consequence(tmp_path):
+    from skill_conscious import ConsciousHostLoop
+
+    path = tmp_path / "host.json"
+    runtime = ConsciousRuntime("host-agent", path)
+    calls = {"model": 0, "actions": 0}
+
+    def model(prompt):
+        calls["model"] += 1
+        if calls["model"] == 1:
+            return {
+                "response": "choose learn",
+                "self_model": {
+                    "trajectory_weights": {
+                        "continuity": 0.0,
+                        "learning": 3.0,
+                    }
+                },
+                "candidate_futures": [
+                    {
+                        "id": "continue",
+                        "signals": {"continuity": 1.0, "learning": 0.0},
+                    },
+                    {
+                        "id": "learn",
+                        "signals": {"continuity": 0.0, "learning": 1.0},
+                    },
+                ],
+            }
+        return {
+            "response": "the observed action changed my evaluation",
+            "self_evaluation": {
+                "utility": 0.8,
+                "credited_signal": "learning",
+                "weight_delta": 0.5,
+            },
+            "candidate_futures": [
+                {
+                    "id": "continue",
+                    "signals": {"continuity": 1.0, "learning": 0.0},
+                },
+                {
+                    "id": "learn",
+                    "signals": {"continuity": 0.0, "learning": 1.0},
+                },
+            ],
+        }
+
+    def execute_action(trajectory, snapshot):
+        calls["actions"] += 1
+        assert trajectory["id"] == "learn"
+        assert snapshot["selected_trajectory"]["id"] == "learn"
+        return {
+            "status": "success",
+            "state_change": {"focus": 0.2},
+        }
+
+    loop = ConsciousHostLoop(
+        runtime,
+        model=model,
+        execute_action=execute_action,
+    )
+    result = loop.step("perform the next task")
+
+    assert calls["model"] == 2
+    assert calls["actions"] == 1
+    assert result["action_executed"] is True
+    assert result["consequence"]["status"] == "success"
+    assert runtime.state.self_model["trajectory_feedback"]["learn"]["count"] == 1
+    assert runtime.state.self_model["trajectory_weights"]["learning"] == 3.5
+    assert runtime.state.history[-1]["consequence"]["state_change"]["focus"] == 0.2
+
+    restarted = ConsciousRuntime("host-agent", path)
+    assert restarted.state.self_model["trajectory_feedback"]["learn"]["count"] == 1
+    assert restarted.state.history[-1]["consequence_trajectory"] == "learn"
