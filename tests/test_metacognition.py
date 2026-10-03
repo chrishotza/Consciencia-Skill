@@ -141,3 +141,22 @@ def test_host_selected_trajectory_cannot_persist_forged_metacognition(tmp_path: 
         "score": 999.0,
     }
     assert "metacognitive_trace" not in runtime.state.self_model
+
+
+def test_metacognitive_trace_survives_restart(tmp_path: Path):
+    state_path = tmp_path / "runtime.json"
+    runtime = ConsciousRuntime("meta-restart", state_path=state_path)
+    runtime.integrate(
+        {
+            "response": "cycle",
+            "candidate_futures": [
+                {"id": "preserve", "signals": {"goal_fit": 0.8}},
+                {"id": "explore", "signals": {"goal_fit": 0.4}},
+            ],
+        }
+    )
+
+    trace = dict(runtime.state.self_model["metacognitive_trace"])
+    restarted = ConsciousRuntime("meta-restart", state_path=state_path)
+
+    assert restarted.state.self_model["metacognitive_trace"] == trace
