@@ -223,6 +223,174 @@ class ConsciousRuntime:
             return configured
         return self.learn_latent_patterns
 
+    def extract_latent_patterns(self) -> list[dict[str, Any]]:
+        if not self.latent_pattern_learning_enabled():
+            return []
+
+        current = self._numeric_state(self.state.self_state)
+        if not current:
+            return []
+
+        history_entries = [
+            entry
+            for entry in self.state.history
+            if isinstance(entry, Mapping)
+            and isinstance(entry.get("self_state"), Mapping)
+        ]
+
+        # Existing patterns remain persistent, but their activation depends on
+        # similarity to the current self-state and decays when not reactivated.
+        for key, pattern in list(self.state.latent_patterns.items()):
+            prototype = pattern.get("prototype", {})
+            similarity = self._numeric_similarity(current, prototype)
+            activation = pattern.get("activation", 0.0)
+            previous_activation = (
+                max(0.0, min(1.0, float(activation)))
+                if isinstance(activation, (int, float)) and not isinstance(activation, bool)
+                else 0.0
+            )
+            if similarity >= 0.75:
+                updated_activation = 0.85 * previous_activation + 0.15 * similarity
+                pattern["last_activation_revision"] = self.state.revision
+            else:
+                updated_activation = 0.95 * previous_activation
+            pattern["activation"] = round(
+                max(0.0, min(1.0, updated_activation)),
+                6,
+            )
+            self.state.latent_patterns[key] = pattern
+
+        # A latent structure is only formed after recurrence. A gap of two
+        # revisions prevents ordinary adjacent transitions from being learned
+        # as persistent motifs.
+        best_match: tuple[float, Mapping[str, Any]] | None = None
+        for entry in history_entries:
+            revision = entry.get("revision")
+            if not isinstance(revision, int):
+                continue
+            if self.state.revision - revision < 2:
+                continue
+            similarity = self._numeric_similarity(current, entry["self_state"])
+            if similarity < 0.85:
+                continue
+            if best_match is None or similarity > best_match[0]:
+                best_match = (similarity, entry)
+
+        events: list[dict[str, Any]] = []
+        if best_match is not None:
+            similarity, entry = best_match
+            previous_state = self._numeric_state(entry["self_state"])
+            shared_keys = sorted(set(current).intersection(previous_state))
+            if shared_keys:
+                existing_key = None
+                existing_similarity = 0.0
+                for key, pattern in self.state.latent_patterns.items():
+                    candidate_similarity = self._numeric_similarity(
+                        current,
+                        pattern.get("prototype", {}),
+                    )
+                    if (
+                        candidate_similarity >= 0.85
+                        and candidate_similarity > existing_similarity
+                    ):
+                        existing_key = key
+                        existing_similarity = candidate_similarity
+
+                if existing_key is None:
+                    signature = "|".join(shared_keys)
+                    digest = hashlib.sha256(
+                        signature.encode("utf-8")
+                    ).hexdigest()[:12]
+                    existing_key = f"latent-{digest}"
+                    self.state.latent_patterns[existing_key] = {
+                        "source": "endogenous",
+                        "activation": 0.0,
+                        "evidence_count": 0,
+                        "prototype": {
+                            key: round(
+                                (float(previous_state[key]) + float(current[key])) / 2.0,
+                                6,
+                            )
+                            for key in shared_keys
+                        },
+                        "contexts": [],
+                        "formed_revision": self.state.revision,
+                    }
+                    events.append({
+                        "type": "latent_pattern_formed",
+                        "pattern": existing_key,
+                        "match_similarity": similarity,
+                    })
+
+                pattern = self.state.latent_patterns[existing_key]
+                prototype = self._numeric_state(pattern.get("prototype", {}))
+                updated_prototype = dict(prototype)
+                for key in shared_keys:
+                    if key in prototype:
+                        updated_prototype[key] = round(
+                            0.75 * prototype[key] + 0.25 * current[key],
+                            6,
+                        )
+                    else:
+                        updated_prototype[key] = round(float(current[key]), 6)
+                pattern["prototype"] = updated_prototype
+
+                evidence_count = pattern.get("evidence_count", 0)
+                if not isinstance(evidence_count, int):
+                    evidence_count = 0
+                evidence_count += 1
+                pattern["evidence_count"] = evidence_count
+                pattern["activation"] = round(
+                    max(
+                        float(pattern.get("activation", 0.0)),
+                        min(
+                            1.0,
+                            0.5 * similarity
+                            + 0.1 * min(evidence_count, 5),
+                        ),
+                    ),
+                    6,
+                )
+
+                context = {
+                    "revision": self.state.revision,
+                    "matched_revision": entry.get("revision"),
+                    "regime": self.state.regime,
+                    "intention": self.state.intention,
+                }
+                contexts = [
+                    item
+                    for item in pattern.get("contexts", [])
+                    if isinstance(item, Mapping)
+                ]
+                if context not in contexts:
+                    contexts.append(context)
+                pattern["contexts"] = contexts[-8:]
+                pattern["last_matched_revision"] = self.state.revision
+                pattern["source"] = "endogenous"
+                events.append({
+                    "type": "latent_pattern_reinforced",
+                    "pattern": existing_key,
+                    "match_similarity": similarity,
+                    "evidence_count": evidence_count,
+                })
+
+        if len(self.state.latent_patterns) > self.latent_pattern_limit:
+            ranked = sorted(
+                self.state.latent_patterns.items(),
+                key=lambda item: (
+                    float(item[1].get("activation", 0.0)),
+                    int(item[1].get("evidence_count", 0)),
+                    str(item[0]),
+                ),
+                reverse=True,
+            )
+            self.state.latent_patterns = dict(
+                ranked[: self.latent_pattern_limit]
+            )
+
+        return events
+
     def calculate_self_dissonance(self) -> float:
         expected = self.state.self_model.get("expected_self_state", {})
         if not isinstance(expected, Mapping):
