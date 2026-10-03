@@ -27,4 +27,8 @@ PRIMITIVES = (
     "trajectory_selection",
     "latent_patterns",
     "self_dissonance",
+    "interoceptive_state",
+    "affective_state",
+    "temporal_state",
+    "perspectives",
 )
