@@ -17,8 +17,8 @@ def test_runtime_selection_returns_auditable_metacognitive_breakdown(tmp_path: P
     selected = runtime.select_trajectory(candidates)
 
     assert selected["id"] == "preserve"
-    assert selected["_metacognitive_breakdown"]["signal_contributions"]["goal_fit"] == 1.6
-    assert selected["_metacognitive_breakdown"]["weights"]["goal_fit"] == 2.0
+    assert selected["metacognition"]["selected_signal_contributions"]["goal_fit"] == 1.6
+    assert selected["metacognition"]["valuation_weights"]["goal_fit"] == 2.0
 
 
 def test_integrate_persists_metacognitive_trace(tmp_path: Path):
@@ -95,4 +95,25 @@ def test_action_completion_closes_metacognitive_trace(tmp_path: Path):
     trace = runtime.state.self_model["metacognitive_trace"]
     assert receipt["action_id"] == trace["action"]["action_id"]
     assert trace["outcome"]["observed_change"] == "changed"
-    assert "selected_trajectory" in trace["state_delta"]
+    assert "pending_action" in trace["state_delta"]
+
+
+def test_self_observation_sees_metacognitive_trace(tmp_path: Path):
+    runtime = ConsciousRuntime(
+        "meta-observed",
+        state_path=tmp_path / "runtime.json",
+        self_observation_enabled=True,
+    )
+    runtime.integrate(
+        {
+            "response": "cycle",
+            "candidate_futures": [
+                {"id": "preserve", "signals": {"goal_fit": 0.8}},
+                {"id": "explore", "signals": {"goal_fit": 0.4}},
+            ],
+        }
+    )
+    runtime.observe_self(persist=False)
+    profile = runtime.snapshot_self_observation()["state"]
+    assert profile["metacognitive_trace_presence"] == 1.0
+    assert profile["decision_attribution_coverage"] == 1.0
