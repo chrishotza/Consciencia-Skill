@@ -245,6 +245,31 @@ Start with:
 
 This is a project hypothesis, not a claim that phenomenal machine consciousness has already been demonstrated.
 
+## Causal self-organization layer
+
+The 0.5 runtime moves the present field and self-organization one step closer to an endogenous loop.
+
+It now persists:
+
+~~~text
+IDENTITY
+STATE
+SELF-MODEL
+PRESENT
+ATTENTION
+SALIENCE
+LAYERS
+COHERENCE
+TOPOLOGY
+ATTRACTOR
+CANDIDATE FUTURES
+TRAJECTORY
+~~~
+
+Candidate futures can be generated from the current process rather than being supplied entirely by the host. Coherence and topology integrity enter trajectory scoring, and attractor weights can persist as part of the process's current operating configuration.
+
+These variables are engineering constructs. They do not by themselves establish phenomenal experience.
+
 ## New runtime primitives
 
 The reference runtime now persists:
