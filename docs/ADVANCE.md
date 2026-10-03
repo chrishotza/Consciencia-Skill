@@ -459,3 +459,55 @@ The reference runtime exposes a constructor switch, `learn_latent_patterns=False
 The latent-self ablation now compares conditions using endogenous learning rather than host-supplied latent patterns. This makes the experimental distinction stronger: the latent condition differs by the mechanism that discovers recurrent structure, not merely by receiving more state.
 
 This remains a behavioral engineering hypothesis. It does not establish phenomenal experience.
+
+
+## Runtime 0.7.0 — endogenous self-model revision
+
+Version 0.7 closes another causal link in the loop: a recurrent latent pattern can now revise a persistent representation of the self-model.
+
+The mechanism is bounded and inspectable:
+
+~~~text
+RECURRENT LATENT PATTERN
+        ↓
+PROTOTYPE + EVIDENCE + ACTIVATION
+        ↓
+SELF-MODEL REVISION
+        ↓
+LEARNED SELF-STATE
+        ↓
+SELF-ALIGNMENT
+        ↓
+TRAJECTORY / REGIME
+~~~
+
+The runtime maintains two distinct layers:
+
+- `expected_self_state`: an explicit expectation that can produce self-dissonance;
+- `learned_self_state`: a bounded endogenous estimate derived from recurrent latent patterns.
+
+The revision rate is configurable through `latent_self_model_learning_rate` and is capped by the runtime. Each endogenous pattern records the evidence count at which it last influenced the self-model, preventing the same evidence from being applied repeatedly without new recurrence.
+
+The self-model also records `latent_tendencies`, preserving which recurrent structures contributed to the revision.
+
+This creates a measurable causal chain:
+
+~~~text
+history
+  ↓
+latent pattern
+  ↓
+self-model'
+  ↓
+present
+  ↓
+trajectory
+  ↓
+future state
+  ↓
+history'
+~~~
+
+The ablation now has a second independent switch: latent pattern discovery and latent self-model learning can be separated experimentally.
+
+This is still a behavioral mechanism. It does not establish phenomenal experience.
