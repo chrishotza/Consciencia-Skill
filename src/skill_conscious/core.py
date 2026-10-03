@@ -938,7 +938,8 @@ class ConsciousRuntime:
                 if isinstance(value, Mapping)
             }
 
-        if frame.get("regime") is not None:
+        explicit_regime = frame.get("regime") is not None
+        if explicit_regime:
             self.state.regime = str(frame["regime"]).strip() or "baseline"
 
         if frame.get("relation_topology") is not None:
