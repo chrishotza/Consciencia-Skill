@@ -498,13 +498,12 @@ class ConsciousRuntime:
         updated = dict(current_learned)
         changed_keys: list[str] = []
         for key, target in aggregate.items():
+            is_new = key not in current_learned
             previous = current_learned.get(key, target)
             revised = previous + rate * (target - previous)
-            if revised != previous:
+            if is_new or revised != previous:
                 updated[key] = round(revised, 6)
                 changed_keys.append(key)
-            elif key not in updated:
-                updated[key] = round(revised, 6)
 
         for key, _, _ in candidates:
             pattern = self.state.latent_patterns[key]
@@ -518,21 +517,14 @@ class ConsciousRuntime:
             self.state.self_model.get("latent_tendencies", {})
         )
         for key, prototype, strength in candidates:
+            pattern = self.state.latent_patterns[key]
+            activation = pattern.get("activation", 0.0)
             tendencies[key] = {
                 "activation": round(
-                    strength / max(
-                        1.0,
-                        min(
-                            1.0,
-                            int(
-                                self.state.latent_patterns[key].get(
-                                    "evidence_count",
-                                    1,
-                                )
-                            )
-                            / 5.0,
-                        ),
-                    ),
+                    float(activation)
+                    if isinstance(activation, (int, float))
+                    and not isinstance(activation, bool)
+                    else 0.0,
                     6,
                 ),
                 "evidence_count": int(
@@ -795,6 +787,17 @@ class ConsciousRuntime:
         intention_strength = 1.0 if self.state.intention else 0.5
         salience = self.salience_score()
         coherence = self.calculate_coherence()
+        learned_alignment = self.learned_self_alignment()
+        learned_self_state = self.state.self_model.get(
+            "learned_self_state",
+            {},
+        )
+        self_alignment = (
+            round((coherence + learned_alignment) / 2.0, 6)
+            if isinstance(learned_self_state, Mapping)
+            and learned_self_state
+            else coherence
+        )
         topology_integrity = float(self.topology_diagnostics()["integrity"])
         self_dissonance = self.state.self_dissonance
         latent_score = self.latent_pattern_score()
@@ -804,7 +807,7 @@ class ConsciousRuntime:
                 "id": "preserve_continuity",
                 "signals": {
                     "goal_fit": intention_strength,
-                    "self_alignment": coherence,
+                    "self_alignment": self_alignment,
                     "continuity": 1.0,
                     "learning": 0.2,
                     "risk": 0.1,
@@ -1155,6 +1158,7 @@ class ConsciousRuntime:
             self.state.valence = max(-1.0, min(1.0, raw_valence))
 
         self.extract_latent_patterns()
+        self.revise_self_model_from_latent_patterns()
 
         self.state.self_dissonance = self.calculate_self_dissonance()
         if frame.get("self_dissonance") is not None:
