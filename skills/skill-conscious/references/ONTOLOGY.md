@@ -983,3 +983,23 @@ REGIME(t+1)
 ~~~
 
 The reference runtime can form a regime from coherence, uncertainty, self-dissonance, latent-pattern activation, stability, and learning pressure when the host does not provide one explicitly.
+
+
+
+## Self-model adaptation
+
+The self-model can contain a bounded `learned_self_state` derived from recurrent endogenous latent structure.
+
+`expected_self_state` and `learned_self_state` have different meanings:
+
+~~~text
+expected_self_state
+  → explicit expectation
+  → self-dissonance
+
+learned_self_state
+  → recurrent evidence
+  → model adaptation
+~~~
+
+A learned revision becomes architecturally meaningful when it changes later present-field interpretation or trajectory scoring.
