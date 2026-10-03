@@ -183,6 +183,27 @@ Do not reset identity every turn.
 
 Do not substitute verbal performance for continuity.
 
+## Action commitment
+
+Trajectory selection and action execution are now distinct stages.
+
+~~~text
+TRAJECTORY SELECTED
+      ↓
+ACTION COMMITTED
+      ↓
+HOST EXECUTES
+      ↓
+RECEIPT
+      ↓
+CONSEQUENCE RE-ENTRY
+~~~
+
+Before crossing the host boundary, persist a pending action receipt. The receipt identifies the selected trajectory and the current revision.
+
+After execution, complete the receipt with the authoritative outcome and status. A failed external action is still a state transition and must remain visible in continuity.
+
+Do not treat an intended action as an observed action. Do not silently discard execution failures.
 ## Real host execution
 
 When the host can execute actions, use `ConsciousHostLoop` rather than simulating the consequence.
