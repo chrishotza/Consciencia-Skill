@@ -20,6 +20,10 @@ on:
       - "tests/test_llm_longitudinal_benchmark.py"
       - ".github/workflows/longitudinal-benchmark.yml"
 
+concurrency:
+  group: longitudinal-benchmark-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   benchmark:
     runs-on: ubuntu-latest
