@@ -91,10 +91,6 @@ def run_condition_with_llm(
     with tempfile.TemporaryDirectory() as tmp:
         path = Path(tmp) / "state.json"
         runtime = _seed(condition, path)
-        adapter = ProviderNeutralLLMAdapter(
-            completion,
-            fixed_candidate_futures=_candidates(0),
-        )
         selected_ids: list[str] = []
         prediction_errors: list[float] = []
         self_observation_samples = 0
@@ -110,8 +106,10 @@ def run_condition_with_llm(
 
             # Candidate futures are controlled by the harness, not by the model.
             candidates = _candidates(cycle)
-            adapter._fixed_candidates = [dict(item) for item in candidates]
-
+            adapter = ProviderNeutralLLMAdapter(
+                completion,
+                fixed_candidate_futures=candidates,
+            )
             frame = adapter(runtime.prepare(f"LLM longitudinal cycle {cycle}"))
             runtime.integrate(frame)
             selected = dict(runtime.state.selected_trajectory or {})
