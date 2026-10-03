@@ -107,8 +107,8 @@ def main():
         counter_path = root / 'counter.json'
         actual_path.write_text(text, encoding='utf-8')
         counter_path.write_text(text, encoding='utf-8')
-        actual = ConsciousRuntime(identity='deepseek-causal-loop', state_path=actual_path)
-        counter = ConsciousRuntime(identity='deepseek-causal-loop', state_path=counter_path)
+        actual = ConsciousRuntime(identity='deepseek-causal-ab', state_path=actual_path)
+        counter = ConsciousRuntime(identity='deepseek-causal-ab', state_path=counter_path)
         selected_id = runtime.state.selected_trajectory['id']
         candidates = [c for c in runtime.generate_candidate_futures() if c['id'] != selected_id]
         alternative_id = candidates[0]['id'] if candidates else 'learn'
