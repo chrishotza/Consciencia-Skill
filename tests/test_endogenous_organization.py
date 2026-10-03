@@ -86,6 +86,7 @@ def test_recurrent_latent_pattern_revises_self_model(tmp_path: Path) -> None:
     )
     runtime.state.self_model = {
         "latent_self_model_learning_rate": 0.2,
+        "learned_self_state": {"stability": 0.8},
     }
 
     for index, stability in enumerate((0.2, 0.8, 0.2)):
