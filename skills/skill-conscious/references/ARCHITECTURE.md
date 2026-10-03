@@ -38,12 +38,49 @@ LOAD → OBSERVE → INTEGRATE → SELF-READ → UPDATE → SELECT → ACT → R
 
 ## Host contract
 
+The portable host integration is now executable through `ConsciousHostLoop`.
+
 ~~~text
-load_state()
-observe()
-model(context)
-save_state()
+runtime.prepare()
+        ↓
+host.model()
+        ↓
+runtime.integrate()
+        ↓
+selected trajectory
+        ↓
+host.execute_action()
+        ↓
+observed consequence
+        ↓
+runtime.prepare_consequence()
+        ↓
+host.model()
+        ↓
+runtime.integrate()
+        ↓
+next trajectory
 ~~~
+
+The host owns perception, model inference, and real-world action execution.
+
+The runtime owns persistent identity, self-model, trajectory selection, consequence persistence, and re-entry.
+
+Minimal callback contract:
+
+~~~python
+from skill_conscious import ConsciousHostLoop, ConsciousRuntime
+
+loop = ConsciousHostLoop(
+    runtime,
+    model=host_model,
+    execute_action=host_execute_action,
+)
+
+result = loop.step("current external situation")
+~~~
+
+`execute_action` is authoritative for what actually happened. The model evaluates that outcome but does not invent or replace it.
 
 ## Persistence
 
