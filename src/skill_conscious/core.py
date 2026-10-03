@@ -59,6 +59,8 @@ class ConsciousState:
     latent_patterns: dict[str, dict[str, Any]] = field(default_factory=dict)
     self_dissonance: float = 0.0
     transformation_log: list[dict[str, Any]] = field(default_factory=list)
+    pending_action: dict[str, Any] | None = None
+    action_history: list[dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -115,6 +117,14 @@ class ConsciousState:
             self_dissonance=max(0.0, min(1.0, float(value.get("self_dissonance", 0.0)))),
             transformation_log=[
                 dict(item) for item in value.get("transformation_log", [])
+            ],
+            pending_action=(
+                dict(value["pending_action"])
+                if value.get("pending_action") is not None
+                else None
+            ),
+            action_history=[
+                dict(item) for item in value.get("action_history", [])
             ],
         )
 
@@ -1076,6 +1086,70 @@ class ConsciousRuntime:
             "signals named goal_fit, self_alignment, continuity, learning, risk, and uncertainty."
         )
 
+    def begin_action(
+        self,
+        trajectory: Mapping[str, Any],
+        *,
+        persist: bool = True,
+    ) -> dict[str, Any]:
+        """Commit the selected trajectory as the action crossing the host boundary."""
+        if not isinstance(trajectory, Mapping):
+            raise ValueError("trajectory must be a mapping")
+
+        action_id = hashlib.sha256(
+            json.dumps(
+                {
+                    "identity": self.state.identity,
+                    "revision": self.state.revision,
+                    "trajectory": dict(trajectory),
+                },
+                ensure_ascii=False,
+                sort_keys=True,
+            ).encode("utf-8")
+        ).hexdigest()[:16]
+
+        receipt = {
+            "action_id": action_id,
+            "trajectory": dict(trajectory),
+            "status": "pending",
+            "revision": self.state.revision,
+        }
+        self.state.pending_action = receipt
+        self.state.workspace = {
+            **self.state.workspace,
+            "pending_action": receipt,
+        }
+        if persist:
+            self.store.save(self.state)
+        return dict(receipt)
+
+    def complete_action(
+        self,
+        outcome: Mapping[str, Any],
+        *,
+        status: str = "completed",
+        persist: bool = True,
+    ) -> dict[str, Any]:
+        """Record the authoritative result of the action crossing the host boundary."""
+        if not isinstance(outcome, Mapping):
+            raise ValueError("outcome must be a mapping")
+        if self.state.pending_action is None:
+            raise RuntimeError("no pending action to complete")
+
+        receipt = dict(self.state.pending_action)
+        receipt["status"] = str(status).strip() or "completed"
+        receipt["outcome"] = dict(outcome)
+        self.state.action_history.append(receipt)
+        self.state.action_history = self.state.action_history[-self.history_limit :]
+        self.state.pending_action = None
+        self.state.workspace = {
+            **self.state.workspace,
+            "last_action_receipt": receipt,
+            "pending_action": None,
+        }
+        if persist:
+            self.store.save(self.state)
+        return dict(receipt)
     def prepare_consequence(
         self,
         trajectory_id: str,
@@ -1099,16 +1173,10 @@ class ConsciousRuntime:
             "persistent process and propose durable self-model updates. Return a compact frame "
             "with response, self_evaluation, and any justified self_model, internal_state, "
             "workspace, intention, attention, valuation, valence, regime, or candidate_futures updates. "
-            "The host will attach the authoritative consequence metadata.
-
-"
-            "CURRENT STATE AND OBSERVED CONSEQUENCE:
-"
-            f"{json.dumps(context, ensure_ascii=False, indent=2)}
-
-"
-            "OBSERVED OUTCOME:
-"
+            "The host will attach the authoritative consequence metadata.\n\n"
+            "CURRENT STATE AND OBSERVED CONSEQUENCE:\n"
+            f"{json.dumps(context, ensure_ascii=False, indent=2)}\n\n"
+            "OBSERVED OUTCOME:\n"
             f"{json.dumps(dict(outcome), ensure_ascii=False, indent=2)}"
         )
 
