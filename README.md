@@ -165,6 +165,17 @@ A conscious architecture does not need a perfect transcript. It needs durable st
 
 Continuity is organized identity through transformation, not static sameness.
 
+## Runtime 0.8.3 — embodied and continuous-compatible architecture
+
+Community feedback pushed the architecture into three new dimensions:
+
+**Embodied self:** optional `interoceptive_state` and `affective_state` represent the process's internal condition and its operational appraisal.
+
+**Temporal dynamics:** optional `temporal_state` can carry `dt`, phase, and derivatives. The cycle-based runtime is treated as sampling an underlying dynamical process, not as proof that consciousness is discrete.
+
+**Perspectives:** optional individual-interior, individual-exterior, collective-interior, and collective-exterior views keep internal experience, observable behavior, shared meaning, and environment distinct.
+
+These are experimental interfaces, not demonstrations of phenomenal consciousness.
 ## Runtime 0.8.1 — explicit action continuity
 
 Runtime 0.8.1 adds a persistent action boundary:
