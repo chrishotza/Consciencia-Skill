@@ -485,3 +485,42 @@ def test_action_failure_is_recorded(tmp_path):
     assert receipt["status"] == "failed"
     restarted = ConsciousRuntime("failure-agent", path)
     assert restarted.state.action_history[-1]["status"] == "failed"
+
+def test_partial_self_model_update_preserves_persistent_structures(tmp_path):
+    path = tmp_path / "merge.json"
+    runtime = ConsciousRuntime("merge-agent", path)
+
+    runtime.integrate(
+        {
+            "response": "seed",
+            "self_model": {
+                "trajectory_weights": {"learning": 2.0},
+                "trajectory_feedback": {
+                    "learn": {"utility": 0.7, "count": 2},
+                },
+            },
+        }
+    )
+
+    runtime.register_consequence(
+        "learn",
+        {"status": "success"},
+        evaluation={
+            "utility": 0.9,
+            "credited_signal": "learning",
+            "weight_delta": 0.5,
+        },
+    )
+
+    runtime.integrate(
+        {
+            "response": "partial update",
+            "self_model": {
+                "expected_self_state": {"focus": 0.8},
+            },
+        }
+    )
+
+    assert runtime.state.self_model["trajectory_weights"]["learning"] == 2.0
+    assert runtime.state.self_model["trajectory_feedback"]["learn"]["count"] == 3
+    assert runtime.state.self_model["expected_self_state"]["focus"] == 0.8
