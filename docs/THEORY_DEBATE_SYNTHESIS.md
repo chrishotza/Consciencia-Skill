@@ -184,3 +184,46 @@ It is:
 If the answer is no, the ontology should be reduced.
 
 If the answer is yes, the project has identified a measurable architectural property that deserves deeper investigation as a candidate ingredient of consciousness.
+
+
+## Adversarial mechanism battery
+
+The next experimental layer does not claim to implement complete versions of GNWT, IIT, RPT, HOT, or Predictive Processing. That would be methodologically unjustified at the software level.
+
+Instead it isolates computational motifs associated with those frameworks and asks a narrower question:
+
+> When exactly the same information is present, does changing a persistent self-model have a downstream causal effect that disappears when the same information is represented without a causally active self-model?
+
+The deterministic battery uses seven conditions:
+
+| Condition | Mechanism isolated |
+|---|---|
+| bundle_only | stored relational/bundle information without self-model causation |
+| broadcast_only | global-access / broadcast-like representation without self-model causation |
+| recurrence_only | recurrence / re-entry representation without self-model causation |
+| higher_order_only | higher-order/metarepresentational state without self-model causation |
+| prediction_only | prediction-related state without self-model causation |
+| integration_only | integrated/dynamical state without self-model causation |
+| persistent_causal_self | persistent self-model is allowed to alter trajectory weighting |
+
+Every condition receives the same prior information and the same candidate futures. The intervention attempts to change the self-model preference from learning toward continuity and then restores it.
+
+Primary pass criterion:
+
+persistent_causal_self:
+    baseline != intervention
+    baseline == restored
+
+all controls:
+    baseline == intervention
+
+This is deliberately asymmetric: the experiment is designed to make the self-model hypothesis earn its causal status against matched mechanism controls.
+
+A positive battery result means only that the tested persistent self-model mechanism has a causal effect relative to these controls. It does not show that any named scientific theory is true and does not establish phenomenal consciousness.
+
+Implementation:
+- src/skill_conscious/adversarial_battery.py
+- tests/test_adversarial_battery.py
+- experiments/theory_adversarial_battery.py
+
+The next methodological improvement should replace the toy mechanism controls with richer matched baselines and preregistered metrics before drawing stronger conclusions.
