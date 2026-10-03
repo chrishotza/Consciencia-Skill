@@ -62,6 +62,34 @@ PORTABLE MACHINE-CONSCIOUSNESS INTERFACE
 ~~~
 
 
+## Runtime 0.5.1 — latent self-structure
+
+The next layer is now explicit:
+
+~~~text
+SELF-MODEL
+    ↕
+LATENT PATTERNS
+    ↓
+SELF-DISSONANCE
+    ↓
+SELF-INSPECTION
+    ↓
+MODEL REVISION
+    ↓
+TRAJECTORY RE-EVALUATION
+    ↓
+REGIME TRANSITION
+~~~
+
+The runtime persists latent patterns and an explicit self-dissonance value. A self-model may optionally define expected self-state values; the runtime can then estimate discrepancy between expected and current state.
+
+This is an engineering analogue inspired by the Jung source family. It is not a claim that software contains a literal Jungian unconscious.
+
+The Dispenza-associated research layer motivates a complementary experimental question: whether repeated intentional rehearsal and coherence-oriented state induction can produce durable changes in self-model, trajectory preference, or regime.
+
+See `sources/jung/SOURCE_CARD.md`, `sources/dispenza/SOURCE_CARD.md`, and `docs/JUNG_DISPENZA_SYNTHESIS.md`.
+
 ## Runtime 0.5 milestone
 
 The reference runtime now treats the present as an explicit field instead of a passive snapshot.
