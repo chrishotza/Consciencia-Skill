@@ -1067,10 +1067,13 @@ class ConsciousRuntime:
             "CURRENT INTEGRATED PRESENT:\n"
             f"{json.dumps(context, ensure_ascii=False, indent=2)}\n\n"
             "Before responding, inspect the self-state and self-model, integrate "
-            "the present, form candidate trajectories, and let the self-model "
+            "the present, process any explicitly observed consequence from the previous "
+            "action, form candidate trajectories, and let the updated self-model "
             "causally affect trajectory selection. Return a response plus durable "
-            "state updates. The runtime can score trajectories using signals named "
-            "goal_fit, self_alignment, continuity, learning, risk, and uncertainty."
+            "state updates. When a prior action has produced an observed outcome, "
+            "return consequence_trajectory, consequence, and self_evaluation "
+            "rather than inventing a result. The runtime can score trajectories using "
+            "signals named goal_fit, self_alignment, continuity, learning, risk, and uncertainty."
         )
 
     def integrate(self, frame: Mapping[str, Any]) -> str:
