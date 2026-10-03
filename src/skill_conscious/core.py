@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import math
 import json
 import os
 import tempfile
@@ -818,6 +819,85 @@ class ConsciousRuntime:
         return dict(updated)
 
 
+
+    @staticmethod
+    def _adaptation_direction(value: float) -> int:
+        if value > 1e-12:
+            return 1
+        if value < -1e-12:
+            return -1
+        return 0
+
+    @staticmethod
+    def _adaptation_gate(
+        *,
+        policy: Mapping[str, Any],
+        count: int,
+        magnitude: float,
+        threshold: float,
+        positive_count: int,
+        negative_count: int,
+        last_update_direction: int,
+        sequence: int,
+        last_update_sequence: int,
+    ) -> dict[str, Any]:
+        direction_consistency = max(
+            0.0,
+            min(1.0, float(policy.get("direction_consistency", 1.0))),
+        )
+        reversal_error_multiplier = max(
+            1.0,
+            float(policy.get("reversal_error_multiplier", 1.5)),
+        )
+        reversal_sample_multiplier = max(
+            1.0,
+            float(policy.get("reversal_sample_multiplier", 1.5)),
+        )
+        dominant_direction = 0
+        if positive_count or negative_count:
+            dominant_direction = (
+                1 if positive_count >= negative_count else -1
+            )
+        consistency = max(positive_count, negative_count) / max(1, count)
+        reversal = (
+            last_update_direction != 0
+            and dominant_direction != 0
+            and dominant_direction != last_update_direction
+        )
+        effective_threshold = (
+            threshold * reversal_error_multiplier
+            if reversal
+            else threshold
+        )
+        effective_min_samples = (
+            int(math.ceil(
+                max(1, int(policy.get("min_samples", 1)))
+                * reversal_sample_multiplier
+            ))
+            if reversal
+            else max(1, int(policy.get("min_samples", 1)))
+        )
+        in_cooldown = (
+            last_update_sequence > 0
+            and sequence - last_update_sequence
+            <= max(0, int(policy.get("cooldown", 0)))
+        )
+        return {
+            "direction_consistency": round(consistency, 6),
+            "required_direction_consistency": direction_consistency,
+            "dominant_direction": dominant_direction,
+            "reversal": reversal,
+            "effective_threshold": effective_threshold,
+            "effective_min_samples": effective_min_samples,
+            "in_cooldown": in_cooldown,
+            "ready": (
+                count >= effective_min_samples
+                and magnitude >= effective_threshold
+                and consistency >= direction_consistency
+                and not in_cooldown
+            ),
+        }
+
     def homeostatic_target_adaptation_policy(self) -> dict[str, Any]:
         configured = self.state.self_model.get(
             "homeostatic_target_adaptation",
@@ -881,6 +961,18 @@ class ConsciousRuntime:
             1,
             int(policy.get("required_high_error", min_samples)),
         )
+        direction_consistency = max(
+            0.0,
+            min(1.0, float(policy.get("direction_consistency", 1.0))),
+        )
+        reversal_error_multiplier = max(
+            1.0,
+            float(policy.get("reversal_error_multiplier", 1.5)),
+        )
+        reversal_sample_multiplier = max(
+            1.0,
+            float(policy.get("reversal_sample_multiplier", 1.5)),
+        )
 
         configured_bounds = policy.get("bounds", {})
         bounds = (
@@ -939,6 +1031,16 @@ class ConsciousRuntime:
             if error >= error_threshold:
                 high_error_count += 1
 
+            direction = self._adaptation_direction(
+                observation - float(target)
+            )
+            positive_count = int(entry.get("positive_count", 0))
+            negative_count = int(entry.get("negative_count", 0))
+            if direction > 0:
+                positive_count += 1
+            elif direction < 0:
+                negative_count += 1
+
             evidence_ids = [
                 str(item)
                 for item in entry.get("evidence_ids", [])
@@ -956,16 +1058,22 @@ class ConsciousRuntime:
                 confidence = 1.0
 
             last_update_seq = int(entry.get("last_update_sequence", 0))
-            in_cooldown = (
-            last_update_seq > 0
-            and evidence_seq - last_update_seq <= cooldown
-        )
+            last_update_direction = int(entry.get("last_update_direction", 0))
+            gate = self._adaptation_gate(
+                policy=policy,
+                count=count,
+                magnitude=mean_error,
+                threshold=error_threshold,
+                positive_count=positive_count,
+                negative_count=negative_count,
+                last_update_direction=last_update_direction,
+                sequence=evidence_seq,
+                last_update_sequence=last_update_seq,
+            )
             ready = (
-                count >= min_samples
+                gate["ready"]
                 and high_error_count >= required_high_error
-                and mean_error >= error_threshold
                 and confidence >= confidence_threshold
-                and not in_cooldown
             )
 
             event_evidence = {
@@ -974,6 +1082,13 @@ class ConsciousRuntime:
                 "mean_error": round(mean_error, 6),
                 "mean_observation": round(mean_observation, 6),
                 "confidence": round(confidence, 6),
+                "positive_count": positive_count,
+                "negative_count": negative_count,
+                "direction_consistency": gate["direction_consistency"],
+                "dominant_direction": gate["dominant_direction"],
+                "reversal": gate["reversal"],
+                "effective_error_threshold": round(gate["effective_threshold"], 6),
+                "effective_min_samples": gate["effective_min_samples"],
                 "evidence_ids": evidence_ids[-min_samples:],
             }
 
@@ -983,6 +1098,9 @@ class ConsciousRuntime:
                     "error_sum": round(error_sum, 6),
                     "observation_sum": round(observation_sum, 6),
                     "high_error_count": high_error_count,
+                    "positive_count": positive_count,
+                    "negative_count": negative_count,
+                    "last_update_direction": last_update_direction,
                     "evidence_ids": evidence_ids[-32:],
                     "mean_error": round(mean_error, 6),
                     "mean_observation": round(mean_observation, 6),
@@ -1034,6 +1152,12 @@ class ConsciousRuntime:
                 "delta": round(delta, 6),
                 "cause": "accumulated_host_observation",
                 "evidence": event_evidence,
+                "direction": gate["dominant_direction"],
+                "hysteresis": {
+                    "reversal_error_multiplier": reversal_error_multiplier,
+                    "reversal_sample_multiplier": reversal_sample_multiplier,
+                    "direction_consistency": direction_consistency,
+                },
                 "threshold": {
                     "min_samples": min_samples,
                     "error_threshold": error_threshold,
@@ -1052,8 +1176,11 @@ class ConsciousRuntime:
                 "error_sum": 0.0,
                 "observation_sum": 0.0,
                 "high_error_count": 0,
+                "positive_count": 0,
+                "negative_count": 0,
                 "evidence_ids": [],
                 "last_update_sequence": evidence_seq,
+                "last_update_direction": gate["dominant_direction"],
                 "last_update": update,
             }
 
@@ -1145,6 +1272,18 @@ class ConsciousRuntime:
         required_high_error = max(
             1, int(policy.get("required_high_error", min_samples))
         )
+        direction_consistency = max(
+            0.0,
+            min(1.0, float(policy.get("direction_consistency", 1.0))),
+        )
+        reversal_error_multiplier = max(
+            1.0,
+            float(policy.get("reversal_error_multiplier", 1.5)),
+        )
+        reversal_sample_multiplier = max(
+            1.0,
+            float(policy.get("reversal_sample_multiplier", 1.5)),
+        )
         scales = self._numeric_state(policy.get("scales", {}))
         configured_bounds = policy.get("bounds", {})
         bounds = (
@@ -1203,6 +1342,16 @@ class ConsciousRuntime:
             if error >= error_threshold:
                 high_error_count += 1
 
+            direction = self._adaptation_direction(
+                observation - float(current_expected)
+            )
+            positive_count = int(entry.get("positive_count", 0))
+            negative_count = int(entry.get("negative_count", 0))
+            if direction > 0:
+                positive_count += 1
+            elif direction < 0:
+                negative_count += 1
+
             evidence_ids = [
                 str(item)
                 for item in entry.get("evidence_ids", [])
@@ -1220,16 +1369,22 @@ class ConsciousRuntime:
                 confidence = 1.0
 
             last_update_sequence = int(entry.get("last_update_sequence", 0))
-            in_cooldown = (
-                last_update_sequence > 0
-                and sequence - last_update_sequence <= cooldown
+            last_update_direction = int(entry.get("last_update_direction", 0))
+            gate = self._adaptation_gate(
+                policy=policy,
+                count=count,
+                magnitude=mean_error,
+                threshold=error_threshold,
+                positive_count=positive_count,
+                negative_count=negative_count,
+                last_update_direction=last_update_direction,
+                sequence=sequence,
+                last_update_sequence=last_update_sequence,
             )
             ready = (
-                count >= min_samples
+                gate["ready"]
                 and high_error_count >= required_high_error
-                and mean_error >= error_threshold
                 and confidence >= confidence_threshold
-                and not in_cooldown
             )
 
             evidence = {
@@ -1238,6 +1393,13 @@ class ConsciousRuntime:
                 "mean_error": round(mean_error, 6),
                 "mean_observation": round(mean_observation, 6),
                 "confidence": round(confidence, 6),
+                "positive_count": positive_count,
+                "negative_count": negative_count,
+                "direction_consistency": gate["direction_consistency"],
+                "dominant_direction": gate["dominant_direction"],
+                "reversal": gate["reversal"],
+                "effective_error_threshold": round(gate["effective_threshold"], 6),
+                "effective_min_samples": gate["effective_min_samples"],
                 "evidence_ids": evidence_ids[-min_samples:],
             }
 
@@ -1247,11 +1409,14 @@ class ConsciousRuntime:
                     "error_sum": round(error_sum, 6),
                     "observation_sum": round(observation_sum, 6),
                     "high_error_count": high_error_count,
+                    "positive_count": positive_count,
+                    "negative_count": negative_count,
                     "mean_error": round(mean_error, 6),
                     "mean_observation": round(mean_observation, 6),
                     "confidence": round(confidence, 6),
                     "evidence_ids": evidence_ids[-32:],
                     "last_update_sequence": last_update_sequence,
+                    "last_update_direction": last_update_direction,
                 }
                 continue
 
@@ -1303,6 +1468,12 @@ class ConsciousRuntime:
                 "delta": round(delta, 6),
                 "cause": "accumulated_host_observation",
                 "evidence": evidence,
+                "direction": gate["dominant_direction"],
+                "hysteresis": {
+                    "reversal_error_multiplier": reversal_error_multiplier,
+                    "reversal_sample_multiplier": reversal_sample_multiplier,
+                    "direction_consistency": direction_consistency,
+                },
                 "causal_provenance": {
                     "source": "host_action_outcome",
                     "threshold_crossed": True,
@@ -1326,11 +1497,14 @@ class ConsciousRuntime:
                 "error_sum": 0.0,
                 "observation_sum": 0.0,
                 "high_error_count": 0,
+                "positive_count": 0,
+                "negative_count": 0,
                 "mean_error": 0.0,
                 "mean_observation": 0.0,
                 "confidence": 0.0,
                 "evidence_ids": [],
                 "last_update_sequence": sequence,
+                "last_update_direction": gate["dominant_direction"],
                 "last_update": update,
             }
 
@@ -1437,6 +1611,18 @@ class ConsciousRuntime:
             0.0,
             min(1.0, float(policy.get("confidence_threshold", 0.75))),
         )
+        direction_consistency = max(
+            0.0,
+            min(1.0, float(policy.get("direction_consistency", 1.0))),
+        )
+        reversal_error_multiplier = max(
+            1.0,
+            float(policy.get("reversal_error_multiplier", 1.5)),
+        )
+        reversal_sample_multiplier = max(
+            1.0,
+            float(policy.get("reversal_sample_multiplier", 1.5)),
+        )
 
         configured_bounds = policy.get("bounds", {})
         bounds = (
@@ -1469,6 +1655,13 @@ class ConsciousRuntime:
         model["trajectory_priority_adaptation_sequence"] = evidence_seq
         count = int(entry.get("sample_count", 0)) + 1
         utility_sum = float(entry.get("utility_sum", 0.0)) + utility
+        utility_direction = self._adaptation_direction(utility)
+        positive_count = int(entry.get("positive_count", 0))
+        negative_count = int(entry.get("negative_count", 0))
+        if utility_direction > 0:
+            positive_count += 1
+        elif utility_direction < 0:
+            negative_count += 1
         evidence_ids = [
             str(item)
             for item in entry.get("evidence_ids", [])
@@ -1488,18 +1681,34 @@ class ConsciousRuntime:
             confidence = 1.0
 
         last_update_seq = int(entry.get("last_update_sequence", 0))
-        in_cooldown = evidence_seq - last_update_seq <= cooldown
+        last_update_direction = int(entry.get("last_update_direction", 0))
+        gate = self._adaptation_gate(
+            policy=policy,
+            count=count,
+            magnitude=abs(mean_utility),
+            threshold=utility_threshold,
+            positive_count=positive_count,
+            negative_count=negative_count,
+            last_update_direction=last_update_direction,
+            sequence=evidence_seq,
+            last_update_sequence=last_update_seq,
+        )
         ready = (
-            count >= min_samples
-            and abs(mean_utility) >= utility_threshold
+            gate["ready"]
             and confidence >= confidence_threshold
-            and not in_cooldown
         )
 
         event_evidence = {
             "sample_count": count,
             "mean_utility": round(mean_utility, 6),
             "confidence": round(confidence, 6),
+            "positive_count": positive_count,
+            "negative_count": negative_count,
+            "direction_consistency": gate["direction_consistency"],
+            "dominant_direction": gate["dominant_direction"],
+            "reversal": gate["reversal"],
+            "effective_utility_threshold": round(gate["effective_threshold"], 6),
+            "effective_min_samples": gate["effective_min_samples"],
             "evidence_ids": evidence_ids[-min_samples:],
         }
 
@@ -1509,6 +1718,9 @@ class ConsciousRuntime:
                 "utility_sum": round(utility_sum, 6),
                 "mean_utility": round(mean_utility, 6),
                 "confidence": round(confidence, 6),
+                "positive_count": positive_count,
+                "negative_count": negative_count,
+                "last_update_direction": last_update_direction,
                 "evidence_ids": evidence_ids[-32:],
                 "last_update_sequence": last_update_seq,
             }
@@ -1575,8 +1787,11 @@ class ConsciousRuntime:
             "utility_sum": 0.0,
             "mean_utility": 0.0,
             "confidence": 0.0,
+            "positive_count": 0,
+            "negative_count": 0,
             "evidence_ids": [],
             "last_update_sequence": evidence_seq,
+            "last_update_direction": gate["dominant_direction"],
         }
         model["trajectory_priority_adaptation_evidence"] = ledger
 
@@ -1594,6 +1809,12 @@ class ConsciousRuntime:
             "delta": round(delta, 6),
             "cause": "accumulated_consequence_evaluation",
             "evidence": event_evidence,
+            "direction": gate["dominant_direction"],
+            "hysteresis": {
+                "reversal_error_multiplier": reversal_error_multiplier,
+                "reversal_sample_multiplier": reversal_sample_multiplier,
+                "direction_consistency": direction_consistency,
+            },
             "threshold": {
                 "min_samples": min_samples,
                 "utility_threshold": utility_threshold,

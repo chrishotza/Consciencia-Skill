@@ -838,3 +838,17 @@ The model does not supply a new expected_self_state to force the update. It may 
 Keep expected_self_state and learned_self_state conceptually separate:
 expected_self_state → explicit expectation
 learned_self_state → recurrent latent-pattern model
+
+
+## Self-development stability protocol
+
+Do not update a learned target or priority from alternating evidence simply because its average magnitude is large.
+
+Use:
+- direction consistency;
+- reversal detection;
+- stronger reversal thresholds;
+- larger reversal sample requirements;
+- bounded update steps.
+
+The adaptation ledger must preserve the evidence needed to audit whether an update continued or reversed the previous learned direction.

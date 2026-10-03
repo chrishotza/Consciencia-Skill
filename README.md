@@ -486,3 +486,14 @@ expected_self_state is the explicit expectation; learned_self_state remains the 
 A self-model update is only committed after accumulated evidence crosses configured thresholds. The runtime records action IDs, evidence statistics, thresholds, constraints, and causal provenance. Later model frames cannot replace an initialized expected self-state while this mechanism is enabled unless the experiment explicitly allows it.
 
 This turns self-model revision into the same auditable class of mechanism as target and priority adaptation.
+
+
+## Adaptive stability: direction consistency and hysteresis
+
+The self-development layers now include an explicit stability gate.
+
+A candidate update must satisfy accumulated evidence, direction consistency, confidence, and threshold. After an update, evidence that attempts to reverse the learned direction is subjected to a stricter error threshold and a larger minimum sample requirement.
+
+The ledger records positive/negative evidence counts, dominant direction, reversal detection, effective thresholds, and the hysteresis configuration. This rejects noisy alternating evidence and makes rapid self-model oscillation harder without eliminating adaptation.
+
+Adversarial coverage now includes mixed-sign utility, alternating internal observations, and deliberate reversal attempts.

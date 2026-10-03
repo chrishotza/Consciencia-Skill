@@ -284,3 +284,83 @@ def test_self_model_adaptation_ignores_unobserved_fields(tmp_path):
     assert receipt["self_model_adaptation"]["updated"] is False
     assert runtime.state.self_model["expected_self_state"]["focus"] == 0.8
 
+
+def test_homeostatic_adaptation_rejects_directionally_inconsistent_evidence(tmp_path):
+    runtime = _configured_runtime(tmp_path)
+
+    for index, value in enumerate((0.4, 1.2, 0.4), 1):
+        _complete_observed_action(runtime, value, f"osc-{index}")
+
+    assert runtime.state.self_model["homeostatic_targets"]["energy"] == 0.8
+    ledger = runtime.state.self_model["homeostatic_adaptation_evidence"]["energy"]
+    assert ledger["positive_count"] == 1
+    assert ledger["negative_count"] == 2
+    assert ledger["last_update_direction"] == 0
+
+
+def test_homeostatic_reversal_requires_hysteresis(tmp_path):
+    runtime = ConsciousRuntime("reversal-agent", tmp_path / "reversal.json")
+    runtime.integrate(
+        {
+            "response": "initialize reversal guard",
+            "self_model": {
+                "homeostatic_targets": {"energy": 0.8},
+                "homeostatic_target_adaptation": {
+                    "enabled": True,
+                    "min_samples": 3,
+                    "error_threshold": 0.25,
+                    "confidence_threshold": 0.75,
+                    "required_high_error": 3,
+                    "learning_rate": 0.5,
+                    "max_step": 0.1,
+                    "cooldown": 2,
+                    "direction_consistency": 1.0,
+                    "reversal_error_multiplier": 1.2,
+                    "reversal_sample_multiplier": 2.0,
+                    "bounds": {"energy": [0.0, 1.0]},
+                },
+            },
+        }
+    )
+
+    for index in range(3):
+        _complete_observed_action(runtime, 0.4, f"down-{index}")
+
+    assert runtime.state.self_model["homeostatic_targets"]["energy"] == 0.7
+
+    for index in range(5):
+        _complete_observed_action(runtime, 1.0, f"up-{index}")
+
+    assert runtime.state.self_model["homeostatic_targets"]["energy"] == 0.7
+
+    _complete_observed_action(runtime, 1.0, "up-6")
+
+    assert runtime.state.self_model["homeostatic_targets"]["energy"] == 0.8
+    update = runtime.state.self_model["homeostatic_adaptation_history"][-1]
+    assert update["direction"] == 1
+    assert update["hysteresis"]["reversal_sample_multiplier"] == 2.0
+    assert update["evidence"]["reversal"] is True
+
+
+def test_priority_adaptation_rejects_mixed_utility_signs(tmp_path):
+    runtime = _configured_priority_runtime(tmp_path)
+
+    for index, utility in enumerate((1.0, -1.0, 1.0), 1):
+        _record_priority_consequence(runtime, utility, f"mixed-{index}")
+
+    assert runtime.state.self_model["trajectory_weights"]["learning"] == 0.0
+    ledger = runtime.state.self_model["trajectory_priority_adaptation_evidence"]["learning"]
+    assert ledger["positive_count"] == 2
+    assert ledger["negative_count"] == 1
+
+
+def test_self_model_adaptation_rejects_directionally_inconsistent_evidence(tmp_path):
+    runtime = _configured_self_model_adaptation_runtime(tmp_path)
+
+    for index, value in enumerate((0.4, 1.2, 0.4), 1):
+        _record_observed_self_state(runtime, value, f"mixed-self-{index}")
+
+    assert runtime.state.self_model["expected_self_state"]["focus"] == 0.8
+    ledger = runtime.state.self_model["self_model_adaptation_evidence"]["focus"]
+    assert ledger["positive_count"] == 1
+    assert ledger["negative_count"] == 2

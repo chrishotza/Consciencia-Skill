@@ -305,3 +305,24 @@ SELF-MODEL'
 expected_self_state remains an explicit expectation. learned_self_state remains the latent-pattern learning representation. The new adaptation path provides an auditable bridge from repeated host-observed self-state outcomes to bounded expectation revision.
 
 Each update records causal provenance containing the evidence IDs and the fact that the threshold was crossed.
+
+
+## Adaptive stability layer
+
+The developmental loop now contains an explicit anti-oscillation gate:
+
+HOST OBSERVATIONS
+      ↓
+EVIDENCE ACCUMULATION
+      ↓
+DIRECTION CONSISTENCY
+      ↓
+HYSTERESIS / REVERSAL GATE
+      ↓
+BOUNDED UPDATE
+      ↓
+SELF-MODEL'
+
+Direction is persisted with each adaptation. A reversal is not treated as symmetrical with continuation: the runtime can demand a larger error and more accumulated samples before changing direction.
+
+This is an engineering stability mechanism, not a claim about consciousness.
