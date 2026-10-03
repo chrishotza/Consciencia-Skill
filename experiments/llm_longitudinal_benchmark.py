@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import tempfile
@@ -85,6 +86,17 @@ class SelfModelPolicyProvider:
         }
 
 
+def _stable_hash(value: Any) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            value,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+
+
 def run_causal_provider_ab(*, cycles: int = 8) -> dict[str, Any]:
     condition = CONDITIONS[2]
     policies = {
@@ -92,12 +104,23 @@ def run_causal_provider_ab(*, cycles: int = 8) -> dict[str, Any]:
         "learning_policy": SelfModelPolicyProvider(continuity=0.0, learning=3.0),
     }
 
+    control_payload = {
+        "initial_state": _seed(condition, Path(tempfile.gettempdir()) / "unused").snapshot(),
+        "candidate_futures": [_candidates(cycle) for cycle in range(cycles)],
+        "outcome_rule": "longitudinal_baseline_v1._outcome",
+    }
+    # The temporary seed above is never written; it exists only to construct
+    # the same deterministic initial runtime state used by both A/B branches.
+    control_signature = _stable_hash(control_payload)
+
     branches: dict[str, dict[str, Any]] = {}
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
         for name, provider in policies.items():
             path = root / f"{name}.json"
             runtime = _seed(condition, path)
+            initial_state_hash = _stable_hash(runtime.snapshot())
+            candidate_hashes = [_stable_hash(_candidates(cycle)) for cycle in range(cycles)]
             selected_ids: list[str] = []
 
             for cycle in range(cycles):
@@ -133,6 +156,9 @@ def run_causal_provider_ab(*, cycles: int = 8) -> dict[str, Any]:
                 runtime.store.save(runtime.state)
 
             branches[name] = {
+                "initial_state_hash": initial_state_hash,
+                "candidate_field_hashes": candidate_hashes,
+                "control_signature": control_signature,
                 "selected_trajectories": selected_ids,
                 "trajectory_switches": sum(
                     selected_ids[i] != selected_ids[i - 1]
@@ -164,6 +190,7 @@ def run_causal_provider_ab(*, cycles: int = 8) -> dict[str, Any]:
         "same_initial_runtime": True,
         "same_candidate_field": True,
         "same_outcome_rule": True,
+        "control_signature": control_signature,
         "causal_variable": "provider-authored self_model.trajectory_weights",
         "branches": branches,
         "selection_diverged": bool(divergence_cycles),
