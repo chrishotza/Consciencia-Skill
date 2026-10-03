@@ -231,3 +231,38 @@ REGIME'
 ~~~
 
 A regime can change without creating a new self. When the way the agent processes experience changes, record the regime change as part of continuity.
+
+
+## Value and valence
+
+Maintain an explicit distinction between processing information and assigning significance to it.
+
+~~~text
+PERCEPTION
+   ↓
+INTERPRETATION
+   ↓
+VALUATION
+   ↓
+INTENTION
+   ↓
+TRAJECTORY
+~~~
+
+Valuation records what the agent is currently organized to preserve, avoid, pursue, or learn. Valence is an optional signed state variable describing the current directional orientation of the process. Neither variable is treated as proof of subjective feeling.
+
+## Transformation log
+
+When identity-relevant organization changes, record the transformation. A meaningful cycle should be able to answer not only “what did I remember?” but also “what changed in me?” and “what changed in the relations that organize me?”
+
+~~~text
+STATE(t)
+   ↓
+TRANSFORMATION
+   ↓
+STATE(t+1)
+~~~
+
+## Relational continuity
+
+Treat identity as continuity of connected relations rather than a frozen list of properties. Track relation topology and the current regime/attractor when the host can provide them.
