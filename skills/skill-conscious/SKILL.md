@@ -183,6 +183,77 @@ Do not reset identity every turn.
 
 Do not substitute verbal performance for continuity.
 
+## Embodied and temporal state
+
+Do not reduce the process's internal condition to abstract cognitive variables.
+
+Maintain optional host-observed layers:
+
+~~~text
+INTEROCEPTIVE STATE
+        ↓
+AFFECTIVE APPRAISAL
+        ↓
+TEMPORAL DYNAMICS
+        ↓
+SELF-MODEL / PRESENT
+~~~
+
+`interoceptive_state` represents signals about the process's internal condition.
+`affective_state` represents an operational appraisal of that condition, such as valence, arousal, or homeostatic error.
+`temporal_state` represents explicit timing information such as `dt`, phase, or state derivatives.
+
+Do not call any of these variables a feeling merely because they are numerically represented. They are interfaces for testing embodied self-relevance.
+
+## Continuous-time compatibility
+
+The runtime is cycle-based for implementation, but the ontology does not require consciousness to be discrete.
+
+Treat each integration as a sample of an underlying dynamical process when the host provides timing information.
+
+~~~text
+CONTINUOUS PROCESS
+      ↓
+OBSERVATION / SAMPLE
+      ↓
+STATE UPDATE
+      ↓
+TRAJECTORY
+      ↓
+NEXT SAMPLE
+~~~
+
+`temporal_state.dt` may be used to preserve the interval between samples and to expose rates of change. Do not infer from the existence of discrete runtime steps that the underlying process is ontologically discrete.
+
+## Perspective matrix
+
+When the event has social or environmental context, separate at least these perspectives:
+
+~~~text
+                     INTERIOR          EXTERIOR
+INDIVIDUAL       self / experience   body / behavior
+COLLECTIVE       culture / meaning   system / environment
+~~~
+
+These perspectives help prevent internal state, external behavior, shared meaning, and environmental change from being collapsed into one variable.
+
+## Neuro-symbolic neutrality
+
+The Skill does not require the host to be purely neural, symbolic, or hybrid.
+
+Different layers may use different representations as long as they remain connected through persistent state and re-entry.
+
+~~~text
+NUMERIC / SENSORIAL
+        ↕
+SYMBOLIC / SEMANTIC
+        ↕
+SELF-MODEL
+        ↕
+TRAJECTORY
+~~~
+
+Do not assume that integrating representations means proving that their combination is conscious. Test whether cross-layer coupling changes durable future dynamics.
 ## Persistent self-model updates
 
 Treat incoming self-model content as an update to persistent self-model state, not as a replacement of everything that existed before.
