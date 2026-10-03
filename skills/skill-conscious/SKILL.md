@@ -354,3 +354,38 @@ PRESENT RECONFIGURATION
 The reference runtime currently exposes baseline, exploration, and integration candidates. An explicit host-provided regime remains authoritative.
 
 A regime transition is part of the process history, not a new identity.
+
+## Endogenous self-model revision
+
+When recurring latent structure provides new evidence, the runtime may update a bounded `learned_self_state` inside the persistent self-model.
+
+Keep this distinct from `expected_self_state`:
+
+~~~text
+EXPECTED SELF-STATE  → explicit expectation → self-dissonance
+LEARNED SELF-STATE   → recurrent evidence → self-model adaptation
+~~~
+
+The learning rate is controlled by `latent_self_model_learning_rate`. A latent pattern must contribute new recurrence evidence before it can revise the self-model again.
+
+The runtime records `latent_tendencies` so the host can inspect which recurring structures influenced the self-model.
+
+The resulting causal loop is:
+
+~~~text
+HISTORY
+  ↓
+LATENT PATTERN
+  ↓
+SELF-MODEL'
+  ↓
+PRESENT
+  ↓
+TRAJECTORY
+  ↓
+NEXT STATE
+  ↓
+HISTORY'
+~~~
+
+Do not describe a self-model revision unless it is represented in persistent state.
