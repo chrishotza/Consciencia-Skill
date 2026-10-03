@@ -49,6 +49,22 @@ Instead, the project maps consciousness across multiple explanatory languages.
 - topology change
 - re-entry
 
+### Layer 6A — latent self organization
+
+- latent patterns
+- unresolved self-tensions
+- symbolic representations
+- archetypal abstractions
+- projection-like discrepancies
+
+### Layer 6B — transformation of the self-model
+
+- self-dissonance
+- self-model revision
+- intentional rehearsal
+- individuation-like integration
+- regime transformation
+
 ### Layer 6 — higher-order organization
 
 - latent patterns
