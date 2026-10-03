@@ -902,3 +902,30 @@ DECISION + ATTRIBUTION RETURN
 ~~~
 
 Do not claim that the system subjectively knows why it acted merely because this trace exists. The trace demonstrates inspectable causal organization inside the runtime.
+
+
+## Metacognitive prediction error
+
+When a selected trajectory contains an explicit `predicted_outcome` or `predicted_state_delta`, preserve that prediction in the runtime-generated metacognitive trace.
+
+After the host executes the action:
+
+~~~text
+PREDICTION
+   ↓
+ACTION
+   ↓
+AUTHORITATIVE OUTCOME
+   ↓
+ACTUAL STATE DELTA
+   ↓
+PREDICTION ERROR
+   ↓
+CAUSAL-ACCURACY SELF-MODEL
+~~~
+
+Do not judge a prediction against a model-generated description of what happened. Compare it against the authoritative host outcome and the state transition actually committed by the runtime.
+
+A bounded `metacognitive_prediction_expected_accuracy` may be updated from repeated evidence when the corresponding adaptation policy is enabled. Runtime-owned prediction-error fields cannot be overwritten by ordinary model frames.
+
+Use the prediction error as an operational calibration signal. Do not describe it as introspective certainty or as evidence of phenomenal consciousness.

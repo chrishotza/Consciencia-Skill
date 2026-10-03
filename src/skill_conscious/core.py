@@ -17,6 +17,10 @@ from .metacognition import (
     build_metacognitive_trace,
     state_delta,
 )
+from .metacognitive_prediction import (
+    METACOGNITIVE_PREDICTION_RUNTIME_KEYS,
+    compare_metacognitive_prediction,
+)
 from .self_observation import (
     SELF_OBSERVATION_RUNTIME_KEYS,
     SelfObservationProfile,
@@ -595,6 +599,226 @@ class ConsciousRuntime:
             "weight": round(weight, 6),
         }
 
+    def metacognitive_prediction_policy(self) -> dict[str, Any]:
+        configured = self.state.self_model.get(
+            "metacognitive_prediction_adaptation",
+            {},
+        )
+        return dict(configured) if isinstance(configured, Mapping) else {}
+
+    def snapshot_metacognitive_prediction(self) -> dict[str, Any]:
+        model = self.state.self_model
+        evidence = model.get("metacognitive_prediction_evidence", {})
+        history = model.get("metacognitive_prediction_history", [])
+        return {
+            "error": float(model.get("metacognitive_prediction_error", 0.0))
+            if isinstance(model.get("metacognitive_prediction_error"), (int, float))
+            and not isinstance(model.get("metacognitive_prediction_error"), bool)
+            else 0.0,
+            "accuracy": float(model.get("metacognitive_prediction_accuracy", 0.0))
+            if isinstance(model.get("metacognitive_prediction_accuracy"), (int, float))
+            and not isinstance(model.get("metacognitive_prediction_accuracy"), bool)
+            else 0.0,
+            "expected_accuracy": float(
+                model.get("metacognitive_prediction_expected_accuracy", 0.5)
+            )
+            if isinstance(
+                model.get("metacognitive_prediction_expected_accuracy"),
+                (int, float),
+            )
+            and not isinstance(
+                model.get("metacognitive_prediction_expected_accuracy"),
+                bool,
+            )
+            else 0.5,
+            "sequence": int(model.get("metacognitive_prediction_sequence", 0))
+            if isinstance(model.get("metacognitive_prediction_sequence"), (int, float))
+            and not isinstance(model.get("metacognitive_prediction_sequence"), bool)
+            else 0,
+            "evidence": dict(evidence) if isinstance(evidence, Mapping) else {},
+            "history": [
+                dict(item)
+                for item in history
+                if isinstance(item, Mapping)
+            ] if isinstance(history, list) else [],
+        }
+
+    def _record_metacognitive_prediction(
+        self,
+        result: Mapping[str, Any],
+        *,
+        evidence_id: str,
+    ) -> dict[str, Any]:
+        if not bool(result.get("available", False)):
+            return {
+                "available": False,
+                "updated": False,
+            }
+
+        error = float(result.get("error", 0.0))
+        accuracy = max(0.0, min(1.0, 1.0 - error))
+        policy = self.metacognitive_prediction_policy()
+        model = dict(self.state.self_model)
+
+        sequence = int(model.get("metacognitive_prediction_sequence", 0)) + 1
+        expected = model.get("metacognitive_prediction_expected_accuracy")
+        if not (
+            isinstance(expected, (int, float))
+            and not isinstance(expected, bool)
+        ):
+            expected = policy.get("initial_expected_accuracy", 0.5)
+        expected = max(0.0, min(1.0, float(expected)))
+
+        adaptation_enabled = bool(policy.get("enabled", False))
+        ledger = model.get("metacognitive_prediction_evidence", {})
+        ledger = dict(ledger) if isinstance(ledger, Mapping) else {}
+        entry = ledger.get("accuracy", {})
+        entry = dict(entry) if isinstance(entry, Mapping) else {}
+
+        count = int(entry.get("sample_count", 0))
+        mean_delta_sum = float(entry.get("delta_sum", 0.0))
+        positive_count = int(entry.get("positive_count", 0))
+        negative_count = int(entry.get("negative_count", 0))
+        last_update_sequence = int(entry.get("last_update_sequence", 0))
+        last_update_direction = int(entry.get("last_update_direction", 0))
+        evidence_ids = [
+            str(item)
+            for item in entry.get("evidence_ids", [])
+            if str(item).strip()
+        ]
+        normalized_evidence_id = str(evidence_id).strip()
+        if normalized_evidence_id and normalized_evidence_id not in evidence_ids:
+            evidence_ids.append(normalized_evidence_id)
+
+        update = None
+        if adaptation_enabled:
+            count += 1
+            delta_from_expected = accuracy - expected
+            mean_delta_sum += delta_from_expected
+            direction = self._adaptation_direction(delta_from_expected)
+            if direction > 0:
+                positive_count += 1
+            elif direction < 0:
+                negative_count += 1
+
+            min_samples = max(1, int(policy.get("min_samples", 3)))
+            error_threshold = max(
+                0.0,
+                float(policy.get("error_threshold", 0.1)),
+            )
+            confidence_threshold = max(
+                0.0,
+                min(1.0, float(policy.get("confidence_threshold", 0.75))),
+            )
+            confidence = min(1.0, count / min_samples)
+            mean_delta = mean_delta_sum / count
+            magnitude = abs(mean_delta)
+            if error_threshold > 0.0:
+                confidence *= min(1.0, magnitude / error_threshold)
+            else:
+                confidence = 1.0
+
+            gate = self._adaptation_gate(
+                policy=policy,
+                count=count,
+                magnitude=magnitude,
+                threshold=error_threshold,
+                positive_count=positive_count,
+                negative_count=negative_count,
+                last_update_direction=last_update_direction,
+                sequence=sequence,
+                last_update_sequence=last_update_sequence,
+            )
+            ready = gate["ready"] and confidence >= confidence_threshold
+            evidence = {
+                "sample_count": count,
+                "mean_delta": round(mean_delta, 6),
+                "confidence": round(confidence, 6),
+                "positive_count": positive_count,
+                "negative_count": negative_count,
+                "direction_consistency": gate["direction_consistency"],
+                "dominant_direction": gate["dominant_direction"],
+                "reversal": gate["reversal"],
+                "effective_error_threshold": round(gate["effective_threshold"], 6),
+                "effective_min_samples": gate["effective_min_samples"],
+                "evidence_ids": evidence_ids[-min_samples:],
+            }
+
+            if ready:
+                learning_rate = max(
+                    0.0,
+                    min(1.0, float(policy.get("learning_rate", 0.25))),
+                )
+                max_step = max(0.0, float(policy.get("max_step", 0.1)))
+                proposed = expected + max(
+                    -max_step,
+                    min(max_step, learning_rate * mean_delta),
+                )
+                proposed = max(0.0, min(1.0, proposed))
+                delta = proposed - expected
+                if abs(delta) > 1e-12:
+                    update = {
+                        "type": "metacognitive_prediction_accuracy_adaptation",
+                        "revision": self.state.revision,
+                        "evidence_sequence": sequence,
+                        "before": round(expected, 6),
+                        "after": round(proposed, 6),
+                        "delta": round(delta, 6),
+                        "cause": "accumulated_prediction_error",
+                        "evidence": evidence,
+                    }
+                    expected = proposed
+                    count = 0
+                    mean_delta_sum = 0.0
+                    positive_count = 0
+                    negative_count = 0
+                    last_update_sequence = sequence
+                    last_update_direction = gate["dominant_direction"]
+
+            ledger["accuracy"] = {
+                "sample_count": count,
+                "delta_sum": round(mean_delta_sum, 6),
+                "positive_count": positive_count,
+                "negative_count": negative_count,
+                "last_update_sequence": last_update_sequence,
+                "last_update_direction": last_update_direction,
+                "evidence_ids": evidence_ids[-32:],
+            }
+            model["metacognitive_prediction_evidence"] = ledger
+
+            if update is not None:
+                history = model.get("metacognitive_prediction_history", [])
+                history = [
+                    dict(item)
+                    for item in history
+                    if isinstance(item, Mapping)
+                ] if isinstance(history, list) else []
+                history.append(update)
+                model["metacognitive_prediction_history"] = (
+                    history[-self.history_limit :]
+                )
+                self.state.transformation_log.append(update)
+                self.state.transformation_log = (
+                    self.state.transformation_log[-self.transformation_limit :]
+                )
+
+        model["metacognitive_prediction_error"] = round(error, 6)
+        model["metacognitive_prediction_accuracy"] = round(accuracy, 6)
+        model["metacognitive_prediction_expected_accuracy"] = round(expected, 6)
+        model["metacognitive_prediction_sequence"] = sequence
+        self.state.self_model = model
+
+        return {
+            "available": True,
+            "updated": update is not None,
+            "error": round(error, 6),
+            "accuracy": round(accuracy, 6),
+            "expected_accuracy": round(expected, 6),
+            "sequence": sequence,
+            "update": update,
+            "diagnostics": dict(result),
+        }
+
     def snapshot_metacognition(self) -> dict[str, Any]:
         model = self.state.self_model
         raw_trace = model.get("metacognitive_trace", {})
@@ -605,6 +829,7 @@ class ConsciousRuntime:
         return {
             "enabled": True,
             "trace": trace,
+            "prediction": self.snapshot_metacognitive_prediction(),
             "sequence": int(sequence) if isinstance(sequence, (int, float)) and not isinstance(sequence, bool) else 0,
             "history": history,
         }
@@ -631,15 +856,43 @@ class ConsciousRuntime:
         action: Mapping[str, Any],
         outcome: Mapping[str, Any],
         before_snapshot: Mapping[str, Any],
-    ) -> None:
+    ) -> dict[str, Any] | None:
         current = self.state.self_model.get("metacognitive_trace")
         if not isinstance(current, Mapping):
-            return
+            return None
+
+        actual_delta = state_delta(before_snapshot, self.state.to_dict())
         updated = dict(current)
         updated["action"] = dict(action)
         updated["outcome"] = dict(outcome)
-        updated["state_delta"] = state_delta(before_snapshot, self.state.to_dict())
+        updated["state_delta"] = actual_delta
+
+        prediction_result = compare_metacognitive_prediction(
+            predicted_outcome=(
+                current.get("predicted_outcome")
+                if isinstance(current.get("predicted_outcome"), Mapping)
+                else None
+            ),
+            predicted_state_delta=(
+                current.get("predicted_state_delta")
+                if isinstance(current.get("predicted_state_delta"), Mapping)
+                else None
+            ),
+            actual_outcome=outcome,
+            actual_state_delta=actual_delta,
+        )
+        prediction_receipt = self._record_metacognitive_prediction(
+            prediction_result.to_dict(),
+            evidence_id=str(action.get("action_id", f"revision-{self.state.revision}")),
+        )
+        if prediction_receipt.get("available"):
+            updated["prediction_error"] = prediction_receipt["error"]
+            updated["prediction_accuracy"] = prediction_receipt["accuracy"]
+            updated["prediction_diagnostics"] = prediction_receipt["diagnostics"]
+            updated["prediction_expected_accuracy"] = prediction_receipt["expected_accuracy"]
+
         self._persist_metacognitive_trace(updated)
+        return prediction_receipt
 
     def experience_dynamics_state(self) -> dict[str, Any]:
         if not self.dynamic_core_enabled:
@@ -2752,8 +3005,10 @@ class ConsciousRuntime:
             "return consequence_trajectory, consequence, and self_evaluation "
             "rather than inventing a result. The runtime can score trajectories using "
             "signals named goal_fit, self_alignment, continuity, learning, risk, uncertainty, "
-            "and homeostatic_fit. Internal condition may legitimately compete with external goals "
-            "when the persistent self-model assigns it a non-zero weight."
+            "and homeostatic_fit. Candidate futures may also include predicted_outcome "
+            "and predicted_state_delta when the trajectory makes an explicit forecast. These are "
+            "predictions, never observations. Internal condition may legitimately compete with "
+            "external goals when the persistent self-model assigns it a non-zero weight."
         )
 
     def begin_action(
@@ -2867,11 +3122,13 @@ class ConsciousRuntime:
         }
         if self.self_observation_enabled:
             receipt["self_observation"] = self.observe_self(persist=False)
-        self._close_metacognitive_trace(
+        prediction_receipt = self._close_metacognitive_trace(
             receipt,
             outcome,
             action_before_snapshot,
         )
+        if prediction_receipt is not None:
+            receipt["metacognitive_prediction"] = prediction_receipt
         if persist:
             self.store.save(self.state)
         return dict(receipt)
@@ -2952,6 +3209,7 @@ class ConsciousRuntime:
                 *RUNTIME_OWNED_KEYS,
                 *SELF_OBSERVATION_RUNTIME_KEYS,
                 *METACOGNITIVE_RUNTIME_KEYS,
+                *METACOGNITIVE_PREDICTION_RUNTIME_KEYS,
             }
             # Once adaptive targets are enabled and initialized, the runtime owns
             # the target unless an experiment explicitly permits external changes.

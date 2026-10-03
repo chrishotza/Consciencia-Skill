@@ -536,3 +536,42 @@ DECISION A + TRACE A
 A successful probe requires decision divergence, attribution divergence, exact reversal of both, and restoration of the intervened valuation.
 
 This establishes an auditable causal relationship between an internal variable, a selected trajectory, and the runtime's own operational attribution of that decision. It does not establish phenomenal consciousness.
+
+
+## Metacognitive prediction verification
+
+The metacognitive trace now carries explicit predictions made by the runtime-selected trajectory and verifies them only after the host action returns an authoritative outcome.
+
+~~~text
+PREDICTED OUTCOME / STATE DELTA
+        ↓
+RUNTIME-GENERATED METACOGNITIVE TRACE
+        ↓
+HOST EXECUTION
+        ↓
+AUTHORITATIVE OUTCOME
+        ↓
+ACTUAL STATE DELTA
+        ↓
+PREDICTION COMPARISON
+        ↓
+METACOGNITIVE PREDICTION ERROR
+        ↓
+CAUSAL-ACCURACY SELF-MODEL
+~~~
+
+The comparator evaluates only fields explicitly predicted by the selected trajectory. It ignores unpredicted outcome fields, treats missing predicted fields as mismatches, and bounds numeric discrepancies to the interval [0, 1].
+
+The runtime records:
+
+- prediction error;
+- prediction accuracy;
+- expected causal-prediction accuracy;
+- evidence sequence and bounded adaptation history;
+- prediction diagnostics for the predicted outcome and predicted state transition.
+
+Repeated prediction errors may update `metacognitive_prediction_expected_accuracy` when the optional `metacognitive_prediction_adaptation.enabled` policy crosses its configured evidence, confidence, consistency, hysteresis, and cooldown gates.
+
+The authoritative outcome is never replaced by the model's prediction. Runtime-owned prediction-error fields are protected from ordinary self-model frames.
+
+This is an operational calibration mechanism. It measures how well the runtime's explicit causal predictions matched subsequent host observations; it does not establish phenomenal consciousness.
