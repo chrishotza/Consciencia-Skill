@@ -18,6 +18,12 @@ RUNTIME_OWNED_FRAME_KEYS = frozenset(
         "metacognitive_prediction_error",
         "metacognitive_prediction_accuracy",
         "metacognitive_prediction_history",
+        "consequence",
+        "consequence_trajectory",
+        "action_receipt",
+        "interoceptive_state",
+        "affective_state",
+        "temporal_state",
     }
 )
 
