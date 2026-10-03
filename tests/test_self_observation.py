@@ -105,3 +105,29 @@ def test_self_observation_restores_across_restart(tmp_path: Path):
         self_observation_enabled=True,
     )
     assert restarted.snapshot_self_observation()["expected"] == snapshot["expected"]
+
+
+def test_model_frame_cannot_overwrite_runtime_self_observation(tmp_path: Path):
+    runtime = ConsciousRuntime(
+        "self-observe-owned",
+        state_path=tmp_path / "runtime.json",
+        self_observation_enabled=True,
+    )
+    runtime.observe_self(persist=True)
+    before = runtime.snapshot_self_observation()["expected"]
+
+    runtime.integrate(
+        {
+            "response": "state update",
+            "self_model": {
+                "self_observation_expected": {
+                    "coherence": 0.0,
+                    "homeostatic_fit": 0.0,
+                },
+                "self_observation_sequence": 9999,
+            },
+        }
+    )
+
+    after = runtime.snapshot_self_observation()["expected"]
+    assert after == before
