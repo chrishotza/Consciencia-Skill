@@ -17,5 +17,7 @@ jobs:
         run: python -m pip install -e ".[dev]"
       - name: Run unit tests
         run: python -m pytest -q
+      - name: Run deterministic self-development probe
+        run: python experiments/self_development_target_adaptation.py
       - name: Run deterministic Hume probe
         run: python experiments/hume_bundle_ab.py

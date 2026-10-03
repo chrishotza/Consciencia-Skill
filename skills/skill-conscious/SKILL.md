@@ -760,3 +760,28 @@ SELF-EVALUATION
       ↓
 SELF-MODEL'
 ~~~
+
+
+## Self-development protocol: target adaptation
+
+When homeostatic_target_adaptation.enabled is true, do not treat a new target value as a model instruction. The runtime accumulates authoritative interoceptive observations returned by the host action boundary.
+
+A durable update requires all configured conditions to hold: enough observations, repeated target error, sufficient confidence, and cooldown expiration. The update is bounded by the configured learning rate and maximum step, optionally constrained by explicit target bounds.
+
+The runtime persists an evidence ledger and an adaptation history containing the action IDs that caused the update, the threshold values, confidence, and the exact before/after target. This makes the transition auditable and restart-persistent.
+
+~~~text
+OBSERVED ACTION OUTCOME
+        ↓
+EVIDENCE LEDGER
+        ↓
+ACCUMULATED PATTERN
+        ↓
+THRESHOLD CROSSING
+        ↓
+BOUNDED TARGET UPDATE
+        ↓
+SELF-MODEL'
+~~~
+
+This mechanism is an engineering model of adaptive self-regulation. It is not evidence of phenomenal consciousness.

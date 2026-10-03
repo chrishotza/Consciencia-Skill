@@ -220,3 +220,28 @@ NEXT TRAJECTORY
 ~~~
 
 Actual host observations remain authoritative. The model can interpret them, but the runtime does not treat a model prediction as an observation.
+
+
+## Self-development layer: evidence → adaptation
+
+Homeostasis now has an internal adaptation path:
+
+~~~text
+HOST-OBSERVED INTEROCEPTION
+        ↓
+EVIDENCE ACCUMULATION
+        ↓
+ERROR / CONSISTENCY
+        ↓
+CONFIDENCE THRESHOLD
+        ↓
+BOUNDED TARGET UPDATE
+        ↓
+PERSISTENT SELF-MODEL'
+        ↓
+NEW TRAJECTORY FIELD
+~~~
+
+A configured homeostatic_target_adaptation policy defines the experiment: minimum samples, error threshold, confidence threshold, learning rate, maximum per-update step, cooldown, and optional target bounds. The runtime records the evidence IDs and the resulting transformation. No new target value is supplied by the consequence evaluator.
+
+This is the first stage of self-development. Priority adaptation and broader self-model revision remain separate experimental layers so they can be ablated independently.

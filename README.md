@@ -428,3 +428,19 @@ Candidate trajectories may also provide a **predicted_interoceptive_state**; the
 When a real host action returns **interoceptive_state**, **affective_state**, or **temporal_state**, those observations are persisted as authoritative action-boundary data. The runtime records the change in homeostatic fit and re-enters the observed condition into the next cycle.
 
 This is a functional self-regulation mechanism. It is not a claim that homeostatic variables constitute feeling or phenomenal consciousness.
+
+
+## Self-development: evidence-driven target adaptation
+
+The first self-development mechanism is now executable rather than host-scripted. A persistent homeostatic target can accumulate evidence from **host-observed interoceptive outcomes** and update itself only when explicit thresholds are crossed.
+
+The adaptation ledger records:
+
+- sample count and repeated high-error observations;
+- mean observed value and mean target error;
+- confidence against a minimum evidence threshold;
+- cooldown and bounded learning rate;
+- the action IDs that supplied the evidence;
+- an auditable before/after target change.
+
+The model does not provide a replacement target after the observations. The runtime derives the update from the accumulated evidence. See tests/test_self_development.py and experiments/self_development_target_adaptation.py.
