@@ -167,11 +167,15 @@ class ConsciousRuntime:
         *,
         memory_limit: int = 32,
         history_limit: int = 64,
+        learn_latent_patterns: bool = True,
+        latent_pattern_limit: int = 16,
     ):
         self.identity = identity
         self.memory_limit = max(1, int(memory_limit))
         self.history_limit = max(1, int(history_limit))
         self.transformation_limit = max(1, self.history_limit)
+        self.learn_latent_patterns = bool(learn_latent_patterns)
+        self.latent_pattern_limit = max(1, int(latent_pattern_limit))
         self.store = JsonStateStore(state_path)
         self.state = self.store.load(identity)
 
