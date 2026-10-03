@@ -439,6 +439,24 @@ A consequence should not be treated as a feeling merely because it receives a po
 
 A consequence becomes part of continuity only when it can alter a later state.
 
+When integrating the next cycle, pass the prior action explicitly:
+
+~~~json
+{
+  "consequence_trajectory": "selected_trajectory_id",
+  "consequence": {
+    "observed_change": "..."
+  },
+  "self_evaluation": {
+    "utility": 0.0,
+    "credited_signal": "learning",
+    "weight_delta": 0.0
+  }
+}
+~~~
+
+`consequence_trajectory` identifies the action whose result is being observed. Do not infer it from a newly selected trajectory. The runtime persists the consequence and applies the evaluation before selecting the next trajectory.
+
 ~~~text
 OUTCOME
   ↓
