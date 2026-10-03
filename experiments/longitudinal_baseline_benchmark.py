@@ -155,12 +155,12 @@ def _run_once(condition: Condition, *, cycles: int, restart_every: int) -> dict[
             trajectory_id = str(selected['id'])
             selected_ids.append(trajectory_id)
 
-            if condition.self_observation and runtime.snapshot_self_observation() is not None:
+            if condition.self_observation and isinstance(receipt.get('self_observation'), dict):
                 self_observation_samples += 1
 
-            runtime.begin_action(selected)
+            runtime.begin_action(selected, persist=False)
             outcome = _outcome(trajectory_id, cycle)
-            receipt = runtime.complete_action(outcome)
+            receipt = runtime.complete_action(outcome, persist=False)
             prediction = receipt.get('metacognitive_prediction')
             if isinstance(prediction, dict):
                 raw_error = prediction.get('prediction_error')
@@ -171,7 +171,9 @@ def _run_once(condition: Condition, *, cycles: int, restart_every: int) -> dict[
                 trajectory_id,
                 {'status': receipt.get('status'), 'result': outcome.get('result')},
                 evaluation={'utility': outcome['utility'], 'credited_signal': outcome['credited_signal']},
+                persist=False,
             )
+            runtime.store.save(runtime.state)
             priority = consequence.get('priority_adaptation')
             if isinstance(priority, dict) and bool(priority.get('updated', False)):
                 adaptation_updates += 1
