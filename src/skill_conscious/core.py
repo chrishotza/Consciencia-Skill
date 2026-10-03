@@ -192,6 +192,76 @@ class ConsciousRuntime:
 
         return round(max(0.0, min(1.0, sum(differences) / len(differences))), 6)
 
+    def reconcile_self_model(self) -> dict[str, Any]:
+        before = self.calculate_self_dissonance()
+        expected = self.state.self_model.get("expected_self_state", {})
+        if not isinstance(expected, Mapping):
+            return {
+                "changed": False,
+                "before": before,
+                "after": before,
+                "updated_keys": [],
+            }
+
+        configured_rate = self.state.self_model.get(
+            "self_model_learning_rate",
+            0.25,
+        )
+        rate = (
+            max(0.0, min(1.0, float(configured_rate)))
+            if isinstance(configured_rate, (int, float))
+            and not isinstance(configured_rate, bool)
+            else 0.25
+        )
+
+        updated = dict(expected)
+        changed_keys: list[str] = []
+
+        for key, expected_value in expected.items():
+            actual_value = self.state.self_state.get(str(key))
+            if (
+                isinstance(expected_value, (int, float))
+                and not isinstance(expected_value, bool)
+                and isinstance(actual_value, (int, float))
+                and not isinstance(actual_value, bool)
+            ):
+                revised = float(expected_value) + rate * (
+                    float(actual_value) - float(expected_value)
+                )
+                if revised != float(expected_value):
+                    updated[str(key)] = revised
+                    changed_keys.append(str(key))
+
+        changed = bool(changed_keys)
+        if changed:
+            self.state.self_model = dict(self.state.self_model)
+            self.state.self_model["expected_self_state"] = updated
+            self.state.self_model["last_reconciliation"] = {
+                "revision": self.state.revision,
+                "before_dissonance": before,
+                "updated_keys": changed_keys,
+            }
+            self.state.self_dissonance = self.calculate_self_dissonance()
+            self.state.coherence = self.calculate_coherence()
+            self.state.transformation_log.append({
+                "revision": self.state.revision,
+                "type": "self_model_reconciliation",
+                "before_dissonance": before,
+                "after_dissonance": self.state.self_dissonance,
+                "updated_keys": changed_keys,
+            })
+            self.state.transformation_log = (
+                self.state.transformation_log[-self.transformation_limit :]
+            )
+            self.store.save(self.state)
+
+        return {
+            "changed": changed,
+            "before": before,
+            "after": self.state.self_dissonance,
+            "updated_keys": changed_keys,
+        }
+
     def topology_diagnostics(self) -> dict[str, float | int]:
         nodes = set(self.state.relation_topology)
         edges = 0
@@ -555,23 +625,6 @@ class ConsciousRuntime:
         candidate_futures = frame.get("candidate_futures")
         selected = frame.get("selected_trajectory")
 
-        if candidate_futures is None and selected is None:
-            candidate_futures = self.generate_candidate_futures()
-
-        if candidate_futures is not None:
-            if not isinstance(candidate_futures, list):
-                raise ValueError("frame.candidate_futures must be a list")
-            candidates = [dict(item) for item in candidate_futures]
-            if selected is None and candidates:
-                selected = self.select_trajectory(candidates)
-
-        if selected is not None:
-            if not isinstance(selected, Mapping):
-                raise ValueError("frame.selected_trajectory must be a mapping")
-            self.state.selected_trajectory = dict(selected)
-        else:
-            self.state.selected_trajectory = None
-
         previous_snapshot = self.state.to_dict()
         self.state.revision += 1
 
@@ -659,6 +712,23 @@ class ConsciousRuntime:
         self.state.coherence = self.calculate_coherence()
         if frame.get("attractor") is None:
             self.state.attractor = self.build_attractor()
+
+        if selected is None:
+            if candidate_futures is None:
+                candidate_futures = self.generate_candidate_futures()
+            elif not isinstance(candidate_futures, list):
+                raise ValueError("frame.candidate_futures must be a list")
+
+            candidates = [dict(item) for item in candidate_futures]
+            if candidates:
+                selected = self.select_trajectory(candidates)
+
+        if selected is not None:
+            if not isinstance(selected, Mapping):
+                raise ValueError("frame.selected_trajectory must be a mapping")
+            self.state.selected_trajectory = dict(selected)
+        else:
+            self.state.selected_trajectory = None
 
         memory = str(frame.get("memory", "")).strip()
         if memory:
