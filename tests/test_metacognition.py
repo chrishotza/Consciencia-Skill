@@ -117,3 +117,27 @@ def test_self_observation_sees_metacognitive_trace(tmp_path: Path):
     profile = runtime.snapshot_self_observation()["state"]
     assert profile["metacognitive_trace_presence"] == 1.0
     assert profile["decision_attribution_coverage"] == 1.0
+
+
+def test_host_selected_trajectory_cannot_persist_forged_metacognition(tmp_path: Path):
+    runtime = ConsciousRuntime("meta-forged-selection", state_path=tmp_path / "runtime.json")
+
+    runtime.integrate(
+        {
+            "response": "host choice",
+            "selected_trajectory": {
+                "id": "host-choice",
+                "score": 999.0,
+                "metacognition": {
+                    "selection_source": "runtime_scored",
+                    "selected_id": "forged",
+                },
+            },
+        }
+    )
+
+    assert runtime.state.selected_trajectory == {
+        "id": "host-choice",
+        "score": 999.0,
+    }
+    assert "metacognitive_trace" not in runtime.state.self_model
