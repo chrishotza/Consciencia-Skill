@@ -20,6 +20,8 @@ DEFAULT_TRAJECTORY_WEIGHTS: dict[str, float] = {
     "coherence": 1.0,
     "topology_integrity": 0.5,
     "salience": 0.25,
+    "self_dissonance": -0.5,
+    "latent_pattern": 0.5,
 }
 
 
@@ -43,6 +45,8 @@ class ConsciousState:
     valuation: dict[str, float] = field(default_factory=dict)
     valence: float = 0.0
     coherence: float = 1.0
+    latent_patterns: dict[str, dict[str, Any]] = field(default_factory=dict)
+    self_dissonance: float = 0.0
     transformation_log: list[dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
@@ -92,6 +96,12 @@ class ConsciousState:
             },
             valence=float(value.get("valence", 0.0)),
             coherence=max(0.0, min(1.0, float(value.get("coherence", 1.0)))),
+            latent_patterns={
+                str(key): dict(pattern)
+                for key, pattern in dict(value.get("latent_patterns", {})).items()
+                if isinstance(pattern, Mapping)
+            },
+            self_dissonance=max(0.0, min(1.0, float(value.get("self_dissonance", 0.0)))),
             transformation_log=[
                 dict(item) for item in value.get("transformation_log", [])
             ],
@@ -154,6 +164,34 @@ class ConsciousRuntime:
         self.store = JsonStateStore(state_path)
         self.state = self.store.load(identity)
 
+    def latent_pattern_score(self) -> float:
+        if not self.state.latent_patterns:
+            return 0.0
+        activations = []
+        for pattern in self.state.latent_patterns.values():
+            if isinstance(pattern, Mapping):
+                value = pattern.get("activation", 0.0)
+                if isinstance(value, (int, float)) and not isinstance(value, bool):
+                    activations.append(max(0.0, min(1.0, float(value))))
+        return round(sum(activations) / len(activations), 6) if activations else 0.0
+
+    def calculate_self_dissonance(self) -> float:
+        expected = self.state.self_model.get("expected_self_state", {})
+        if not isinstance(expected, Mapping):
+            return self.state.self_dissonance
+
+        differences = []
+        for key, expected_value in expected.items():
+            actual_value = self.state.self_state.get(str(key))
+            if isinstance(actual_value, (int, float)) and not isinstance(actual_value, bool):
+                if isinstance(expected_value, (int, float)) and not isinstance(expected_value, bool):
+                    differences.append(abs(float(actual_value) - float(expected_value)))
+
+        if not differences:
+            return self.state.self_dissonance
+
+        return round(max(0.0, min(1.0, sum(differences) / len(differences))), 6)
+
     def topology_diagnostics(self) -> dict[str, float | int]:
         nodes = set(self.state.relation_topology)
         edges = 0
@@ -209,6 +247,7 @@ class ConsciousRuntime:
             1.0 if trajectory_ok else 0.0,
             1.0 if layers_ok else 0.0,
             float(topology["integrity"]),
+            1.0 - self.state.self_dissonance,
         )
         return round(sum(components) / len(components), 6)
 
@@ -247,8 +286,10 @@ class ConsciousRuntime:
         salience = self.salience_score()
         coherence = self.calculate_coherence()
         topology_integrity = float(self.topology_diagnostics()["integrity"])
+        self_dissonance = self.state.self_dissonance
+        latent_score = self.latent_pattern_score()
 
-        return [
+        candidates = [
             {
                 "id": "preserve_continuity",
                 "signals": {
@@ -292,6 +333,24 @@ class ConsciousRuntime:
                 },
             },
         ]
+        if self_dissonance > 0.0 or self.state.latent_patterns:
+            candidates.append({
+                "id": "integrate_latent_pattern",
+                "signals": {
+                    "goal_fit": 0.5,
+                    "self_alignment": 1.0 - self_dissonance,
+                    "continuity": 0.8,
+                    "learning": 0.9,
+                    "risk": 0.1,
+                    "uncertainty": 1.0 - latent_score,
+                    "coherence": coherence,
+                    "topology_integrity": topology_integrity,
+                    "salience": salience,
+                    "self_dissonance": 1.0 - self_dissonance,
+                    "latent_pattern": latent_score,
+                },
+            })
+        return candidates
 
     def present_field(
         self,
@@ -328,6 +387,8 @@ class ConsciousRuntime:
             "valuation": self.state.valuation,
             "valence": self.state.valence,
             "coherence": self.calculate_coherence(),
+            "latent_patterns": self.state.latent_patterns,
+            "self_dissonance": self.state.self_dissonance,
             "transformation_log": self.state.transformation_log[-self.transformation_limit :],
             "revision": self.state.revision,
         }
@@ -367,6 +428,8 @@ class ConsciousRuntime:
             float(self.topology_diagnostics()["integrity"]),
         )
         signals.setdefault("salience", self.salience_score())
+        signals.setdefault("self_dissonance", 1.0 - self.state.self_dissonance)
+        signals.setdefault("latent_pattern", self.latent_pattern_score())
 
         weights = self.trajectory_weights()
         score = 0.0
@@ -559,6 +622,16 @@ class ConsciousRuntime:
                 for node, targets in raw_topology.items()
             }
 
+        if frame.get("latent_patterns") is not None:
+            raw_patterns = frame["latent_patterns"]
+            if not isinstance(raw_patterns, Mapping):
+                raise ValueError("frame.latent_patterns must be a mapping")
+            self.state.latent_patterns = {
+                str(key): dict(value)
+                for key, value in raw_patterns.items()
+                if isinstance(value, Mapping)
+            }
+
         if frame.get("attractor") is not None:
             raw_attractor = frame["attractor"]
             if not isinstance(raw_attractor, Mapping):
@@ -579,6 +652,10 @@ class ConsciousRuntime:
             raw_valence = float(frame["valence"])
             self.state.valence = max(-1.0, min(1.0, raw_valence))
 
+        self.state.self_dissonance = self.calculate_self_dissonance()
+        if frame.get("self_dissonance") is not None:
+            self.state.self_dissonance = max(0.0, min(1.0, float(frame["self_dissonance"])))
+
         self.state.coherence = self.calculate_coherence()
         if frame.get("attractor") is None:
             self.state.attractor = self.build_attractor()
@@ -590,7 +667,7 @@ class ConsciousRuntime:
 
         changed: dict[str, Any] = {}
         current_snapshot = self.state.to_dict()
-        for key in ("self_state", "self_model", "workspace", "intention", "attention", "salience", "layers", "regime", "attractor", "valuation", "valence", "coherence", "relation_topology"):
+        for key in ("self_state", "self_model", "workspace", "intention", "attention", "salience", "layers", "regime", "attractor", "valuation", "valence", "coherence", "relation_topology", "latent_patterns", "self_dissonance"):
             if previous_snapshot.get(key) != current_snapshot.get(key):
                 changed[key] = {"before": previous_snapshot.get(key), "after": current_snapshot.get(key)}
         if changed:
@@ -616,6 +693,8 @@ class ConsciousRuntime:
                 "valuation": self.state.valuation,
                 "valence": self.state.valence,
                 "coherence": self.state.coherence,
+                "latent_patterns": self.state.latent_patterns,
+                "self_dissonance": self.state.self_dissonance,
                 "transformation": bool(changed),
             }
         )
