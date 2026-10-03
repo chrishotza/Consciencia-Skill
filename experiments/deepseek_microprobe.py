@@ -16,13 +16,14 @@ def call_deepseek(prompt: str) -> str:
             {"role": "system", "content": (
                 "You are an experimental cognitive module inside Skill-Conscious. "
                 "Do not claim phenomenal consciousness. Work only from supplied persistent "
-                "state. Return one compact JSON object with keys: response, internal_state, "
-                "self_model, intention, memory. Keep values concise."
+                "state. Return JSON only with keys response, internal_state, self_model, "
+                "intention. Keep response under 80 characters, intention under 80 characters, "
+                "and use at most 2 keys in each state object."
             )},
             {"role": "user", "content": prompt},
         ],
         "temperature": 0,
-        "max_tokens": 220,
+        "max_tokens": 140,
         "response_format": {"type": "json_object"},
     }
     request = urllib.request.Request(
@@ -58,6 +59,10 @@ def run_cycle(runtime: ConsciousRuntime, observation: str) -> dict:
         "Use the persistent state causally. Update the self-model only when supported."
     )
     frame = json.loads(call_deepseek(prompt))
+    frame.setdefault("memory", str(frame.get("response", ""))[:120])
+    frame.setdefault("internal_state", {})
+    frame.setdefault("self_model", {})
+    frame.setdefault("intention", "")
     response = runtime.integrate(frame)
     result = compact_state(runtime)
     result["response"] = response
