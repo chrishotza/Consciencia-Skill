@@ -33,6 +33,7 @@ DEFAULT_TRAJECTORY_WEIGHTS: dict[str, float] = {
     "self_dissonance": -0.5,
     "latent_pattern": 0.5,
     "dissonance_resolution": 1.0,
+    "homeostatic_fit": 0.75,
 }
 
 
@@ -755,6 +756,67 @@ class ConsciousRuntime:
                 return sum(values) / len(values)
         return 1.0 if self.state.attention else 0.0
 
+    def homeostatic_targets(self) -> dict[str, float]:
+        configured = self.state.self_model.get("homeostatic_targets", {})
+        if not isinstance(configured, Mapping):
+            return {}
+        return self._numeric_state(configured)
+
+    def calculate_homeostatic_error(
+        self,
+        observed: Mapping[str, Any] | None = None,
+    ) -> float:
+        targets = self.homeostatic_targets()
+        if not targets:
+            return 0.0
+
+        current = (
+            self._numeric_state(observed)
+            if observed is not None
+            else self._numeric_state(self.state.interoceptive_state)
+        )
+        scales = self._numeric_state(
+            self.state.self_model.get("homeostatic_scales", {})
+        )
+
+        errors: list[float] = []
+        for key, target in targets.items():
+            if key not in current:
+                continue
+            scale = scales.get(key, 1.0)
+            if scale <= 0.0:
+                scale = 1.0
+            errors.append(
+                max(0.0, min(1.0, abs(current[key] - target) / scale))
+            )
+
+        if not errors:
+            return 0.0
+        return round(sum(errors) / len(errors), 6)
+
+    def homeostatic_fit(
+        self,
+        observed: Mapping[str, Any] | None = None,
+    ) -> float:
+        targets = self.homeostatic_targets()
+        if not targets:
+            return 0.0
+        return round(
+            max(0.0, min(1.0, 1.0 - self.calculate_homeostatic_error(observed))),
+            6,
+        )
+
+    def refresh_affective_state(self) -> dict[str, Any]:
+        if not self.homeostatic_targets():
+            return dict(self.state.affective_state)
+
+        updated = dict(self.state.affective_state)
+        error = self.calculate_homeostatic_error()
+        updated["homeostatic_error"] = error
+        updated["homeostatic_fit"] = round(1.0 - error, 6)
+        self.state.affective_state = updated
+        return dict(updated)
+
     def calculate_coherence(self) -> float:
         topology = self.topology_diagnostics()
         trajectory_ok = (
@@ -823,6 +885,7 @@ class ConsciousRuntime:
         topology_integrity = float(self.topology_diagnostics()["integrity"])
         self_dissonance = self.state.self_dissonance
         latent_score = self.latent_pattern_score()
+        current_homeostatic_fit = self.homeostatic_fit()
 
         candidates = [
             {
@@ -868,6 +931,23 @@ class ConsciousRuntime:
                 },
             },
         ]
+        if self.homeostatic_targets() and self.state.interoceptive_state:
+            candidates.append({
+                "id": "restore_homeostasis",
+                "signals": {
+                    "goal_fit": 0.4 * intention_strength,
+                    "self_alignment": current_homeostatic_fit,
+                    "continuity": 0.9,
+                    "learning": 0.3,
+                    "risk": 0.1,
+                    "uncertainty": 1.0 - uncertainty_level,
+                    "coherence": coherence,
+                    "topology_integrity": topology_integrity,
+                    "salience": salience,
+                    "homeostatic_fit": min(1.0, current_homeostatic_fit + 0.35),
+                },
+            })
+
         if self_dissonance > 0.0 or self.state.latent_patterns:
             candidates.append({
                 "id": "integrate_latent_pattern",
@@ -927,6 +1007,11 @@ class ConsciousRuntime:
             "self_dissonance": self.state.self_dissonance,
             "interoceptive_state": self.state.interoceptive_state,
             "affective_state": self.state.affective_state,
+            "homeostasis": {
+                "targets": self.homeostatic_targets(),
+                "error": self.calculate_homeostatic_error(),
+                "fit": self.homeostatic_fit(),
+            },
             "temporal_state": self.state.temporal_state,
             "perspectives": self.state.perspectives,
             "transformation_log": self.state.transformation_log[-self.transformation_limit :],
@@ -969,6 +1054,14 @@ class ConsciousRuntime:
         if not isinstance(signals, Mapping):
             raise ValueError("trajectory.signals must be a mapping")
         signals = dict(signals)
+        predicted_internal = candidate.get("predicted_interoceptive_state")
+        if isinstance(predicted_internal, Mapping):
+            signals.setdefault(
+                "homeostatic_fit",
+                self.homeostatic_fit(predicted_internal),
+            )
+        else:
+            signals.setdefault("homeostatic_fit", self.homeostatic_fit())
         signals.setdefault("coherence", self.calculate_coherence())
         signals.setdefault(
             "topology_integrity",
@@ -1107,7 +1200,9 @@ class ConsciousRuntime:
             "state updates. When a prior action has produced an observed outcome, "
             "return consequence_trajectory, consequence, and self_evaluation "
             "rather than inventing a result. The runtime can score trajectories using "
-            "signals named goal_fit, self_alignment, continuity, learning, risk, and uncertainty."
+            "signals named goal_fit, self_alignment, continuity, learning, risk, uncertainty, "
+            "and homeostatic_fit. Internal condition may legitimately compete with external goals "
+            "when the persistent self-model assigns it a non-zero weight."
         )
 
     def begin_action(
@@ -1163,6 +1258,29 @@ class ConsciousRuntime:
         receipt = dict(self.state.pending_action)
         receipt["status"] = str(status).strip() or "completed"
         receipt["outcome"] = dict(outcome)
+
+        homeostatic_before = self.homeostatic_fit()
+        observed_layers: dict[str, dict[str, Any]] = {}
+        for layer_name in (
+            "interoceptive_state",
+            "affective_state",
+            "temporal_state",
+        ):
+            raw_layer = outcome.get(layer_name)
+            if isinstance(raw_layer, Mapping):
+                setattr(self.state, layer_name, dict(raw_layer))
+                observed_layers[layer_name] = dict(raw_layer)
+
+        self.refresh_affective_state()
+        homeostatic_after = self.homeostatic_fit()
+        receipt["observed_layers"] = observed_layers
+        receipt["homeostatic_fit_before"] = homeostatic_before
+        receipt["homeostatic_fit_after"] = homeostatic_after
+        receipt["homeostatic_delta"] = round(
+            homeostatic_after - homeostatic_before,
+            6,
+        )
+
         self.state.action_history.append(receipt)
         self.state.action_history = self.state.action_history[-self.history_limit :]
         self.state.pending_action = None
@@ -1258,6 +1376,8 @@ class ConsciousRuntime:
             if not isinstance(raw_temporal, Mapping):
                 raise ValueError("frame.temporal_state must be a mapping")
             self.state.temporal_state = dict(raw_temporal)
+
+        self.refresh_affective_state()
 
         if frame.get("perspectives") is not None:
             raw_perspectives = frame["perspectives"]
@@ -1451,6 +1571,7 @@ class ConsciousRuntime:
         )
         self.state.history = self.state.history[-self.history_limit :]
 
+        self.refresh_affective_state()
         self.store.save(self.state)
         return response
 
