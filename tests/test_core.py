@@ -362,13 +362,32 @@ def test_integrate_consequence_updates_next_cycle(tmp_path):
 
     assert runtime.state.self_model["trajectory_feedback"]["continue"]["count"] == 1
     assert runtime.state.self_model["trajectory_weights"]["continuity"] == -1.0
-    assert runtime.state.selected_trajectory["id"] == "learn"
+    # Consequence feedback is applied after the current selection, so it
+    # affects the following cycle rather than retroactively changing this one.
+    assert runtime.state.selected_trajectory["id"] == "continue"
     assert runtime.state.history[-1]["consequence"]["stability"] == -0.5
     assert runtime.state.history[-1]["consequence_trajectory"] == "continue"
 
+    runtime.integrate(
+        {
+            "response": "next cycle after consequence",
+            "candidate_futures": [
+                {
+                    "id": "continue",
+                    "signals": {"continuity": 1.0, "learning": 0.0},
+                },
+                {
+                    "id": "learn",
+                    "signals": {"continuity": 0.0, "learning": 1.0},
+                },
+            ],
+        }
+    )
+    assert runtime.state.selected_trajectory["id"] == "learn"
+
     restarted = ConsciousRuntime("agent-integrated-consequence", path)
     assert restarted.state.selected_trajectory["id"] == "learn"
-    assert restarted.state.history[-1]["self_evaluation"]["utility"] == -1.0
+    assert restarted.state.history[-2]["self_evaluation"]["utility"] == -1.0
 
 
 def test_conscious_host_executes_action_and_reenters_observed_consequence(tmp_path):
