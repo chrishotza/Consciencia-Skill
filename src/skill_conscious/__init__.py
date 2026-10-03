@@ -7,6 +7,7 @@ from .sensor_affect import SensoryAffectiveSnapshot, appraise_sensory_field, cau
 from .reentry import ExperienceFieldMemory, ExperienceFieldReentry
 from .attractor import AttractorState, ExperienceAttractorMemory
 from .runtime_bridge import BridgeSelection, ExperienceDynamicsBridge, RUNTIME_OWNED_KEYS
+from .causal_probe import ReversibleInterventionResult, run_reversible_intervention
 
 __all__ = [
     "ConsciousRuntime",
@@ -34,4 +35,6 @@ __all__ = [
     "BridgeSelection",
     "ExperienceDynamicsBridge",
     "RUNTIME_OWNED_KEYS",
+    "ReversibleInterventionResult",
+    "run_reversible_intervention",
 ]
