@@ -63,6 +63,114 @@ class OpenAICompatibleProvider:
             raise ValueError("OpenAI-compatible endpoint returned an invalid response") from exc
 
 
+
+
+class SelfModelPolicyProvider:
+    """Deterministic providers that differ only in their self-model policy."""
+
+    def __init__(self, *, continuity: float, learning: float) -> None:
+        self.continuity = float(continuity)
+        self.learning = float(learning)
+
+    def __call__(self, _prompt: str) -> dict[str, Any]:
+        return {
+            "response": "causal policy frame",
+            "self_model": {
+                "trajectory_weights": {
+                    "goal_fit": 1.0,
+                    "continuity": self.continuity,
+                    "learning": self.learning,
+                }
+            },
+        }
+
+
+def run_causal_provider_ab(*, cycles: int = 8) -> dict[str, Any]:
+    condition = CONDITIONS[2]
+    policies = {
+        "continuity_policy": SelfModelPolicyProvider(continuity=3.0, learning=0.0),
+        "learning_policy": SelfModelPolicyProvider(continuity=0.0, learning=3.0),
+    }
+
+    branches: dict[str, dict[str, Any]] = {}
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        for name, provider in policies.items():
+            path = root / f"{name}.json"
+            runtime = _seed(condition, path)
+            selected_ids: list[str] = []
+
+            for cycle in range(cycles):
+                candidates = _candidates(cycle)
+                adapter = ProviderNeutralLLMAdapter(
+                    provider,
+                    fixed_candidate_futures=candidates,
+                )
+                frame = adapter(
+                    runtime.prepare(
+                        f"causal A/B cycle {cycle}",
+                        candidate_futures=candidates,
+                    )
+                )
+                runtime.integrate(frame)
+                selected = dict(runtime.state.selected_trajectory or {})
+                selected_ids.append(str(selected["id"]))
+
+                runtime.begin_action(selected, persist=False)
+                outcome = _outcome(str(selected["id"]), cycle)
+                runtime.complete_action(outcome, persist=False)
+
+                evaluation = adapter(
+                    runtime.prepare_consequence(
+                        str(selected["id"]),
+                        outcome,
+                        candidate_futures=candidates,
+                    )
+                )
+                evaluation["consequence_trajectory"] = str(selected["id"])
+                evaluation["consequence"] = dict(outcome)
+                runtime.integrate(evaluation)
+                runtime.store.save(runtime.state)
+
+            branches[name] = {
+                "selected_trajectories": selected_ids,
+                "trajectory_switches": sum(
+                    selected_ids[i] != selected_ids[i - 1]
+                    for i in range(1, len(selected_ids))
+                ),
+                "final_state_hash": __import__("hashlib").sha256(
+                    json.dumps(
+                        runtime.snapshot(),
+                        ensure_ascii=False,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    ).encode("utf-8")
+                ).hexdigest(),
+                "final_trajectory_weights": dict(
+                    runtime.state.self_model.get("trajectory_weights", {})
+                ),
+            }
+
+    a = branches["continuity_policy"]["selected_trajectories"]
+    b = branches["learning_policy"]["selected_trajectories"]
+    divergence_cycles = [
+        index
+        for index, (left, right) in enumerate(zip(a, b))
+        if left != right
+    ]
+
+    return {
+        "protocol": "llm-causal-ab-v1",
+        "same_initial_runtime": True,
+        "same_candidate_field": True,
+        "same_outcome_rule": True,
+        "causal_variable": "provider-authored self_model.trajectory_weights",
+        "branches": branches,
+        "selection_diverged": bool(divergence_cycles),
+        "divergence_cycles": divergence_cycles,
+        "not_a_phenomenal_consciousness_test": True,
+    }
+
 def completion_from_environment() -> Any:
     provider = os.getenv("SKILL_CONSCIOUS_LLM_PROVIDER", "deterministic").strip().lower()
     if provider == "deterministic":
@@ -231,6 +339,7 @@ def main() -> None:
         cycles=args.cycles,
         restart_every=args.restart_every,
     )
+    report["causal_provider_ab"] = run_causal_provider_ab(cycles=args.cycles)
     print(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
 
 
