@@ -99,7 +99,7 @@ The result should be stored as machine-readable JSON alongside a human-readable 
 
 ## Runtime 0.7 extension
 
-The experiment now separates two mechanisms that were previously coupled:
+The runtime exposes two independently controllable mechanisms:
 
 ~~~text
 LATENT PATTERN DISCOVERY
@@ -109,10 +109,6 @@ SELF-MODEL REVISION
 CAUSAL TRAJECTORY EFFECT
 ~~~
 
-This allows three distinct ablations:
+The reference tests exercise these switches independently. The current four-condition ablation keeps the original A/B/C/D structure; C enables endogenous latent discovery, while D additionally enables endogenous self-model revision and the explicit reconciliation step.
 
-1. no endogenous latent learning;
-2. endogenous latent learning without self-model revision;
-3. endogenous latent learning plus bounded self-model revision.
-
-The goal is to determine whether any downstream behavioral difference comes from discovering a recurrent pattern, from revising the self-model with that pattern, or from both.
+The goal is to determine whether downstream behavioral differences arise from discovering a recurrent pattern, revising the self-model with that pattern, explicit reconciliation, or their interaction.
