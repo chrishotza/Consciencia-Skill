@@ -679,3 +679,84 @@ A host has integrated the consequence layer when it can demonstrate:
 6. persistence of the update after restart.
 
 The unresolved question remains whether the resulting architecture has phenomenal experience.
+
+## Self-regulation and homeostatic relevance
+
+Internal condition must not remain a decorative field.
+
+When the host provides persistent internal signals, define explicit homeostatic targets when appropriate:
+
+~~~json
+{
+  "self_model": {
+    "homeostatic_targets": {
+      "energy": 0.8
+    }
+  },
+  "interoceptive_state": {
+    "energy": 0.4
+  }
+}
+~~~
+
+The runtime derives:
+
+~~~text
+INTEROCEPTIVE STATE
+       ↓
+HOMEOSTATIC ERROR
+       ↓
+HOMEOSTATIC FIT
+       ↓
+TRAJECTORY SCORING
+       ↓
+ACTION
+~~~
+
+Use **homeostatic_scales** when a signal needs a domain-specific normalization scale.
+
+A trajectory can carry **predicted_interoceptive_state**. The runtime evaluates its predicted homeostatic fit before selection. This creates a testable competition between external goals and internal condition.
+
+The host remains authoritative about actual internal observations. A model prediction is not an observation.
+
+## Embodied consequence rule
+
+When execute_action() returns any of these mappings:
+
+- interoceptive_state;
+- affective_state;
+- temporal_state;
+
+the action receipt persists them as observed layers.
+
+The runtime records:
+
+~~~text
+HOMEOSTATIC FIT BEFORE
+        ↓
+OBSERVED ACTION
+        ↓
+HOMEOSTATIC FIT AFTER
+        ↓
+HOMEOSTATIC DELTA
+~~~
+
+The delta is an engineering signal for self-regulation. It is not treated as evidence of subjective feeling.
+
+A complete embodied cycle therefore requires:
+
+~~~text
+INTERNAL CONDITION
+      ↓
+SELF-RELEVANCE
+      ↓
+TRAJECTORY
+      ↓
+ACTION
+      ↓
+OBSERVED INTERNAL CONSEQUENCE
+      ↓
+SELF-EVALUATION
+      ↓
+SELF-MODEL'
+~~~
