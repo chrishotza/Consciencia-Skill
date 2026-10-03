@@ -457,7 +457,9 @@ class ConsciousRuntime:
                 "before_dissonance": before,
                 "updated_keys": changed_keys,
             }
-            self.state.self_dissonance = self.calculate_self_dissonance()
+            self.extract_latent_patterns()
+
+        self.state.self_dissonance = self.calculate_self_dissonance()
             self.state.coherence = self.calculate_coherence()
             self.state.transformation_log.append({
                 "revision": self.state.revision,
