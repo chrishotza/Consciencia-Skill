@@ -433,6 +433,7 @@ class ConsciousRuntime:
             "valuation": dict(restored),
             "evidence_added": False,
         }
+
     def experience_dynamics_state(self) -> dict[str, Any]:
         if not self.dynamic_core_enabled:
             return {"experience_dynamics_enabled": False}
