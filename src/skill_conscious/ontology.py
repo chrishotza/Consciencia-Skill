@@ -31,4 +31,6 @@ PRIMITIVES = (
     "affective_state",
     "temporal_state",
     "perspectives",
+    "homeostasis",
+    "self_regulation",
 )
