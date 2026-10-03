@@ -2,41 +2,18 @@ name: DeepSeek Architecture Review
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches:
+      - main
+  workflow_dispatch: {}
 
 permissions:
   contents: read
 
 jobs:
-  deepseek-review:
+  deepseek-smoke:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Build review bundle
-        run: |
-          mkdir -p /tmp/review
-          cp src/skill_conscious/core.py /tmp/review/core.py
-          cp src/skill_conscious/ontology.py /tmp/review/ontology.py
-          cp tests/test_endogenous_organization.py /tmp/review/test_endogenous_organization.py
-          cp tests/test_self_causality.py /tmp/review/test_self_causality.py
-          cp tests/test_latent_self.py /tmp/review/test_latent_self.py
-          cp experiments/latent_self_ablation.py /tmp/review/latent_self_ablation.py
-          cp docs/EXPERIMENTS.md /tmp/review/EXPERIMENTS.md
-          cp docs/ADVANCE.md /tmp/review/ADVANCE.md
-          python - <<'PY'
-          from pathlib import Path
-          parts = []
-          for path in sorted(Path("/tmp/review").iterdir()):
-              parts.append(f"===== {path.name} =====")
-              parts.append(path.read_text(encoding="utf-8"))
-          Path("/tmp/review/bundle.txt").write_text("\n\n".join(parts), encoding="utf-8")
-          print(f"Bundle bytes: {Path('/tmp/review/bundle.txt').stat().st_size}")
-          PY
-
-      - name: Ask DeepSeek
+      - name: Verify DeepSeek secret and API
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: |
@@ -44,84 +21,34 @@ jobs:
           import json
           import os
           import urllib.request
-          from pathlib import Path
 
-          api_key = os.environ.get("DEEPSEEK_API_KEY", "")
-          if not api_key:
-              raise SystemExit(
-                  "DEEPSEEK_API_KEY secret is unavailable or has a different name."
-              )
+          key = os.environ.get("DEEPSEEK_API_KEY", "")
+          if not key:
+              raise SystemExit("DEEPSEEK_API_KEY is unavailable to this workflow.")
 
-          bundle = Path("/tmp/review/bundle.txt").read_text(encoding="utf-8")
-          prompt = """You are an external architecture reviewer for the Skill-Conscious repository.
-
-Review the supplied runtime and experimental code as an adversarial engineering auditor.
-
-Focus on:
-1. actual causal ordering bugs;
-2. state persistence and mutation bugs;
-3. latent-pattern learning validity;
-4. self-model revision validity;
-5. regime-selection causality;
-6. experiment confounds and false positives;
-7. numerical instability or edge cases;
-8. the smallest concrete next changes that make the architecture more rigorous.
-
-Do not claim phenomenal consciousness is demonstrated.
-Do not praise the project without evidence.
-Separate confirmed code facts, likely bugs, and design hypotheses.
-Return a concise but technically detailed Markdown report with sections:
-- Critical findings
-- Important findings
-- Experimental confounds
-- Recommended next implementation
-- Suggested tests
-
-Repository version is 0.7.0.
-
-SOURCE:
-""" + bundle
-
-          payload = json.dumps({
+          body = json.dumps({
               "model": "deepseek-chat",
               "messages": [
-                  {
-                      "role": "system",
-                      "content": "You are a rigorous software and experimental-methods reviewer."
-                  },
-                  {"role": "user", "content": prompt}
+                  {"role": "user", "content": "Reply with exactly: DEEPSEEK_OK"}
               ],
-              "temperature": 0.1
+              "temperature": 0
           }).encode("utf-8")
 
           request = urllib.request.Request(
               "https://api.deepseek.com/chat/completions",
-              data=payload,
+              data=body,
               headers={
-                  "Authorization": f"Bearer {api_key}",
+                  "Authorization": f"Bearer {key}",
                   "Content-Type": "application/json",
               },
               method="POST",
           )
 
-          with urllib.request.urlopen(request, timeout=180) as response:
-              data = json.loads(response.read().decode("utf-8"))
+          with urllib.request.urlopen(request, timeout=60) as response:
+              payload = json.loads(response.read().decode("utf-8"))
 
-          content = data["choices"][0]["message"]["content"]
-          Path("deepseek-review.md").write_text(content, encoding="utf-8")
-          print(content)
+          answer = payload["choices"][0]["message"]["content"].strip()
+          print(f"DeepSeek API responded: {answer}")
+          if answer != "DEEPSEEK_OK":
+              raise SystemExit("DeepSeek API returned an unexpected response.")
           PY
-
-      - name: Publish review summary
-        run: |
-          {
-            echo "## DeepSeek architecture review"
-            echo
-            cat deepseek-review.md
-          } >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Upload review artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: deepseek-architecture-review
-          path: deepseek-review.md
