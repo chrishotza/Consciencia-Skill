@@ -12,6 +12,11 @@ from typing import Any, Mapping
 from .ontology import CONSCIOUSNESS_DEFINITION
 from .experience_field import ExperienceFieldProfile
 from .runtime_bridge import ExperienceDynamicsBridge, RUNTIME_OWNED_KEYS
+from .metacognition import (
+    METACOGNITIVE_RUNTIME_KEYS,
+    build_metacognitive_trace,
+    state_delta,
+)
 from .self_observation import (
     SELF_OBSERVATION_RUNTIME_KEYS,
     SelfObservationProfile,
@@ -589,6 +594,47 @@ class ConsciousRuntime:
             "distance": distance,
             "weight": round(weight, 6),
         }
+
+    def snapshot_metacognition(self) -> dict[str, Any]:
+        model = self.state.self_model
+        raw_trace = model.get("metacognitive_trace", {})
+        raw_history = model.get("metacognitive_history", [])
+        trace = dict(raw_trace) if isinstance(raw_trace, Mapping) else {}
+        history = [dict(item) for item in raw_history if isinstance(item, Mapping)] if isinstance(raw_history, list) else []
+        sequence = model.get("metacognitive_sequence", 0)
+        return {
+            "enabled": True,
+            "trace": trace,
+            "sequence": int(sequence) if isinstance(sequence, (int, float)) and not isinstance(sequence, bool) else 0,
+            "history": history,
+        }
+
+    def _persist_metacognitive_trace(self, trace: Mapping[str, Any]) -> None:
+        model = dict(self.state.self_model)
+        sequence = int(trace.get("sequence", 0)) if isinstance(trace.get("sequence", 0), (int, float)) and not isinstance(trace.get("sequence", 0), bool) else 0
+        history = model.get("metacognitive_history", [])
+        if not isinstance(history, list):
+            history = []
+        history = [*history, dict(trace)][-self.history_limit:]
+        model["metacognitive_trace"] = dict(trace)
+        model["metacognitive_sequence"] = sequence
+        model["metacognitive_history"] = history
+        self.state.self_model = model
+
+    def _close_metacognitive_trace(
+        self,
+        action: Mapping[str, Any],
+        outcome: Mapping[str, Any],
+        before_snapshot: Mapping[str, Any],
+    ) -> None:
+        current = self.state.self_model.get("metacognitive_trace")
+        if not isinstance(current, Mapping):
+            return
+        updated = dict(current)
+        updated["action"] = dict(action)
+        updated["outcome"] = dict(outcome)
+        updated["state_delta"] = state_delta(before_snapshot, self.state.to_dict())
+        self._persist_metacognitive_trace(updated)
 
     def experience_dynamics_state(self) -> dict[str, Any]:
         if not self.dynamic_core_enabled:
@@ -2429,6 +2475,7 @@ class ConsciousRuntime:
             },
             "experience_dynamics": self.experience_dynamics_state(),
             "self_observation": self.snapshot_self_observation(),
+            "metacognition": self.snapshot_metacognition(),
             "temporal_state": self.state.temporal_state,
             "perspectives": self.state.perspectives,
             "transformation_log": self.state.transformation_log[-self.transformation_limit :],
@@ -2466,7 +2513,7 @@ class ConsciousRuntime:
 
         return weights
 
-    def score_trajectory(self, candidate: Mapping[str, Any]) -> float:
+    def _score_trajectory_details(self, candidate: Mapping[str, Any]) -> dict[str, Any]:
         signals = candidate.get("signals", {})
         if not isinstance(signals, Mapping):
             raise ValueError("trajectory.signals must be a mapping")
@@ -2489,30 +2536,71 @@ class ConsciousRuntime:
         signals.setdefault("latent_pattern", self.latent_pattern_score())
 
         weights = self.trajectory_weights()
-        score = 0.0
+        signal_contributions: dict[str, float] = {}
+        base_score = 0.0
         for key, value in signals.items():
             if isinstance(value, (int, float)) and not isinstance(value, bool):
-                score += weights.get(str(key), 0.0) * float(value)
+                contribution = float(weights.get(str(key), 0.0)) * float(value)
+                signal_contributions[str(key)] = round(contribution, 6)
+                base_score += contribution
 
+        score = base_score
+        self_observation_score = 0.0
+        self_observation_diagnostics: dict[str, float] = {}
         if self.self_observation_enabled:
-            self_observation_score, _ = self._score_self_observation_candidate(candidate)
+            self_observation_score, self_observation_diagnostics = (
+                self._score_self_observation_candidate(candidate)
+            )
             score += self_observation_score
 
+        experience_dynamics_score = 0.0
+        experience_dynamics_diagnostics: dict[str, float] = {}
         if self.dynamic_core_enabled:
             predicted_field = candidate.get("predicted_experience_field")
             if isinstance(predicted_field, Mapping):
                 try:
                     predicted_profile = self._experience_profile(predicted_field)
                     current_profile = self._current_experience_profile()
-                    score, _ = self.dynamic_core.score_candidate(
+                    scored, diagnostics = self.dynamic_core.score_candidate(
                         score,
                         predicted_profile,
                         current_profile=current_profile,
                     )
+                    experience_dynamics_score = round(scored - score, 6)
+                    experience_dynamics_diagnostics = {
+                        str(key): float(value)
+                        for key, value in diagnostics.items()
+                        if isinstance(value, (int, float)) and not isinstance(value, bool)
+                    }
+                    score = scored
                 except (TypeError, ValueError):
                     pass
 
-        return score
+        return {
+            "score": round(score, 6),
+            "signals": {
+                str(key): round(float(value), 6)
+                for key, value in signals.items()
+                if isinstance(value, (int, float)) and not isinstance(value, bool)
+            },
+            "weights": {
+                str(key): round(float(value), 6)
+                for key, value in weights.items()
+                if isinstance(value, (int, float)) and not isinstance(value, bool)
+            },
+            "signal_contributions": signal_contributions,
+            "self_observation": {
+                **self_observation_diagnostics,
+                "contribution": round(self_observation_score, 6),
+            },
+            "experience_dynamics": {
+                **experience_dynamics_diagnostics,
+                "contribution": round(experience_dynamics_score, 6),
+            },
+        }
+
+    def score_trajectory(self, candidate: Mapping[str, Any]) -> float:
+        return float(self._score_trajectory_details(candidate)["score"])
 
     def select_regime(
         self, candidates: list[Mapping[str, Any]]
@@ -2580,16 +2668,32 @@ class ConsciousRuntime:
         scored: list[dict[str, Any]] = []
         for candidate in candidates:
             item = dict(candidate)
-            item["score"] = self.score_trajectory(item)
-            if self.self_observation_enabled and isinstance(item.get("predicted_self_observation"), Mapping):
-                _, diagnostics = self._score_self_observation_candidate(item)
-                item["self_observation"] = diagnostics
+            details = self._score_trajectory_details(item)
+            item["score"] = details["score"]
+            if self.self_observation_enabled and isinstance(
+                item.get("predicted_self_observation"), Mapping
+            ):
+                item["self_observation"] = dict(details["self_observation"])
+            item["_metacognitive_breakdown"] = details
             scored.append(item)
 
-        return max(
+        selected = max(
             scored,
             key=lambda item: (float(item.get("score", 0.0)), str(item.get("id", ""))),
         )
+        sequence = int(self.state.self_model.get("metacognitive_sequence", 0)) + 1
+        trace = build_metacognitive_trace(
+            revision=self.state.revision,
+            sequence=sequence,
+            candidates=scored,
+            selected=selected,
+            selection_source="runtime_scored",
+            valuation_weights=self.trajectory_weights(),
+        ).to_dict()
+        selected = dict(selected)
+        selected.pop("_metacognitive_breakdown", None)
+        selected["metacognition"] = trace
+        return selected
 
     def present(self, external_input: str) -> dict[str, Any]:
         return self.present_field(external_input)
@@ -2697,6 +2801,7 @@ class ConsciousRuntime:
         if self.state.pending_action is None:
             raise RuntimeError("no pending action to complete")
 
+        action_before_snapshot = self.state.to_dict()
         receipt = dict(self.state.pending_action)
         receipt["status"] = str(status).strip() or "completed"
         receipt["outcome"] = dict(outcome)
@@ -2757,6 +2862,11 @@ class ConsciousRuntime:
         }
         if self.self_observation_enabled:
             receipt["self_observation"] = self.observe_self(persist=False)
+        self._close_metacognitive_trace(
+            receipt,
+            outcome,
+            action_before_snapshot,
+        )
         if persist:
             self.store.save(self.state)
         return dict(receipt)
@@ -2835,6 +2945,7 @@ class ConsciousRuntime:
                 "self_model_adaptation_sequence",
                 *RUNTIME_OWNED_KEYS,
                 *SELF_OBSERVATION_RUNTIME_KEYS,
+                *METACOGNITIVE_RUNTIME_KEYS,
             }
             # Once adaptive targets are enabled and initialized, the runtime owns
             # the target unless an experiment explicitly permits external changes.
@@ -3037,6 +3148,9 @@ class ConsciousRuntime:
             if not isinstance(selected, Mapping):
                 raise ValueError("frame.selected_trajectory must be a mapping")
             self.state.selected_trajectory = dict(selected)
+            raw_trace = selected.get("metacognition")
+            if isinstance(raw_trace, Mapping):
+                self._persist_metacognitive_trace(raw_trace)
         else:
             self.state.selected_trajectory = None
 
