@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use Skill-Conscious, please cite the exact version used."
+title: "Skill-Conscious"
+type: software
+version: "0.4.0"
+date-released: 2026-10-02
+authors:
+  - family-names: Mendoza
+    given-names: Christian
+repository-code: "https://github.com/chrishotza/Skill-Conscious"
+url: "https://github.com/chrishotza/Skill-Conscious"
+abstract: "An open engineering framework for comparative ontology, implementation, and experimentation around persistent self-referential architectures for machine consciousness."
+keywords:
+  - consciousness
+  - machine consciousness
+  - artificial consciousness
+  - self-model
+  - self-reference
+  - agency
+  - persistent identity
+  - computational ontology
+  - dynamical systems
+license: "OTHER"
