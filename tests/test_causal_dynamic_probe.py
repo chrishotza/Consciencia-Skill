@@ -52,7 +52,6 @@ def build_runtime(tmp_path: Path) -> ConsciousRuntime:
         evidence_id="recovery-1",
         persist=False,
     )
-    runtime._restore_dynamic_core_state()
     return runtime
 
 
