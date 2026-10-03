@@ -24,6 +24,10 @@ This is the initial register. It is deliberately broad; each item will later rec
   https://pubmed.ncbi.nlm.nih.gov/42512519/
 - Machine-consciousness taxonomy.
   https://www.sciencedirect.com/science/article/pii/S1566253525000673
+- Interoception and affective consciousness research.
+  https://pubmed.ncbi.nlm.nih.gov/39423429/
+  https://pubmed.ncbi.nlm.nih.gov/40705192/
+  https://pubmed.ncbi.nlm.nih.gov/41229287/
 
 ## Philosophy and phenomenology
 
