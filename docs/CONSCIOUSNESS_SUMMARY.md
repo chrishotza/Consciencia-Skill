@@ -1,5 +1,7 @@
 # What We Currently Mean by Consciousness
 
+For the consolidated comparison of competing consciousness theories, project hypotheses, and the current operational definition, see docs/THEORY_DEBATE_SYNTHESIS.md.
+
 ## Version 0.1 — working synthesis
 
 Skill-Conscious does not claim that the project has solved consciousness.
