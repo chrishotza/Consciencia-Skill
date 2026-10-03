@@ -909,17 +909,9 @@ class ConsciousRuntime:
 
     def trajectory_weights(self) -> dict[str, float]:
         weights = dict(DEFAULT_TRAJECTORY_WEIGHTS)
-        value_weights = self.state.valuation
-        if isinstance(value_weights, Mapping):
-            for key, value in value_weights.items():
-                if isinstance(value, (int, float)) and not isinstance(value, bool):
-                    weights[str(key)] = float(value)
-        configured = self.state.self_model.get("trajectory_weights", {})
-        if isinstance(configured, Mapping):
-            for key, value in configured.items():
-                if isinstance(value, (int, float)) and not isinstance(value, bool):
-                    weights[str(key)] = float(value)
 
+        # Derived attractor weights are a fallback; persistent host valuation and
+        # especially the persistent self-model remain authoritative when present.
         attractor_weights = (
             self.state.attractor.get("trajectory_weights", {})
             if isinstance(self.state.attractor, Mapping)
@@ -929,6 +921,19 @@ class ConsciousRuntime:
             for key, value in attractor_weights.items():
                 if isinstance(value, (int, float)) and not isinstance(value, bool):
                     weights[str(key)] = float(value)
+
+        value_weights = self.state.valuation
+        if isinstance(value_weights, Mapping):
+            for key, value in value_weights.items():
+                if isinstance(value, (int, float)) and not isinstance(value, bool):
+                    weights[str(key)] = float(value)
+
+        configured = self.state.self_model.get("trajectory_weights", {})
+        if isinstance(configured, Mapping):
+            for key, value in configured.items():
+                if isinstance(value, (int, float)) and not isinstance(value, bool):
+                    weights[str(key)] = float(value)
+
         return weights
 
     def score_trajectory(self, candidate: Mapping[str, Any]) -> float:
