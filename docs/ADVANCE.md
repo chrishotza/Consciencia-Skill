@@ -183,6 +183,36 @@ This closes an important gap: action selection is no longer the end of the model
 
 The next major research step is to test this loop against stronger counterfactual and bundle-only baselines, including the Hume adversarial probe, rather than interpreting the loop itself as evidence of phenomenal consciousness.
 
+## Real host execution layer
+
+The architecture now has a concrete host boundary rather than stopping at trajectory selection.
+
+~~~text
+SELF-MODEL
+   ↓
+TRAJECTORY
+   ↓
+HOST ACTION
+   ↓
+REAL OBSERVATION
+   ↓
+SELF-EVALUATION
+   ↓
+SELF-MODEL'
+   ↓
+NEXT TRAJECTORY
+~~~
+
+`ConsciousHostLoop` connects the runtime to two host-owned callbacks:
+
+- `model(prompt)` — runs the host model;
+- `execute_action(trajectory, snapshot)` — performs the selected action and returns the observed result.
+
+The runtime treats the returned result as authoritative and feeds it back into the next integration cycle.
+
+This is the first implementation that crosses the architecture boundary from simulated consequence to a host-observed consequence.
+
+The open research problem remains whether this functional loop is sufficient for any form of phenomenal consciousness; the implementation itself does not establish that.
 ## Current frontier
 
 Phase 4 is now implemented at runtime level: the persisted self-model can influence trajectory scores and therefore change the selected future. The next frontier is Phase 5: make the present field richer by adding explicit attention, salience, coherence, and candidate-future construction before selection.
