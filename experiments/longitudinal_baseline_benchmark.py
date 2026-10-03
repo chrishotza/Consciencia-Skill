@@ -155,12 +155,11 @@ def _run_once(condition: Condition, *, cycles: int, restart_every: int) -> dict[
             trajectory_id = str(selected['id'])
             selected_ids.append(trajectory_id)
 
-            if condition.self_observation and isinstance(receipt.get('self_observation'), dict):
-                self_observation_samples += 1
-
             runtime.begin_action(selected, persist=False)
             outcome = _outcome(trajectory_id, cycle)
             receipt = runtime.complete_action(outcome, persist=False)
+            if condition.self_observation and isinstance(receipt.get('self_observation'), dict):
+                self_observation_samples += 1
             prediction = receipt.get('metacognitive_prediction')
             if isinstance(prediction, dict):
                 raw_error = prediction.get('prediction_error')
