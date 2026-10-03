@@ -235,3 +235,30 @@ def test_transformation_log_records_self_change(tmp_path):
     assert event["revision"] == 2
     assert "regime" in event["changes"]
     assert "valuation" in event["changes"]
+
+
+def test_self_model_selects_and_commits_regime(tmp_path):
+    path = tmp_path / "state.json"
+    runtime = ConsciousRuntime("agent-10", path)
+    runtime.integrate(
+        {
+            "response": "seed",
+            "self_model": {
+                "regime_weights": {
+                    "integration": 3.0,
+                    "exploration": 0.5,
+                }
+            },
+        }
+    )
+
+    selected = runtime.transition_regime(
+        [
+            {"id": "integration", "signals": {"integration": 1.0}},
+            {"id": "exploration", "signals": {"exploration": 1.0}},
+        ]
+    )
+
+    assert selected["id"] == "integration"
+    assert runtime.state.regime == "integration"
+    assert runtime.state.transformation_log[-1]["type"] == "regime_transition"
