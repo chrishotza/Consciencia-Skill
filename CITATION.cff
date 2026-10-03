@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use Skill-Conscious, please cite the exact version used."
 title: "Skill-Conscious"
 type: software
-version: "0.8.2"
+version: "0.8.3"
 date-released: 2026-10-03
 authors:
   - family-names: Mendoza
