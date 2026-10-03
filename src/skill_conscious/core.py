@@ -163,6 +163,56 @@ class ConsciousRuntime:
                 score += weights.get(str(key), 0.0) * float(value)
         return score
 
+    def select_regime(
+        self, candidates: list[Mapping[str, Any]]
+    ) -> dict[str, Any]:
+        if not candidates:
+            raise ValueError("regime candidates cannot be empty")
+
+        weights = self.state.self_model.get("regime_weights", {})
+        if not isinstance(weights, Mapping):
+            weights = {}
+
+        scored: list[dict[str, Any]] = []
+        for candidate in candidates:
+            item = dict(candidate)
+            signals = item.get("signals", {})
+            if not isinstance(signals, Mapping):
+                raise ValueError("regime.signals must be a mapping")
+            score = 0.0
+            for key, value in signals.items():
+                if isinstance(value, (int, float)) and not isinstance(value, bool):
+                    weight = weights.get(str(key), 0.0)
+                    if isinstance(weight, (int, float)) and not isinstance(weight, bool):
+                        score += float(weight) * float(value)
+            item["score"] = score
+            scored.append(item)
+
+        return max(
+            scored,
+            key=lambda item: (float(item.get("score", 0.0)), str(item.get("id", ""))),
+        )
+
+    def transition_regime(
+        self, candidates: list[Mapping[str, Any]]
+    ) -> dict[str, Any]:
+        selected = self.select_regime(candidates)
+        previous = self.state.regime
+        next_regime = str(selected.get("id", "")).strip()
+        if not next_regime:
+            raise ValueError("selected regime requires a non-empty id")
+        if next_regime != previous:
+            self.state.regime = next_regime
+            self.state.transformation_log.append({
+                "revision": self.state.revision,
+                "type": "regime_transition",
+                "from": previous,
+                "to": next_regime,
+            })
+            self.state.transformation_log = self.state.transformation_log[-self.transformation_limit :]
+            self.store.save(self.state)
+        return selected
+
     def select_trajectory(
         self, candidates: list[Mapping[str, Any]]
     ) -> dict[str, Any]:
