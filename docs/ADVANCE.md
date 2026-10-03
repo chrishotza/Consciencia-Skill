@@ -404,4 +404,58 @@ RE-ENTRY
 The next release should make these transitions endogenous rather than merely supplied by the host model.
 
 
-<!-- runtime frontier update pending -->
+## Runtime 0.6.0 — endogenous latent learning and regime formation
+
+The runtime now learns latent self-patterns from its own longitudinal state instead of requiring the host to provide them.
+
+A latent pattern is not treated as an unconscious entity or a literal archetype. It is an explicitly inspectable recurrent structure:
+
+~~~text
+SELF-STATE(t)
+   ↓
+HISTORY
+   ↓
+RECURRENCE DETECTION
+   ↓
+LATENT PATTERN
+   ↓
+ACTIVATION / DECAY
+   ↓
+PRESENT
+   ↓
+TRAJECTORY / REGIME
+~~~
+
+The extractor requires recurrence across non-adjacent revisions before forming a pattern. Each pattern persists a prototype, activation, evidence count, matched revisions, and contextual metadata. Activation decays when the current state no longer resembles the learned prototype.
+
+The same cycle now also contains endogenous regime selection:
+
+~~~text
+SELF-STATE + SELF-MODEL
+        ↓
+Dissonance / Coherence
+        ↓
+Latent Pattern Activation
+        ↓
+Regime Candidates
+        ↓
+Regime Selection
+        ↓
+Present Reconfiguration
+        ↓
+Trajectory Selection
+~~~
+
+The default regime candidates are:
+
+- baseline
+- exploration
+- integration
+
+The self-model can override regime weights, while an explicitly supplied regime remains authoritative.
+
+The reference runtime exposes a constructor switch, `learn_latent_patterns=False`, so the endogenous learner can be ablated experimentally without changing the rest of the architecture.
+
+The latent-self ablation now compares conditions using endogenous learning rather than host-supplied latent patterns. This makes the experimental distinction stronger: the latent condition differs by the mechanism that discovers recurrent structure, not merely by receiving more state.
+
+This remains a behavioral engineering hypothesis. It does not establish phenomenal experience.
