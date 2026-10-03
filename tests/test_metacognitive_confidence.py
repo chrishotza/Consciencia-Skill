@@ -82,3 +82,21 @@ def test_metacognitive_confidence_is_runtime_owned(tmp_path: Path):
 
     after = runtime.snapshot_metacognitive_prediction()
     assert after == before
+
+
+def test_persistent_confidence_intervention_survives_restart(tmp_path: Path):
+    runtime = _runtime(tmp_path)
+    runtime.intervene_metacognitive_prediction_expected_accuracy(
+        0.1,
+        persist=True,
+        intervention_id="restart-test",
+    )
+
+    restarted = ConsciousRuntime(
+        "metacognitive-confidence",
+        state_path=tmp_path / "runtime.json",
+        metacognitive_prediction_weight=2.0,
+    )
+
+    snapshot = restarted.snapshot_metacognitive_prediction()
+    assert snapshot["expected_accuracy"] == 0.1
