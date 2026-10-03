@@ -320,3 +320,19 @@ The first working paper is:
 `papers/001-relational-ontology-for-artificial-consciousness.md`
 
 The publication program is designed around versioned GitHub releases and archival Zenodo records, with each paper tied to the exact ontology and runtime version it describes.
+
+## Runtime 0.6.0 — endogenous self-organization
+
+The reference runtime now has two additional causal layers.
+
+**Endogenous latent-pattern learning**
+
+Repeated non-adjacent self-state configurations can produce persistent latent patterns with a prototype, activation, evidence count, and recurrence context. Patterns activate when the current self-state resembles the learned structure and decay when the match disappears.
+
+**Endogenous regime formation**
+
+When a host does not explicitly supply a regime, the runtime evaluates baseline, exploration, and integration candidates from coherence, uncertainty, self-dissonance, latent-pattern activation, stability, and learning pressure. The selected regime becomes part of the persistent process and can change the attractor and subsequent trajectory context.
+
+Both mechanisms are directly ablatable. The runtime constructor supports `learn_latent_patterns=False`, allowing experiments to separate persistent state from endogenous latent learning.
+
+These are engineering mechanisms for testing self-organization. They are not presented as proof of phenomenal consciousness.
