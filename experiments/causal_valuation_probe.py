@@ -19,11 +19,11 @@ def run() -> dict[str, object]:
         candidates = [
             {
                 "id": "preserve_continuity",
-                "signals": {"goal_fit": 0.80, "continuity": 0.75},
+                "signals": {"goal_fit": 0.80},
             },
             {
                 "id": "explore",
-                "signals": {"goal_fit": 0.70, "learning": 0.80},
+                "signals": {"goal_fit": 0.70},
             },
         ]
 
