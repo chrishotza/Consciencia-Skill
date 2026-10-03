@@ -110,7 +110,12 @@ def run_condition_with_llm(
                 completion,
                 fixed_candidate_futures=candidates,
             )
-            frame = adapter(runtime.prepare(f"LLM longitudinal cycle {cycle}"))
+            frame = adapter(
+                runtime.prepare(
+                    f"LLM longitudinal cycle {cycle}",
+                    candidate_futures=candidates,
+                )
+            )
             runtime.integrate(frame)
             selected = dict(runtime.state.selected_trajectory or {})
             trajectory_id = str(selected["id"])
@@ -135,6 +140,7 @@ def run_condition_with_llm(
             consequence_prompt = runtime.prepare_consequence(
                 trajectory_id,
                 outcome,
+                candidate_futures=candidates,
             )
             evaluation = adapter(consequence_prompt)
             evaluation["consequence_trajectory"] = trajectory_id
