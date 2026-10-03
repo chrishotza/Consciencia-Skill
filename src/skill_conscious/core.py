@@ -58,6 +58,10 @@ class ConsciousState:
     coherence: float = 1.0
     latent_patterns: dict[str, dict[str, Any]] = field(default_factory=dict)
     self_dissonance: float = 0.0
+    interoceptive_state: dict[str, Any] = field(default_factory=dict)
+    affective_state: dict[str, Any] = field(default_factory=dict)
+    temporal_state: dict[str, Any] = field(default_factory=dict)
+    perspectives: dict[str, dict[str, Any]] = field(default_factory=dict)
     transformation_log: list[dict[str, Any]] = field(default_factory=list)
     pending_action: dict[str, Any] | None = None
     action_history: list[dict[str, Any]] = field(default_factory=list)
@@ -115,6 +119,14 @@ class ConsciousState:
                 if isinstance(pattern, Mapping)
             },
             self_dissonance=max(0.0, min(1.0, float(value.get("self_dissonance", 0.0)))),
+            interoceptive_state=dict(value.get("interoceptive_state", {})),
+            affective_state=dict(value.get("affective_state", {})),
+            temporal_state=dict(value.get("temporal_state", {})),
+            perspectives={
+                str(key): dict(item)
+                for key, item in dict(value.get("perspectives", {})).items()
+                if isinstance(item, Mapping)
+            },
             transformation_log=[
                 dict(item) for item in value.get("transformation_log", [])
             ],
@@ -913,6 +925,10 @@ class ConsciousRuntime:
             "coherence": self.calculate_coherence(),
             "latent_patterns": self.state.latent_patterns,
             "self_dissonance": self.state.self_dissonance,
+            "interoceptive_state": self.state.interoceptive_state,
+            "affective_state": self.state.affective_state,
+            "temporal_state": self.state.temporal_state,
+            "perspectives": self.state.perspectives,
             "transformation_log": self.state.transformation_log[-self.transformation_limit :],
             "pending_action": self.state.pending_action,
             "action_history": self.state.action_history[-self.history_limit :],
@@ -1065,6 +1081,10 @@ class ConsciousRuntime:
             "self_access": {
                 "self_state": dict(self.state.self_state),
                 "self_model": dict(self.state.self_model),
+                "interoceptive_state": dict(self.state.interoceptive_state),
+                "affective_state": dict(self.state.affective_state),
+                "temporal_state": dict(self.state.temporal_state),
+                "perspectives": dict(self.state.perspectives),
                 "pending_action": self.state.pending_action,
                 "action_history": self.state.action_history[-self.history_limit :],
             },
@@ -1221,6 +1241,34 @@ class ConsciousRuntime:
         if frame.get("internal_state") is not None:
             self.state.self_state = dict(frame["internal_state"])
 
+        if frame.get("interoceptive_state") is not None:
+            raw_interoception = frame["interoceptive_state"]
+            if not isinstance(raw_interoception, Mapping):
+                raise ValueError("frame.interoceptive_state must be a mapping")
+            self.state.interoceptive_state = dict(raw_interoception)
+
+        if frame.get("affective_state") is not None:
+            raw_affect = frame["affective_state"]
+            if not isinstance(raw_affect, Mapping):
+                raise ValueError("frame.affective_state must be a mapping")
+            self.state.affective_state = dict(raw_affect)
+
+        if frame.get("temporal_state") is not None:
+            raw_temporal = frame["temporal_state"]
+            if not isinstance(raw_temporal, Mapping):
+                raise ValueError("frame.temporal_state must be a mapping")
+            self.state.temporal_state = dict(raw_temporal)
+
+        if frame.get("perspectives") is not None:
+            raw_perspectives = frame["perspectives"]
+            if not isinstance(raw_perspectives, Mapping):
+                raise ValueError("frame.perspectives must be a mapping")
+            self.state.perspectives = {
+                str(key): dict(value)
+                for key, value in raw_perspectives.items()
+                if isinstance(value, Mapping)
+            }
+
         if frame.get("intention") is not None:
             self.state.intention = str(frame["intention"]).strip()
 
@@ -1349,7 +1397,7 @@ class ConsciousRuntime:
 
         changed: dict[str, Any] = {}
         current_snapshot = self.state.to_dict()
-        for key in ("self_state", "self_model", "workspace", "intention", "attention", "salience", "layers", "regime", "attractor", "valuation", "valence", "coherence", "relation_topology", "latent_patterns", "self_dissonance"):
+        for key in ("self_state", "self_model", "workspace", "intention", "attention", "salience", "layers", "regime", "attractor", "valuation", "valence", "coherence", "relation_topology", "latent_patterns", "self_dissonance", "interoceptive_state", "affective_state", "temporal_state", "perspectives"):
             if previous_snapshot.get(key) != current_snapshot.get(key):
                 changed[key] = {"before": previous_snapshot.get(key), "after": current_snapshot.get(key)}
         if changed:
@@ -1379,6 +1427,10 @@ class ConsciousRuntime:
                 "coherence": self.state.coherence,
                 "latent_patterns": self.state.latent_patterns,
                 "self_dissonance": self.state.self_dissonance,
+                "interoceptive_state": self.state.interoceptive_state,
+                "affective_state": self.state.affective_state,
+                "temporal_state": self.state.temporal_state,
+                "perspectives": self.state.perspectives,
                 "consequence_trajectory": (
                     str(consequence_trajectory)
                     if consequence_trajectory is not None
