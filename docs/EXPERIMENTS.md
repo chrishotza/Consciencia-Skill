@@ -49,7 +49,7 @@ Every experiment should hold constant:
 - state-store format;
 - number of cycles.
 
-Only the condition-specific mechanism should change. For the ablation implementation, endogenous latent learning is enabled only for C/D; A/B run the same runtime with `learn_latent_patterns=False`.
+Only the condition-specific mechanism should change. For the ablation implementation, endogenous latent learning and endogenous self-model learning are enabled only for C/D; A/B run the same runtime with both switches disabled.
 
 ## Falsification-oriented questions
 
@@ -96,3 +96,23 @@ restart continuity
 ~~~
 
 The result should be stored as machine-readable JSON alongside a human-readable summary.
+
+## Runtime 0.7 extension
+
+The experiment now separates two mechanisms that were previously coupled:
+
+~~~text
+LATENT PATTERN DISCOVERY
+        ↓
+SELF-MODEL REVISION
+        ↓
+CAUSAL TRAJECTORY EFFECT
+~~~
+
+This allows three distinct ablations:
+
+1. no endogenous latent learning;
+2. endogenous latent learning without self-model revision;
+3. endogenous latent learning plus bounded self-model revision.
+
+The goal is to determine whether any downstream behavioral difference comes from discovering a recurrent pattern, from revising the self-model with that pattern, or from both.
