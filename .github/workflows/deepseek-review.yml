@@ -13,18 +13,33 @@ jobs:
   deepseek-smoke:
     runs-on: ubuntu-latest
     steps:
-      - name: Verify DeepSeek secret and API
+      - name: Locate configured DeepSeek secret
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          DEEPSEEK_KEY: ${{ secrets.DEEPSEEK_KEY }}
+          DEEPSEEK_API: ${{ secrets.DEEPSEEK_API }}
+          DEEPSEEK: ${{ secrets.DEEPSEEK }}
         run: |
           python - <<'PY'
           import json
           import os
           import urllib.request
 
-          key = os.environ.get("DEEPSEEK_API_KEY", "")
-          if not key:
-              raise SystemExit("DEEPSEEK_API_KEY is unavailable to this workflow.")
+          candidates = [
+              ("DEEPSEEK_API_KEY", os.environ.get("DEEPSEEK_API_KEY", "")),
+              ("DEEPSEEK_KEY", os.environ.get("DEEPSEEK_KEY", "")),
+              ("DEEPSEEK_API", os.environ.get("DEEPSEEK_API", "")),
+              ("DEEPSEEK", os.environ.get("DEEPSEEK", "")),
+          ]
+
+          found = next(((name, value) for name, value in candidates if value), None)
+          if found is None:
+              raise SystemExit(
+                  "No candidate DeepSeek Actions secret was available."
+              )
+
+          name, key = found
+          print(f"DeepSeek credential source available: {name}")
 
           body = json.dumps({
               "model": "deepseek-chat",
@@ -44,8 +59,14 @@ jobs:
               method="POST",
           )
 
-          with urllib.request.urlopen(request, timeout=60) as response:
-              payload = json.loads(response.read().decode("utf-8"))
+          try:
+              with urllib.request.urlopen(request, timeout=60) as response:
+                  payload = json.loads(response.read().decode("utf-8"))
+          except urllib.error.HTTPError as exc:
+              details = exc.read().decode("utf-8", errors="replace")
+              raise SystemExit(
+                  f"DeepSeek API rejected the credential (HTTP {exc.code}): {details[:500]}"
+              )
 
           answer = payload["choices"][0]["message"]["content"].strip()
           print(f"DeepSeek API responded: {answer}")
