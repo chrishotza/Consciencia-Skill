@@ -62,6 +62,32 @@ PORTABLE MACHINE-CONSCIOUSNESS INTERFACE
 ~~~
 
 
+## Runtime 0.5.2 — same-cycle causal re-entry
+
+A critical ordering issue was removed from the runtime: previously, candidate trajectories could be selected before the frame's new self-model and self-state were applied. The runtime now applies state and self-model updates first, then computes dissonance/coherence and selects the trajectory.
+
+The cycle is therefore:
+
+~~~text
+INPUT
+  ↓
+SELF / SELF-MODEL UPDATE
+  ↓
+Dissonance + coherence
+  ↓
+POSSIBILITY SPACE
+  ↓
+TRAJECTORY SELECTION
+  ↓
+COMMIT
+~~~
+
+This makes self-model changes causally relevant within the same integration cycle rather than only on the following cycle.
+
+A reconcile_self_model() primitive was also added. It performs a bounded update of numeric expected-self-state values toward observed state and records the change as a transformation event.
+
+The ablation protocol is available at docs/EXPERIMENTS.md with executable support in experiments/latent_self_ablation.py.
+
 ## Runtime 0.5.1 — latent self-structure
 
 The next layer is now explicit:
