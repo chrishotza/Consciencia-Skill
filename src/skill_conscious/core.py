@@ -3005,8 +3005,10 @@ class ConsciousRuntime:
             "return consequence_trajectory, consequence, and self_evaluation "
             "rather than inventing a result. The runtime can score trajectories using "
             "signals named goal_fit, self_alignment, continuity, learning, risk, uncertainty, "
-            "and homeostatic_fit. Internal condition may legitimately compete with external goals "
-            "when the persistent self-model assigns it a non-zero weight."
+            "and homeostatic_fit. Candidate futures may also include predicted_outcome "
+            "and predicted_state_delta when the trajectory makes an explicit forecast. These are "
+            "predictions, never observations. Internal condition may legitimately compete with "
+            "external goals when the persistent self-model assigns it a non-zero weight."
         )
 
     def begin_action(
