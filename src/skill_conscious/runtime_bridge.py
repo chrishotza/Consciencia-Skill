@@ -137,6 +137,72 @@ class ExperienceDynamicsBridge:
             return {"enabled": False, "updated": False}
         return self.reentry.record_consequence(regime, float(utility), evidence_id=evidence_id)
 
+    def dynamic_core_snapshot(self) -> dict[str, Any]:
+        """Return a deep-copyable snapshot of dynamic state used for scoring."""
+        import copy
+        if not self.enabled:
+            return {"enabled": False}
+        return {
+            "attractor": copy.deepcopy(self.attractor.state.to_dict()),
+            "reentry": copy.deepcopy(self.reentry.state.to_dict()),
+        }
+
+    def intervene_attractor_center(
+        self,
+        center: Mapping[str, Any],
+        *,
+        persist: bool = False,
+        intervention_id: str | None = None,
+    ) -> dict[str, Any]:
+        """Intervene directly on attractor position without adding evidence."""
+        if not self.enabled:
+            return {"enabled": False, "intervened": False, "reason": "dynamic_core_disabled"}
+        sanitized = {
+            str(key): float(value)
+            for key, value in center.items()
+            if isinstance(value, (int, float)) and not isinstance(value, bool)
+        }
+        before = dict(self.attractor.state.center)
+        self.attractor.state.center = sanitized
+        receipt = {
+            "enabled": True,
+            "intervened": before != sanitized,
+            "intervention_id": str(intervention_id) if intervention_id else None,
+            "before": before,
+            "after": dict(sanitized),
+            "evidence_added": False,
+        }
+        if persist:
+            self.attractor.save()
+        return receipt
+
+    def restore_dynamic_core_snapshot(
+        self,
+        snapshot: Mapping[str, Any],
+        *,
+        persist: bool = False,
+        intervention_id: str | None = None,
+    ) -> dict[str, Any]:
+        """Restore an exact dynamic-state snapshot without generating evidence."""
+        if not self.enabled:
+            return {"enabled": False, "restored": False, "reason": "dynamic_core_disabled"}
+        import copy
+        attractor = snapshot.get("attractor")
+        reentry = snapshot.get("reentry")
+        if not isinstance(attractor, Mapping) or not isinstance(reentry, Mapping):
+            raise ValueError("snapshot must contain attractor and reentry mappings")
+        self.attractor.state = type(self.attractor.state)(**copy.deepcopy(dict(attractor)))
+        self.reentry.state = type(self.reentry.state)(**copy.deepcopy(dict(reentry)))
+        if persist:
+            self.attractor.save()
+            self.reentry.save()
+        return {
+            "enabled": True,
+            "restored": True,
+            "intervention_id": str(intervention_id) if intervention_id else None,
+            "evidence_added": False,
+        }
+
     def sanitize_model_frame(self, frame: Mapping[str, Any]) -> dict[str, Any]:
         clean = self.reentry.sanitized_model_frame(frame)
         model = clean.get("self_model")
