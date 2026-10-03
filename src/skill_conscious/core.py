@@ -1087,6 +1087,261 @@ class ConsciousRuntime:
             "updates": updates,
         }
 
+
+    def trajectory_priority_adaptation_policy(self) -> dict[str, Any]:
+        configured = self.state.self_model.get(
+            "trajectory_priority_adaptation",
+            {},
+        )
+        if not isinstance(configured, Mapping):
+            return {}
+        return dict(configured)
+
+    def adapt_trajectory_priority_from_evidence(
+        self,
+        evaluation: Mapping[str, Any] | None,
+        *,
+        evidence_id: str | None = None,
+    ) -> dict[str, Any]:
+        """Accumulate consequence-evaluation evidence and update one trajectory weight."""
+        policy = self.trajectory_priority_adaptation_policy()
+        if not bool(policy.get("enabled", False)):
+            return {
+                "enabled": False,
+                "updated": False,
+                "signal": None,
+            }
+
+        if not isinstance(evaluation, Mapping):
+            return {
+                "enabled": True,
+                "updated": False,
+                "signal": None,
+                "reason": "no_self_evaluation",
+            }
+
+        signal = evaluation.get("credited_signal")
+        utility = evaluation.get("utility")
+        if not (
+            isinstance(signal, str)
+            and signal.strip()
+            and isinstance(utility, (int, float))
+            and not isinstance(utility, bool)
+        ):
+            return {
+                "enabled": True,
+                "updated": False,
+                "signal": None,
+                "reason": "evaluation_requires_utility_and_credited_signal",
+            }
+
+        signal = signal.strip()
+        utility = float(utility)
+
+        min_samples = max(1, int(policy.get("min_samples", 3)))
+        utility_threshold = max(
+            0.0,
+            float(policy.get("utility_threshold", 0.5)),
+        )
+        learning_rate = max(
+            0.0,
+            min(1.0, float(policy.get("learning_rate", 0.25))),
+        )
+        max_step = max(
+            0.0,
+            float(policy.get("max_step", 0.25)),
+        )
+        cooldown = max(0, int(policy.get("cooldown", 2)))
+        confidence_threshold = max(
+            0.0,
+            min(1.0, float(policy.get("confidence_threshold", 0.75))),
+        )
+
+        configured_bounds = policy.get("bounds", {})
+        bounds = (
+            configured_bounds if isinstance(configured_bounds, Mapping) else {}
+        )
+
+        ledger = self.state.self_model.get(
+            "trajectory_priority_adaptation_evidence",
+            {},
+        )
+        if not isinstance(ledger, Mapping):
+            ledger = {}
+        ledger = dict(ledger)
+
+        model = dict(self.state.self_model)
+        weights = dict(
+            model.get("trajectory_weights", {})
+            if isinstance(model.get("trajectory_weights", {}), Mapping)
+            else {}
+        )
+
+        entry = ledger.get(signal, {})
+        if not isinstance(entry, Mapping):
+            entry = {}
+        entry = dict(entry)
+
+        evidence_seq = len(self.state.action_history) + len(
+            model.get("trajectory_priority_adaptation_history", [])
+            if isinstance(model.get("trajectory_priority_adaptation_history", []), list)
+            else []
+        ) + 1
+        count = int(entry.get("sample_count", 0)) + 1
+        utility_sum = float(entry.get("utility_sum", 0.0)) + utility
+        evidence_ids = [
+            str(item)
+            for item in entry.get("evidence_ids", [])
+            if str(item).strip()
+        ]
+        if evidence_id:
+            evidence_ids.append(str(evidence_id))
+
+        mean_utility = utility_sum / count
+        confidence = min(1.0, count / min_samples)
+        if utility_threshold > 0.0:
+            confidence *= min(
+                1.0,
+                abs(mean_utility) / utility_threshold,
+            )
+        else:
+            confidence = 1.0
+
+        last_update_seq = int(entry.get("last_update_sequence", 0))
+        in_cooldown = evidence_seq - last_update_seq <= cooldown
+        ready = (
+            count >= min_samples
+            and abs(mean_utility) >= utility_threshold
+            and confidence >= confidence_threshold
+            and not in_cooldown
+        )
+
+        event_evidence = {
+            "sample_count": count,
+            "mean_utility": round(mean_utility, 6),
+            "confidence": round(confidence, 6),
+            "evidence_ids": evidence_ids[-min_samples:],
+        }
+
+        if not ready:
+            ledger[signal] = {
+                "sample_count": count,
+                "utility_sum": round(utility_sum, 6),
+                "mean_utility": round(mean_utility, 6),
+                "confidence": round(confidence, 6),
+                "evidence_ids": evidence_ids[-32:],
+                "last_update_sequence": last_update_seq,
+            }
+            model["trajectory_priority_adaptation_evidence"] = ledger
+            self.state.self_model = model
+            return {
+                "enabled": True,
+                "updated": False,
+                "signal": signal,
+                "evidence": event_evidence,
+            }
+
+        current_weight = weights.get(signal, 0.0)
+        if not (
+            isinstance(current_weight, (int, float))
+            and not isinstance(current_weight, bool)
+        ):
+            current_weight = 0.0
+
+        delta = max(
+            -max_step,
+            min(max_step, learning_rate * mean_utility),
+        )
+        proposed = float(current_weight) + delta
+
+        key_bounds = bounds.get(signal)
+        if (
+            isinstance(key_bounds, (list, tuple))
+            and len(key_bounds) == 2
+            and all(
+                isinstance(item, (int, float)) and not isinstance(item, bool)
+                for item in key_bounds
+            )
+        ):
+            lower = float(key_bounds[0])
+            upper = float(key_bounds[1])
+            if lower > upper:
+                lower, upper = upper, lower
+            proposed = max(lower, min(upper, proposed))
+            delta = proposed - float(current_weight)
+
+        if abs(delta) <= 1e-12:
+            ledger[signal] = {
+                "sample_count": 0,
+                "utility_sum": 0.0,
+                "mean_utility": 0.0,
+                "confidence": 0.0,
+                "evidence_ids": [],
+                "last_update_sequence": last_update_seq,
+            }
+            model["trajectory_priority_adaptation_evidence"] = ledger
+            self.state.self_model = model
+            return {
+                "enabled": True,
+                "updated": False,
+                "signal": signal,
+                "reason": "bounded_at_current_value",
+            }
+
+        weights[signal] = round(proposed, 6)
+        model["trajectory_weights"] = weights
+        ledger[signal] = {
+            "sample_count": 0,
+            "utility_sum": 0.0,
+            "mean_utility": 0.0,
+            "confidence": 0.0,
+            "evidence_ids": [],
+            "last_update_sequence": evidence_seq,
+        }
+        model["trajectory_priority_adaptation_evidence"] = ledger
+
+        history = model.get("trajectory_priority_adaptation_history", [])
+        if not isinstance(history, list):
+            history = []
+        history = [dict(item) for item in history if isinstance(item, Mapping)]
+        update = {
+            "type": "trajectory_priority_adaptation",
+            "revision": self.state.revision,
+            "evidence_sequence": evidence_seq,
+            "signal": signal,
+            "before": round(float(current_weight), 6),
+            "after": round(proposed, 6),
+            "delta": round(delta, 6),
+            "cause": "accumulated_consequence_evaluation",
+            "evidence": event_evidence,
+            "threshold": {
+                "min_samples": min_samples,
+                "utility_threshold": utility_threshold,
+                "confidence_threshold": confidence_threshold,
+            },
+            "constraints": {
+                "learning_rate": learning_rate,
+                "max_step": max_step,
+                "cooldown": cooldown,
+            },
+            "ignored_direct_weight_delta": evaluation.get("weight_delta"),
+        }
+        history.append(update)
+        model["trajectory_priority_adaptation_history"] = history[-self.history_limit :]
+        self.state.self_model = model
+
+        self.state.transformation_log.append(update)
+        self.state.transformation_log = (
+            self.state.transformation_log[-self.transformation_limit :]
+        )
+
+        return {
+            "enabled": True,
+            "updated": True,
+            "signal": signal,
+            "update": update,
+        }
+
     def calculate_coherence(self) -> float:
         topology = self.topology_diagnostics()
         trajectory_ok = (
@@ -1616,8 +1871,43 @@ class ConsciousRuntime:
             merged_self_model = dict(previous_self_model)
 
             # A host frame is a delta unless it explicitly replaces a value.
-            # Preserve persistent self structures that the host did not touch.
+            # Runtime-owned evidence is never accepted as model-generated input.
+            target_adaptation = merged_self_model.get(
+                "homeostatic_target_adaptation",
+                {},
+            )
+            target_adaptation_enabled = (
+                isinstance(target_adaptation, Mapping)
+                and bool(target_adaptation.get("enabled", False))
+            )
+            runtime_owned_self_model_keys = {
+                "homeostatic_adaptation_evidence",
+                "homeostatic_adaptation_history",
+                "trajectory_priority_adaptation_evidence",
+                "trajectory_priority_adaptation_history",
+            }
+            # Once adaptive targets are enabled and initialized, the runtime owns
+            # the target unless an experiment explicitly permits external changes.
+            external_target_updates = (
+                bool(target_adaptation.get("allow_external_target_update", False))
+                if isinstance(target_adaptation, Mapping)
+                else False
+            )
+            target_is_initialized = bool(
+                isinstance(merged_self_model.get("homeostatic_targets"), Mapping)
+                and merged_self_model.get("homeostatic_targets")
+            )
             for key, value in incoming_self_model.items():
+                key = str(key)
+                if key in runtime_owned_self_model_keys:
+                    continue
+                if (
+                    key == "homeostatic_targets"
+                    and target_adaptation_enabled
+                    and target_is_initialized
+                    and not external_target_updates
+                ):
+                    continue
                 if (
                     isinstance(value, Mapping)
                     and isinstance(merged_self_model.get(key), Mapping)
@@ -1626,7 +1916,7 @@ class ConsciousRuntime:
                     nested.update(dict(value))
                     merged_self_model[key] = nested
                 else:
-                    merged_self_model[str(key)] = value
+                    merged_self_model[key] = value
 
             self.state.self_model = merged_self_model
 
@@ -1895,24 +2185,39 @@ class ConsciousRuntime:
         model["trajectory_feedback"] = feedback
 
         if isinstance(evaluation, Mapping):
-            signal = evaluation.get("credited_signal")
-            delta = evaluation.get("weight_delta")
-            if (
-                isinstance(signal, str)
-                and signal.strip()
-                and isinstance(delta, (int, float))
-                and not isinstance(delta, bool)
-            ):
-                weights = dict(model.get("trajectory_weights", {}))
-                old = weights.get(signal, 0.0)
-                if not isinstance(old, (int, float)) or isinstance(old, bool):
-                    old = 0.0
-                weights[signal] = round(
-                    max(-3.0, min(3.0, float(old) + float(delta))),
-                    6,
+            priority_policy = self.trajectory_priority_adaptation_policy()
+            if bool(priority_policy.get("enabled", False)):
+                result["priority_adaptation"] = self.adapt_trajectory_priority_from_evidence(
+                    evaluation,
+                    evidence_id=(
+                        str(self.state.action_history[-1].get("action_id"))
+                        if self.state.action_history
+                        and self.state.action_history[-1].get("action_id")
+                        else f"revision-{self.state.revision}-{trajectory}"
+                    ),
                 )
-                model["trajectory_weights"] = weights
+            else:
+                signal = evaluation.get("credited_signal")
+                delta = evaluation.get("weight_delta")
+                if (
+                    isinstance(signal, str)
+                    and signal.strip()
+                    and isinstance(delta, (int, float))
+                    and not isinstance(delta, bool)
+                ):
+                    weights = dict(model.get("trajectory_weights", {}))
+                    old = weights.get(signal, 0.0)
+                    if not isinstance(old, (int, float)) or isinstance(old, bool):
+                        old = 0.0
+                    weights[signal] = round(
+                        max(-3.0, min(3.0, float(old) + float(delta))),
+                        6,
+                    )
+                    model["trajectory_weights"] = weights
 
+        # The helper may have replaced self.state.self_model. Refresh the local
+        # model reference before committing the feedback metadata.
+        model = dict(self.state.self_model)
         model["last_consequence_feedback"] = result
         self.state.self_model = model
         self.state.workspace = {

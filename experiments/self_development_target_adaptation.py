@@ -51,8 +51,47 @@ def run() -> None:
         restarted = ConsciousRuntime("probe", path)
         assert restarted.state.self_model["homeostatic_targets"]["energy"] == 0.75
 
+        priority_path = Path(tmp) / "priority.json"
+        priority = ConsciousRuntime("priority-probe", priority_path)
+        priority.integrate(
+            {
+                "response": "initialize priority adaptation",
+                "self_model": {
+                    "trajectory_weights": {"learning": 0.0},
+                    "trajectory_priority_adaptation": {
+                        "enabled": True,
+                        "min_samples": 3,
+                        "utility_threshold": 0.5,
+                        "confidence_threshold": 0.75,
+                        "learning_rate": 0.5,
+                        "max_step": 0.25,
+                        "cooldown": 2,
+                        "bounds": {"learning": [-3.0, 3.0]},
+                    },
+                },
+            }
+        )
+        for index in range(3):
+            priority.begin_action({"id": f"priority-{index + 1}", "signals": {}})
+            priority.complete_action({"status": "success"})
+            priority.integrate(
+                {
+                    "response": "evaluate",
+                    "consequence_trajectory": "learn",
+                    "consequence": {"status": "success"},
+                    "self_evaluation": {
+                        "utility": 1.0,
+                        "credited_signal": "learning",
+                        "weight_delta": 99.0,
+                    },
+                }
+            )
+        assert priority.state.self_model["trajectory_weights"]["learning"] == 0.25
+
         print("SELF-DEVELOPMENT TARGET ADAPTATION: PASS")
         print("target energy: 0.8 -> 0.75 after 3 independent host observations")
+        print("SELF-DEVELOPMENT PRIORITY ADAPTATION: PASS")
+        print("learning weight: 0.0 -> 0.25 after 3 accumulated consequence evaluations")
 
 
 if __name__ == "__main__":

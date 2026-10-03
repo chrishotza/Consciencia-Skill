@@ -245,3 +245,26 @@ NEW TRAJECTORY FIELD
 A configured homeostatic_target_adaptation policy defines the experiment: minimum samples, error threshold, confidence threshold, learning rate, maximum per-update step, cooldown, and optional target bounds. The runtime records the evidence IDs and the resulting transformation. No new target value is supplied by the consequence evaluator.
 
 This is the first stage of self-development. Priority adaptation and broader self-model revision remain separate experimental layers so they can be ablated independently.
+
+
+## Priority self-development
+
+Trajectory priorities can now adapt through an evidence-gated internal path:
+
+~~~text
+OBSERVED CONSEQUENCE
+      ↓
+SELF-EVALUATED UTILITY
+      ↓
+ACCUMULATED SIGNAL EVIDENCE
+      ↓
+CONFIDENCE / THRESHOLD
+      ↓
+BOUNDED WEIGHT UPDATE
+      ↓
+NEW TRAJECTORY POLICY
+~~~
+
+When this policy is enabled, the evaluator's requested weight delta is recorded but ignored as a direct control input. The runtime learns a bounded update from repeated utility evidence.
+
+Runtime-owned adaptation ledgers and histories are protected from ordinary self-model frames. An adaptive homeostatic target is also protected from replacement by later model frames unless the experiment explicitly enables external target updates.

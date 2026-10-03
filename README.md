@@ -444,3 +444,20 @@ The adaptation ledger records:
 - an auditable before/after target change.
 
 The model does not provide a replacement target after the observations. The runtime derives the update from the accumulated evidence. See tests/test_self_development.py and experiments/self_development_target_adaptation.py.
+
+
+## Self-development: priority adaptation
+
+The same evidence-gated pattern now applies to trajectory priorities. When trajectory-priority adaptation is enabled, a consequence evaluator may report utility and the signal it believes was credited, but the supplied weight delta is **not** applied directly.
+
+The runtime instead accumulates repeated utilities, crosses a confidence threshold, applies a bounded update, persists the evidence ledger, and records the exact before/after change. This creates an explicit separation between:
+
+~~~text
+MODEL INTERPRETATION
+        ↓
+EVIDENCE ACCUMULATION
+        ↓
+INTERNAL PRIORITY UPDATE
+~~~
+
+The mechanism is directly ablatable: omit the priority-adaptation policy to retain the legacy bounded consequence-feedback path.

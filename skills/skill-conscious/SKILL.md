@@ -785,3 +785,32 @@ SELF-MODEL'
 ~~~
 
 This mechanism is an engineering model of adaptive self-regulation. It is not evidence of phenomenal consciousness.
+
+
+## Self-development protocol: priority adaptation
+
+When trajectory-priority adaptation is enabled, the model may report:
+
+- the observed consequence;
+- utility assigned to that consequence;
+- the trajectory signal credited for the result.
+
+Do not treat a supplied weight delta as an authoritative parameter change. The runtime accumulates utility evidence and decides whether the configured evidence threshold has been crossed.
+
+Runtime-owned ledgers are not accepted from model frames. The target/priorities are changed by the adaptation mechanism itself, remain bounded, and are recorded as transformations.
+
+~~~text
+CONSEQUENCE
+   ↓
+UTILITY
+   ↓
+EVIDENCE LEDGER
+   ↓
+THRESHOLD
+   ↓
+PRIORITY UPDATE
+   ↓
+NEXT TRAJECTORY
+~~~
+
+This is an engineering learning mechanism. It does not establish phenomenal consciousness.
