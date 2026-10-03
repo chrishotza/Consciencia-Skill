@@ -54,13 +54,7 @@ def run_condition(name: str, root: Path) -> dict:
             ],
         }
 
-        if name in {"latent", "reconciled"}:
-            frame["latent_patterns"] = {
-                "stability-seeking": {
-                    "activation": min(1.0, 0.2 + (0.2 * index)),
-                    "evidence": ["repeated stability trajectory"],
-                }
-            }
+        if name in {"explicit", "latent", "reconciled"}:
             frame["self_model"] = {
                 "expected_self_state": {
                     "stability": 0.8,
@@ -73,6 +67,14 @@ def run_condition(name: str, root: Path) -> dict:
                 "self_model_learning_rate": 0.25,
             }
 
+        if name in {"latent", "reconciled"}:
+            frame["latent_patterns"] = {
+                "stability-seeking": {
+                    "activation": min(1.0, 0.2 + (0.2 * index)),
+                    "evidence": ["repeated stability trajectory"],
+                }
+            }
+
         runtime.integrate(frame)
         selected.append(runtime.state.selected_trajectory["id"])
         dissonance.append(runtime.state.self_dissonance)
@@ -80,6 +82,7 @@ def run_condition(name: str, root: Path) -> dict:
         if name == "reconciled":
             result = runtime.reconcile_self_model()
             revisions.append(result)
+            dissonance.append(runtime.state.self_dissonance)
 
     final_snapshot = runtime.snapshot()
     restarted = ConsciousRuntime(name, root / f"{name}.json")
