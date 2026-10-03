@@ -1026,6 +1026,8 @@ class ConsciousRuntime:
             {
                 "revision": self.state.revision,
                 "response": response,
+                "self_state": self.state.self_state,
+                "self_model": self.state.self_model,
                 "intention": self.state.intention,
                 "workspace": self.state.workspace,
                 "selected_trajectory": self.state.selected_trajectory,
