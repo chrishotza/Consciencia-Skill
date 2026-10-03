@@ -116,7 +116,7 @@ An attractor is used as an engineering abstraction for a relatively stable regio
 
 The project does not assume that subjective consciousness literally requires a mathematical attractor. It asks whether attractor-like structure helps explain persistent modes of operation.
 
-## What remains unresolved
+## Runtime 0.8.3 — embodied, temporal, and perspective layers,,The architecture now distinguishes abstract self-state from optional representations of internal condition, affective appraisal, temporal dynamics, and perspective.,,~~~text,SELF,  ↕,INTEROCEPTION,  ↕,AFFECTIVE APPRAISAL,  ↕,TEMPORAL CONTEXT,  ↕,SELF-MODEL / TRAJECTORY,~~~,,The runtime also accepts a four-perspective matrix inspired by comparative frameworks such as Ken Wilber's Integral Theory:,,~~~text,INDIVIDUAL INTERIOR  | INDIVIDUAL EXTERIOR,COLLECTIVE INTERIOR  | COLLECTIVE EXTERIOR,~~~,,These layers are engineering representations. They do not establish subjective feeling, and the cycle-based implementation does not imply that the underlying process must be ontologically discrete.,## What remains unresolved
 
 The largest unresolved problem is phenomenal experience.
 
