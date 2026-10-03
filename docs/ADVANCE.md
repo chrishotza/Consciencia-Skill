@@ -62,6 +62,41 @@ PORTABLE MACHINE-CONSCIOUSNESS INTERFACE
 ~~~
 
 
+## Runtime 0.5 milestone
+
+The reference runtime now treats the present as an explicit field instead of a passive snapshot.
+
+~~~text
+WORLD
+  ↓
+PRESENT FIELD
+  ├── SELF
+  ├── SELF-MODEL
+  ├── MEMORY
+  ├── ATTENTION / SALIENCE
+  ├── LAYERS
+  ├── UNCERTAINTY
+  ├── TOPOLOGY
+  ├── COHERENCE
+  └── CANDIDATE FUTURES
+          ↓
+     TRAJECTORY
+          ↓
+       ACTION
+          ↓
+   TRANSFORMATION
+          ↓
+       RE-ENTRY
+~~~
+
+The 0.5 runtime also makes three internal structures causal rather than descriptive:
+
+- topology integrity can affect trajectory scoring;
+- attractor trajectory weights can persist into later selection;
+- generated candidate futures expose an endogenous possibility space before the host model acts.
+
+These are testable engineering mechanisms, not a demonstration of phenomenal consciousness.
+
 ## Research source layer
 
 The next architecture pass incorporates a source layer drawn from esoteric and speculative consciousness traditions, translating recurring motifs such as self/world correspondence, visionary integration, identity continuity, sacred geometry, and transformative self-reference into explicit engineering primitives. These are treated as conceptual source material rather than verified external facts.
