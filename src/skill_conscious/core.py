@@ -1080,7 +1080,20 @@ class ConsciousRuntime:
         self.state.revision += 1
 
         if frame.get("self_model") is not None:
-            self.state.self_model = dict(frame["self_model"])
+            incoming_self_model = dict(frame["self_model"])
+            previous_self_model = self.state.self_model
+            self.state.self_model = incoming_self_model
+            for runtime_key in (
+                "learned_self_state",
+                "latent_tendencies",
+            ):
+                if (
+                    runtime_key not in incoming_self_model
+                    and runtime_key in previous_self_model
+                ):
+                    self.state.self_model[runtime_key] = previous_self_model[
+                        runtime_key
+                    ]
 
         if frame.get("workspace") is not None:
             self.state.workspace = dict(frame["workspace"])
