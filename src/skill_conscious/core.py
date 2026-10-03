@@ -10,6 +10,8 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from .ontology import CONSCIOUSNESS_DEFINITION
+from .experience_field import ExperienceFieldProfile
+from .runtime_bridge import ExperienceDynamicsBridge, RUNTIME_OWNED_KEYS
 
 
 DEFAULT_REGIME_WEIGHTS: dict[str, float] = {
@@ -194,6 +196,9 @@ class ConsciousRuntime:
         learn_latent_patterns: bool = True,
         latent_pattern_limit: int = 16,
         learn_self_model_from_latent_patterns: bool = True,
+        dynamic_core_enabled: bool = False,
+        dynamic_core_state_path: str | os.PathLike[str] | None = None,
+        dynamic_core_return_weight: float = 0.5,
     ):
         self.identity = identity
         self.memory_limit = max(1, int(memory_limit))
@@ -204,8 +209,127 @@ class ConsciousRuntime:
         self.learn_self_model_from_latent_patterns = bool(
             learn_self_model_from_latent_patterns
         )
+        self.dynamic_core_enabled = bool(dynamic_core_enabled)
+        dynamic_path = (
+            Path(dynamic_core_state_path)
+            if dynamic_core_state_path is not None
+            else Path(state_path).with_suffix(".dynamic.json")
+        )
+        self.dynamic_core = ExperienceDynamicsBridge(
+            dynamic_path,
+            enabled=self.dynamic_core_enabled,
+            return_weight=float(dynamic_core_return_weight),
+        )
         self.store = JsonStateStore(state_path)
         self.state = self.store.load(identity)
+        if self.dynamic_core_enabled:
+            self._restore_dynamic_core_state()
+
+    def _restore_dynamic_core_state(self) -> None:
+        """Mirror persisted dynamic-core state into runtime-owned self-model fields."""
+        runtime_state = self.dynamic_core.runtime_state()
+        model = dict(self.state.self_model)
+        changed = False
+        for key, value in runtime_state.items():
+            if key in RUNTIME_OWNED_KEYS and model.get(key) != value:
+                model[key] = value
+                changed = True
+        if changed:
+            self.state.self_model = model
+
+    @staticmethod
+    def _experience_profile(value: Mapping[str, Any] | ExperienceFieldProfile) -> ExperienceFieldProfile:
+        if isinstance(value, ExperienceFieldProfile):
+            return value
+        if not isinstance(value, Mapping):
+            raise ValueError("experience_field must be a mapping or ExperienceFieldProfile")
+        payload: dict[str, float] = {}
+        for key in ExperienceFieldProfile.__dataclass_fields__:
+            raw = value.get(key)
+            if not isinstance(raw, (int, float)) or isinstance(raw, bool):
+                raise ValueError(f"experience_field.{key} must be numeric")
+            payload[key] = float(raw)
+        return ExperienceFieldProfile(**payload)
+
+    def _current_experience_profile(self) -> ExperienceFieldProfile | None:
+        raw = self.state.self_model.get("experience_field_state")
+        if not isinstance(raw, Mapping):
+            return None
+        try:
+            return self._experience_profile(raw)
+        except ValueError:
+            return None
+
+    def observe_experience_field(
+        self,
+        profile: Mapping[str, Any] | ExperienceFieldProfile,
+        *,
+        evidence_id: str,
+        regime: str | None = None,
+        persist: bool = True,
+    ) -> dict[str, Any]:
+        """Make a host-observed experience field part of runtime continuity."""
+        if not self.dynamic_core_enabled:
+            return {"enabled": False, "accepted": False, "reason": "dynamic_core_disabled"}
+        observed = self._experience_profile(profile)
+        result = self.dynamic_core.observe(
+            observed,
+            evidence_id=str(evidence_id),
+            regime=str(regime or self.state.regime),
+        )
+        runtime_state = self.dynamic_core.runtime_state()
+        model = dict(self.state.self_model)
+        for key in RUNTIME_OWNED_KEYS:
+            if key in runtime_state:
+                model[key] = runtime_state[key]
+        self.state.self_model = model
+        self.state.workspace = {
+            **self.state.workspace,
+            "experience_dynamics": runtime_state,
+        }
+        self.state.transformation_log.append({
+            "revision": self.state.revision,
+            "type": "experience_dynamics_observation",
+            "evidence_id": str(evidence_id),
+            "result": result,
+        })
+        self.state.transformation_log = self.state.transformation_log[-self.transformation_limit :]
+        if persist:
+            self.store.save(self.state)
+        return result
+
+    def record_experience_recovery(
+        self,
+        baseline: Mapping[str, Any] | ExperienceFieldProfile,
+        perturbed: Mapping[str, Any] | ExperienceFieldProfile,
+        recovered: Mapping[str, Any] | ExperienceFieldProfile,
+        *,
+        evidence_id: str,
+        persist: bool = True,
+    ) -> dict[str, Any]:
+        """Record a measured perturbation/recovery event in the runtime's dynamic state."""
+        if not self.dynamic_core_enabled:
+            return {"enabled": False, "updated": False, "reason": "dynamic_core_disabled"}
+        result = self.dynamic_core.record_recovery(
+            self._experience_profile(baseline),
+            self._experience_profile(perturbed),
+            self._experience_profile(recovered),
+            evidence_id=str(evidence_id),
+        )
+        self._restore_dynamic_core_state()
+        self.state.workspace = {
+            **self.state.workspace,
+            "experience_dynamics": self.dynamic_core.runtime_state(),
+        }
+        if persist:
+            self.store.save(self.state)
+        return result
+
+    def experience_dynamics_state(self) -> dict[str, Any]:
+        if not self.dynamic_core_enabled:
+            return {"experience_dynamics_enabled": False}
+        self._restore_dynamic_core_state()
+        return self.dynamic_core.runtime_state()
 
     def latent_pattern_score(self) -> float:
         if not self.state.latent_patterns:
@@ -2038,6 +2162,7 @@ class ConsciousRuntime:
                 "error": self.calculate_homeostatic_error(),
                 "fit": self.homeostatic_fit(),
             },
+            "experience_dynamics": self.experience_dynamics_state(),
             "temporal_state": self.state.temporal_state,
             "perspectives": self.state.perspectives,
             "transformation_log": self.state.transformation_log[-self.transformation_limit :],
@@ -2102,6 +2227,21 @@ class ConsciousRuntime:
         for key, value in signals.items():
             if isinstance(value, (int, float)) and not isinstance(value, bool):
                 score += weights.get(str(key), 0.0) * float(value)
+
+        if self.dynamic_core_enabled:
+            predicted_field = candidate.get("predicted_experience_field")
+            if isinstance(predicted_field, Mapping):
+                try:
+                    predicted_profile = self._experience_profile(predicted_field)
+                    current_profile = self._current_experience_profile()
+                    score, _ = self.dynamic_core.score_candidate(
+                        score,
+                        predicted_profile,
+                        current_profile=current_profile,
+                    )
+                except (TypeError, ValueError):
+                    pass
+
         return score
 
     def select_regime(
@@ -2297,9 +2437,20 @@ class ConsciousRuntime:
                 setattr(self.state, layer_name, dict(raw_layer))
                 observed_layers[layer_name] = dict(raw_layer)
 
+        if self.dynamic_core_enabled and outcome.get("experience_field") is not None:
+            dynamic_result = self.observe_experience_field(
+                outcome["experience_field"],
+                evidence_id=str(receipt["action_id"]),
+                regime=self.state.regime,
+                persist=False,
+            )
+        else:
+            dynamic_result = {"enabled": False}
+
         self.refresh_affective_state()
         homeostatic_after = self.homeostatic_fit()
         receipt["observed_layers"] = observed_layers
+        receipt["experience_dynamics"] = dynamic_result
         receipt["homeostatic_fit_before"] = homeostatic_before
         receipt["homeostatic_fit_after"] = homeostatic_after
         receipt["homeostatic_delta"] = round(
@@ -2404,6 +2555,7 @@ class ConsciousRuntime:
                 "self_model_adaptation_evidence",
                 "self_model_adaptation_history",
                 "self_model_adaptation_sequence",
+                *RUNTIME_OWNED_KEYS,
             }
             # Once adaptive targets are enabled and initialized, the runtime owns
             # the target unless an experiment explicitly permits external changes.
@@ -2559,6 +2711,20 @@ class ConsciousRuntime:
         if frame.get("valence") is not None:
             raw_valence = float(frame["valence"])
             self.state.valence = max(-1.0, min(1.0, raw_valence))
+
+        raw_experience_field = frame.get("experience_field")
+        if self.dynamic_core_enabled and raw_experience_field is not None:
+            self.observe_experience_field(
+                raw_experience_field,
+                evidence_id=str(
+                    frame.get(
+                        "experience_field_evidence_id",
+                        f"revision-{self.state.revision}",
+                    )
+                ),
+                regime=self.state.regime,
+                persist=False,
+            )
 
         self.extract_latent_patterns()
         self.revise_self_model_from_latent_patterns()
