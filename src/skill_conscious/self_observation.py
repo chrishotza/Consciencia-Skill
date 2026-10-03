@@ -84,12 +84,12 @@ def build_self_observation(
     history = snapshot.get("action_history", [])
     affective = snapshot.get("affective_state", {})
     valuation = snapshot.get("valuation", {})
-    metacognitive = self_model.get("metacognitive_trace", {})
 
     if not isinstance(self_state, Mapping):
         self_state = {}
     if not isinstance(self_model, Mapping):
         self_model = {}
+    metacognitive = self_model.get("metacognitive_trace", {})
     if not isinstance(affective, Mapping):
         affective = {}
     if not isinstance(history, list):
