@@ -17,6 +17,9 @@ DEFAULT_TRAJECTORY_WEIGHTS: dict[str, float] = {
     "learning": 0.5,
     "risk": -1.0,
     "uncertainty": -0.5,
+    "coherence": 1.0,
+    "topology_integrity": 0.5,
+    "salience": 0.25,
 }
 
 
@@ -32,11 +35,14 @@ class ConsciousState:
     history: list[dict[str, Any]] = field(default_factory=list)
     selected_trajectory: dict[str, Any] | None = None
     attention: list[str] = field(default_factory=list)
+    salience: dict[str, float] = field(default_factory=dict)
+    layers: dict[str, dict[str, Any]] = field(default_factory=dict)
     regime: str = "baseline"
     relation_topology: dict[str, list[str]] = field(default_factory=dict)
     attractor: dict[str, Any] | None = None
     valuation: dict[str, float] = field(default_factory=dict)
     valence: float = 0.0
+    coherence: float = 1.0
     transformation_log: list[dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
@@ -59,6 +65,16 @@ class ConsciousState:
                 else None
             ),
             attention=[str(item) for item in value.get("attention", [])],
+            salience={
+                str(key): float(val)
+                for key, val in dict(value.get("salience", {})).items()
+                if isinstance(val, (int, float)) and not isinstance(val, bool)
+            },
+            layers={
+                str(key): dict(layer)
+                for key, layer in dict(value.get("layers", {})).items()
+                if isinstance(layer, Mapping)
+            },
             regime=str(value.get("regime", "baseline")),
             relation_topology={
                 str(node): [str(target) for target in targets]
@@ -75,6 +91,7 @@ class ConsciousState:
                 if isinstance(val, (int, float)) and not isinstance(val, bool)
             },
             valence=float(value.get("valence", 0.0)),
+            coherence=max(0.0, min(1.0, float(value.get("coherence", 1.0)))),
             transformation_log=[
                 dict(item) for item in value.get("transformation_log", [])
             ],
@@ -137,6 +154,184 @@ class ConsciousRuntime:
         self.store = JsonStateStore(state_path)
         self.state = self.store.load(identity)
 
+    def topology_diagnostics(self) -> dict[str, float | int]:
+        nodes = set(self.state.relation_topology)
+        edges = 0
+        dangling = 0
+        for targets in self.state.relation_topology.values():
+            edges += len(targets)
+            for target in targets:
+                nodes.add(str(target))
+
+        declared = set(self.state.relation_topology)
+        for targets in self.state.relation_topology.values():
+            dangling += sum(1 for target in targets if str(target) not in declared)
+
+        if edges == 0:
+            integrity = 1.0 if not self.state.relation_topology else 0.0
+        else:
+            integrity = 1.0 - (dangling / edges)
+
+        node_count = len(nodes)
+        max_edges = node_count * max(0, node_count - 1)
+        density = (edges / max_edges) if max_edges else 0.0
+
+        return {
+            "nodes": node_count,
+            "edges": edges,
+            "density": round(density, 6),
+            "integrity": round(max(0.0, min(1.0, integrity)), 6),
+        }
+
+    def salience_score(self) -> float:
+        if self.state.salience:
+            values = [
+                max(0.0, min(1.0, float(value)))
+                for value in self.state.salience.values()
+            ]
+            if values:
+                return sum(values) / len(values)
+        return 1.0 if self.state.attention else 0.0
+
+    def calculate_coherence(self) -> float:
+        topology = self.topology_diagnostics()
+        trajectory_ok = (
+            self.state.selected_trajectory is None
+            or isinstance(self.state.selected_trajectory, Mapping)
+        )
+        layers_ok = all(
+            isinstance(layer, Mapping) for layer in self.state.layers.values()
+        )
+        components = (
+            1.0 if self.state.identity.strip() else 0.0,
+            1.0 if isinstance(self.state.self_model, Mapping) else 0.0,
+            1.0 if isinstance(self.state.intention, str) else 0.0,
+            1.0 if trajectory_ok else 0.0,
+            1.0 if layers_ok else 0.0,
+            float(topology["integrity"]),
+        )
+        return round(sum(components) / len(components), 6)
+
+    def build_attractor(self) -> dict[str, Any]:
+        weights = self.trajectory_weights()
+        stable_weights = {
+            key: round(value, 6)
+            for key, value in weights.items()
+            if abs(float(value)) >= 0.5
+        }
+        return {
+            "regime": self.state.regime,
+            "attention": list(self.state.attention),
+            "intention": self.state.intention,
+            "coherence": self.calculate_coherence(),
+            "trajectory_weights": stable_weights,
+        }
+
+    def generate_candidate_futures(self) -> list[dict[str, Any]]:
+        uncertainty = self.state.self_model.get("uncertainty", {})
+        uncertainty_values: list[float] = []
+
+        if isinstance(uncertainty, Mapping):
+            for value in uncertainty.values():
+                if isinstance(value, (int, float)) and not isinstance(value, bool):
+                    uncertainty_values.append(
+                        max(0.0, min(1.0, abs(float(value))))
+                    )
+
+        uncertainty_level = (
+            sum(uncertainty_values) / len(uncertainty_values)
+            if uncertainty_values
+            else 0.0
+        )
+        intention_strength = 1.0 if self.state.intention else 0.5
+        salience = self.salience_score()
+        coherence = self.calculate_coherence()
+        topology_integrity = float(self.topology_diagnostics()["integrity"])
+
+        return [
+            {
+                "id": "preserve_continuity",
+                "signals": {
+                    "goal_fit": intention_strength,
+                    "self_alignment": coherence,
+                    "continuity": 1.0,
+                    "learning": 0.2,
+                    "risk": 0.1,
+                    "uncertainty": 1.0 - uncertainty_level,
+                    "coherence": coherence,
+                    "topology_integrity": topology_integrity,
+                    "salience": salience,
+                },
+            },
+            {
+                "id": "learn",
+                "signals": {
+                    "goal_fit": 0.6 + (0.2 * intention_strength),
+                    "self_alignment": 0.6,
+                    "continuity": 0.7,
+                    "learning": 1.0,
+                    "risk": 0.2,
+                    "uncertainty": uncertainty_level,
+                    "coherence": coherence,
+                    "topology_integrity": topology_integrity,
+                    "salience": salience,
+                },
+            },
+            {
+                "id": "explore",
+                "signals": {
+                    "goal_fit": 0.4,
+                    "self_alignment": 0.4,
+                    "continuity": 0.4,
+                    "learning": 1.0,
+                    "risk": 0.7,
+                    "uncertainty": 1.0,
+                    "coherence": coherence,
+                    "topology_integrity": topology_integrity,
+                    "salience": salience,
+                },
+            },
+        ]
+
+    def present_field(
+        self,
+        external_input: str,
+        *,
+        candidate_futures: list[Mapping[str, Any]] | None = None,
+    ) -> dict[str, Any]:
+        external_input = str(external_input).strip()
+        if not external_input:
+            raise ValueError("external_input cannot be empty")
+
+        candidates = (
+            [dict(item) for item in candidate_futures]
+            if candidate_futures is not None
+            else self.generate_candidate_futures()
+        )
+
+        return {
+            "world_now": external_input,
+            "self_now": self.state.self_state,
+            "self_model": self.state.self_model,
+            "active_memory": self.state.memories[-self.memory_limit :],
+            "intention": self.state.intention,
+            "uncertainty": self.state.self_model.get("uncertainty", {}),
+            "candidate_futures": candidates,
+            "selected_trajectory": self.state.selected_trajectory,
+            "attention": self.state.attention,
+            "salience": self.state.salience,
+            "layers": self.state.layers,
+            "regime": self.state.regime,
+            "relation_topology": self.state.relation_topology,
+            "topology_diagnostics": self.topology_diagnostics(),
+            "attractor": self.state.attractor,
+            "valuation": self.state.valuation,
+            "valence": self.state.valence,
+            "coherence": self.calculate_coherence(),
+            "transformation_log": self.state.transformation_log[-self.transformation_limit :],
+            "revision": self.state.revision,
+        }
+
     def trajectory_weights(self) -> dict[str, float]:
         weights = dict(DEFAULT_TRAJECTORY_WEIGHTS)
         value_weights = self.state.valuation
@@ -149,12 +344,29 @@ class ConsciousRuntime:
             for key, value in configured.items():
                 if isinstance(value, (int, float)) and not isinstance(value, bool):
                     weights[str(key)] = float(value)
+
+        attractor_weights = (
+            self.state.attractor.get("trajectory_weights", {})
+            if isinstance(self.state.attractor, Mapping)
+            else {}
+        )
+        if isinstance(attractor_weights, Mapping):
+            for key, value in attractor_weights.items():
+                if isinstance(value, (int, float)) and not isinstance(value, bool):
+                    weights[str(key)] = float(value)
         return weights
 
     def score_trajectory(self, candidate: Mapping[str, Any]) -> float:
         signals = candidate.get("signals", {})
         if not isinstance(signals, Mapping):
             raise ValueError("trajectory.signals must be a mapping")
+        signals = dict(signals)
+        signals.setdefault("coherence", self.calculate_coherence())
+        signals.setdefault(
+            "topology_integrity",
+            float(self.topology_diagnostics()["integrity"]),
+        )
+        signals.setdefault("salience", self.salience_score())
 
         weights = self.trajectory_weights()
         score = 0.0
