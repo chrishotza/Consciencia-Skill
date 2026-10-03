@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from pathlib import Path
 
 from skill_conscious import ConsciousRuntime, run_reversible_valuation_intervention
@@ -35,7 +36,7 @@ def test_valuation_intervention_does_not_create_learning_evidence(tmp_path: Path
     runtime.state.valuation = {"goal_fit": 1.0}
     runtime.store.save(runtime.state)
 
-    before = runtime.adaptation_evidence_snapshot()
+    before = deepcopy(runtime.state.self_model)
     runtime.intervene_valuation(
         {"goal_fit": -1.0},
         persist=False,
@@ -47,7 +48,7 @@ def test_valuation_intervention_does_not_create_learning_evidence(tmp_path: Path
         intervention_id="unit-test",
     )
 
-    assert runtime.adaptation_evidence_snapshot() == before
+    assert runtime.state.self_model == before
 
 
 def test_restored_valuation_persists_across_restart(tmp_path: Path):
