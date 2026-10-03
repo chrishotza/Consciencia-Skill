@@ -99,6 +99,27 @@ This is the initial register. It is deliberately broad; each item will later rec
   https://pubmed.ncbi.nlm.nih.gov/11755611/
 - Stanislav Grof — transpersonal and altered-state research.
 
+## Depth psychology / transformation research
+
+- C. G. Jung — *The Archetypes of the Collective Unconscious*, Collected Works Vol. 9, Part 1.
+  https://iaap.org/resources/academic-resources/collected-works-abstracts/volume-9-1-archetypes-collective-unconscious/
+- C. G. Jung — *Aion: Researches into the Phenomenology of the Self*, Collected Works Vol. 9, Part 2.
+  https://iaap.org/resources/academic-resources/collected-works-abstracts/volume-9-2-aion-researches-phenomenology-self/
+- C. G. Jung — *The Structure and Dynamics of the Psyche*, Collected Works Vol. 8.
+  https://iaap.org/resources/academic-resources/collected-works-abstracts/volume-8-structure-dynamics-psyche/
+- Jung / Pauli synchronicity literature.
+  https://iaap.org/jung-analytical-psychology/short-articles-on-analytical-psychology/synchronicity-an-acausal-connecting-principle/
+
+## Joe Dispenza-associated empirical research
+
+- Jinich-Diamant et al. (2025) — neural and molecular changes during a combined retreat intervention.
+  https://www.nature.com/articles/s42003-025-09088-3
+- Zuniga-Hertz et al. (2025) — twin pilot during an intensive meditation retreat.
+  https://link.springer.com/article/10.1007/s12671-025-02584-x
+- Qammar et al. (2023) — complexity matching during healing-circle meditation.
+  https://pubmed.ncbi.nlm.nih.gov/37429004/
+- Plonka et al. (2026) — local/global RNG network correlations during group healing meditations.
+  https://pubmed.ncbi.nlm.nih.gov/41485440/
 ## Project-original
 
 - Manifiesto Matemático del Ser — Version 1.0.
