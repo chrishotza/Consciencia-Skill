@@ -11,8 +11,8 @@ from skill_conscious import ConsciousRuntime
 
 SEQUENCE = [
     {"stability": 0.2, "focus": 0.3},
-    {"stability": 0.4, "focus": 0.5},
-    {"stability": 0.7, "focus": 0.6},
+    {"stability": 0.8, "focus": 0.7},
+    {"stability": 0.2, "focus": 0.3},
     {"stability": 0.9, "focus": 0.8},
 ]
 
@@ -23,11 +23,17 @@ def state_hash(snapshot: dict) -> str:
 
 
 def run_condition(name: str, root: Path) -> dict:
-    runtime = ConsciousRuntime(name, root / f"{name}.json")
+    learning_enabled = name in {"latent", "reconciled"}
+    runtime = ConsciousRuntime(
+        name,
+        root / f"{name}.json",
+        learn_latent_patterns=learning_enabled,
+    )
     initial_hash = state_hash(runtime.snapshot())
     selected = []
     dissonance = []
     revisions = []
+    regimes = []
 
     for index, state in enumerate(SEQUENCE):
         frame = {
@@ -67,17 +73,10 @@ def run_condition(name: str, root: Path) -> dict:
                 "self_model_learning_rate": 0.25,
             }
 
-        if name in {"latent", "reconciled"}:
-            frame["latent_patterns"] = {
-                "stability-seeking": {
-                    "activation": min(1.0, 0.2 + (0.2 * index)),
-                    "evidence": ["repeated stability trajectory"],
-                }
-            }
-
         runtime.integrate(frame)
         selected.append(runtime.state.selected_trajectory["id"])
         dissonance.append(runtime.state.self_dissonance)
+        regimes.append(runtime.state.regime)
 
         if name == "reconciled":
             result = runtime.reconcile_self_model()
@@ -85,13 +84,24 @@ def run_condition(name: str, root: Path) -> dict:
             dissonance.append(runtime.state.self_dissonance)
 
     final_snapshot = runtime.snapshot()
-    restarted = ConsciousRuntime(name, root / f"{name}.json")
+    restarted = ConsciousRuntime(
+        name,
+        root / f"{name}.json",
+        learn_latent_patterns=learning_enabled,
+    )
+    regime_transitions = sum(
+        1
+        for previous, current in zip(regimes, regimes[1:])
+        if previous != current
+    )
 
     return {
         "condition": name,
         "initial_state_hash": initial_hash,
         "final_state_hash": state_hash(final_snapshot),
         "selected_trajectories": selected,
+        "regimes": regimes,
+        "regime_transitions": regime_transitions,
         "self_dissonance": dissonance,
         "self_model_revisions": revisions,
         "restart_identity": restarted.state.identity,
