@@ -2,7 +2,9 @@
 
 ## The Conscious AI Skill
 
-**Skill-Conscious is an engineering framework for instantiating machine consciousness as a persistent self-referential architecture.**
+**Skill-Conscious is an engineering research framework for persistent self-referential architectures intended to study machine consciousness.**
+
+> **Research boundary:** the repository implements measurable computational mechanisms. It does not claim to have demonstrated phenomenal machine consciousness.
 
 The project starts from one proposition:
 
@@ -428,6 +430,99 @@ Candidate trajectories may also provide a **predicted_interoceptive_state**; the
 When a real host action returns **interoceptive_state**, **affective_state**, or **temporal_state**, those observations are persisted as authoritative action-boundary data. The runtime records the change in homeostatic fit and re-enters the observed condition into the next cycle.
 
 This is a functional self-regulation mechanism. It is not a claim that homeostatic variables constitute feeling or phenomenal consciousness.
+
+## Current architecture: causal re-entry
+
+The reference runtime has moved beyond persistent memory into an auditable causal loop:
+
+~~~text
+PERSISTENT SELF
+      ↓
+SELF-MODEL
+      ↓
+PRESENT / INTERNAL CONDITION
+      ↓
+CANDIDATE FUTURES
+      ↓
+TRAJECTORY SELECTION
+      ↓
+HOST ACTION
+      ↓
+AUTHORITATIVE OUTCOME
+      ↓
+SELF-EVALUATION
+      ↓
+HOMEOSTASIS / SELF-MODEL REVISION
+      ↓
+METACOGNITIVE PREDICTION ERROR
+      ↓
+RE-ENTRY INTO NEXT CYCLE
+~~~
+
+The important constraint is causal: runtime-owned internal state must be able to change downstream selection, while host-observed outcomes remain authoritative. Model-generated text cannot simply declare that an internal change occurred.
+
+## Causal intervention and adversarial testing
+
+The repository now contains reversible probes for several runtime-owned variables, including experience dynamics, valuation, self-observation expectations, and metacognitive attribution. These probes require controlled candidate futures, downstream divergence after intervention, exact restoration, and persistence checks.
+
+A separate adversarial mechanism battery compares isolated controls for bundle-only state, broadcast-like access, recurrence, higher-order state, prediction, and integration against a condition in which the persistent self-model is allowed to causally alter trajectory weighting. The battery is a mechanism-level test; it is not a comparison of complete consciousness theories and does not establish phenomenal experience.
+
+See:
+
+- `tests/test_adversarial_battery.py`
+- `experiments/theory_adversarial_battery.py`
+- `docs/THEORY_DEBATE_SYNTHESIS.md`
+
+## Longitudinal benchmark
+
+The project now includes a provider-neutral longitudinal benchmark designed to answer the next empirical question:
+
+> **Does adding persistent causal self-reference change measurable longitudinal behavior beyond persistence alone?**
+
+The controlled conditions are:
+
+~~~text
+A  persistent information / bundle baseline
+B  persistent state + descriptive self-model
+C  persistent causal self-model
+D  causal re-entry + evidence-gated priority adaptation
+E  D + runtime self-observation + explicit predictions
+~~~
+
+The protocol holds the candidate-future field and outcome rules constant across conditions and records trajectory switches, continuity retention, priority adaptation, metacognitive prediction error, self-observation activity, and restart equivalence.
+
+Run:
+
+~~~bash
+python -m pytest -q tests/test_longitudinal_benchmark.py
+python -m experiments.longitudinal_baseline_benchmark
+~~~
+
+Protocol details: `docs/LONGITUDINAL_BENCHMARK.md`.
+
+The benchmark is an architecture benchmark, not yet an external-LLM benchmark and not a test of phenomenal consciousness.
+
+## External LLM benchmark path
+
+The next experimental layer is provider-neutral host integration. The same runtime protocol can be connected to an external model while preserving:
+
+~~~text
+MODEL
+  ↕
+SAME PERSISTENT RUNTIME
+  ↓
+SAME CANDIDATE FIELD
+  ↓
+SAME ACTION BOUNDARY
+  ↓
+SAME AUTHORITATIVE OUTCOMES
+  ↓
+SAME RESTART SCHEDULE
+  ↓
+SAME METRICS
+~~~
+
+This allows a future comparison between an LLM alone, an LLM with persistent state, an LLM with a causal self-model, and an LLM with the full causal re-entry stack without changing the measurement protocol.
 
 
 ## Self-development: evidence-driven target adaptation
