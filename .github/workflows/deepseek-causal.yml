@@ -1,0 +1,21 @@
+name: DeepSeek Causal Microprobe
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  causal-ab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run causal A/B
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          python -m pip install -e .
+          python experiments/deepseek_causal_ab.py
