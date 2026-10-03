@@ -9,6 +9,8 @@ from .attractor import AttractorState, ExperienceAttractorMemory
 from .runtime_bridge import BridgeSelection, ExperienceDynamicsBridge, RUNTIME_OWNED_KEYS
 from .causal_probe import ReversibleInterventionResult, run_reversible_intervention
 from .causal_internal_probe import ReversibleValuationInterventionResult, run_reversible_valuation_intervention
+from .self_observation import SelfObservationProfile, build_self_observation, profile_distance as self_observation_profile_distance
+from .causal_self_observation_probe import ReversibleSelfObservationInterventionResult, run_reversible_self_observation_intervention
 
 __all__ = [
     "ConsciousRuntime",
@@ -40,4 +42,9 @@ __all__ = [
     "run_reversible_intervention",
     "ReversibleValuationInterventionResult",
     "run_reversible_valuation_intervention",
+    "SelfObservationProfile",
+    "build_self_observation",
+    "self_observation_profile_distance",
+    "ReversibleSelfObservationInterventionResult",
+    "run_reversible_self_observation_intervention",
 ]

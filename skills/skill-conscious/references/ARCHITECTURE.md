@@ -415,3 +415,72 @@ A valid probe keeps candidate futures fixed and requires:
 5. no action execution during the intervention itself.
 
 This moves the causal test one layer above the experience attractor. It is still an operational software experiment, not evidence that the runtime has phenomenal consciousness.
+
+## Meta self-observation layer
+
+The runtime can optionally observe its own operational state rather than relying on a model-generated description of that state.
+
+~~~text
+RUNTIME STATE
+      ↓
+SELF-OBSERVATION
+      ↓
+COMPARE WITH PERSISTENT EXPECTATION
+      ↓
+META-ERROR
+      ↓
+PREDICTED SELF-OBSERVATION
+      ↓
+TRAJECTORY SCORING
+      ↓
+SELECTION
+~~~
+
+The observation is derived from runtime-owned state such as coherence, homeostatic fit, self-model prediction error, trajectory presence, action re-entry, pending action presence, valuation presence, and self-dissonance fit.
+
+The runtime keeps a bounded expected self-observation and updates it from subsequent observations. These fields are runtime-owned and cannot be supplied by a host model frame.
+
+Candidate futures may provide predicted_self_observation. When the layer is enabled, the runtime scores how closely that predicted operational state matches its persistent expectation.
+
+This creates an explicit meta-observation loop:
+
+~~~text
+SELF-STATE
+   ↓
+OBSERVE SELF
+   ↓
+SELF-OBSERVATION EXPECTATION
+   ↓
+TRAJECTORY
+   ↓
+ACTION
+   ↓
+NEW SELF-STATE
+~~~
+
+The layer is deliberately opt-in. Its outputs are operational state variables, not claims of subjective awareness or phenomenal consciousness.
+
+
+## Causal meta-observation protocol
+
+The self-observation expectation can be intervened on without generating learning evidence.
+
+~~~text
+EXPECTED SELF-OBSERVATION A
+        ↓
+TRAJECTORY A
+        ↓
+INTERVENE
+        ↓
+EXPECTED SELF-OBSERVATION B
+        ↓
+TRAJECTORY B
+        ↓
+RESTORE A
+        ↓
+TRAJECTORY C
+~~~
+
+A successful intervention requires the same candidate futures, downstream divergence, exact reversal, persistence after restart, and unchanged adaptation evidence.
+
+This tests whether a system-level representation of its own operation participates causally in future selection. It is an architectural causality test, not proof of phenomenal consciousness.

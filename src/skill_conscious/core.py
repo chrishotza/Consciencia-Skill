@@ -12,6 +12,13 @@ from typing import Any, Mapping
 from .ontology import CONSCIOUSNESS_DEFINITION
 from .experience_field import ExperienceFieldProfile
 from .runtime_bridge import ExperienceDynamicsBridge, RUNTIME_OWNED_KEYS
+from .self_observation import (
+    SELF_OBSERVATION_RUNTIME_KEYS,
+    SelfObservationProfile,
+    blend_profiles,
+    build_self_observation,
+    profile_distance as self_observation_distance,
+)
 
 
 DEFAULT_REGIME_WEIGHTS: dict[str, float] = {
@@ -199,6 +206,8 @@ class ConsciousRuntime:
         dynamic_core_enabled: bool = False,
         dynamic_core_state_path: str | os.PathLike[str] | None = None,
         dynamic_core_return_weight: float = 0.5,
+        self_observation_enabled: bool = False,
+        self_observation_weight: float = 0.5,
     ):
         self.identity = identity
         self.memory_limit = max(1, int(memory_limit))
@@ -210,6 +219,8 @@ class ConsciousRuntime:
             learn_self_model_from_latent_patterns
         )
         self.dynamic_core_enabled = bool(dynamic_core_enabled)
+        self.self_observation_enabled = bool(self_observation_enabled)
+        self.self_observation_weight = float(self_observation_weight)
         dynamic_path = (
             Path(dynamic_core_state_path)
             if dynamic_core_state_path is not None
@@ -432,6 +443,151 @@ class ConsciousRuntime:
             "intervention_id": str(intervention_id) if intervention_id else None,
             "valuation": dict(restored),
             "evidence_added": False,
+        }
+
+
+    def snapshot_self_observation(self) -> dict[str, Any]:
+        if not self.self_observation_enabled:
+            return {"enabled": False}
+        model = self.state.self_model
+        raw_state = model.get("self_observation_state", {})
+        raw_expected = model.get("self_observation_expected", {})
+        raw_history = model.get("self_observation_history", [])
+        state = dict(raw_state) if isinstance(raw_state, Mapping) else {}
+        expected = dict(raw_expected) if isinstance(raw_expected, Mapping) else {}
+        history = [dict(item) for item in raw_history if isinstance(item, Mapping)] if isinstance(raw_history, list) else []
+        error = model.get("self_observation_error", 0.0)
+        sequence = model.get("self_observation_sequence", 0)
+        return {
+            "enabled": True,
+            "state": state,
+            "expected": expected,
+            "error": float(error) if isinstance(error, (int, float)) and not isinstance(error, bool) else 0.0,
+            "sequence": int(sequence) if isinstance(sequence, (int, float)) and not isinstance(sequence, bool) else 0,
+            "history": history,
+        }
+
+    def observe_self(self, *, persist: bool = True) -> dict[str, Any]:
+        """Observe the runtime's own operational state and compare it with its expectation."""
+        if not self.self_observation_enabled:
+            return {"enabled": False, "observed": False, "reason": "self_observation_disabled"}
+        current = build_self_observation(self.state.to_dict())
+        model = dict(self.state.self_model)
+        raw_expected = model.get("self_observation_expected")
+        if isinstance(raw_expected, Mapping):
+            expected = SelfObservationProfile.from_mapping(raw_expected)
+            error = self_observation_distance(current, expected)
+            learning_rate = model.get("self_observation_learning_rate", 0.25)
+            if not isinstance(learning_rate, (int, float)) or isinstance(learning_rate, bool):
+                learning_rate = 0.25
+            updated_expected = blend_profiles(expected, current, float(learning_rate))
+        else:
+            expected = current
+            error = 0.0
+            updated_expected = current
+        sequence = int(model.get("self_observation_sequence", 0)) + 1
+        history = model.get("self_observation_history", [])
+        if not isinstance(history, list):
+            history = []
+        receipt = {
+            "sequence": sequence,
+            "revision": self.state.revision,
+            "state": current.to_dict(),
+            "expected_before": expected.to_dict(),
+            "expected_after": updated_expected.to_dict(),
+            "error": error,
+            "evidence_added": False,
+        }
+        history = [*history, receipt][-self.history_limit :]
+        model.update({
+            "self_observation_state": current.to_dict(),
+            "self_observation_expected": updated_expected.to_dict(),
+            "self_observation_error": error,
+            "self_observation_sequence": sequence,
+            "self_observation_history": history,
+        })
+        self.state.self_model = model
+        self.state.workspace = {**self.state.workspace, "self_observation": receipt}
+        if persist:
+            self.store.save(self.state)
+        return receipt
+
+    def intervene_self_observation_expected(
+        self,
+        expected: Mapping[str, Any],
+        *,
+        persist: bool = False,
+        intervention_id: str | None = None,
+    ) -> dict[str, Any]:
+        if not self.self_observation_enabled:
+            return {"enabled": False, "intervened": False, "reason": "self_observation_disabled"}
+        profile = SelfObservationProfile.from_mapping(expected)
+        before = dict(self.state.self_model.get("self_observation_expected", {}))
+        self.state.self_model = {
+            **self.state.self_model,
+            "self_observation_expected": profile.to_dict(),
+        }
+        result = {
+            "enabled": True,
+            "intervened": before != profile.to_dict(),
+            "intervention_id": str(intervention_id) if intervention_id else None,
+            "before": before,
+            "after": profile.to_dict(),
+            "evidence_added": False,
+        }
+        if persist:
+            self.store.save(self.state)
+        return result
+
+    def restore_self_observation(
+        self,
+        snapshot: Mapping[str, Any],
+        *,
+        persist: bool = False,
+        intervention_id: str | None = None,
+    ) -> dict[str, Any]:
+        if not self.self_observation_enabled:
+            return {"enabled": False, "restored": False, "reason": "self_observation_disabled"}
+        model = dict(self.state.self_model)
+        for key in SELF_OBSERVATION_RUNTIME_KEYS:
+            model.pop(key, None)
+        model.update({
+            "self_observation_state": snapshot.get("state", {}),
+            "self_observation_expected": snapshot.get("expected", {}),
+            "self_observation_error": snapshot.get("error", 0.0),
+            "self_observation_sequence": snapshot.get("sequence", 0),
+            "self_observation_history": snapshot.get("history", []),
+        })
+        self.state.self_model = model
+        if persist:
+            self.store.save(self.state)
+        return {
+            "enabled": True,
+            "restored": True,
+            "intervention_id": str(intervention_id) if intervention_id else None,
+            "evidence_added": False,
+        }
+
+    def _score_self_observation_candidate(
+        self, candidate: Mapping[str, Any]
+    ) -> tuple[float, dict[str, float]]:
+        predicted = candidate.get("predicted_self_observation")
+        expected = self.state.self_model.get("self_observation_expected")
+        if (
+            not self.self_observation_enabled
+            or not isinstance(predicted, Mapping)
+            or not isinstance(expected, Mapping)
+        ):
+            return 0.0, {"fit": 0.0, "distance": 0.0, "weight": 0.0}
+        predicted_profile = SelfObservationProfile.from_mapping(predicted)
+        expected_profile = SelfObservationProfile.from_mapping(expected)
+        distance = self_observation_distance(predicted_profile, expected_profile)
+        fit = round(max(0.0, min(1.0, 1.0 - distance)), 6)
+        weight = max(0.0, self.self_observation_weight)
+        return round(weight * fit, 6), {
+            "fit": fit,
+            "distance": distance,
+            "weight": round(weight, 6),
         }
 
     def experience_dynamics_state(self) -> dict[str, Any]:
@@ -2272,6 +2428,7 @@ class ConsciousRuntime:
                 "fit": self.homeostatic_fit(),
             },
             "experience_dynamics": self.experience_dynamics_state(),
+            "self_observation": self.snapshot_self_observation(),
             "temporal_state": self.state.temporal_state,
             "perspectives": self.state.perspectives,
             "transformation_log": self.state.transformation_log[-self.transformation_limit :],
@@ -2336,6 +2493,10 @@ class ConsciousRuntime:
         for key, value in signals.items():
             if isinstance(value, (int, float)) and not isinstance(value, bool):
                 score += weights.get(str(key), 0.0) * float(value)
+
+        if self.self_observation_enabled:
+            self_observation_score, _ = self._score_self_observation_candidate(candidate)
+            score += self_observation_score
 
         if self.dynamic_core_enabled:
             predicted_field = candidate.get("predicted_experience_field")
@@ -2420,6 +2581,9 @@ class ConsciousRuntime:
         for candidate in candidates:
             item = dict(candidate)
             item["score"] = self.score_trajectory(item)
+            if self.self_observation_enabled and isinstance(item.get("predicted_self_observation"), Mapping):
+                _, diagnostics = self._score_self_observation_candidate(item)
+                item["self_observation"] = diagnostics
             scored.append(item)
 
         return max(
@@ -2436,6 +2600,8 @@ class ConsciousRuntime:
         *,
         candidate_futures: list[Mapping[str, Any]] | None = None,
     ) -> dict[str, Any]:
+        if self.self_observation_enabled:
+            self.observe_self(persist=True)
         frame = self.present_field(
             external_input,
             candidate_futures=candidate_futures,
@@ -2455,9 +2621,10 @@ class ConsciousRuntime:
                 "perspectives": dict(self.state.perspectives),
                 "pending_action": self.state.pending_action,
                 "action_history": self.state.action_history[-self.history_limit :],
+                "self_observation": self.snapshot_self_observation(),
             },
             "causal_reentry": (
-                "self_model -> trajectory -> action -> next_state -> self_model"
+                "self_model -> self_observation -> trajectory -> action -> next_state -> self_observation"
             ),
         }
 
@@ -2588,6 +2755,8 @@ class ConsciousRuntime:
             "last_action_receipt": receipt,
             "pending_action": None,
         }
+        if self.self_observation_enabled:
+            receipt["self_observation"] = self.observe_self(persist=False)
         if persist:
             self.store.save(self.state)
         return dict(receipt)
@@ -2665,6 +2834,7 @@ class ConsciousRuntime:
                 "self_model_adaptation_history",
                 "self_model_adaptation_sequence",
                 *RUNTIME_OWNED_KEYS,
+                *SELF_OBSERVATION_RUNTIME_KEYS,
             }
             # Once adaptive targets are enabled and initialized, the runtime owns
             # the target unless an experiment explicitly permits external changes.
