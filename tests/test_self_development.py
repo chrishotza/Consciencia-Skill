@@ -51,7 +51,10 @@ def test_adaptive_target_requires_accumulated_evidence(tmp_path):
     assert event["target"] == "energy"
     assert event["cause"] == "accumulated_host_observation"
     assert event["evidence"]["sample_count"] == 3
-    assert event["evidence"]["evidence_ids"] == ["a1", "a2", "a3"]
+    evidence_ids = event["evidence"]["evidence_ids"]
+    assert len(evidence_ids) == 3
+    assert all(evidence_ids)
+    assert evidence_ids == [item["action_id"] for item in runtime.state.action_history[-3:]]
 
 
 def test_adaptive_target_persists_across_restart(tmp_path):
