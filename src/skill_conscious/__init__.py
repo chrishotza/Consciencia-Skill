@@ -14,6 +14,7 @@ from .causal_self_observation_probe import ReversibleSelfObservationIntervention
 from .metacognition import MetacognitiveTrace, build_metacognitive_trace, state_delta
 from .metacognitive_prediction import MetacognitivePredictionResult, compare_metacognitive_prediction, METACOGNITIVE_PREDICTION_RUNTIME_KEYS
 from .metacognitive_causal_probe import MetacognitiveCausalProbeResult, run_metacognitive_causal_probe
+from .metacognitive_confidence_probe import ReversibleMetacognitiveConfidenceInterventionResult, run_reversible_metacognitive_confidence_intervention
 from .llm_adapter import LLMCompletion, LLMProtocolError, ProviderNeutralLLMAdapter
 
 __all__ = [
@@ -59,6 +60,8 @@ __all__ = [
     "MetacognitivePredictionResult",
     "compare_metacognitive_prediction",
     "METACOGNITIVE_PREDICTION_RUNTIME_KEYS",
+    "ReversibleMetacognitiveConfidenceInterventionResult",
+    "run_reversible_metacognitive_confidence_intervention",
     "LLMCompletion",
     "LLMProtocolError",
     "ProviderNeutralLLMAdapter",
