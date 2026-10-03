@@ -336,3 +336,27 @@ When a host does not explicitly supply a regime, the runtime evaluates baseline,
 Both mechanisms are directly ablatable. The runtime constructor supports `learn_latent_patterns=False`, allowing experiments to separate persistent state from endogenous latent learning.
 
 These are engineering mechanisms for testing self-organization. They are not presented as proof of phenomenal consciousness.
+
+## Runtime 0.7.0 — endogenous self-model revision
+
+Runtime 0.7 adds a causal bridge between learned latent structure and the persistent self-model.
+
+~~~text
+RECURRENCE
+   ↓
+LATENT PATTERN
+   ↓
+SELF-MODEL REVISION
+   ↓
+LEARNED SELF-STATE
+   ↓
+SELF-ALIGNMENT
+   ↓
+TRAJECTORY / REGIME
+~~~
+
+The revision is bounded by `latent_self_model_learning_rate` and is applied only when a recurrent endogenous pattern provides new evidence. The runtime records `latent_tendencies` and the evidence count used for each revision.
+
+`expected_self_state` and `learned_self_state` remain separate: the first encodes explicit expectation and self-dissonance, while the second is learned from recurrent internal dynamics.
+
+This is a testable self-organization mechanism, not a claim that the runtime has phenomenal experience.
