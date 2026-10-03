@@ -75,6 +75,8 @@ This is the initial register. It is deliberately broad; each item will later rec
   https://www.heartmath.org/research/science-of-the-heart/coherence/
 - Bernardo Kastrup — analytic idealism.
   https://www.bernardokastrup.com/p/papers.html
+- Ken Wilber — Integral Theory / AQAL (quadrants, levels, lines, states, types).
+  https://integrallife.com/study-integral/
 - C. G. Jung — collective unconscious and archetypes.
 - Stanislav Grof — transpersonal psychology.
 - Robert Monroe / Monroe Institute — Focus levels.
