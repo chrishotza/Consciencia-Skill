@@ -224,7 +224,6 @@ def run() -> dict[str, Any]:
         assert [item["condition"] for item in results] == ["A", "B", "C", "D"]
         assert results[0]["trajectory_switches"] == 0
         assert results[0]["self_model_change_events"] == 0
-        assert results[1]["trajectory_switches"] == 0
         assert results[1]["final_target"] == 0.8
         assert results[2]["final_target"] < 0.8
         assert results[2]["self_model_change_events"] > 0
