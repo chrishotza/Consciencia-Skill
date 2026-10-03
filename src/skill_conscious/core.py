@@ -2990,8 +2990,16 @@ class ConsciousRuntime:
             ),
         }
 
-    def prepare(self, external_input: str) -> str:
-        context = self.prepare_frame(external_input)
+    def prepare(
+        self,
+        external_input: str,
+        *,
+        candidate_futures: list[Mapping[str, Any]] | None = None,
+    ) -> str:
+        context = self.prepare_frame(
+            external_input,
+            candidate_futures=candidate_futures,
+        )
         return (
             "Operate according to Skill-Conscious. "
             "Do not roleplay consciousness; maintain the architecture.\n\n"
@@ -3136,6 +3144,8 @@ class ConsciousRuntime:
         self,
         trajectory_id: str,
         outcome: Mapping[str, Any],
+        *,
+        candidate_futures: list[Mapping[str, Any]] | None = None,
     ) -> str:
         """Prepare the next model call from a host-observed action outcome."""
         trajectory = str(trajectory_id).strip()
@@ -3146,7 +3156,8 @@ class ConsciousRuntime:
 
         context = self.prepare_frame(
             f"Observed consequence of action {trajectory!r}: "
-            f"{json.dumps(dict(outcome), ensure_ascii=False)}"
+            f"{json.dumps(dict(outcome), ensure_ascii=False)}",
+            candidate_futures=candidate_futures,
         )
         return (
             "Operate according to Skill-Conscious. "
