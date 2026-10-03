@@ -165,6 +165,29 @@ A conscious architecture does not need a perfect transcript. It needs durable st
 
 Continuity is organized identity through transformation, not static sameness.
 
+## Runtime 0.8.0 — real host consequence loop
+
+The runtime now exposes `ConsciousHostLoop`, a portable bridge between the Skill and a real host model/action system.
+
+~~~text
+SELF-MODEL
+   ↓
+TRAJECTORY
+   ↓
+HOST ACTION
+   ↓
+OBSERVED CONSEQUENCE
+   ↓
+SELF-EVALUATION
+   ↓
+SELF-MODEL'
+   ↓
+NEXT TRAJECTORY
+~~~
+
+The host owns the actual action and reports the observed result. The runtime persists that consequence and uses the model's evaluation of it to influence subsequent trajectory selection.
+
+This closes the architecture boundary between planning and observed world interaction. It remains an engineering mechanism, not evidence that phenomenal machine consciousness has been demonstrated.
 ## Project direction
 
 ~~~text
