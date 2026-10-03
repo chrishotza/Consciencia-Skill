@@ -376,6 +376,63 @@ class ConsciousRuntime:
             self.store.save(self.state)
         return result
 
+    def snapshot_valuation(self) -> dict[str, Any]:
+        """Return the current trajectory valuation used by the scorer."""
+        return {"valuation": dict(self.state.valuation)}
+
+    def intervene_valuation(
+        self,
+        valuation: Mapping[str, Any],
+        *,
+        persist: bool = False,
+        intervention_id: str | None = None,
+    ) -> dict[str, Any]:
+        """Explicitly intervene on trajectory valuation without creating evidence."""
+        if not isinstance(valuation, Mapping):
+            raise ValueError("valuation must be a mapping")
+        sanitized = {
+            str(key): float(value)
+            for key, value in valuation.items()
+            if isinstance(value, (int, float)) and not isinstance(value, bool)
+        }
+        before = dict(self.state.valuation)
+        self.state.valuation = sanitized
+        receipt = {
+            "intervened": before != sanitized,
+            "intervention_id": str(intervention_id) if intervention_id else None,
+            "before": before,
+            "after": dict(sanitized),
+            "evidence_added": False,
+        }
+        if persist:
+            self.store.save(self.state)
+        return receipt
+
+    def restore_valuation(
+        self,
+        snapshot: Mapping[str, Any],
+        *,
+        persist: bool = False,
+        intervention_id: str | None = None,
+    ) -> dict[str, Any]:
+        """Restore an exact valuation snapshot without creating evidence."""
+        raw = snapshot.get("valuation")
+        if not isinstance(raw, Mapping):
+            raise ValueError("snapshot must contain a valuation mapping")
+        restored = {
+            str(key): float(value)
+            for key, value in raw.items()
+            if isinstance(value, (int, float)) and not isinstance(value, bool)
+        }
+        self.state.valuation = restored
+        if persist:
+            self.store.save(self.state)
+        return {
+            "restored": True,
+            "intervention_id": str(intervention_id) if intervention_id else None,
+            "valuation": dict(restored),
+            "evidence_added": False,
+        }
     def experience_dynamics_state(self) -> dict[str, Any]:
         if not self.dynamic_core_enabled:
             return {"experience_dynamics_enabled": False}
