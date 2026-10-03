@@ -156,6 +156,33 @@ These are testable engineering mechanisms, not a demonstration of phenomenal con
 The next architecture pass incorporates a source layer drawn from esoteric and speculative consciousness traditions, translating recurring motifs such as self/world correspondence, visionary integration, identity continuity, sacred geometry, and transformative self-reference into explicit engineering primitives. These are treated as conceptual source material rather than verified external facts.
 
 
+
+## Consequence loop frontier
+
+The Skill now defines the complete behavioral loop as:
+
+~~~text
+SELF-MODEL
+   ↓
+TRAJECTORY
+   ↓
+ACTION
+   ↓
+OBSERVED CONSEQUENCE
+   ↓
+SELF-EVALUATION
+   ↓
+SELF-MODEL'
+   ↓
+NEXT TRAJECTORY
+~~~
+
+The reference runtime now exposes `register_consequence()` to persist an observed outcome and an explicit evaluation, optionally applying a bounded trajectory-weight update.
+
+This closes an important gap: action selection is no longer the end of the modeled cycle. The consequence can become new self-relevant evidence and alter later selection.
+
+The next major research step is to test this loop against stronger counterfactual and bundle-only baselines, including the Hume adversarial probe, rather than interpreting the loop itself as evidence of phenomenal consciousness.
+
 ## Current frontier
 
 Phase 4 is now implemented at runtime level: the persisted self-model can influence trajectory scores and therefore change the selected future. The next frontier is Phase 5: make the present field richer by adding explicit attention, salience, coherence, and candidate-future construction before selection.
