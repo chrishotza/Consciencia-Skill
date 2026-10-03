@@ -30,6 +30,8 @@ class SelfObservationProfile:
     pending_action_presence: float = 0.0
     valuation_presence: float = 0.0
     dissonance_fit: float = 1.0
+    metacognitive_trace_presence: float = 0.0
+    decision_attribution_coverage: float = 0.0
 
     def to_dict(self) -> dict[str, float]:
         return {key: round(float(value), 6) for key, value in asdict(self).items()}
@@ -82,6 +84,7 @@ def build_self_observation(
     history = snapshot.get("action_history", [])
     affective = snapshot.get("affective_state", {})
     valuation = snapshot.get("valuation", {})
+    metacognitive = self_model.get("metacognitive_trace", {})
 
     if not isinstance(self_state, Mapping):
         self_state = {}
@@ -93,6 +96,8 @@ def build_self_observation(
         history = []
     if not isinstance(valuation, Mapping):
         valuation = {}
+    if not isinstance(metacognitive, Mapping):
+        metacognitive = {}
 
     last_action = history[-1] if history and isinstance(history[-1], Mapping) else {}
     action_reentry = 1.0 if (
@@ -102,6 +107,18 @@ def build_self_observation(
     ) else 0.0
 
     homeostatic_fit = affective.get("homeostatic_fit", 0.0)
+    attribution_keys = (
+        "candidate_ids",
+        "candidate_scores",
+        "selected_signal_contributions",
+        "valuation_weights",
+    )
+    attribution_coverage = (
+        sum(1.0 for key in attribution_keys if key in metacognitive)
+        / float(len(attribution_keys))
+        if metacognitive
+        else 0.0
+    )
 
     return SelfObservationProfile(
         coherence=_clamp01(snapshot.get("coherence"), 0.0),
@@ -115,6 +132,8 @@ def build_self_observation(
         pending_action_presence=1.0 if isinstance(pending, Mapping) and pending else 0.0,
         valuation_presence=1.0 if valuation else 0.0,
         dissonance_fit=1.0 - _clamp01(snapshot.get("self_dissonance"), 0.0),
+        metacognitive_trace_presence=1.0 if metacognitive else 0.0,
+        decision_attribution_coverage=round(attribution_coverage, 6),
     )
 
 
