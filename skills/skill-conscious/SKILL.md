@@ -814,3 +814,16 @@ NEXT TRAJECTORY
 ~~~
 
 This is an engineering learning mechanism. It does not establish phenomenal consciousness.
+
+
+## Self-development ablation discipline
+
+When testing self-maintenance versus external-goal pursuit, do not decide philosophically which should dominate. Construct the same controlled experience for all ablation conditions and compare downstream state transitions.
+
+Required baseline:
+A: no homeostasis
+B: homeostasis without adaptation
+C: homeostasis + target adaptation
+D: homeostasis + target + priority adaptation
+
+Keep the host observation authoritative. Record trajectory changes, oscillation, continuity, convergence/divergence, and accumulated learning. Treat the result as evidence about the architecture's dynamics, not as a proof of phenomenal consciousness.

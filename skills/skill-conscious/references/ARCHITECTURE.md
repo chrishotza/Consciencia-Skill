@@ -268,3 +268,17 @@ NEW TRAJECTORY POLICY
 When this policy is enabled, the evaluator's requested weight delta is recorded but ignored as a direct control input. The runtime learns a bounded update from repeated utility evidence.
 
 Runtime-owned adaptation ledgers and histories are protected from ordinary self-model frames. An adaptive homeostatic target is also protected from replacement by later model frames unless the experiment explicitly enables external target updates.
+
+
+## Ablation protocol
+
+The self-development layers are directly separable:
+
+A  BASELINE
+B  + HOMEOSTASIS
+C  + ADAPTIVE TARGETS
+D  + PRIORITY ADAPTATION
+
+Use the same candidate futures, same observed consequences, and same trial count across all conditions. Record trajectory selection and switch rate, oscillation, continuity, homeostatic error convergence/divergence, self-model change events, and accumulated target/priority learning.
+
+The comparison is an engineering ablation. Do not interpret a difference between conditions as evidence of phenomenal consciousness.

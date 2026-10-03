@@ -461,3 +461,17 @@ INTERNAL PRIORITY UPDATE
 ~~~
 
 The mechanism is directly ablatable: omit the priority-adaptation policy to retain the legacy bounded consequence-feedback path.
+
+
+## Self-development ablation A/B/C/D
+
+The self-development stack now includes a deterministic four-condition ablation.
+
+A: no homeostasis
+B: homeostasis
+C: homeostasis + adaptive targets
+D: homeostasis + adaptive targets + priority adaptation
+
+All four conditions receive the same controlled trajectory field and the same host-observed internal outcome. The experiment reports trajectory selection, switches, oscillation, continuity, homeostatic convergence/divergence, self-model change events, target updates, priority updates, and accumulated learning.
+
+The purpose is causal separation of layers, not a claim that one condition is intrinsically “more conscious.” Run python experiments/self_development_ablation.py.

@@ -19,5 +19,7 @@ jobs:
         run: python -m pytest -q
       - name: Run deterministic self-development probe
         run: python experiments/self_development_target_adaptation.py
+      - name: Run deterministic self-development A/B/C/D ablation
+        run: python experiments/self_development_ablation.py
       - name: Run deterministic Hume probe
         run: python experiments/hume_bundle_ab.py
