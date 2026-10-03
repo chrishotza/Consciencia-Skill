@@ -1,9 +1,30 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import dataclass
 from typing import Any, Mapping
 
 from .core import ConsciousRuntime
+
+
+_ADAPTATION_EVIDENCE_KEYS = (
+    "homeostatic_adaptation_evidence",
+    "homeostatic_adaptation_history",
+    "trajectory_priority_adaptation_evidence",
+    "trajectory_priority_adaptation_history",
+    "trajectory_priority_adaptation_sequence",
+    "self_model_adaptation_evidence",
+    "self_model_adaptation_history",
+    "self_model_adaptation_sequence",
+)
+
+
+def _adaptation_evidence_snapshot(runtime: ConsciousRuntime) -> dict[str, Any]:
+    return {
+        key: deepcopy(runtime.state.self_model.get(key))
+        for key in _ADAPTATION_EVIDENCE_KEYS
+        if key in runtime.state.self_model
+    }
 
 
 @dataclass(frozen=True)
@@ -49,7 +70,7 @@ def run_reversible_valuation_intervention(
     """
     snapshot = runtime.snapshot_valuation()
     before_valuation = dict(snapshot.get("valuation", {}))
-    before_evidence = runtime.adaptation_evidence_snapshot()
+    before_evidence = _adaptation_evidence_snapshot(runtime)
 
     baseline = runtime.select_trajectory(candidates)
     intervention = runtime.intervene_valuation(
@@ -69,7 +90,7 @@ def run_reversible_valuation_intervention(
     restored = runtime.select_trajectory(candidates)
 
     after_valuation = runtime.snapshot_valuation().get("valuation", {})
-    after_evidence = runtime.adaptation_evidence_snapshot()
+    after_evidence = _adaptation_evidence_snapshot(runtime)
 
     baseline_score = float(baseline.get("score", 0.0))
     intervention_score = float(intervened.get("score", 0.0))
