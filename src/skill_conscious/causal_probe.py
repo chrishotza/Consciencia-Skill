@@ -37,9 +37,7 @@ def run_reversible_intervention(
     runtime: ConsciousRuntime,
     candidates: list[Mapping[str, Any]],
     *,
-    baseline_profiles: Mapping[str, ExperienceFieldProfile | Mapping[str, Any]],
     intervention_center: Mapping[str, Any],
-    current_profile: ExperienceFieldProfile | Mapping[str, Any] | None = None,
     intervention_id: str = "causal-intervention",
 ) -> ReversibleInterventionResult:
     """Intervene, measure downstream divergence, then reverse the exact intervention.
