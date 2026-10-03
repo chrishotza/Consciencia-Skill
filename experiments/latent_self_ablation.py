@@ -28,6 +28,7 @@ def run_condition(name: str, root: Path) -> dict:
         name,
         root / f"{name}.json",
         learn_latent_patterns=learning_enabled,
+        learn_self_model_from_latent_patterns=learning_enabled,
     )
     initial_hash = state_hash(runtime.snapshot())
     selected = []
@@ -88,6 +89,7 @@ def run_condition(name: str, root: Path) -> dict:
         name,
         root / f"{name}.json",
         learn_latent_patterns=learning_enabled,
+        learn_self_model_from_latent_patterns=learning_enabled,
     )
     regime_transitions = sum(
         1
@@ -104,6 +106,8 @@ def run_condition(name: str, root: Path) -> dict:
         "regime_transitions": regime_transitions,
         "self_dissonance": dissonance,
         "self_model_revisions": revisions,
+        "learned_self_state": restarted.state.self_model.get("learned_self_state", {}),
+        "latent_tendencies": restarted.state.self_model.get("latent_tendencies", {}),
         "restart_identity": restarted.state.identity,
         "restart_revision": restarted.state.revision,
         "latent_pattern_keys": sorted(restarted.state.latent_patterns),
