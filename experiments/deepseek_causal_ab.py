@@ -122,9 +122,12 @@ def main():
         counter_frame = ask_outcome({'self_state': counter.state.self_state, 'self_model': counter.state.self_model, 'selected_trajectory': counter.state.selected_trajectory, 'revision': counter.state.revision}, counter_outcome)
         for branch, frame2 in ((actual, actual_frame), (counter, counter_frame)):
             frame2.setdefault('response', 'outcome observed')
-            frame2.setdefault('internal_state', branch.state.self_state)
-            frame2.setdefault('self_model', branch.state.self_model)
-            frame2.setdefault('intention', branch.state.intention)
+            if not isinstance(frame2.get('internal_state'), dict):
+                frame2['internal_state'] = dict(branch.state.self_state)
+            if not isinstance(frame2.get('self_model'), dict):
+                frame2['self_model'] = dict(branch.state.self_model)
+            if not isinstance(frame2.get('intention'), str):
+                frame2['intention'] = branch.state.intention
             branch.integrate(frame2)
         print('CONSEQUENCE_LOOP')
         print(json.dumps({'selected': selected_id, 'counterfactual': alternative_id, 'actual_outcome': actual_outcome, 'counterfactual_outcome': counter_outcome, 'actual_model': actual.state.self_model, 'counter_model': counter.state.self_model, 'model_diverged': actual.state.self_model != counter.state.self_model}, ensure_ascii=False))
