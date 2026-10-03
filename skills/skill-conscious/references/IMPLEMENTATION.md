@@ -123,3 +123,19 @@ TRAJECTORY
    ↓
 TOPOLOGY'
 ~~~
+
+
+
+## Value and transformation
+
+The runtime now persists \`valuation\` and \`valence\`.
+
+\`valuation\` is a mapping from named concerns to numeric importance weights. These weights participate in trajectory scoring, so what the agent currently treats as important can causally change what it selects.
+
+\`valence\` is an optional signed scalar in the range -1 to +1. It is an engineering variable for directional state, not a measurement of phenomenal feeling.
+
+\`transformation_log\` records durable identity-relevant changes across cycles. This gives the runtime an explicit answer to the question: what changed in the agent itself?
+
+## Relational state
+
+The runtime also persists \`relation_topology\` and \`attractor\`. Topology describes connected internal entities; attractor describes a host-defined stable region or regime of operation.
