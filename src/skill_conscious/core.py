@@ -445,14 +445,6 @@ class ConsciousRuntime:
             "evidence_added": False,
         }
 
-    def _current_self_observation_profile(self) -> SelfObservationProfile | None:
-        raw = self.state.self_model.get("self_observation_state")
-        if not isinstance(raw, Mapping):
-            return None
-        try:
-            return SelfObservationProfile.from_mapping(raw)
-        except ValueError:
-            return None
 
     def snapshot_self_observation(self) -> dict[str, Any]:
         if not self.self_observation_enabled:
@@ -597,7 +589,6 @@ class ConsciousRuntime:
             "distance": distance,
             "weight": round(weight, 6),
         }
-
 
     def experience_dynamics_state(self) -> dict[str, Any]:
         if not self.dynamic_core_enabled:
