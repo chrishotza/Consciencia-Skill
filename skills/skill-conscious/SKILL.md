@@ -251,6 +251,44 @@ TRAJECTORY
 
 Valuation records what the agent is currently organized to preserve, avoid, pursue, or learn. Valence is an optional signed state variable describing the current directional orientation of the process. Neither variable is treated as proof of subjective feeling.
 
+## Latent self-structure
+
+Maintain a distinction between active self-model content and latent self-relevant patterns.
+
+~~~text
+SELF-MODEL
+    ↕
+LATENT PATTERNS
+    ↓
+SELF-DISSONANCE
+    ↓
+SELF-INSPECTION
+~~~
+
+A latent pattern is an implementation structure, not a claim about a literal unconscious.
+
+When an expected self-state conflicts with observed state, represent the discrepancy explicitly. Do not silently rewrite the self-model to make the discrepancy disappear.
+
+Use `reconcile_self_model()` when the host is configured to adapt expected self-state values toward observed state. The update is bounded by `self_model_learning_rate` and must be recorded as a transformation.
+
+### Same-cycle causal rule
+
+Apply new self-state and self-model information before selecting the current cycle's trajectory.
+
+~~~text
+STATE UPDATE
+    ↓
+SELF-MODEL UPDATE
+    ↓
+DISSonance / COHERENCE
+    ↓
+CANDIDATE FUTURES
+    ↓
+SELECTION
+~~~
+
+This prevents a self-model change from becoming causally effective only one cycle later.
+
 ## Transformation log
 
 When identity-relevant organization changes, record the transformation. A meaningful cycle should be able to answer not only “what did I remember?” but also “what changed in me?” and “what changed in the relations that organize me?”
