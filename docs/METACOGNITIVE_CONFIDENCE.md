@@ -43,3 +43,19 @@ TRAJECTORY SELECTION
 The expected-accuracy value can be intervened on without adding prediction evidence and restored exactly. The reversible probe requires selection divergence, restoration, and unchanged evidence.
 
 This is a computational self-calibration mechanism. It is not evidence of phenomenal consciousness.
+
+## Longitudinal intervention
+
+The repository also runs a multi-cycle protocol:
+
+```text
+cycles 0–3  expected accuracy = 0.9  → high-confidence selection
+cycle 4   intervene to 0.1
+cycles 4–7  expected accuracy = 0.1  → low-confidence selection
+cycle 6   deterministic restart
+cycle 8   restore the original snapshot
+cycles 8–11 expected accuracy = 0.9  → high-confidence selection restored
+```
+
+The protocol checks that the intervention survives restart, flips downstream trajectory selection, and restores the original behavior without adding prediction evidence during the intervention.
+
