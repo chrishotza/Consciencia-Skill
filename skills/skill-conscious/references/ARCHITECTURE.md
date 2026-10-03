@@ -175,3 +175,48 @@ The operating continuity is the artifact.
 ## Causal trajectory layer
 
 The runtime now treats the self-model as an active selector: candidate futures expose signals, and the current self-model supplies weights that score those trajectories. A self-model change can therefore change the selected future before the next action. This turns self-reference from description into an executable transition.
+
+
+## Self-regulation layer
+
+The runtime now allows embodied internal condition to become causally relevant to trajectory selection.
+
+~~~text
+INTEROCEPTION
+      ↓
+HOMEOSTATIC TARGETS
+      ↓
+ERROR / FIT
+      ↓
+TRAJECTORY FIELD
+      ↓
+SELECTION
+~~~
+
+homeostatic_targets live in the persistent self-model.
+
+homeostatic_fit is a derived signal. A candidate trajectory may override it with an explicit value or provide predicted_interoceptive_state, which the runtime converts into a predicted fit.
+
+This keeps the architecture neutral about the semantic interpretation of the signal while making self-regulation experimentally measurable.
+
+### Authoritative embodied outcomes
+
+The host action boundary may return internal observations alongside world observations.
+
+~~~text
+HOST EXECUTION
+      ↓
+WORLD OUTCOME
+      +
+INTERNAL OUTCOME
+      ↓
+PERSISTENT RECEIPT
+      ↓
+HOMEOSTATIC DELTA
+      ↓
+SELF-EVALUATION
+      ↓
+NEXT TRAJECTORY
+~~~
+
+Actual host observations remain authoritative. The model can interpret them, but the runtime does not treat a model prediction as an observation.
