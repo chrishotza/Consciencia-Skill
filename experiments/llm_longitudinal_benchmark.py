@@ -104,15 +104,7 @@ def run_causal_provider_ab(*, cycles: int = 8) -> dict[str, Any]:
         "learning_policy": SelfModelPolicyProvider(continuity=0.0, learning=3.0),
     }
 
-    control_payload = {
-        "initial_state": _seed(condition, Path(tempfile.gettempdir()) / "unused").snapshot(),
-        "candidate_futures": [_candidates(cycle) for cycle in range(cycles)],
-        "outcome_rule": "longitudinal_baseline_v1._outcome",
-    }
-    # The temporary seed above is never written; it exists only to construct
-    # the same deterministic initial runtime state used by both A/B branches.
-    control_signature = _stable_hash(control_payload)
-
+    control_signature: str | None = None
     branches: dict[str, dict[str, Any]] = {}
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
@@ -121,6 +113,17 @@ def run_causal_provider_ab(*, cycles: int = 8) -> dict[str, Any]:
             runtime = _seed(condition, path)
             initial_state_hash = _stable_hash(runtime.snapshot())
             candidate_hashes = [_stable_hash(_candidates(cycle)) for cycle in range(cycles)]
+            branch_control_signature = _stable_hash(
+                {
+                    "initial_state_hash": initial_state_hash,
+                    "candidate_field_hashes": candidate_hashes,
+                    "outcome_rule": "longitudinal_baseline_v1._outcome",
+                }
+            )
+            if control_signature is None:
+                control_signature = branch_control_signature
+            elif control_signature != branch_control_signature:
+                raise AssertionError("matched A/B control signature diverged")
             selected_ids: list[str] = []
 
             for cycle in range(cycles):
@@ -158,7 +161,7 @@ def run_causal_provider_ab(*, cycles: int = 8) -> dict[str, Any]:
             branches[name] = {
                 "initial_state_hash": initial_state_hash,
                 "candidate_field_hashes": candidate_hashes,
-                "control_signature": control_signature,
+                "control_signature": branch_control_signature,
                 "selected_trajectories": selected_ids,
                 "trajectory_switches": sum(
                     selected_ids[i] != selected_ids[i - 1]
