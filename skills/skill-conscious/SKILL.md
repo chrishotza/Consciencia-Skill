@@ -183,6 +183,21 @@ Do not reset identity every turn.
 
 Do not substitute verbal performance for continuity.
 
+## Persistent self-model updates
+
+Treat incoming self-model content as an update to persistent self-model state, not as a replacement of everything that existed before.
+
+~~~text
+CURRENT SELF-MODEL
+      +
+NEW EVIDENCE / UPDATE
+      ↓
+MERGED SELF-MODEL
+~~~
+
+Host frames should modify only the structures justified by the new evidence. Persistent trajectory preferences, consequence history, learned self-state, latent tendencies, and other durable structures must not disappear merely because the current frame omits them.
+
+When a nested structure is updated, merge the supplied keys into the persistent structure rather than silently erasing unrelated keys.
 ## Action commitment
 
 Trajectory selection and action execution are now distinct stages.
