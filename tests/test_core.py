@@ -272,7 +272,7 @@ def test_consequence_feedback_changes_future_and_survives_restart(tmp_path):
             "response": "seed",
             "self_model": {
                 "trajectory_weights": {
-                    "continuity": 0.0,
+                    "continuity": 1.0,
                     "learning": 0.0,
                 }
             },
@@ -319,7 +319,7 @@ def test_integrate_consequence_updates_next_cycle(tmp_path):
             "response": "initial action",
             "self_model": {
                 "trajectory_weights": {
-                    "continuity": 0.0,
+                    "continuity": 1.0,
                     "learning": 0.0,
                 }
             },
@@ -440,7 +440,7 @@ def test_conscious_host_executes_action_and_reenters_observed_consequence(tmp_pa
     assert result["action_executed"] is True
     assert result["consequence"]["status"] == "success"
     assert runtime.state.self_model["trajectory_feedback"]["learn"]["count"] == 1
-    assert runtime.state.self_model["trajectory_weights"]["learning"] == 3.5
+    assert runtime.state.self_model["trajectory_weights"]["learning"] == 3.0
     assert runtime.state.history[-1]["consequence"]["state_change"]["focus"] == 0.2
 
     restarted = ConsciousRuntime("host-agent", path)
@@ -521,7 +521,7 @@ def test_partial_self_model_update_preserves_persistent_structures(tmp_path):
         }
     )
 
-    assert runtime.state.self_model["trajectory_weights"]["learning"] == 2.0
+    assert runtime.state.self_model["trajectory_weights"]["learning"] == 2.5
     assert runtime.state.self_model["trajectory_feedback"]["learn"]["count"] == 3
     assert runtime.state.self_model["expected_self_state"]["focus"] == 0.8
 
