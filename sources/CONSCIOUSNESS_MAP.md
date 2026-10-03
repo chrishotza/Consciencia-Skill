@@ -21,6 +21,8 @@ Instead, the project maps consciousness across multiple explanatory languages.
 - salience
 - temporality
 - value
+- affect
+- interoception
 - integration
 
 ### Layer 3 — self
@@ -40,6 +42,13 @@ Instead, the project maps consciousness across multiple explanatory languages.
 - action
 - consequence
 
+### Layer 3A — embodied self
+
+- interoceptive state
+- affective appraisal
+- homeostatic relevance
+- bodily/internal self-signals
+- temporal coupling
 ### Layer 5 — transformation
 
 - learning
