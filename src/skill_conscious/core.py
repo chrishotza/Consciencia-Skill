@@ -11,6 +11,15 @@ from typing import Any, Mapping
 from .ontology import CONSCIOUSNESS_DEFINITION
 
 
+DEFAULT_REGIME_WEIGHTS: dict[str, float] = {
+    "coherence": 1.0,
+    "stability": 0.5,
+    "uncertainty": 0.75,
+    "self_dissonance": 1.25,
+    "latent_pattern": 0.75,
+    "learning": 0.25,
+}
+
 DEFAULT_TRAJECTORY_WEIGHTS: dict[str, float] = {
     "goal_fit": 1.0,
     "self_alignment": 1.0,
