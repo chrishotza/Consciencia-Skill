@@ -361,7 +361,7 @@ def test_integrate_consequence_updates_next_cycle(tmp_path):
     )
 
     assert runtime.state.self_model["trajectory_feedback"]["continue"]["count"] == 1
-    assert runtime.state.self_model["trajectory_weights"]["continuity"] == -2.0
+    assert runtime.state.self_model["trajectory_weights"]["continuity"] == -1.0
     assert runtime.state.selected_trajectory["id"] == "learn"
     assert runtime.state.history[-1]["consequence"]["stability"] == -0.5
     assert runtime.state.history[-1]["consequence_trajectory"] == "continue"
