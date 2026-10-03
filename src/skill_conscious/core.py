@@ -1255,5 +1255,91 @@ class ConsciousRuntime:
         self.store.save(self.state)
         return response
 
+    def register_consequence(
+        self,
+        trajectory_id: str,
+        outcome: Mapping[str, Any],
+        *,
+        evaluation: Mapping[str, Any] | None = None,
+        persist: bool = True,
+    ) -> dict[str, Any]:
+        """Persist an action consequence and optionally feed an explicit evaluation back into the self-model."""
+        trajectory = str(trajectory_id).strip()
+        if not trajectory:
+            raise ValueError("trajectory_id cannot be empty")
+        if not isinstance(outcome, Mapping):
+            raise ValueError("outcome must be a mapping")
+        if evaluation is not None and not isinstance(evaluation, Mapping):
+            raise ValueError("evaluation must be a mapping")
+
+        result = {
+            "trajectory": trajectory,
+            "outcome": dict(outcome),
+            "evaluation": dict(evaluation or {}),
+            "revision": self.state.revision + 1,
+        }
+
+        model = dict(self.state.self_model)
+        feedback = dict(model.get("trajectory_feedback", {}))
+        previous = feedback.get(trajectory, {})
+        if not isinstance(previous, Mapping):
+            previous = {}
+
+        entry = dict(previous)
+        entry["last_outcome"] = dict(outcome)
+        entry["last_evaluation"] = dict(evaluation or {})
+        entry["count"] = int(previous.get("count", 0)) + 1
+        if isinstance(evaluation, Mapping) and "utility" in evaluation:
+            utility = evaluation.get("utility")
+            if isinstance(utility, (int, float)) and not isinstance(utility, bool):
+                entry["utility"] = round(float(utility), 6)
+
+        feedback[trajectory] = entry
+        model["trajectory_feedback"] = feedback
+
+        if isinstance(evaluation, Mapping):
+            signal = evaluation.get("credited_signal")
+            delta = evaluation.get("weight_delta")
+            if (
+                isinstance(signal, str)
+                and signal.strip()
+                and isinstance(delta, (int, float))
+                and not isinstance(delta, bool)
+            ):
+                weights = dict(model.get("trajectory_weights", {}))
+                old = weights.get(signal, 0.0)
+                if not isinstance(old, (int, float)) or isinstance(old, bool):
+                    old = 0.0
+                weights[signal] = round(
+                    max(-3.0, min(3.0, float(old) + float(delta))),
+                    6,
+                )
+                model["trajectory_weights"] = weights
+
+        model["last_consequence_feedback"] = result
+        self.state.self_model = model
+        self.state.workspace = {
+            **self.state.workspace,
+            "last_action": trajectory,
+            "last_outcome": dict(outcome),
+            "last_self_evaluation": dict(evaluation or {}),
+        }
+
+        self.state.transformation_log.append({
+            "revision": self.state.revision,
+            "type": "consequence_feedback",
+            "trajectory": trajectory,
+            "outcome": dict(outcome),
+            "evaluation": dict(evaluation or {}),
+        })
+        self.state.transformation_log = (
+            self.state.transformation_log[-self.transformation_limit :]
+        )
+
+        if persist:
+            self.store.save(self.state)
+
+        return result
+
     def snapshot(self) -> dict[str, Any]:
         return self.state.to_dict()
