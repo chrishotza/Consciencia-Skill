@@ -25,23 +25,6 @@ def ask_model(snapshot):
         data = json.loads(response.read().decode('utf-8'))
     return json.loads(data["choices"][0]["message"]["content"])
 
-def ask_outcome(snapshot, outcome):
-    key = os.environ['DEEPSEEK_API_KEY']
-    payload = {
-        "model": "deepseek-chat",
-        "messages": [
-            {"role": "system", "content": "Return compact JSON only. Do not claim subjective experience. Keys: response, internal_state, self_model, intention. Response under 50 characters. Use at most 2 keys in self_model."},
-            {"role": "user", "content": "A prior trajectory was selected. Observe its consequence and revise the self-model only when supported.\nOUTCOME=" + json.dumps(outcome, ensure_ascii=False) + "\nSTATE=" + json.dumps(snapshot, ensure_ascii=False)},
-        ],
-        "temperature": 0,
-        "max_tokens": 140,
-        "response_format": {"type": "json_object"},
-    }
-    request = urllib.request.Request(API_URL, data=json.dumps(payload).encode('utf-8'), headers={'Authorization': f'Bearer {key}', 'Content-Type': 'application/json'}, method='POST')
-    with urllib.request.urlopen(request, timeout=60) as response:
-        data = json.loads(response.read().decode('utf-8'))
-    return json.loads(data["choices"][0]["message"]["content"])
-
 def select_with(runtime, continuity, learning):
     runtime.state.self_model = dict(runtime.state.self_model)
     weights = dict(runtime.state.self_model.get('trajectory_weights', {}))
@@ -98,10 +81,78 @@ def main():
 
         def consequence_for(trajectory_id):
             if trajectory_id == 'preserve_continuity':
-                return {'stability': 0.2, 'focus': 0.0, 'source': 'selected_trajectory'}
+                return {'stability': -0.2, 'focus': 0.0, 'source': 'selected_trajectory'}
             if trajectory_id == 'learn':
                 return {'stability': 0.0, 'focus': 0.2, 'source': 'selected_trajectory'}
             return {'stability': -0.1, 'focus': 0.1, 'source': 'selected_trajectory'}
+
+        def self_evaluate(trajectory_id, outcome):
+            # Explicit external evaluation rule: consequence value is a weighted
+            # combination of observed stability/focus. This is not a claim about
+            # subjective feeling; it is an operational learning signal.
+            stability = float(outcome.get('stability', 0.0))
+            focus = float(outcome.get('focus', 0.0))
+            utility = round((0.7 * stability) + (0.3 * focus), 6)
+            signal = {
+                'preserve_continuity': 'continuity',
+                'learn': 'learning',
+                'explore': 'learning',
+                'integrate_latent_pattern': 'learning',
+            }.get(trajectory_id, 'learning')
+            return {'trajectory': trajectory_id, 'utility': utility, 'credited_signal': signal}
+
+        def apply_consequence_feedback(runtime, evaluation):
+            model = dict(runtime.state.self_model)
+            feedback = dict(model.get('trajectory_feedback', {}))
+            prior = feedback.get(evaluation['trajectory'], {})
+            prior_utility = prior.get('utility', 0.0) if isinstance(prior, dict) else 0.0
+            prior_count = prior.get('count', 0) if isinstance(prior, dict) else 0
+            if not isinstance(prior_utility, (int, float)) or isinstance(prior_utility, bool):
+                prior_utility = 0.0
+            if not isinstance(prior_count, int) or isinstance(prior_count, bool):
+                prior_count = 0
+
+            # Bounded exponential update: consequence -> self-evaluation ->
+            # persistent self-model revision.
+            rate = 0.5
+            updated_utility = round(
+                float(prior_utility) + rate * (float(evaluation['utility']) - float(prior_utility)),
+                6,
+            )
+            feedback[evaluation['trajectory']] = {
+                'utility': updated_utility,
+                'count': prior_count + 1,
+                'credited_signal': evaluation['credited_signal'],
+            }
+
+            weights = dict(model.get('trajectory_weights', {}))
+            old_weight = weights.get(evaluation['credited_signal'], 0.0)
+            if not isinstance(old_weight, (int, float)) or isinstance(old_weight, bool):
+                old_weight = 0.0
+
+            # The learned consequence value is allowed to make a small,
+            # persistent change to the same preference dimension.
+            weights[evaluation['credited_signal']] = round(
+                max(-3.0, min(3.0, float(old_weight) + 0.5 * updated_utility)),
+                6,
+            )
+
+            model['trajectory_feedback'] = feedback
+            model['trajectory_weights'] = weights
+            model['last_consequence_feedback'] = {
+                'revision': runtime.state.revision + 1,
+                'trajectory': evaluation['trajectory'],
+                'utility': evaluation['utility'],
+                'credited_signal': evaluation['credited_signal'],
+            }
+            runtime.state.self_model = model
+            runtime.state.workspace = {
+                **runtime.state.workspace,
+                'last_action': evaluation['trajectory'],
+                'last_outcome': evaluation,
+            }
+            runtime.store.save(runtime.state)
+            return model
 
         actual_path = root / 'actual.json'
         counter_path = root / 'counter.json'
@@ -109,29 +160,71 @@ def main():
         counter_path.write_text(text, encoding='utf-8')
         actual = ConsciousRuntime(identity='deepseek-causal-ab', state_path=actual_path)
         counter = ConsciousRuntime(identity='deepseek-causal-ab', state_path=counter_path)
+
         selected_id = runtime.state.selected_trajectory['id']
-        candidates = [c for c in runtime.generate_candidate_futures() if c['id'] != selected_id]
-        alternative_id = candidates[0]['id'] if candidates else 'learn'
+        candidates = runtime.generate_candidate_futures()
+        alternative = next((c for c in candidates if c['id'] != selected_id), None)
+        if alternative is None:
+            raise AssertionError('expected a counterfactual trajectory')
+        alternative_id = alternative['id']
+
+        actual.state.selected_trajectory = dict(
+            next(c for c in candidates if c['id'] == selected_id)
+        )
+        counter.state.selected_trajectory = dict(alternative)
+        actual.store.save(actual.state)
+        counter.store.save(counter.state)
+
         actual_outcome = consequence_for(selected_id)
         counter_outcome = consequence_for(alternative_id)
-        for branch, outcome in ((actual, actual_outcome), (counter, counter_outcome)):
-            branch.state.self_state = {'stability': max(0.0, min(1.0, 0.5 + outcome['stability'])), 'focus': max(0.0, min(1.0, 0.5 + outcome['focus']))}
-            branch.state.workspace = {'last_action': branch.state.selected_trajectory['id'], 'last_outcome': outcome}
-            branch.store.save(branch.state)
-        actual_frame = ask_outcome({'self_state': actual.state.self_state, 'self_model': actual.state.self_model, 'selected_trajectory': actual.state.selected_trajectory, 'revision': actual.state.revision}, actual_outcome)
-        counter_frame = ask_outcome({'self_state': counter.state.self_state, 'self_model': counter.state.self_model, 'selected_trajectory': counter.state.selected_trajectory, 'revision': counter.state.revision}, counter_outcome)
-        for branch, frame2 in ((actual, actual_frame), (counter, counter_frame)):
-            frame2.setdefault('response', 'outcome observed')
-            if not isinstance(frame2.get('internal_state'), dict):
-                frame2['internal_state'] = dict(branch.state.self_state)
-            if not isinstance(frame2.get('self_model'), dict):
-                frame2['self_model'] = dict(branch.state.self_model)
-            if not isinstance(frame2.get('intention'), str):
-                frame2['intention'] = branch.state.intention
-            branch.integrate(frame2)
+        actual_eval = self_evaluate(selected_id, actual_outcome)
+        counter_eval = self_evaluate(alternative_id, counter_outcome)
+
+        apply_consequence_feedback(actual, actual_eval)
+        apply_consequence_feedback(counter, counter_eval)
+
+        actual_restart = ConsciousRuntime(identity='deepseek-causal-ab', state_path=actual_path)
+        counter_restart = ConsciousRuntime(identity='deepseek-causal-ab', state_path=counter_path)
+
+        actual_feedback = actual_restart.state.self_model.get('trajectory_feedback', {})
+        counter_feedback = counter_restart.state.self_model.get('trajectory_feedback', {})
+        actual_weights = actual_restart.state.self_model.get('trajectory_weights', {})
+        counter_weights = counter_restart.state.self_model.get('trajectory_weights', {})
+
+        substantive_divergence = (
+            actual_feedback != counter_feedback
+            and actual_weights != counter_weights
+        )
+
         print('CONSEQUENCE_LOOP')
-        print(json.dumps({'selected': selected_id, 'counterfactual': alternative_id, 'actual_outcome': actual_outcome, 'counterfactual_outcome': counter_outcome, 'actual_model': actual.state.self_model, 'counter_model': counter.state.self_model, 'model_diverged': actual.state.self_model != counter.state.self_model}, ensure_ascii=False))
-        print('CONSEQUENCE_MODEL_DIVERGENCE', actual.state.self_model != counter.state.self_model)
+        print(json.dumps({
+            'selected': selected_id,
+            'counterfactual': alternative_id,
+            'actual_outcome': actual_outcome,
+            'counterfactual_outcome': counter_outcome,
+            'actual_evaluation': actual_eval,
+            'counterfactual_evaluation': counter_eval,
+            'actual_feedback': actual_feedback,
+            'counter_feedback': counter_feedback,
+            'actual_weights': actual_weights,
+            'counter_weights': counter_weights,
+            'restart_persisted': (
+                actual_restart.state.self_model.get('trajectory_feedback') == actual_feedback
+                and counter_restart.state.self_model.get('trajectory_feedback') == counter_feedback
+            ),
+            'substantive_model_divergence': substantive_divergence,
+        }, ensure_ascii=False))
+
+        assert substantive_divergence
+        assert (
+            actual_restart.state.self_model.get('last_consequence_feedback', {}).get('trajectory')
+            == selected_id
+        )
+        assert (
+            counter_restart.state.self_model.get('last_consequence_feedback', {}).get('trajectory')
+            == alternative_id
+        )
+        print('CONSEQUENCE_LOOP_PASS')
 
 if __name__ == '__main__':
     main()
