@@ -169,6 +169,7 @@ class ConsciousRuntime:
         history_limit: int = 64,
         learn_latent_patterns: bool = True,
         latent_pattern_limit: int = 16,
+        learn_self_model_from_latent_patterns: bool = True,
     ):
         self.identity = identity
         self.memory_limit = max(1, int(memory_limit))
@@ -176,6 +177,9 @@ class ConsciousRuntime:
         self.transformation_limit = max(1, self.history_limit)
         self.learn_latent_patterns = bool(learn_latent_patterns)
         self.latent_pattern_limit = max(1, int(latent_pattern_limit))
+        self.learn_self_model_from_latent_patterns = bool(
+            learn_self_model_from_latent_patterns
+        )
         self.store = JsonStateStore(state_path)
         self.state = self.store.load(identity)
 
@@ -398,6 +402,166 @@ class ConsciousRuntime:
             )
 
         return events
+
+    def self_model_latent_learning_enabled(self) -> bool:
+        configured = self.state.self_model.get(
+            "latent_self_model_learning"
+        )
+        if isinstance(configured, bool):
+            return configured
+        return self.learn_self_model_from_latent_patterns
+
+    def learned_self_alignment(self) -> float:
+        learned = self.state.self_model.get("learned_self_state", {})
+        if not isinstance(learned, Mapping) or not learned:
+            return 0.0
+        return self._numeric_similarity(self.state.self_state, learned)
+
+    def revise_self_model_from_latent_patterns(self) -> dict[str, Any]:
+        if not self.self_model_latent_learning_enabled():
+            return {
+                "changed": False,
+                "updated_keys": [],
+                "patterns": [],
+            }
+
+        candidates: list[tuple[str, Mapping[str, Any], float]] = []
+        for key, pattern in self.state.latent_patterns.items():
+            if not isinstance(pattern, Mapping):
+                continue
+            if pattern.get("source") != "endogenous":
+                continue
+
+            activation = pattern.get("activation", 0.0)
+            evidence_count = pattern.get("evidence_count", 0)
+            previous_evidence = pattern.get(
+                "last_self_model_evidence_count",
+                0,
+            )
+            if not (
+                isinstance(activation, (int, float))
+                and not isinstance(activation, bool)
+                and isinstance(evidence_count, int)
+                and not isinstance(evidence_count, bool)
+                and isinstance(previous_evidence, int)
+                and not isinstance(previous_evidence, bool)
+            ):
+                continue
+
+            if activation < 0.6 or evidence_count <= previous_evidence:
+                continue
+
+            prototype = self._numeric_state(pattern.get("prototype", {}))
+            if not prototype:
+                continue
+
+            strength = float(activation) * min(1.0, evidence_count / 5.0)
+            candidates.append((str(key), prototype, strength))
+
+        if not candidates:
+            return {
+                "changed": False,
+                "updated_keys": [],
+                "patterns": [],
+            }
+
+        configured_rate = self.state.self_model.get(
+            "latent_self_model_learning_rate",
+            0.1,
+        )
+        rate = (
+            max(0.0, min(0.5, float(configured_rate)))
+            if isinstance(configured_rate, (int, float))
+            and not isinstance(configured_rate, bool)
+            else 0.1
+        )
+
+        current_learned = self._numeric_state(
+            self.state.self_model.get("learned_self_state", {})
+        )
+
+        target_values: dict[str, list[tuple[float, float]]] = {}
+        for _, prototype, strength in candidates:
+            for key, value in prototype.items():
+                target_values.setdefault(key, []).append((value, strength))
+
+        aggregate: dict[str, float] = {}
+        for key, values in target_values.items():
+            total_weight = sum(weight for _, weight in values)
+            if total_weight <= 0.0:
+                continue
+            aggregate[key] = round(
+                sum(value * weight for value, weight in values) / total_weight,
+                6,
+            )
+
+        updated = dict(current_learned)
+        changed_keys: list[str] = []
+        for key, target in aggregate.items():
+            previous = current_learned.get(key, target)
+            revised = previous + rate * (target - previous)
+            if revised != previous:
+                updated[key] = round(revised, 6)
+                changed_keys.append(key)
+            elif key not in updated:
+                updated[key] = round(revised, 6)
+
+        for key, _, _ in candidates:
+            pattern = self.state.latent_patterns[key]
+            evidence_count = int(pattern.get("evidence_count", 0))
+            pattern["last_self_model_evidence_count"] = evidence_count
+            pattern["last_self_model_revision"] = self.state.revision
+
+        self.state.self_model = dict(self.state.self_model)
+        self.state.self_model["learned_self_state"] = updated
+        tendencies = dict(
+            self.state.self_model.get("latent_tendencies", {})
+        )
+        for key, prototype, strength in candidates:
+            tendencies[key] = {
+                "activation": round(
+                    strength / max(
+                        1.0,
+                        min(
+                            1.0,
+                            int(
+                                self.state.latent_patterns[key].get(
+                                    "evidence_count",
+                                    1,
+                                )
+                            )
+                            / 5.0,
+                        ),
+                    ),
+                    6,
+                ),
+                "evidence_count": int(
+                    self.state.latent_patterns[key].get(
+                        "evidence_count",
+                        0,
+                    )
+                ),
+                "prototype": prototype,
+            }
+        self.state.self_model["latent_tendencies"] = tendencies
+
+        changed = bool(changed_keys)
+        if changed:
+            self.state.transformation_log.append({
+                "revision": self.state.revision,
+                "type": "latent_self_model_revision",
+                "updated_keys": changed_keys,
+                "patterns": [key for key, _, _ in candidates],
+            })
+            self.state.transformation_log = (
+                self.state.transformation_log[-self.transformation_limit :]
+            )
+
+        return {
+            "changed": changed,
+            "updated_keys": changed_keys,
+            "patterns": [key for key, _, _ in candidates],
+        }
 
     def calculate_self_dissonance(self) -> float:
         expected = self.state.self_model.get("expected_self_state", {})
