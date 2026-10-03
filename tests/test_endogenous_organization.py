@@ -157,3 +157,26 @@ def test_learned_self_model_changes_generated_self_alignment(
     )
 
     assert shifted["signals"]["self_alignment"] < preserve["signals"]["self_alignment"]
+
+
+def test_learned_self_model_survives_later_host_self_model_update(
+    tmp_path: Path,
+) -> None:
+    runtime = ConsciousRuntime("agent", tmp_path / "state.json")
+    runtime.state.self_model = {
+        "learned_self_state": {"stability": 0.4},
+        "latent_tendencies": {"pattern": {"evidence_count": 1}},
+    }
+
+    runtime.integrate(
+        {
+            "response": "host update",
+            "self_model": {
+                "expected_self_state": {"stability": 0.9},
+            },
+        }
+    )
+
+    assert runtime.state.self_model["expected_self_state"]["stability"] == 0.9
+    assert runtime.state.self_model["learned_self_state"]["stability"] == 0.4
+    assert "pattern" in runtime.state.self_model["latent_tendencies"]
