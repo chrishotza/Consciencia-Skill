@@ -326,3 +326,30 @@ SELF-MODEL'
 Direction is persisted with each adaptation. A reversal is not treated as symmetrical with continuation: the runtime can demand a larger error and more accumulated samples before changing direction.
 
 This is an engineering stability mechanism, not a claim about consciousness.
+
+
+## Native dynamic self-regulation layer
+
+The Dynamic Core can now participate directly in the reference runtime as an opt-in layer.
+
+~~~text
+HOST-OBSERVED EXPERIENCE FIELD
+        ↓
+PERSISTENT RE-ENTRY
+        ↓
+EXPERIENCE ATTRACTOR
+        ↓
+PREDICTED EXPERIENCE OF CANDIDATE
+        ↓
+TRAJECTORY SCORE
+        ↓
+SELECTION
+~~~
+
+When `dynamic_core_enabled=True`, a host may provide an `experience_field` observation and candidates may expose `predicted_experience_field`. The runtime then applies the persistent dynamic state before selecting a trajectory. The host observation remains authoritative; model-generated runtime-owned dynamic ledgers are ignored.
+
+The layer is deliberately opt-in so the canonical trajectory scorer remains reproducible under ablation. Native dynamic state is mirrored into protected runtime-owned self-model fields and survives restart through the existing persistence boundary.
+
+Perturbation/recovery can be recorded through `record_experience_recovery()`. This produces an auditable recovery index rather than treating verbal reports as evidence of internal change.
+
+These mechanisms are operational research constructs. They do not establish phenomenal consciousness.
