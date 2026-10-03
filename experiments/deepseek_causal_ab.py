@@ -30,11 +30,11 @@ def ask_outcome(snapshot, outcome):
     payload = {
         "model": "deepseek-chat",
         "messages": [
-            {"role": "system", "content": "Return compact JSON only. Do not claim subjective experience. Keys: response, internal_state, self_model, intention."},
+            {"role": "system", "content": "Return compact JSON only. Do not claim subjective experience. Keys: response, internal_state, self_model, intention. Response under 50 characters. Use at most 2 keys in self_model."},
             {"role": "user", "content": "A prior trajectory was selected. Observe its consequence and revise the self-model only when supported.\nOUTCOME=" + json.dumps(outcome, ensure_ascii=False) + "\nSTATE=" + json.dumps(snapshot, ensure_ascii=False)},
         ],
         "temperature": 0,
-        "max_tokens": 100,
+        "max_tokens": 140,
         "response_format": {"type": "json_object"},
     }
     request = urllib.request.Request(API_URL, data=json.dumps(payload).encode('utf-8'), headers={'Authorization': f'Bearer {key}', 'Content-Type': 'application/json'}, method='POST')
