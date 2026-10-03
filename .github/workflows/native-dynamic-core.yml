@@ -10,9 +10,14 @@ on:
     branches:
       - main
 
+concurrency:
+  group: native-dynamic-core-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   pytest:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -20,5 +25,5 @@ jobs:
           python-version: "3.11"
       - name: Install test dependencies
         run: python -m pip install --upgrade pip pytest
-      - name: Run test suite
-        run: python -m pytest -q
+      - name: Run first-failure diagnostic suite
+        run: timeout 900s python -m pytest -vv -x
