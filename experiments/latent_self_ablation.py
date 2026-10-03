@@ -24,11 +24,12 @@ def state_hash(snapshot: dict) -> str:
 
 def run_condition(name: str, root: Path) -> dict:
     learning_enabled = name in {"latent", "reconciled"}
+    self_model_learning_enabled = name == "reconciled"
     runtime = ConsciousRuntime(
         name,
         root / f"{name}.json",
         learn_latent_patterns=learning_enabled,
-        learn_self_model_from_latent_patterns=learning_enabled,
+        learn_self_model_from_latent_patterns=self_model_learning_enabled,
     )
     initial_hash = state_hash(runtime.snapshot())
     selected = []
@@ -89,7 +90,7 @@ def run_condition(name: str, root: Path) -> dict:
         name,
         root / f"{name}.json",
         learn_latent_patterns=learning_enabled,
-        learn_self_model_from_latent_patterns=learning_enabled,
+        learn_self_model_from_latent_patterns=self_model_learning_enabled,
     )
     regime_transitions = sum(
         1
