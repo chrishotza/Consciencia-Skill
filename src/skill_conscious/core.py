@@ -190,6 +190,39 @@ class ConsciousRuntime:
                     activations.append(max(0.0, min(1.0, float(value))))
         return round(sum(activations) / len(activations), 6) if activations else 0.0
 
+    @staticmethod
+    def _numeric_state(value: Mapping[str, Any] | None) -> dict[str, float]:
+        if not isinstance(value, Mapping):
+            return {}
+        return {
+            str(key): float(raw)
+            for key, raw in value.items()
+            if isinstance(raw, (int, float)) and not isinstance(raw, bool)
+        }
+
+    @staticmethod
+    def _numeric_similarity(
+        left: Mapping[str, Any],
+        right: Mapping[str, Any],
+    ) -> float:
+        left_numeric = ConsciousRuntime._numeric_state(left)
+        right_numeric = ConsciousRuntime._numeric_state(right)
+        shared = set(left_numeric).intersection(right_numeric)
+        if not shared:
+            return 0.0
+
+        scores = [
+            1.0 / (1.0 + abs(left_numeric[key] - right_numeric[key]))
+            for key in sorted(shared)
+        ]
+        return round(sum(scores) / len(scores), 6)
+
+    def latent_pattern_learning_enabled(self) -> bool:
+        configured = self.state.self_model.get("latent_pattern_learning")
+        if isinstance(configured, bool):
+            return configured
+        return self.learn_latent_patterns
+
     def calculate_self_dissonance(self) -> float:
         expected = self.state.self_model.get("expected_self_state", {})
         if not isinstance(expected, Mapping):
