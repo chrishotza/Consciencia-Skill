@@ -298,6 +298,33 @@ class ConsciousRuntime:
             self.store.save(self.state)
         return result
 
+    def record_experience_recovery(
+        self,
+        baseline: Mapping[str, Any] | ExperienceFieldProfile,
+        perturbed: Mapping[str, Any] | ExperienceFieldProfile,
+        recovered: Mapping[str, Any] | ExperienceFieldProfile,
+        *,
+        evidence_id: str,
+        persist: bool = True,
+    ) -> dict[str, Any]:
+        """Record a measured perturbation/recovery event in the runtime's dynamic state."""
+        if not self.dynamic_core_enabled:
+            return {"enabled": False, "updated": False, "reason": "dynamic_core_disabled"}
+        result = self.dynamic_core.record_recovery(
+            self._experience_profile(baseline),
+            self._experience_profile(perturbed),
+            self._experience_profile(recovered),
+            evidence_id=str(evidence_id),
+        )
+        self._restore_dynamic_core_state()
+        self.state.workspace = {
+            **self.state.workspace,
+            "experience_dynamics": self.dynamic_core.runtime_state(),
+        }
+        if persist:
+            self.store.save(self.state)
+        return result
+
     def experience_dynamics_state(self) -> dict[str, Any]:
         if not self.dynamic_core_enabled:
             return {"experience_dynamics_enabled": False}
