@@ -373,3 +373,45 @@ A successful operational probe requires:
 The probe is deliberately separate from ordinary adaptation. An intervention does not count as host evidence and does not advance the attractor or re-entry learning sequence.
 
 This is a causal test of the software architecture. It is not a test or proof of phenomenal consciousness.
+
+## Causal internal valuation protocol
+
+The next causal layer targets a higher-level internal variable already used by trajectory selection: persistent valuation.
+
+~~~text
+INTERNAL STATE
+      ↓
+VALUATION
+      ↓
+TRAJECTORY SCORING
+      ↓
+SELECTION
+      ↓
+ACTION / NEXT STATE
+~~~
+
+The reversible probe is:
+
+~~~text
+BASELINE VALUATION
+      ↓
+TRAJECTORY A
+      ↓
+INTERVENE ON VALUATION
+      ↓
+TRAJECTORY B
+      ↓
+RESTORE EXACT VALUATION
+      ↓
+TRAJECTORY C
+~~~
+
+A valid probe keeps candidate futures fixed and requires:
+
+1. downstream divergence after intervention;
+2. exact reversal after restoration;
+3. valuation restoration;
+4. unchanged adaptation evidence;
+5. no action execution during the intervention itself.
+
+This moves the causal test one layer above the experience attractor. It is still an operational software experiment, not evidence that the runtime has phenomenal consciousness.

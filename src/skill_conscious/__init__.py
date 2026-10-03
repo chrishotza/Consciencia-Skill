@@ -8,6 +8,7 @@ from .reentry import ExperienceFieldMemory, ExperienceFieldReentry
 from .attractor import AttractorState, ExperienceAttractorMemory
 from .runtime_bridge import BridgeSelection, ExperienceDynamicsBridge, RUNTIME_OWNED_KEYS
 from .causal_probe import ReversibleInterventionResult, run_reversible_intervention
+from .causal_internal_probe import ReversibleValuationInterventionResult, run_reversible_valuation_intervention
 
 __all__ = [
     "ConsciousRuntime",
@@ -37,4 +38,6 @@ __all__ = [
     "RUNTIME_OWNED_KEYS",
     "ReversibleInterventionResult",
     "run_reversible_intervention",
+    "ReversibleValuationInterventionResult",
+    "run_reversible_valuation_intervention",
 ]
