@@ -988,6 +988,13 @@ class ConsciousRuntime:
             self.state.self_dissonance = max(0.0, min(1.0, float(frame["self_dissonance"])))
 
         self.state.coherence = self.calculate_coherence()
+
+        if not explicit_regime:
+            self.transition_regime(
+                self.generate_regime_candidates(),
+                persist=False,
+            )
+
         if frame.get("attractor") is None:
             self.state.attractor = self.build_attractor()
 
