@@ -2215,9 +2215,8 @@ class ConsciousRuntime:
                     )
                     model["trajectory_weights"] = weights
 
-        # The helper may have replaced self.state.self_model. Refresh the local
-        # model reference before committing the feedback metadata.
-        model = dict(self.state.self_model)
+        # Only the evidence-gated helper mutates self.state.self_model directly.
+        # Preserve local legacy feedback/weight updates when that path is active.
         model["last_consequence_feedback"] = result
         self.state.self_model = model
         self.state.workspace = {
