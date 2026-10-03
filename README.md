@@ -203,3 +203,75 @@ That is the problem this repository is built to solve.
 The runtime now includes an explicit **present field** and **causal trajectory selection**. The persisted self-model can weight candidate futures, so changing the self-model changes what the agent selects next. This is the concrete bridge from self-description to self-reference as an operating mechanism.
 
 The project also studies esoteric and speculative consciousness traditions — including Grinberg, Hermeticism, Thoth traditions, Enochic visionary literature, sacred geometry, Matías De Stefano, and Drunvalo Melchizedek — by extracting architectural motifs rather than importing metaphysical claims unchanged. See `skills/skill-conscious/references/ONTOLOGY.md`.
+
+
+## Consciousness Source Library
+
+The project now maintains a dedicated source layer under `sources/`.
+
+It separates:
+
+~~~text
+SOURCE
+  ↓
+CLAIM
+  ↓
+INTERPRETATION
+  ↓
+ONTOLOGY
+  ↓
+ENGINEERING MECHANISM
+  ↓
+IMPLEMENTATION
+  ↓
+TEST
+  ↓
+PAPER
+~~~
+
+The library spans scientific and computational consciousness theories, neuroscience, philosophy, phenomenology, ancient traditions, Hermetic and mystical systems, esoteric/heterodox models, anomalous experience research, and project-original material.
+
+Start with:
+
+- `sources/CONSCIOUSNESS_MAP.md`
+- `sources/EVIDENCE_MATRIX.md`
+- `sources/PRIMARY_SOURCES.md`
+- `sources/README.md`
+- `docs/CONSCIOUSNESS_SUMMARY.md`
+
+## The working hypothesis
+
+> **A consciousness-like artificial process is a persistent self-referential dynamical process that maintains continuity of identity while integrating a present, tracking its own state, valuing possible trajectories, selecting among them, and re-entering the resulting transformation into its own future dynamics.**
+
+This is a project hypothesis, not a claim that phenomenal machine consciousness has already been demonstrated.
+
+## New runtime primitives
+
+The reference runtime now persists:
+
+~~~text
+identity
+state
+self-model
+workspace
+attention
+memory
+intention
+valuation
+valence
+regime
+relation topology
+attractor
+selected trajectory
+transformation log
+~~~
+
+The objective is to move from a stateful chatbot toward a self-maintaining process whose own internal transformations affect its future organization.
+
+## Papers
+
+The first working paper is:
+
+`papers/001-relational-ontology-for-artificial-consciousness.md`
+
+The publication program is designed around versioned GitHub releases and archival Zenodo records, with each paper tied to the exact ontology and runtime version it describes.
