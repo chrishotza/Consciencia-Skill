@@ -5,14 +5,24 @@ on:
     paths:
       - "src/skill_conscious/**"
       - "experiments/longitudinal_baseline_benchmark.py"
+      - "experiments/llm_longitudinal_benchmark.py"
       - "tests/test_longitudinal_benchmark.py"
+      - "tests/test_llm_adapter.py"
+      - "tests/test_llm_longitudinal_benchmark.py"
       - ".github/workflows/longitudinal-benchmark.yml"
   pull_request:
     paths:
       - "src/skill_conscious/**"
       - "experiments/longitudinal_baseline_benchmark.py"
+      - "experiments/llm_longitudinal_benchmark.py"
       - "tests/test_longitudinal_benchmark.py"
+      - "tests/test_llm_adapter.py"
+      - "tests/test_llm_longitudinal_benchmark.py"
       - ".github/workflows/longitudinal-benchmark.yml"
+
+concurrency:
+  group: longitudinal-benchmark-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   benchmark:
@@ -24,17 +34,29 @@ jobs:
         with:
           python-version: "3.11"
       - run: python -m pip install -e ".[dev]"
-      - run: python -m pytest -q tests/test_longitudinal_benchmark.py
+      - run: timeout 180s python -m pytest -vv -x tests/test_longitudinal_benchmark.py tests/test_llm_adapter.py tests/test_llm_longitudinal_benchmark.py
       - run: python -m experiments.longitudinal_baseline_benchmark > /tmp/longitudinal-benchmark.json
+      - run: python -m experiments.llm_longitudinal_benchmark > /tmp/llm-longitudinal-benchmark.json
       - run: |
           python - <<'PY'
           import json
           from pathlib import Path
           report = json.loads(Path('/tmp/longitudinal-benchmark.json').read_text())
+          llm_report = json.loads(Path('/tmp/llm-longitudinal-benchmark.json').read_text())
           assert report['protocol'] == 'longitudinal-baseline-v1'
+          assert llm_report['protocol'] == 'llm-longitudinal-v1'
+          assert llm_report['provider_boundary'] == 'provider-neutral'
+          causal_ab = llm_report['causal_provider_ab']
+          assert causal_ab['protocol'] == 'llm-causal-ab-v1'
+          assert causal_ab['same_initial_runtime'] is True
+          assert causal_ab['same_candidate_field'] is True
+          assert causal_ab['same_outcome_rule'] is True
+          assert causal_ab['selection_diverged'] is True
           assert all(
               check['trajectory_sequence_match'] and check['final_state_hash_match']
               for check in report['restart_checks'].values()
           )
+          assert len(llm_report['conditions']) == 5
           print('LONGITUDINAL_BENCHMARK_PASS')
+          print('LLM_LONGITUDINAL_BENCHMARK_PASS')
           PY

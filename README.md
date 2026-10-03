@@ -502,6 +502,45 @@ Protocol details: `docs/LONGITUDINAL_BENCHMARK.md`.
 
 The benchmark is an architecture benchmark, not yet an external-LLM benchmark and not a test of phenomenal consciousness.
 
+## Provider-neutral LLM boundary
+
+The repository now exposes a provider-neutral adapter at `skill_conscious.llm_adapter`.
+
+It normalizes external model output into the runtime frame contract and protects runtime-owned state such as trajectory selection, action history, and metacognitive runtime fields. A benchmark can also supply a fixed candidate-future field that the model is not allowed to replace.
+
+~~~text
+EXTERNAL LLM
+    ↓
+PROVIDER ADAPTER
+    ↓
+VALIDATED MODEL FRAME
+    ↓
+SAME PERSISTENT RUNTIME
+    ↓
+SAME ACTION / OUTCOME BOUNDARY
+~~~
+
+See `docs/LLM_ADAPTER.md` and `tests/test_llm_adapter.py`.
+
+## LLM longitudinal harness
+
+The provider-neutral boundary now has its own longitudinal runner:
+
+~~~bash
+python -m experiments.llm_longitudinal_benchmark
+~~~
+
+CI uses a deterministic provider so the runtime protocol can be verified without network access. The same harness also supports an OpenAI-compatible endpoint through environment variables:
+
+~~~text
+SKILL_CONSCIOUS_LLM_PROVIDER=openai_compatible
+SKILL_CONSCIOUS_LLM_URL=...
+SKILL_CONSCIOUS_LLM_API_KEY=...
+SKILL_CONSCIOUS_LLM_MODEL=...
+~~~
+
+The harness keeps the candidate-future field and authoritative action outcomes under runtime control. This separates provider integration from the causal mechanisms being measured.
+
 ## External LLM benchmark path
 
 The next experimental layer is provider-neutral host integration. The same runtime protocol can be connected to an external model while preserving:
