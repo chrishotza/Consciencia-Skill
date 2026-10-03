@@ -878,6 +878,8 @@ class ConsciousRuntime:
             **self.state.self_model,
             "metacognitive_prediction_expected_accuracy": sanitized,
         }
+        if persist:
+            self.store.save(self.state)
         return {
             "intervened": before != sanitized,
             "intervention_id": str(intervention_id) if intervention_id else None,
