@@ -24,6 +24,11 @@ class MetacognitiveTrace:
     self_observation: dict[str, float]
     experience_dynamics: dict[str, float]
     valuation_weights: dict[str, float]
+    predicted_outcome: dict[str, Any] | None = None
+    predicted_state_delta: dict[str, Any] | None = None
+    prediction_error: float | None = None
+    prediction_accuracy: float | None = None
+    prediction_diagnostics: dict[str, Any] | None = None
     action: dict[str, Any] | None = None
     outcome: dict[str, Any] | None = None
     state_delta: dict[str, Any] | None = None
@@ -101,6 +106,8 @@ def build_metacognitive_trace(
 
     raw_self = raw_breakdown.get("self_observation", {})
     raw_dynamic = raw_breakdown.get("experience_dynamics", {})
+    raw_predicted_outcome = selected.get("predicted_outcome")
+    raw_predicted_state_delta = selected.get("predicted_state_delta")
 
     self_observation = {
         str(key): float(value)
@@ -126,4 +133,14 @@ def build_metacognitive_trace(
         self_observation=self_observation,
         experience_dynamics=experience_dynamics,
         valuation_weights=_numeric_mapping(valuation_weights),
+        predicted_outcome=(
+            dict(raw_predicted_outcome)
+            if isinstance(raw_predicted_outcome, Mapping)
+            else None
+        ),
+        predicted_state_delta=(
+            dict(raw_predicted_state_delta)
+            if isinstance(raw_predicted_state_delta, Mapping)
+            else None
+        ),
     )
