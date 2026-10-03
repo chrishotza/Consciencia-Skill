@@ -443,28 +443,7 @@ class ConsciousRuntime:
         )
 
     def present(self, external_input: str) -> dict[str, Any]:
-        external_input = str(external_input).strip()
-        if not external_input:
-            raise ValueError("external_input cannot be empty")
-
-        return {
-            "world_now": external_input,
-            "self_now": self.state.self_state,
-            "self_model": self.state.self_model,
-            "active_memory": self.state.memories[-self.memory_limit :],
-            "intention": self.state.intention,
-            "uncertainty": self.state.self_model.get("uncertainty", {}),
-            "candidate_futures": [],
-            "selected_trajectory": self.state.selected_trajectory,
-            "attention": self.state.attention,
-            "regime": self.state.regime,
-            "relation_topology": self.state.relation_topology,
-            "attractor": self.state.attractor,
-            "valuation": self.state.valuation,
-            "valence": self.state.valence,
-            "transformation_log": self.state.transformation_log[-self.transformation_limit :],
-            "revision": self.state.revision,
-        }
+        return self.present_field(external_input)
 
     def prepare_frame(
         self,
@@ -472,9 +451,10 @@ class ConsciousRuntime:
         *,
         candidate_futures: list[Mapping[str, Any]] | None = None,
     ) -> dict[str, Any]:
-        frame = self.present(external_input)
-        if candidate_futures:
-            frame["candidate_futures"] = [dict(item) for item in candidate_futures]
+        frame = self.present_field(
+            external_input,
+            candidate_futures=candidate_futures,
+        )
 
         return {
             "definition": CONSCIOUSNESS_DEFINITION,
@@ -512,6 +492,9 @@ class ConsciousRuntime:
         candidate_futures = frame.get("candidate_futures")
         selected = frame.get("selected_trajectory")
 
+        if candidate_futures is None and selected is None:
+            candidate_futures = self.generate_candidate_futures()
+
         if candidate_futures is not None:
             if not isinstance(candidate_futures, list):
                 raise ValueError("frame.candidate_futures must be a list")
@@ -543,6 +526,26 @@ class ConsciousRuntime:
 
         if frame.get("attention") is not None:
             self.state.attention = [str(item) for item in frame["attention"]]
+
+        if frame.get("salience") is not None:
+            raw_salience = frame["salience"]
+            if not isinstance(raw_salience, Mapping):
+                raise ValueError("frame.salience must be a mapping")
+            self.state.salience = {
+                str(key): max(0.0, min(1.0, float(value)))
+                for key, value in raw_salience.items()
+                if isinstance(value, (int, float)) and not isinstance(value, bool)
+            }
+
+        if frame.get("layers") is not None:
+            raw_layers = frame["layers"]
+            if not isinstance(raw_layers, Mapping):
+                raise ValueError("frame.layers must be a mapping")
+            self.state.layers = {
+                str(key): dict(value)
+                for key, value in raw_layers.items()
+                if isinstance(value, Mapping)
+            }
 
         if frame.get("regime") is not None:
             self.state.regime = str(frame["regime"]).strip() or "baseline"
@@ -576,6 +579,10 @@ class ConsciousRuntime:
             raw_valence = float(frame["valence"])
             self.state.valence = max(-1.0, min(1.0, raw_valence))
 
+        self.state.coherence = self.calculate_coherence()
+        if frame.get("attractor") is None:
+            self.state.attractor = self.build_attractor()
+
         memory = str(frame.get("memory", "")).strip()
         if memory:
             self.state.memories.append(memory)
@@ -583,7 +590,7 @@ class ConsciousRuntime:
 
         changed: dict[str, Any] = {}
         current_snapshot = self.state.to_dict()
-        for key in ("self_state", "self_model", "workspace", "intention", "attention", "regime", "attractor", "valuation", "valence", "relation_topology"):
+        for key in ("self_state", "self_model", "workspace", "intention", "attention", "salience", "layers", "regime", "attractor", "valuation", "valence", "coherence", "relation_topology"):
             if previous_snapshot.get(key) != current_snapshot.get(key):
                 changed[key] = {"before": previous_snapshot.get(key), "after": current_snapshot.get(key)}
         if changed:
@@ -601,11 +608,14 @@ class ConsciousRuntime:
                 "workspace": self.state.workspace,
                 "selected_trajectory": self.state.selected_trajectory,
                 "attention": self.state.attention,
+                "salience": self.state.salience,
+                "layers": self.state.layers,
                 "regime": self.state.regime,
                 "relation_topology": self.state.relation_topology,
                 "attractor": self.state.attractor,
                 "valuation": self.state.valuation,
                 "valence": self.state.valence,
+                "coherence": self.state.coherence,
                 "transformation": bool(changed),
             }
         )
