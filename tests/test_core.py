@@ -309,3 +309,63 @@ def test_consequence_feedback_changes_future_and_survives_restart(tmp_path):
     assert restarted.state.self_model["trajectory_feedback"]["learn"]["utility"] == 1.0
     assert restarted.state.self_model["trajectory_weights"]["learning"] == 2.0
     assert restarted.state.workspace["last_outcome"]["focus"] == 0.9
+
+def test_integrate_consequence_updates_next_cycle(tmp_path):
+    path = tmp_path / "state.json"
+    runtime = ConsciousRuntime("agent-integrated-consequence", path)
+
+    runtime.integrate(
+        {
+            "response": "initial action",
+            "self_model": {
+                "trajectory_weights": {
+                    "continuity": 0.0,
+                    "learning": 0.0,
+                }
+            },
+            "candidate_futures": [
+                {
+                    "id": "continue",
+                    "signals": {"continuity": 1.0, "learning": 0.0},
+                },
+                {
+                    "id": "learn",
+                    "signals": {"continuity": 0.0, "learning": 1.0},
+                },
+            ],
+        }
+    )
+    assert runtime.state.selected_trajectory["id"] == "continue"
+
+    runtime.integrate(
+        {
+            "response": "process the observed consequence",
+            "candidate_futures": [
+                {
+                    "id": "continue",
+                    "signals": {"continuity": 1.0, "learning": 0.0},
+                },
+                {
+                    "id": "learn",
+                    "signals": {"continuity": 0.0, "learning": 1.0},
+                },
+            ],
+            "consequence_trajectory": "continue",
+            "consequence": {"stability": -0.5, "focus": 0.8},
+            "self_evaluation": {
+                "utility": -1.0,
+                "credited_signal": "continuity",
+                "weight_delta": -2.0,
+            },
+        }
+    )
+
+    assert runtime.state.self_model["trajectory_feedback"]["continue"]["count"] == 1
+    assert runtime.state.self_model["trajectory_weights"]["continuity"] == -2.0
+    assert runtime.state.selected_trajectory["id"] == "learn"
+    assert runtime.state.history[-1]["consequence"]["stability"] == -0.5
+    assert runtime.state.history[-1]["consequence_trajectory"] == "continue"
+
+    restarted = ConsciousRuntime("agent-integrated-consequence", path)
+    assert restarted.state.selected_trajectory["id"] == "learn"
+    assert restarted.state.history[-1]["self_evaluation"]["utility"] == -1.0
