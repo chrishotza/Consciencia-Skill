@@ -53,16 +53,42 @@ class ConsciousHostLoop:
         if not isinstance(selected, Mapping):
             return result
 
-        outcome = self.execute_action(
-            dict(selected),
-            self.runtime.snapshot(),
-        )
+        action_receipt = self.runtime.begin_action(selected)
+        try:
+            outcome = self.execute_action(
+                dict(selected),
+                self.runtime.snapshot(),
+            )
+        except Exception as exc:
+            failure = {
+                "error": type(exc).__name__,
+                "message": str(exc),
+            }
+            failure_receipt = self.runtime.complete_action(
+                failure,
+                status="failed",
+            )
+            result.update(
+                {
+                    "action_executed": False,
+                    "action_receipt": failure_receipt,
+                    "error": failure,
+                }
+            )
+            raise
+
         if not isinstance(outcome, Mapping):
+            failure = {
+                "error": "InvalidActionOutcome",
+                "message": "execute_action must return a mapping",
+            }
+            self.runtime.complete_action(failure, status="failed")
             raise ValueError("execute_action must return a mapping")
 
         trajectory_id = str(selected.get("id", "")).strip()
         if not trajectory_id:
             raise ValueError("selected trajectory requires a non-empty id")
+        action_receipt = self.runtime.complete_action(outcome)
 
         consequence_prompt = self.runtime.prepare_consequence(
             trajectory_id,
@@ -74,6 +100,10 @@ class ConsciousHostLoop:
         )
         evaluation_frame["consequence_trajectory"] = trajectory_id
         evaluation_frame["consequence"] = dict(outcome)
+        evaluation_frame["workspace"] = {
+            **dict(evaluation_frame.get("workspace", {})),
+            "action_receipt": action_receipt,
+        }
 
         # The actual host-observed outcome is authoritative. The model may
         # evaluate it, but it must not manufacture or replace the observation.
@@ -82,6 +112,7 @@ class ConsciousHostLoop:
         result.update(
             {
                 "action_executed": True,
+                "action_receipt": action_receipt,
                 "consequence": dict(outcome),
                 "next_trajectory": self.runtime.state.selected_trajectory,
                 "consequence_evaluation": evaluation_frame.get(
