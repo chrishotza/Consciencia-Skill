@@ -16,4 +16,12 @@ PRIMITIVES = (
     "reentry",
     "agency",
     "continuity",
+    "attention",
+    "salience",
+    "layers",
+    "coherence",
+    "topology",
+    "attractor",
+    "possibility_space",
+    "trajectory_selection",
 )
