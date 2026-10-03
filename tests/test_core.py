@@ -524,3 +524,45 @@ def test_partial_self_model_update_preserves_persistent_structures(tmp_path):
     assert runtime.state.self_model["trajectory_weights"]["learning"] == 2.0
     assert runtime.state.self_model["trajectory_feedback"]["learn"]["count"] == 3
     assert runtime.state.self_model["expected_self_state"]["focus"] == 0.8
+
+
+def test_interoceptive_affective_temporal_and_perspective_state_survive_restart(tmp_path):
+    path = tmp_path / "embodied.json"
+    runtime = ConsciousRuntime("embodied-agent", path)
+    runtime.integrate(
+        {
+            "response": "integrate internal condition",
+            "interoceptive_state": {
+                "energy": 0.72,
+                "thermal_load": 0.18,
+            },
+            "affective_state": {
+                "valence": -0.2,
+                "arousal": 0.61,
+                "homeostatic_error": 0.15,
+            },
+            "temporal_state": {
+                "dt": 0.25,
+                "mode": "sampled-continuous",
+                "derivative_norm": 0.31,
+            },
+            "perspectives": {
+                "individual_interior": {"focus": "self-state"},
+                "individual_exterior": {"status": "active"},
+                "collective_interior": {"meaning": "shared"},
+                "collective_exterior": {"system": "stable"},
+            },
+        }
+    )
+
+    restarted = ConsciousRuntime("embodied-agent", path)
+    assert restarted.state.interoceptive_state["energy"] == 0.72
+    assert restarted.state.affective_state["arousal"] == 0.61
+    assert restarted.state.temporal_state["dt"] == 0.25
+    assert restarted.state.perspectives["individual_interior"]["focus"] == "self-state"
+
+    present = restarted.present("current input")
+    assert present["interoceptive_state"]["thermal_load"] == 0.18
+    assert present["affective_state"]["homeostatic_error"] == 0.15
+    assert present["temporal_state"]["mode"] == "sampled-continuous"
+    assert "collective_exterior" in present["perspectives"]
