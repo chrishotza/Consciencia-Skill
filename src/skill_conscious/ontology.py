@@ -24,4 +24,6 @@ PRIMITIVES = (
     "attractor",
     "possibility_space",
     "trajectory_selection",
+    "latent_patterns",
+    "self_dissonance",
 )
