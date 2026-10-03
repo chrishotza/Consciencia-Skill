@@ -446,3 +446,42 @@ def test_conscious_host_executes_action_and_reenters_observed_consequence(tmp_pa
     restarted = ConsciousRuntime("host-agent", path)
     assert restarted.state.self_model["trajectory_feedback"]["learn"]["count"] == 1
     assert restarted.state.history[-1]["consequence_trajectory"] == "learn"
+
+def test_action_lifecycle_persists_receipt(tmp_path):
+    path = tmp_path / "action.json"
+    runtime = ConsciousRuntime("action-agent", path)
+
+    selected = {
+        "id": "learn",
+        "signals": {"learning": 1.0},
+    }
+    receipt = runtime.begin_action(selected)
+    assert receipt["status"] == "pending"
+    assert runtime.state.pending_action["action_id"] == receipt["action_id"]
+
+    completed = runtime.complete_action(
+        {"status": "success", "state_change": {"focus": 0.2}}
+    )
+    assert completed["status"] == "completed"
+    assert completed["outcome"]["status"] == "success"
+    assert runtime.state.pending_action is None
+    assert runtime.state.action_history[-1]["action_id"] == receipt["action_id"]
+
+    restarted = ConsciousRuntime("action-agent", path)
+    assert restarted.state.pending_action is None
+    assert restarted.state.action_history[-1]["outcome"]["state_change"]["focus"] == 0.2
+
+
+def test_action_failure_is_recorded(tmp_path):
+    path = tmp_path / "failure.json"
+    runtime = ConsciousRuntime("failure-agent", path)
+    runtime.begin_action({"id": "fail", "signals": {}})
+
+    receipt = runtime.complete_action(
+        {"error": "ToolError", "message": "execution failed"},
+        status="failed",
+    )
+
+    assert receipt["status"] == "failed"
+    restarted = ConsciousRuntime("failure-agent", path)
+    assert restarted.state.action_history[-1]["status"] == "failed"
