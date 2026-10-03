@@ -1210,6 +1210,23 @@ class ConsciousRuntime:
         else:
             self.state.selected_trajectory = None
 
+        # A consequence belongs to the action from the previous cycle. It is
+        # intentionally explicit so the runtime never invents an outcome.
+        consequence = frame.get("consequence")
+        consequence_evaluation = frame.get("self_evaluation")
+        consequence_trajectory = frame.get("consequence_trajectory")
+        if consequence is not None:
+            if not isinstance(consequence, Mapping):
+                raise ValueError("frame.consequence must be a mapping")
+            if consequence_trajectory is None:
+                raise ValueError("frame.consequence_trajectory is required with frame.consequence")
+            self.register_consequence(
+                str(consequence_trajectory),
+                consequence,
+                evaluation=consequence_evaluation,
+                persist=False,
+            )
+
         memory = str(frame.get("memory", "")).strip()
         if memory:
             self.state.memories.append(memory)
@@ -1247,6 +1264,21 @@ class ConsciousRuntime:
                 "coherence": self.state.coherence,
                 "latent_patterns": self.state.latent_patterns,
                 "self_dissonance": self.state.self_dissonance,
+                "consequence_trajectory": (
+                    str(consequence_trajectory)
+                    if consequence_trajectory is not None
+                    else None
+                ),
+                "consequence": (
+                    dict(consequence)
+                    if isinstance(consequence, Mapping)
+                    else None
+                ),
+                "self_evaluation": (
+                    dict(consequence_evaluation)
+                    if isinstance(consequence_evaluation, Mapping)
+                    else None
+                ),
                 "transformation": bool(changed),
             }
         )
