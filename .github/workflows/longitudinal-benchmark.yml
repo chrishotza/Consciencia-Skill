@@ -30,7 +30,7 @@ jobs:
         with:
           python-version: "3.11"
       - run: python -m pip install -e ".[dev]"
-      - run: python -m pytest -q tests/test_longitudinal_benchmark.py tests/test_llm_adapter.py tests/test_llm_longitudinal_benchmark.py
+      - run: timeout 180s python -m pytest -vv -x tests/test_longitudinal_benchmark.py tests/test_llm_adapter.py tests/test_llm_longitudinal_benchmark.py
       - run: python -m experiments.longitudinal_baseline_benchmark > /tmp/longitudinal-benchmark.json
       - run: python -m experiments.llm_longitudinal_benchmark > /tmp/llm-longitudinal-benchmark.json
       - run: |
