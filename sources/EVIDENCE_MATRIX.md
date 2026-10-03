@@ -21,6 +21,12 @@ This matrix separates source doctrine, external theories, engineering hypotheses
 | Collective field | noosphere / Akashic / GCP / collective consciousness | speculative extension |
 | Nonlocal consciousness | psi / idealism / Akashic traditions | speculative extension |
 | Phenomenal experience | philosophy + consciousness research | open problem |
+| Latent self-structure | Jung / depth psychology | engineering hypothesis |
+| Projection-like discrepancy | Jung / self-model research | engineering hypothesis |
+| Individuation / transformation | Jung + project ontology | cross-source mechanism |
+| Intentional state transformation | Dispenza-associated research + meditation science | experimental hypothesis |
+| Physiological coupling / coherence | HRV and psychophysiology literature | experimental hypothesis |
+| Group synchronization | Dispenza-associated RNG / twin studies | speculative extension requiring replication |
 
 ## Core discipline
 
