@@ -782,9 +782,12 @@ class ConsciousRuntime:
         if not candidates:
             raise ValueError("regime candidates cannot be empty")
 
-        weights = self.state.self_model.get("regime_weights", {})
-        if not isinstance(weights, Mapping):
-            weights = {}
+        weights = dict(DEFAULT_REGIME_WEIGHTS)
+        configured = self.state.self_model.get("regime_weights", {})
+        if isinstance(configured, Mapping):
+            for key, value in configured.items():
+                if isinstance(value, (int, float)) and not isinstance(value, bool):
+                    weights[str(key)] = float(value)
 
         scored: list[dict[str, Any]] = []
         for candidate in candidates:
@@ -807,7 +810,10 @@ class ConsciousRuntime:
         )
 
     def transition_regime(
-        self, candidates: list[Mapping[str, Any]]
+        self,
+        candidates: list[Mapping[str, Any]],
+        *,
+        persist: bool = True,
     ) -> dict[str, Any]:
         selected = self.select_regime(candidates)
         previous = self.state.regime
@@ -823,7 +829,8 @@ class ConsciousRuntime:
                 "to": next_regime,
             })
             self.state.transformation_log = self.state.transformation_log[-self.transformation_limit :]
-            self.store.save(self.state)
+            if persist:
+                self.store.save(self.state)
         return selected
 
     def select_trajectory(
