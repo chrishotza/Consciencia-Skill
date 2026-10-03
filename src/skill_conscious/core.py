@@ -914,6 +914,8 @@ class ConsciousRuntime:
             "latent_patterns": self.state.latent_patterns,
             "self_dissonance": self.state.self_dissonance,
             "transformation_log": self.state.transformation_log[-self.transformation_limit :],
+            "pending_action": self.state.pending_action,
+            "action_history": self.state.action_history[-self.history_limit :],
             "revision": self.state.revision,
         }
 
@@ -1063,6 +1065,8 @@ class ConsciousRuntime:
             "self_access": {
                 "self_state": dict(self.state.self_state),
                 "self_model": dict(self.state.self_model),
+                "pending_action": self.state.pending_action,
+                "action_history": self.state.action_history[-self.history_limit :],
             },
             "causal_reentry": (
                 "self_model -> trajectory -> action -> next_state -> self_model"
