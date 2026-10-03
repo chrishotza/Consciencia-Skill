@@ -346,7 +346,7 @@ class ConsciousRuntime:
                     "coherence": coherence,
                     "topology_integrity": topology_integrity,
                     "salience": salience,
-                    "self_dissonance": 1.0 - self_dissonance,
+                    "self_dissonance": self_dissonance,
                     "latent_pattern": latent_score,
                 },
             })
@@ -428,7 +428,7 @@ class ConsciousRuntime:
             float(self.topology_diagnostics()["integrity"]),
         )
         signals.setdefault("salience", self.salience_score())
-        signals.setdefault("self_dissonance", 1.0 - self.state.self_dissonance)
+        signals.setdefault("self_dissonance", self.state.self_dissonance)
         signals.setdefault("latent_pattern", self.latent_pattern_score())
 
         weights = self.trajectory_weights()
