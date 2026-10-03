@@ -827,3 +827,14 @@ C: homeostasis + target adaptation
 D: homeostasis + target + priority adaptation
 
 Keep the host observation authoritative. Record trajectory changes, oscillation, continuity, convergence/divergence, and accumulated learning. Treat the result as evidence about the architecture's dynamics, not as a proof of phenomenal consciousness.
+
+
+## Self-model adaptation protocol
+
+When self_model_adaptation.enabled is true, the authoritative source of adaptation evidence is the self_state mapping attached to the completed host action outcome.
+
+The model does not supply a new expected_self_state to force the update. It may interpret the consequence, but the runtime accumulates host observations, applies thresholds, bounds the step, persists the new expectation, and records causal provenance.
+
+Keep expected_self_state and learned_self_state conceptually separate:
+expected_self_state → explicit expectation
+learned_self_state → recurrent latent-pattern model

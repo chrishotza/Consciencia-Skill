@@ -282,3 +282,26 @@ D  + PRIORITY ADAPTATION
 Use the same candidate futures, same observed consequences, and same trial count across all conditions. Record trajectory selection and switch rate, oscillation, continuity, homeostatic error convergence/divergence, self-model change events, and accumulated target/priority learning.
 
 The comparison is an engineering ablation. Do not interpret a difference between conditions as evidence of phenomenal consciousness.
+
+
+## Self-model adaptation layer
+
+The self-model now has a direct experience path:
+
+~~~text
+HOST-OBSERVED SELF-STATE
+        ↓
+SELF-MODEL PREDICTION ERROR
+        ↓
+EVIDENCE ACCUMULATION
+        ↓
+CONFIDENCE / THRESHOLD
+        ↓
+BOUNDED EXPECTATION UPDATE
+        ↓
+SELF-MODEL'
+~~~
+
+expected_self_state remains an explicit expectation. learned_self_state remains the latent-pattern learning representation. The new adaptation path provides an auditable bridge from repeated host-observed self-state outcomes to bounded expectation revision.
+
+Each update records causal provenance containing the evidence IDs and the fact that the threshold was crossed.

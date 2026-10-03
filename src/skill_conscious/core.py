@@ -1091,6 +1091,284 @@ class ConsciousRuntime:
         }
 
 
+
+    def self_model_adaptation_policy(self) -> dict[str, Any]:
+        configured = self.state.self_model.get(
+            "self_model_adaptation",
+            {},
+        )
+        if not isinstance(configured, Mapping):
+            return {}
+        return dict(configured)
+
+    def adapt_self_model_from_evidence(
+        self,
+        observed: Mapping[str, Any] | None,
+        *,
+        evidence_id: str | None = None,
+    ) -> dict[str, Any]:
+        """Accumulate host-observed self-state evidence and adapt expectations."""
+        policy = self.self_model_adaptation_policy()
+        if not bool(policy.get("enabled", False)):
+            return {
+                "enabled": False,
+                "updated": False,
+                "fields": [],
+            }
+
+        if not isinstance(observed, Mapping):
+            return {
+                "enabled": True,
+                "updated": False,
+                "fields": [],
+                "reason": "no_observed_self_state",
+            }
+
+        model = dict(self.state.self_model)
+        expected = model.get("expected_self_state", {})
+        if not isinstance(expected, Mapping) or not expected:
+            return {
+                "enabled": True,
+                "updated": False,
+                "fields": [],
+                "reason": "no_expected_self_state",
+            }
+
+        min_samples = max(1, int(policy.get("min_samples", 3)))
+        error_threshold = max(0.0, float(policy.get("error_threshold", 0.25)))
+        learning_rate = max(0.0, min(1.0, float(policy.get("learning_rate", 0.25))))
+        max_step = max(0.0, float(policy.get("max_step", 0.1)))
+        cooldown = max(0, int(policy.get("cooldown", 2)))
+        confidence_threshold = max(
+            0.0, min(1.0, float(policy.get("confidence_threshold", 0.75)))
+        )
+        required_high_error = max(
+            1, int(policy.get("required_high_error", min_samples))
+        )
+        scales = self._numeric_state(policy.get("scales", {}))
+        configured_bounds = policy.get("bounds", {})
+        bounds = (
+            configured_bounds
+            if isinstance(configured_bounds, Mapping)
+            else {}
+        )
+
+        ledger = model.get("self_model_adaptation_evidence", {})
+        if not isinstance(ledger, Mapping):
+            ledger = {}
+        ledger = dict(ledger)
+
+        sequence = int(model.get("self_model_adaptation_sequence", 0)) + 1
+        model["self_model_adaptation_sequence"] = sequence
+        updated_expected = dict(expected)
+        updates: list[dict[str, Any]] = []
+
+        for key, current_expected in expected.items():
+            if key not in observed:
+                continue
+            if not (
+                isinstance(current_expected, (int, float))
+                and not isinstance(current_expected, bool)
+            ):
+                continue
+
+            raw_observation = observed[key]
+            if not (
+                isinstance(raw_observation, (int, float))
+                and not isinstance(raw_observation, bool)
+            ):
+                continue
+
+            observation = float(raw_observation)
+            scale = float(scales.get(key, 1.0))
+            if scale <= 0.0:
+                scale = 1.0
+
+            error = max(
+                0.0,
+                min(1.0, abs(observation - float(current_expected)) / scale),
+            )
+
+            entry = ledger.get(key, {})
+            if not isinstance(entry, Mapping):
+                entry = {}
+            entry = dict(entry)
+
+            count = int(entry.get("sample_count", 0)) + 1
+            error_sum = float(entry.get("error_sum", 0.0)) + error
+            observation_sum = (
+                float(entry.get("observation_sum", 0.0)) + observation
+            )
+            high_error_count = int(entry.get("high_error_count", 0))
+            if error >= error_threshold:
+                high_error_count += 1
+
+            evidence_ids = [
+                str(item)
+                for item in entry.get("evidence_ids", [])
+                if str(item).strip()
+            ]
+            if evidence_id:
+                evidence_ids.append(str(evidence_id))
+
+            mean_error = error_sum / count
+            mean_observation = observation_sum / count
+            confidence = min(1.0, count / min_samples)
+            if error_threshold > 0.0:
+                confidence *= min(1.0, mean_error / error_threshold)
+            else:
+                confidence = 1.0
+
+            last_update_sequence = int(entry.get("last_update_sequence", 0))
+            in_cooldown = (
+                last_update_sequence > 0
+                and sequence - last_update_sequence <= cooldown
+            )
+            ready = (
+                count >= min_samples
+                and high_error_count >= required_high_error
+                and mean_error >= error_threshold
+                and confidence >= confidence_threshold
+                and not in_cooldown
+            )
+
+            evidence = {
+                "sample_count": count,
+                "high_error_count": high_error_count,
+                "mean_error": round(mean_error, 6),
+                "mean_observation": round(mean_observation, 6),
+                "confidence": round(confidence, 6),
+                "evidence_ids": evidence_ids[-min_samples:],
+            }
+
+            if not ready:
+                ledger[key] = {
+                    "sample_count": count,
+                    "error_sum": round(error_sum, 6),
+                    "observation_sum": round(observation_sum, 6),
+                    "high_error_count": high_error_count,
+                    "mean_error": round(mean_error, 6),
+                    "mean_observation": round(mean_observation, 6),
+                    "confidence": round(confidence, 6),
+                    "evidence_ids": evidence_ids[-32:],
+                    "last_update_sequence": last_update_sequence,
+                }
+                continue
+
+            before = float(current_expected)
+            delta = max(
+                -max_step,
+                min(max_step, learning_rate * (mean_observation - before)),
+            )
+            proposed = before + delta
+
+            key_bounds = bounds.get(key)
+            if (
+                isinstance(key_bounds, (list, tuple))
+                and len(key_bounds) == 2
+                and all(
+                    isinstance(item, (int, float)) and not isinstance(item, bool)
+                    for item in key_bounds
+                )
+            ):
+                lower = float(key_bounds[0])
+                upper = float(key_bounds[1])
+                if lower > upper:
+                    lower, upper = upper, lower
+                proposed = max(lower, min(upper, proposed))
+                delta = proposed - before
+
+            if abs(delta) <= 1e-12:
+                ledger[key] = {
+                    "sample_count": 0,
+                    "error_sum": 0.0,
+                    "observation_sum": 0.0,
+                    "high_error_count": 0,
+                    "mean_error": 0.0,
+                    "mean_observation": 0.0,
+                    "confidence": 0.0,
+                    "evidence_ids": [],
+                    "last_update_sequence": last_update_sequence,
+                }
+                continue
+
+            updated_expected[key] = round(proposed, 6)
+            update = {
+                "type": "self_model_adaptation",
+                "revision": self.state.revision,
+                "evidence_sequence": sequence,
+                "field": key,
+                "before": round(before, 6),
+                "after": round(proposed, 6),
+                "delta": round(delta, 6),
+                "cause": "accumulated_host_observation",
+                "evidence": evidence,
+                "causal_provenance": {
+                    "source": "host_action_outcome",
+                    "threshold_crossed": True,
+                    "evidence_ids": evidence["evidence_ids"],
+                },
+                "threshold": {
+                    "min_samples": min_samples,
+                    "error_threshold": error_threshold,
+                    "confidence_threshold": confidence_threshold,
+                    "required_high_error": required_high_error,
+                },
+                "constraints": {
+                    "learning_rate": learning_rate,
+                    "max_step": max_step,
+                    "cooldown": cooldown,
+                },
+            }
+            updates.append(update)
+            ledger[key] = {
+                "sample_count": 0,
+                "error_sum": 0.0,
+                "observation_sum": 0.0,
+                "high_error_count": 0,
+                "mean_error": 0.0,
+                "mean_observation": 0.0,
+                "confidence": 0.0,
+                "evidence_ids": [],
+                "last_update_sequence": sequence,
+                "last_update": update,
+            }
+
+        model["self_model_adaptation_evidence"] = ledger
+        if not updates:
+            self.state.self_model = model
+            return {
+                "enabled": True,
+                "updated": False,
+                "fields": [],
+                "evidence": ledger,
+            }
+
+        model["expected_self_state"] = updated_expected
+        history = model.get("self_model_adaptation_history", [])
+        if not isinstance(history, list):
+            history = []
+        history = [
+            dict(item) for item in history
+            if isinstance(item, Mapping)
+        ]
+        history.extend(updates)
+        model["self_model_adaptation_history"] = history[-self.history_limit :]
+        self.state.self_model = model
+
+        for update in updates:
+            self.state.transformation_log.append(update)
+        self.state.transformation_log = (
+            self.state.transformation_log[-self.transformation_limit :]
+        )
+
+        return {
+            "enabled": True,
+            "updated": True,
+            "fields": [item["field"] for item in updates],
+            "updates": updates,
+        }
+
     def trajectory_priority_adaptation_policy(self) -> dict[str, Any]:
         configured = self.state.self_model.get(
             "trajectory_priority_adaptation",
@@ -1814,6 +2092,12 @@ class ConsciousRuntime:
         )
         receipt["target_adaptation"] = target_adaptation
 
+        self_model_adaptation = self.adapt_self_model_from_evidence(
+            outcome.get("self_state"),
+            evidence_id=str(receipt["action_id"]),
+        )
+        receipt["self_model_adaptation"] = self_model_adaptation
+
         self.refresh_affective_state()
         self.state.action_history.append(receipt)
         self.state.action_history = self.state.action_history[-self.history_limit :]
@@ -1878,9 +2162,17 @@ class ConsciousRuntime:
                 "homeostatic_target_adaptation",
                 {},
             )
+            self_model_adaptation = merged_self_model.get(
+                "self_model_adaptation",
+                {},
+            )
             target_adaptation_enabled = (
                 isinstance(target_adaptation, Mapping)
                 and bool(target_adaptation.get("enabled", False))
+            )
+            self_model_adaptation_enabled = (
+                isinstance(self_model_adaptation, Mapping)
+                and bool(self_model_adaptation.get("enabled", False))
             )
             runtime_owned_self_model_keys = {
                 "homeostatic_adaptation_evidence",
@@ -1888,6 +2180,9 @@ class ConsciousRuntime:
                 "trajectory_priority_adaptation_evidence",
                 "trajectory_priority_adaptation_history",
                 "trajectory_priority_adaptation_sequence",
+                "self_model_adaptation_evidence",
+                "self_model_adaptation_history",
+                "self_model_adaptation_sequence",
             }
             # Once adaptive targets are enabled and initialized, the runtime owns
             # the target unless an experiment explicitly permits external changes.
@@ -1896,9 +2191,18 @@ class ConsciousRuntime:
                 if isinstance(target_adaptation, Mapping)
                 else False
             )
+            external_self_model_updates = (
+                bool(self_model_adaptation.get("allow_external_expected_update", False))
+                if isinstance(self_model_adaptation, Mapping)
+                else False
+            )
             target_is_initialized = bool(
                 isinstance(merged_self_model.get("homeostatic_targets"), Mapping)
                 and merged_self_model.get("homeostatic_targets")
+            )
+            expected_self_state_initialized = bool(
+                isinstance(merged_self_model.get("expected_self_state"), Mapping)
+                and merged_self_model.get("expected_self_state")
             )
             for key, value in incoming_self_model.items():
                 key = str(key)
@@ -1909,6 +2213,13 @@ class ConsciousRuntime:
                     and target_adaptation_enabled
                     and target_is_initialized
                     and not external_target_updates
+                ):
+                    continue
+                if (
+                    key == "expected_self_state"
+                    and self_model_adaptation_enabled
+                    and expected_self_state_initialized
+                    and not external_self_model_updates
                 ):
                     continue
                 if (

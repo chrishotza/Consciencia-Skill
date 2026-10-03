@@ -192,3 +192,95 @@ def test_runtime_owned_evidence_cannot_be_injected_by_model(tmp_path):
     assert "homeostatic_adaptation_evidence" not in runtime.state.self_model
 
 
+
+def _configured_self_model_adaptation_runtime(tmp_path):
+    runtime = ConsciousRuntime("self-model-agent", tmp_path / "self-model.json")
+    runtime.integrate(
+        {
+            "response": "initialize self-model adaptation",
+            "self_model": {
+                "expected_self_state": {"focus": 0.8},
+                "self_model_adaptation": {
+                    "enabled": True,
+                    "min_samples": 3,
+                    "error_threshold": 0.25,
+                    "confidence_threshold": 0.75,
+                    "required_high_error": 3,
+                    "learning_rate": 0.5,
+                    "max_step": 0.1,
+                    "cooldown": 2,
+                    "bounds": {"focus": [0.0, 1.0]},
+                },
+            },
+        }
+    )
+    return runtime
+
+
+def _record_observed_self_state(runtime, value, label):
+    runtime.begin_action({"id": label, "signals": {}})
+    return runtime.complete_action(
+        {
+            "status": "success",
+            "self_state": {"focus": value},
+        }
+    )
+
+
+def test_self_model_adaptation_requires_accumulated_host_evidence(tmp_path):
+    runtime = _configured_self_model_adaptation_runtime(tmp_path)
+
+    _record_observed_self_state(runtime, 0.4, "s1")
+    _record_observed_self_state(runtime, 0.4, "s2")
+    assert runtime.state.self_model["expected_self_state"]["focus"] == 0.8
+
+    receipt = _record_observed_self_state(runtime, 0.4, "s3")
+
+    assert receipt["self_model_adaptation"]["updated"] is True
+    assert runtime.state.self_model["expected_self_state"]["focus"] == 0.7
+    update = runtime.state.self_model["self_model_adaptation_history"][-1]
+    assert update["cause"] == "accumulated_host_observation"
+    assert update["causal_provenance"]["source"] == "host_action_outcome"
+    assert update["evidence"]["sample_count"] == 3
+    assert len(update["evidence"]["evidence_ids"]) == 3
+
+
+def test_self_model_adaptation_persists_across_restart(tmp_path):
+    runtime = _configured_self_model_adaptation_runtime(tmp_path)
+    for index in range(3):
+        _record_observed_self_state(runtime, 0.4, f"s{index + 1}")
+
+    restarted = ConsciousRuntime("self-model-agent", tmp_path / "self-model.json")
+
+    assert restarted.state.self_model["expected_self_state"]["focus"] == 0.7
+    assert restarted.state.self_model["self_model_adaptation_history"][-1]["after"] == 0.7
+
+
+def test_self_model_expectation_cannot_be_replaced_by_model_frame(tmp_path):
+    runtime = _configured_self_model_adaptation_runtime(tmp_path)
+
+    runtime.integrate(
+        {
+            "response": "model proposes a new expectation",
+            "self_model": {
+                "expected_self_state": {"focus": 0.1},
+            },
+        }
+    )
+
+    assert runtime.state.self_model["expected_self_state"]["focus"] == 0.8
+
+
+def test_self_model_adaptation_ignores_unobserved_fields(tmp_path):
+    runtime = _configured_self_model_adaptation_runtime(tmp_path)
+    runtime.begin_action({"id": "empty", "signals": {}})
+    receipt = runtime.complete_action(
+        {
+            "status": "success",
+            "self_state": {"other": 0.2},
+        }
+    )
+
+    assert receipt["self_model_adaptation"]["updated"] is False
+    assert runtime.state.self_model["expected_self_state"]["focus"] == 0.8
+

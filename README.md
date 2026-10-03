@@ -475,3 +475,14 @@ D: homeostasis + adaptive targets + priority adaptation
 All four conditions receive the same controlled trajectory field and the same host-observed internal outcome. The experiment reports trajectory selection, switches, oscillation, continuity, homeostatic convergence/divergence, self-model change events, target updates, priority updates, and accumulated learning.
 
 The purpose is causal separation of layers, not a claim that one condition is intrinsically “more conscious.” Run python experiments/self_development_ablation.py.
+
+
+## Self-model adaptation from host evidence
+
+The third self-development mechanism adapts an explicit expected self-state from repeated host-observed self-state outcomes.
+
+expected_self_state is the explicit expectation; learned_self_state remains the recurrent latent-pattern representation.
+
+A self-model update is only committed after accumulated evidence crosses configured thresholds. The runtime records action IDs, evidence statistics, thresholds, constraints, and causal provenance. Later model frames cannot replace an initialized expected self-state while this mechanism is enabled unless the experiment explicitly allows it.
+
+This turns self-model revision into the same auditable class of mechanism as target and priority adaptation.
