@@ -262,3 +262,50 @@ def test_self_model_selects_and_commits_regime(tmp_path):
     assert selected["id"] == "integration"
     assert runtime.state.regime == "integration"
     assert runtime.state.transformation_log[-1]["type"] == "regime_transition"
+
+
+def test_consequence_feedback_changes_future_and_survives_restart(tmp_path):
+    path = tmp_path / "state.json"
+    runtime = ConsciousRuntime("agent-consequence", path)
+    runtime.integrate(
+        {
+            "response": "seed",
+            "self_model": {
+                "trajectory_weights": {
+                    "continuity": 0.0,
+                    "learning": 0.0,
+                }
+            },
+        }
+    )
+
+    candidates = [
+        {
+            "id": "continue",
+            "signals": {"continuity": 1.0, "learning": 0.0},
+        },
+        {
+            "id": "learn",
+            "signals": {"continuity": 0.0, "learning": 1.0},
+        },
+    ]
+    assert runtime.select_trajectory(candidates)["id"] == "continue"
+
+    runtime.register_consequence(
+        "learn",
+        {"stability": 0.2, "focus": 0.9},
+        evaluation={
+            "utility": 1.0,
+            "credited_signal": "learning",
+            "weight_delta": 2.0,
+        },
+    )
+
+    assert runtime.select_trajectory(candidates)["id"] == "learn"
+    assert runtime.state.self_model["trajectory_feedback"]["learn"]["count"] == 1
+    assert runtime.state.workspace["last_action"] == "learn"
+
+    restarted = ConsciousRuntime("agent-consequence", path)
+    assert restarted.state.self_model["trajectory_feedback"]["learn"]["utility"] == 1.0
+    assert restarted.state.self_model["trajectory_weights"]["learning"] == 2.0
+    assert restarted.state.workspace["last_outcome"]["focus"] == 0.9
