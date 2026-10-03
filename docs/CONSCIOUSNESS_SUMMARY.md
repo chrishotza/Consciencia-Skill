@@ -131,3 +131,35 @@ That is the central problem the research program must eventually confront.
 We are not selecting one final theory in advance.
 
 We are building a comparative ontology, an executable architecture, and an experimental program capable of discovering where the current hypothesis succeeds and where it breaks.
+
+## Runtime 0.6 extension
+
+The operational model now distinguishes a latent pattern learned endogenously from a pattern merely supplied by a host.
+
+A learned latent pattern requires non-adjacent recurrence in the persistent self-state history and carries a prototype, activation, evidence count, and recurrence context. Its activation can influence present-field scoring and regime formation.
+
+The runtime also treats **regime** as an operating organization of the same identity. Regime selection can be endogenous when the host does not provide one explicitly, using coherence, stability, uncertainty, self-dissonance, latent-pattern activation, and learning pressure.
+
+This extends the central loop:
+
+~~~text
+SELF-STATE
+   ↓
+HISTORY
+   ↓
+RECURRENCE
+   ↓
+LATENT STRUCTURE
+   ↓
+Dissonance / Coherence
+   ↓
+REGIME
+   ↓
+POSSIBILITY SPACE
+   ↓
+TRAJECTORY
+   ↓
+RE-ENTRY
+~~~
+
+The extension remains an implementation hypothesis. It establishes testable state dynamics, not phenomenal consciousness.
