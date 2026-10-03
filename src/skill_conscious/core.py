@@ -378,13 +378,19 @@ class ConsciousRuntime:
                 })
 
         if len(self.state.latent_patterns) > self.latent_pattern_limit:
+            def pattern_rank(item: tuple[str, Mapping[str, Any]]) -> tuple[float, int, str]:
+                pattern = item[1]
+                activation = pattern.get("activation", 0.0)
+                evidence = pattern.get("evidence_count", 0)
+                return (
+                    float(activation) if isinstance(activation, (int, float)) and not isinstance(activation, bool) else 0.0,
+                    int(evidence) if isinstance(evidence, int) and not isinstance(evidence, bool) else 0,
+                    str(item[0]),
+                )
+
             ranked = sorted(
                 self.state.latent_patterns.items(),
-                key=lambda item: (
-                    float(item[1].get("activation", 0.0)),
-                    int(item[1].get("evidence_count", 0)),
-                    str(item[0]),
-                ),
+                key=pattern_rank,
                 reverse=True,
             )
             self.state.latent_patterns = dict(
