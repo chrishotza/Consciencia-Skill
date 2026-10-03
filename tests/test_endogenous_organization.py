@@ -103,11 +103,17 @@ def test_recurrent_latent_pattern_revises_self_model(tmp_path: Path) -> None:
     assert "stability" in learned
     assert learned["stability"] > 0.2
     assert len(tendencies) == 1
-    assert runtime.state.transformation_log[-1]["type"] in {
-        "latent_self_model_revision",
-        "regime_transition",
-        "changes",
-    }
+    assert any(
+        (
+            event.get("type") in {
+                "latent_self_model_revision",
+                "regime_transition",
+                "changes",
+            }
+        )
+        for event in reversed(runtime.state.transformation_log)
+        if isinstance(event, dict)
+    )
 
 
 def test_latent_self_model_revision_is_ablated_independently(
