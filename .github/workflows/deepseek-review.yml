@@ -10,66 +10,15 @@ permissions:
   contents: read
 
 jobs:
-  deepseek-smoke:
+  deepseek-microprobe:
     runs-on: ubuntu-latest
     steps:
-      - name: Locate configured DeepSeek secret
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run low-token consciousness microprobe
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          DEEPSEEK_KEY: ${{ secrets.DEEPSEEK_KEY }}
-          DEEPSEEK_API: ${{ secrets.DEEPSEEK_API }}
-          DEEPSEEK: ${{ secrets.DEEPSEEK }}
         run: |
-          python - <<'PY'
-          import json
-          import os
-          import urllib.request
-
-          candidates = [
-              ("DEEPSEEK_API_KEY", os.environ.get("DEEPSEEK_API_KEY", "")),
-              ("DEEPSEEK_KEY", os.environ.get("DEEPSEEK_KEY", "")),
-              ("DEEPSEEK_API", os.environ.get("DEEPSEEK_API", "")),
-              ("DEEPSEEK", os.environ.get("DEEPSEEK", "")),
-          ]
-
-          found = next(((name, value) for name, value in candidates if value), None)
-          if found is None:
-              raise SystemExit(
-                  "No candidate DeepSeek Actions secret was available."
-              )
-
-          name, key = found
-          print(f"DeepSeek credential source available: {name}")
-
-          body = json.dumps({
-              "model": "deepseek-chat",
-              "messages": [
-                  {"role": "user", "content": "Reply with exactly: DEEPSEEK_OK"}
-              ],
-              "temperature": 0
-          }).encode("utf-8")
-
-          request = urllib.request.Request(
-              "https://api.deepseek.com/chat/completions",
-              data=body,
-              headers={
-                  "Authorization": f"Bearer {key}",
-                  "Content-Type": "application/json",
-              },
-              method="POST",
-          )
-
-          try:
-              with urllib.request.urlopen(request, timeout=60) as response:
-                  payload = json.loads(response.read().decode("utf-8"))
-          except urllib.error.HTTPError as exc:
-              details = exc.read().decode("utf-8", errors="replace")
-              raise SystemExit(
-                  f"DeepSeek API rejected the credential (HTTP {exc.code}): {details[:500]}"
-              )
-
-          answer = payload["choices"][0]["message"]["content"].strip()
-          print(f"DeepSeek API responded: {answer}")
-          if answer != "DEEPSEEK_OK":
-              raise SystemExit("DeepSeek API returned an unexpected response.")
-          PY
+          python -m pip install -e .
+          python experiments/deepseek_microprobe.py
