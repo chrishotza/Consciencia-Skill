@@ -1,0 +1,19 @@
+name: Hume Adversarial Probe
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  hume-bundle-ab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run deterministic Hume bundle probe
+        run: |
+          python -m pip install -e .
+          python experiments/hume_bundle_ab.py
