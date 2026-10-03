@@ -8,6 +8,9 @@ on:
       - "src/skill_conscious/metacognitive_confidence_probe.py"
       - "tests/test_metacognitive_confidence.py"
       - "experiments/metacognitive_confidence_probe.py"
+      - "tests/test_metacognitive_confidence_longitudinal.py"
+      - "experiments/metacognitive_confidence_longitudinal.py"
+      - "src/skill_conscious/llm_adapter.py"
       - ".github/workflows/metacognitive-confidence.yml"
   pull_request:
     paths:
@@ -16,6 +19,9 @@ on:
       - "src/skill_conscious/metacognitive_confidence_probe.py"
       - "tests/test_metacognitive_confidence.py"
       - "experiments/metacognitive_confidence_probe.py"
+      - "tests/test_metacognitive_confidence_longitudinal.py"
+      - "experiments/metacognitive_confidence_longitudinal.py"
+      - "src/skill_conscious/llm_adapter.py"
       - ".github/workflows/metacognitive-confidence.yml"
 
 concurrency:
@@ -32,5 +38,6 @@ jobs:
         with:
           python-version: "3.11"
       - run: python -m pip install -e ".[dev]"
-      - run: timeout 120s python -m pytest -vv -x tests/test_metacognitive_confidence.py
+      - run: timeout 120s python -m pytest -vv -x tests/test_metacognitive_confidence.py tests/test_metacognitive_confidence_longitudinal.py
       - run: timeout 120s python -m experiments.metacognitive_confidence_probe
+      - run: timeout 120s python -m experiments.metacognitive_confidence_longitudinal
