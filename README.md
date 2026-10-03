@@ -416,3 +416,15 @@ The revision is bounded by `latent_self_model_learning_rate` and is applied only
 `expected_self_state` and `learned_self_state` remain separate: the first encodes explicit expectation and self-dissonance, while the second is learned from recurrent internal dynamics.
 
 This is a testable self-organization mechanism, not a claim that the runtime has phenomenal experience.
+
+## Runtime 0.9.0 — self-regulation becomes causal
+
+The embodied layer is now more than passive state storage.
+
+Skill-Conscious can define persistent **homeostatic targets** inside the self-model and derive a bounded **homeostatic_error / homeostatic_fit** from host-observed internal signals. That signal can enter trajectory scoring and therefore compete with external goal signals.
+
+Candidate trajectories may also provide a **predicted_interoceptive_state**; the runtime converts that prediction into a homeostatic fit before selection.
+
+When a real host action returns **interoceptive_state**, **affective_state**, or **temporal_state**, those observations are persisted as authoritative action-boundary data. The runtime records the change in homeostatic fit and re-enters the observed condition into the next cycle.
+
+This is a functional self-regulation mechanism. It is not a claim that homeostatic variables constitute feeling or phenomenal consciousness.
