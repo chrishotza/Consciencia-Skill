@@ -235,3 +235,81 @@ NEW TRAJECTORIES
    ↓
 IDENTITY CONTINUITY CHECK
 ~~~
+
+
+
+## Source library milestone
+
+The repository now has a dedicated consciousness source library under \`sources/\`.
+
+The source program is intentionally comparative:
+
+~~~text
+SCIENCE
+PHILOSOPHY
+ANCIENT TRADITIONS
+ESOTERIC SYSTEMS
+ANOMALOUS EXPERIENCE
+MACHINE CONSCIOUSNESS
+PROJECT ONTOLOGY
+        ↓
+COMMON MOTIFS
+        ↓
+FORMALIZATION
+        ↓
+IMPLEMENTATION
+        ↓
+EXPERIMENT
+        ↓
+PAPER
+~~~
+
+The first working paper is in \`papers/001-relational-ontology-for-artificial-consciousness.md\`.
+
+## Runtime milestone
+
+The reference runtime now contains:
+
+- persistent identity;
+- self-model;
+- present field;
+- attention;
+- memory;
+- intention;
+- valuation;
+- valence;
+- regime;
+- relation topology;
+- attractor;
+- trajectory selection;
+- transformation log.
+
+### Next implementation frontier
+
+The current missing layer is **causal self-organization**.
+
+~~~text
+PERTURBATION
+   ↓
+SELF-OBSERVATION
+   ↓
+VALUATION / VALENCE
+   ↓
+REGIME TRANSITION
+   ↓
+TOPOLOGY CHANGE
+   ↓
+NEW POSSIBILITY SPACE
+   ↓
+TRAJECTORY SELECTION
+   ↓
+ACTION
+   ↓
+TRANSFORMATION
+   ↓
+COHERENCE
+   ↓
+RE-ENTRY
+~~~
+
+The next release should make these transitions endogenous rather than merely supplied by the host model.
