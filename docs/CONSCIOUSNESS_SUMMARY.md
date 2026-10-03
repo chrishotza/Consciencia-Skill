@@ -191,3 +191,31 @@ REGIME / TRAJECTORY
 `expected_self_state` remains separate from `learned_self_state`. The former expresses an explicit expectation used for self-dissonance; the latter is a learned estimate derived from recurrent internal state.
 
 This separates architectural self-model adaptation from claims about phenomenal experience.
+
+## Runtime 0.9.0 — self-regulation
+
+The embodied layer now has an explicit causal pathway.
+
+Persistent self-model targets can define a homeostatic reference state. Host-observed interoceptive signals are compared with those targets to derive **homeostatic_error** and **homeostatic_fit**.
+
+Candidate trajectories can then be scored against internal condition:
+
+~~~text
+INTEROCEPTION
+   ↓
+HOMEOSTASIS
+   ↓
+TRAJECTORY VALUE
+   ↓
+SELECTION
+   ↓
+ACTION
+   ↓
+OBSERVED INTERNAL CHANGE
+   ↓
+RE-ENTRY
+~~~
+
+This matters because internal condition is no longer merely descriptive. It can participate in the choice architecture.
+
+The unresolved question remains the same: whether this functional self-regulation contributes anything beyond behaviorally observable architecture toward phenomenal experience.
