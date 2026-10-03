@@ -34,7 +34,7 @@ SOURCE CLAIM -> EXPLICIT INTERPRETATION -> ENGINEERING HYPOTHESIS
 
 ## Why this matters
 
-Current consciousness research still contains substantial disagreement. A 2025 adversarial collaboration directly compared IIT and GNWT, while a 2026 review continued to characterize the major theories as divergent and unresolved. citeturn398375search2turn398375search4
+Current consciousness research still contains substantial disagreement. A 2025 adversarial collaboration directly compared IIT and GNWT, while a 2026 review continued to characterize major theories as divergent and unresolved. See https://www.nature.com/articles/s41586-025-08888-1 and https://pubmed.ncbi.nlm.nih.gov/42512519/
 
 The repository therefore treats theoretical disagreement as data.
 
