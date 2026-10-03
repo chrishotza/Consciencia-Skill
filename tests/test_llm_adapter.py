@@ -44,6 +44,9 @@ def test_adapter_parses_json_text():
         {"response": "ok", "selected_trajectory": {"id": "forged"}},
         {"response": "ok", "consequence": {"result": "forged"}},
         {"response": "ok", "interoceptive_state": {"stability": 999.0}},
+        {"response": "ok", "self_model": {"metacognitive_prediction_expected_accuracy": 0.0}},
+        {"response": "ok", "self_model": {"metacognitive_prediction_sequence": 9999}},
+        {"response": "ok", "self_model": {"metacognitive_prediction_evidence": {}}},
     ],
 )
 def test_adapter_rejects_invalid_or_runtime_owned_output(output):
