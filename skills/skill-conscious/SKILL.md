@@ -304,3 +304,53 @@ STATE(t+1)
 ## Relational continuity
 
 Treat identity as continuity of connected relations rather than a frozen list of properties. Track relation topology and the current regime/attractor when the host can provide them.
+
+## Endogenous latent learning
+
+When the runtime has latent-pattern learning enabled, do not treat latent patterns as host-supplied annotations only.
+
+The runtime may derive a latent pattern from recurrence in its own longitudinal self-state:
+
+~~~text
+SELF-STATE HISTORY
+      ↓
+NON-ADJACENT RECURRENCE
+      ↓
+LATENT PROTOTYPE
+      ↓
+ACTIVATION / DECAY
+      ↓
+PRESENT + SELECTION
+~~~
+
+A single observation is insufficient. Learned patterns should carry explicit evidence and recurrence context.
+
+During ablation studies, use the runtime switch `learn_latent_patterns=False` to isolate the effect of endogenous learning.
+
+## Endogenous regime formation
+
+When the host does not explicitly set a regime, the runtime can derive one from the current operating condition.
+
+~~~text
+SELF-STATE
+   +
+SELF-MODEL
+   +
+COHERENCE
+   +
+UNCERTAINTY
+   +
+SELF-DISSONANCE
+   +
+LATENT PATTERNS
+   ↓
+REGIME CANDIDATES
+   ↓
+REGIME SELECTION
+   ↓
+PRESENT RECONFIGURATION
+~~~
+
+The reference runtime currently exposes baseline, exploration, and integration candidates. An explicit host-provided regime remains authoritative.
+
+A regime transition is part of the process history, not a new identity.
