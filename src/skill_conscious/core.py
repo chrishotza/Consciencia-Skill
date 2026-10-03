@@ -325,6 +325,57 @@ class ConsciousRuntime:
             self.store.save(self.state)
         return result
 
+    def snapshot_experience_dynamics(self) -> dict[str, Any]:
+        if not self.dynamic_core_enabled:
+            return {"enabled": False}
+        return self.dynamic_core.dynamic_core_snapshot()
+
+    def intervene_experience_attractor(
+        self,
+        center: Mapping[str, Any],
+        *,
+        persist: bool = False,
+        intervention_id: str | None = None,
+    ) -> dict[str, Any]:
+        if not self.dynamic_core_enabled:
+            return {"enabled": False, "intervened": False, "reason": "dynamic_core_disabled"}
+        result = self.dynamic_core.intervene_attractor_center(
+            center,
+            persist=persist,
+            intervention_id=intervention_id,
+        )
+        self._restore_dynamic_core_state()
+        self.state.workspace = {
+            **self.state.workspace,
+            "experience_dynamics_intervention": result,
+        }
+        if persist:
+            self.store.save(self.state)
+        return result
+
+    def restore_experience_dynamics(
+        self,
+        snapshot: Mapping[str, Any],
+        *,
+        persist: bool = False,
+        intervention_id: str | None = None,
+    ) -> dict[str, Any]:
+        if not self.dynamic_core_enabled:
+            return {"enabled": False, "restored": False, "reason": "dynamic_core_disabled"}
+        result = self.dynamic_core.restore_dynamic_core_snapshot(
+            snapshot,
+            persist=persist,
+            intervention_id=intervention_id,
+        )
+        self._restore_dynamic_core_state()
+        self.state.workspace = {
+            **self.state.workspace,
+            "experience_dynamics_intervention": result,
+        }
+        if persist:
+            self.store.save(self.state)
+        return result
+
     def experience_dynamics_state(self) -> dict[str, Any]:
         if not self.dynamic_core_enabled:
             return {"experience_dynamics_enabled": False}
