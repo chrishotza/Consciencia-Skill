@@ -15,7 +15,7 @@ def run() -> None:
                 "response": "initialize",
                 "self_model": {
                     "homeostatic_targets": {"energy": 0.8},
-                    "homeostatic_adaptation": {
+                    "homeostatic_target_adaptation": {
                         "enabled": True,
                         "min_samples": 3,
                         "error_threshold": 0.25,

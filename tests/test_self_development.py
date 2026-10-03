@@ -18,7 +18,7 @@ def _configured_runtime(tmp_path):
             "response": "initialize adaptive target",
             "self_model": {
                 "homeostatic_targets": {"energy": 0.8},
-                "homeostatic_adaptation": {
+                "homeostatic_target_adaptation": {
                     "enabled": True,
                     "min_samples": 3,
                     "error_threshold": 0.25,
@@ -69,7 +69,7 @@ def test_adaptive_target_persists_across_restart(tmp_path):
 
 def test_adaptive_target_is_bounded_per_update(tmp_path):
     runtime = _configured_runtime(tmp_path)
-    runtime.state.self_model["homeostatic_adaptation"]["max_step"] = 0.02
+    runtime.state.self_model["homeostatic_target_adaptation"]["max_step"] = 0.02
 
     for index in range(3):
         _complete_observed_action(runtime, 0.0, f"b{index + 1}")
