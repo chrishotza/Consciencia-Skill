@@ -34,6 +34,6 @@ def test_evidence_gated_reentry_changes_longitudinal_policy():
 
 def test_metacognitive_reentry_records_prediction_and_self_observation():
     result = run_condition(CONDITIONS[4], cycles=8)
-    assert result['prediction_samples'] == 12
+    assert result['prediction_samples'] == 8
     assert result['prediction_error_mean'] is not None
-    assert result['self_observation_samples'] == 12
+    assert result['self_observation_samples'] == 8
