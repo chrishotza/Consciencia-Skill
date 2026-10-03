@@ -1198,18 +1198,22 @@ class ConsciousRuntime:
         if frame.get("self_model") is not None:
             incoming_self_model = dict(frame["self_model"])
             previous_self_model = self.state.self_model
-            self.state.self_model = incoming_self_model
-            for runtime_key in (
-                "learned_self_state",
-                "latent_tendencies",
-            ):
+            merged_self_model = dict(previous_self_model)
+
+            # A host frame is a delta unless it explicitly replaces a value.
+            # Preserve persistent self structures that the host did not touch.
+            for key, value in incoming_self_model.items():
                 if (
-                    runtime_key not in incoming_self_model
-                    and runtime_key in previous_self_model
+                    isinstance(value, Mapping)
+                    and isinstance(merged_self_model.get(key), Mapping)
                 ):
-                    self.state.self_model[runtime_key] = previous_self_model[
-                        runtime_key
-                    ]
+                    nested = dict(merged_self_model[key])
+                    nested.update(dict(value))
+                    merged_self_model[key] = nested
+                else:
+                    merged_self_model[str(key)] = value
+
+            self.state.self_model = merged_self_model
 
         if frame.get("workspace") is not None:
             self.state.workspace = dict(frame["workspace"])
