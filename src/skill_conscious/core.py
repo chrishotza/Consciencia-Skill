@@ -22,6 +22,7 @@ DEFAULT_TRAJECTORY_WEIGHTS: dict[str, float] = {
     "salience": 0.25,
     "self_dissonance": -0.5,
     "latent_pattern": 0.5,
+    "dissonance_resolution": 1.0,
 }
 
 
@@ -418,6 +419,7 @@ class ConsciousRuntime:
                     "salience": salience,
                     "self_dissonance": self_dissonance,
                     "latent_pattern": latent_score,
+                    "dissonance_resolution": self_dissonance,
                 },
             })
         return candidates
