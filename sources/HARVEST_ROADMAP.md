@@ -193,6 +193,20 @@ Every branch must eventually answer:
 - Does it remain causal under restart?
 - Does it alter future self-organization?
 
+## Branch 12 — Depth psychology and intentional self-transformation
+
+- C. G. Jung: ego / Self, shadow, complexes, archetypes, active imagination, individuation, synchronicity.
+- Joe Dispenza-associated empirical work: meditation, reconceptualization, intention, coherence, HRV, neural and molecular changes, group synchronization.
+- Contemporary cognitive and computational reformulations of archetypal or latent-pattern models.
+
+Deliverable:
+
+source doctrine → latent/self structure → executable mechanism → ablation → longitudinal test.
+
+Boundary:
+
+Do not treat Jungian metaphysics or Dispenza's broader metaphysical claims as established physical mechanisms.
+
 ## Final atlas objective
 
 The end state is:
