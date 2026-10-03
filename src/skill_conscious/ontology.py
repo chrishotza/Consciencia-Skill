@@ -22,6 +22,7 @@ PRIMITIVES = (
     "coherence",
     "topology",
     "attractor",
+    "regime",
     "possibility_space",
     "trajectory_selection",
     "latent_patterns",
