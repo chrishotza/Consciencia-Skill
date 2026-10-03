@@ -96,3 +96,71 @@ def test_adapter_integrates_with_host_loop_without_llm_owning_selection(tmp_path
     assert result["action_executed"] is True
     assert result["selected_trajectory"]["id"] == "preserve_continuity"
     assert len(prompts) == 2
+
+
+def test_controlled_candidate_field_is_exposed_to_provider_prompt(tmp_path):
+    prompts: list[str] = []
+
+    def complete(prompt: str):
+        prompts.append(prompt)
+        return {"response": "ok"}
+
+    candidates = [
+        {
+            "id": "preserve_continuity",
+            "signals": {"continuity": 1.0, "learning": 0.0},
+        },
+        {
+            "id": "learn",
+            "signals": {"continuity": 0.0, "learning": 1.0},
+        },
+    ]
+    runtime = ConsciousRuntime(
+        identity="controlled-prompt-test",
+        state_path=tmp_path / "state.json",
+    )
+    adapter = ProviderNeutralLLMAdapter(
+        complete,
+        fixed_candidate_futures=candidates,
+    )
+
+    prompt = runtime.prepare(
+        "controlled world",
+        candidate_futures=candidates,
+    )
+    frame = adapter(prompt)
+
+    assert '"id": "preserve_continuity"' in prompts[0]
+    assert '"id": "learn"' in prompts[0]
+    assert frame["candidate_futures"] == candidates
+
+
+def test_controlled_candidate_field_is_exposed_on_consequence_prompt(tmp_path):
+    prompts: list[str] = []
+
+    def complete(prompt: str):
+        prompts.append(prompt)
+        return {"response": "ok"}
+
+    candidates = [
+        {"id": "preserve_continuity", "signals": {"continuity": 1.0}},
+        {"id": "learn", "signals": {"learning": 1.0}},
+    ]
+    runtime = ConsciousRuntime(
+        identity="controlled-consequence-test",
+        state_path=tmp_path / "state.json",
+    )
+    adapter = ProviderNeutralLLMAdapter(
+        complete,
+        fixed_candidate_futures=candidates,
+    )
+
+    prompt = runtime.prepare_consequence(
+        "preserve_continuity",
+        {"status": "success", "result": "stable"},
+        candidate_futures=candidates,
+    )
+    adapter(prompt)
+
+    assert '"id": "preserve_continuity"' in prompts[0]
+    assert '"id": "learn"' in prompts[0]
