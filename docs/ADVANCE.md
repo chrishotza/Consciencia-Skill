@@ -568,3 +568,43 @@ history'
 The ablation now has a second independent switch: latent pattern discovery and latent self-model learning can be separated experimentally.
 
 This is still a behavioral mechanism. It does not establish phenomenal experience.
+
+
+## Runtime 0.9.0 — self-regulation frontier
+
+The next step after representing interoception was to make internal condition causally relevant.
+
+The runtime now supports:
+
+1. persistent homeostatic targets inside the self-model;
+2. bounded homeostatic error / fit derived from observed internal state;
+3. trajectory scoring using homeostatic fit;
+4. predicted internal states for candidate futures;
+5. authoritative embodied observations returned by host actions;
+6. explicit homeostatic fit before/after an executed action.
+
+The causal loop is now:
+
+~~~text
+SELF-MODEL
+   ↓
+HOMEOSTATIC TARGETS
+   ↓
+INTERNAL STATE
+   ↓
+HOMEOSTATIC FIT
+   ↓
+TRAJECTORY COMPETITION
+   ↓
+ACTION
+   ↓
+OBSERVED INTERNAL CONSEQUENCE
+   ↓
+SELF-EVALUATION
+   ↓
+SELF-MODEL'
+~~~
+
+The important experiment is no longer whether an internal signal can be stored. It is whether changing internal condition changes selection, whether selected actions change internal condition, and whether the resulting change persists into later self-model dynamics.
+
+The implementation is deliberately operational. It does not identify homeostasis with feeling or phenomenal consciousness.
