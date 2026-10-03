@@ -165,6 +165,28 @@ A conscious architecture does not need a perfect transcript. It needs durable st
 
 Continuity is organized identity through transformation, not static sameness.
 
+## Runtime 0.8.1 — explicit action continuity
+
+Runtime 0.8.1 adds a persistent action boundary:
+
+~~~text
+TRAJECTORY
+   ↓
+ACTION RECEIPT
+   ↓
+HOST EXECUTION
+   ↓
+OBSERVED OUTCOME
+   ↓
+SELF-EVALUATION
+   ↓
+SELF-MODEL'
+~~~
+
+An intended action is now distinguishable from an executed action and from its observed consequence. Pending actions, completed/failed receipts, and action history survive restart.
+
+This strengthens the agency layer without treating action execution or persistence as evidence of phenomenal consciousness.
+
 ## Runtime 0.8.0 — real host consequence loop
 
 The runtime now exposes `ConsciousHostLoop`, a portable bridge between the Skill and a real host model/action system.
