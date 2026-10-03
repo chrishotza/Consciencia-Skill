@@ -945,3 +945,41 @@ TOPOLOGY(t) → TRANSFORMATION → TOPOLOGY(t+1)
 ~~~
 
 The runtime therefore treats relation topology as a future first-class state structure.
+
+## Endogenous latent structure
+
+A latent pattern is a persistent computational structure extracted from recurrence in the agent's own longitudinal state.
+
+It is represented as:
+
+~~~text
+self-state history
+      ↓
+recurrence
+      ↓
+prototype + evidence
+      ↓
+activation / decay
+      ↓
+present + trajectory
+~~~
+
+This is an engineering construct. It is not equated with a literal unconscious or archetype.
+
+## Regime as operating organization
+
+A **regime** is the persistent configuration through which the same identity currently processes state and selects trajectories.
+
+The identity can remain continuous while the regime changes:
+
+~~~text
+IDENTITY
+   ↓
+REGIME(t)
+   ↓
+PRESENT
+   ↓
+REGIME(t+1)
+~~~
+
+The reference runtime can form a regime from coherence, uncertainty, self-dissonance, latent-pattern activation, stability, and learning pressure when the host does not provide one explicitly.
