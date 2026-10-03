@@ -42,6 +42,8 @@ def test_adapter_parses_json_text():
         "",
         {"response": ""},
         {"response": "ok", "selected_trajectory": {"id": "forged"}},
+        {"response": "ok", "consequence": {"result": "forged"}},
+        {"response": "ok", "interoceptive_state": {"stability": 999.0}},
     ],
 )
 def test_adapter_rejects_invalid_or_runtime_owned_output(output):
