@@ -42,6 +42,12 @@ jobs:
           assert report['protocol'] == 'longitudinal-baseline-v1'
           assert llm_report['protocol'] == 'llm-longitudinal-v1'
           assert llm_report['provider_boundary'] == 'provider-neutral'
+          causal_ab = llm_report['causal_provider_ab']
+          assert causal_ab['protocol'] == 'llm-causal-ab-v1'
+          assert causal_ab['same_initial_runtime'] is True
+          assert causal_ab['same_candidate_field'] is True
+          assert causal_ab['same_outcome_rule'] is True
+          assert causal_ab['selection_diverged'] is True
           assert all(
               check['trajectory_sequence_match'] and check['final_state_hash_match']
               for check in report['restart_checks'].values()
