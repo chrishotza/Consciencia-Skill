@@ -241,6 +241,8 @@ class ConsciousRuntime:
         # Existing patterns remain persistent, but their activation depends on
         # similarity to the current self-state and decays when not reactivated.
         for key, pattern in list(self.state.latent_patterns.items()):
+            if pattern.get("source") != "endogenous":
+                continue
             prototype = pattern.get("prototype", {})
             similarity = self._numeric_similarity(current, prototype)
             activation = pattern.get("activation", 0.0)
@@ -872,8 +874,8 @@ class ConsciousRuntime:
             "revision": self.state.revision,
             "present": frame,
             "self_access": {
-                "self_state": self.state.self_state,
-                "self_model": self.state.self_model,
+                "self_state": dict(self.state.self_state),
+                "self_model": dict(self.state.self_model),
             },
             "causal_reentry": (
                 "self_model -> trajectory -> action -> next_state -> self_model"
