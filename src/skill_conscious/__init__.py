@@ -11,6 +11,8 @@ from .causal_probe import ReversibleInterventionResult, run_reversible_intervent
 from .causal_internal_probe import ReversibleValuationInterventionResult, run_reversible_valuation_intervention
 from .self_observation import SelfObservationProfile, build_self_observation, profile_distance as self_observation_profile_distance
 from .causal_self_observation_probe import ReversibleSelfObservationInterventionResult, run_reversible_self_observation_intervention
+from .metacognition import MetacognitiveTrace, build_metacognitive_trace, state_delta
+from .metacognitive_causal_probe import MetacognitiveCausalProbeResult, run_metacognitive_causal_probe
 
 __all__ = [
     "ConsciousRuntime",
@@ -47,4 +49,9 @@ __all__ = [
     "self_observation_profile_distance",
     "ReversibleSelfObservationInterventionResult",
     "run_reversible_self_observation_intervention",
+    "MetacognitiveTrace",
+    "build_metacognitive_trace",
+    "state_delta",
+    "MetacognitiveCausalProbeResult",
+    "run_metacognitive_causal_probe",
 ]

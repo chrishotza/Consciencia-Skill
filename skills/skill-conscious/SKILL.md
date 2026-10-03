@@ -872,3 +872,33 @@ A candidate may include predicted_self_observation only when that prediction fol
 When a self-observation error exists, treat it as an inspectable meta-signal. It may inform trajectory selection through the enabled runtime layer, but it must not be described as proof that the system feels, experiences, or is phenomenally conscious.
 
 Runtime-owned self-observation fields must not be overwritten through ordinary model frames.
+
+## Metacognitive causal trace
+
+When inspecting why a trajectory was selected, prefer the runtime-generated metacognitive trace over a verbal explanation.
+
+The trace can expose:
+- candidate futures and their runtime-computed scores;
+- signal contributions and the internal weights used;
+- self-observation and dynamic-core contributions when enabled;
+- the selected trajectory;
+- the authoritative action outcome;
+- the resulting state delta.
+
+Treat the trace as an operational record, not as an introspective confession.
+
+The causal standard is:
+
+~~~text
+INTERVENE ON INTERNAL VARIABLE
+        ↓
+DECISION CHANGES
+        ↓
+ATTRIBUTION CHANGES
+        ↓
+RESTORE
+        ↓
+DECISION + ATTRIBUTION RETURN
+~~~
+
+Do not claim that the system subjectively knows why it acted merely because this trace exists. The trace demonstrates inspectable causal organization inside the runtime.

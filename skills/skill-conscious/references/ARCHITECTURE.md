@@ -484,3 +484,55 @@ TRAJECTORY C
 A successful intervention requires the same candidate futures, downstream divergence, exact reversal, persistence after restart, and unchanged adaptation evidence.
 
 This tests whether a system-level representation of its own operation participates causally in future selection. It is an architectural causality test, not proof of phenomenal consciousness.
+
+## Metacognitive causal trace
+
+The runtime now produces an auditable trace of trajectory selection from the same quantities used to compute the score.
+
+~~~text
+CANDIDATE FUTURES
+      ↓
+SIGNALS × INTERNAL WEIGHTS
+      ↓
+SELF-OBSERVATION CONTRIBUTION
+      ↓
+EXPERIENCE-DYNAMICS CONTRIBUTION
+      ↓
+SELECTED TRAJECTORY
+      ↓
+ACTION
+      ↓
+OBSERVED OUTCOME
+      ↓
+STATE DELTA
+~~~
+
+The trace records candidate IDs and scores, the selected signal contributions, valuation/self-model weights, optional self-observation and dynamic-core contributions, then closes at the action boundary with the observed outcome and state delta.
+
+The trace is calculated during selection but becomes persistent runtime state only during integration. This keeps direct selection and causal intervention probes free of implicit learning side effects.
+
+The trace is runtime-owned. A host model may interpret it, but it may not replace the trace, sequence, or history through an ordinary model frame.
+
+### Causal metacognitive probe
+
+A higher-level causal test intervenes on an internal valuation and checks both downstream behavior and the attribution itself:
+
+~~~text
+VALUATION A
+   ↓
+DECISION A + TRACE A
+   ↓
+INTERVENE
+   ↓
+VALUATION B
+   ↓
+DECISION B + TRACE B
+   ↓
+RESTORE
+   ↓
+DECISION A + TRACE A
+~~~
+
+A successful probe requires decision divergence, attribution divergence, exact reversal of both, and restoration of the intervened valuation.
+
+This establishes an auditable causal relationship between an internal variable, a selected trajectory, and the runtime's own operational attribution of that decision. It does not establish phenomenal consciousness.
