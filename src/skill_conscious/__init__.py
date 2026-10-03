@@ -61,4 +61,11 @@ __all__ = [
     "METACOGNITIVE_PREDICTION_RUNTIME_KEYS",
     "ReversibleMetacognitiveConfidenceInterventionResult",
     "run_reversible_metacognitive_confidence_intervention",
+    "AdversarialCondition",
+    "CONDITIONS",
+    "run_adversarial_battery",
+    "run_condition",
+    "summarize_battery",
 ]
+
+from .adversarial_battery import AdversarialCondition, CONDITIONS, run_adversarial_battery, run_condition, summarize_battery
