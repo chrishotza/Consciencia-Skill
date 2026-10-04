@@ -89,11 +89,10 @@ def run_reversible_metacognitive_confidence_intervention(
 
     def candidate_contributions(value: Mapping[str, Any]) -> dict[str, float]:
         trace = dict(value.get("metacognition", {}))
-        candidates = dict(trace.get("candidate_scores", {}))
-        breakdown = dict(trace.get("prediction_candidate_contributions", {}))
+        scores = dict(trace.get("candidate_scores", {}))
         return {
             str(key): float(amount)
-            for key, amount in breakdown.items()
+            for key, amount in scores.items()
             if isinstance(amount, (int, float)) and not isinstance(amount, bool)
         }
 
@@ -109,6 +108,9 @@ def run_reversible_metacognitive_confidence_intervention(
         baseline_contribution=baseline_contribution,
         intervention_contribution=intervention_contribution,
         restored_contribution=restored_contribution,
+        baseline_candidate_contributions=baseline_candidate_contributions,
+        intervention_candidate_contributions=intervention_candidate_contributions,
+        restored_candidate_contributions=restored_candidate_contributions,
         downstream_divergence=(
             str(baseline.get("id", "")) != str(intervention.get("id", ""))
         ),
