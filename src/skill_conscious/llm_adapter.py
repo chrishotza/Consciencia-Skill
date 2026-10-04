@@ -119,6 +119,7 @@ class ProviderNeutralLLMAdapter:
                     "metacognitive_prediction_sequence",
                     "metacognitive_prediction_evidence",
                     "metacognitive_prediction_history",
+                    "metacognitive_uncertainty",
                     "trajectory_priority_adaptation_evidence",
                     "trajectory_priority_adaptation_history",
                     "trajectory_priority_adaptation_sequence",
