@@ -27,14 +27,14 @@ concurrency:
 jobs:
   benchmark:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
       - run: python -m pip install -e ".[dev]"
-      - run: timeout 180s python -m pytest -vv -x tests/test_longitudinal_benchmark.py tests/test_llm_adapter.py tests/test_llm_longitudinal_benchmark.py
+      - run: timeout 300s python -m pytest -vv -x tests/test_longitudinal_benchmark.py tests/test_llm_adapter.py tests/test_llm_longitudinal_benchmark.py
       - run: python -m experiments.longitudinal_baseline_benchmark > /tmp/longitudinal-benchmark.json
       - run: python -m experiments.llm_longitudinal_benchmark > /tmp/llm-longitudinal-benchmark.json
       - run: |

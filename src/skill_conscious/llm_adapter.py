@@ -107,6 +107,30 @@ class ProviderNeutralLLMAdapter:
                 f"LLM cannot directly write runtime-owned keys: {joined}"
             )
 
+        self_model = frame.get("self_model")
+        if isinstance(self_model, Mapping):
+            forbidden_self_model = sorted(
+                key
+                for key in self_model
+                if str(key) in {
+                    "metacognitive_prediction_error",
+                    "metacognitive_prediction_accuracy",
+                    "metacognitive_prediction_expected_accuracy",
+                    "metacognitive_prediction_sequence",
+                    "metacognitive_prediction_evidence",
+                    "metacognitive_prediction_history",
+                    "trajectory_priority_adaptation_evidence",
+                    "trajectory_priority_adaptation_history",
+                    "trajectory_priority_adaptation_sequence",
+                }
+            )
+            if forbidden_self_model:
+                joined = ", ".join(forbidden_self_model)
+                raise LLMProtocolError(
+                    "LLM cannot directly write runtime-owned self_model keys: "
+                    + joined
+                )
+
         response = frame.get("response")
         if not isinstance(response, str) or not response.strip():
             raise LLMProtocolError(

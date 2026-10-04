@@ -15,6 +15,9 @@ class ReversibleMetacognitiveConfidenceInterventionResult:
     baseline_contribution: float
     intervention_contribution: float
     restored_contribution: float
+    baseline_candidate_contributions: dict[str, float]
+    intervention_candidate_contributions: dict[str, float]
+    restored_candidate_contributions: dict[str, float]
     downstream_divergence: bool
     reversible: bool
     expected_accuracy_restored: bool
@@ -28,6 +31,9 @@ class ReversibleMetacognitiveConfidenceInterventionResult:
             "baseline_contribution": self.baseline_contribution,
             "intervention_contribution": self.intervention_contribution,
             "restored_contribution": self.restored_contribution,
+            "baseline_candidate_contributions": self.baseline_candidate_contributions,
+            "intervention_candidate_contributions": self.intervention_candidate_contributions,
+            "restored_candidate_contributions": self.restored_candidate_contributions,
             "downstream_divergence": self.downstream_divergence,
             "reversible": self.reversible,
             "expected_accuracy_restored": self.expected_accuracy_restored,
@@ -81,6 +87,19 @@ def run_reversible_metacognitive_confidence_intervention(
         )
     )
 
+    def candidate_contributions(value: Mapping[str, Any]) -> dict[str, float]:
+        trace = dict(value.get("metacognition", {}))
+        scores = dict(trace.get("candidate_scores", {}))
+        return {
+            str(key): float(amount)
+            for key, amount in scores.items()
+            if isinstance(amount, (int, float)) and not isinstance(amount, bool)
+        }
+
+    baseline_candidate_contributions = candidate_contributions(baseline)
+    intervention_candidate_contributions = candidate_contributions(intervention)
+    restored_candidate_contributions = candidate_contributions(restored)
+
     after = runtime.snapshot_metacognitive_prediction()
     return ReversibleMetacognitiveConfidenceInterventionResult(
         baseline_selection=str(baseline.get("id", "")),
@@ -89,6 +108,9 @@ def run_reversible_metacognitive_confidence_intervention(
         baseline_contribution=baseline_contribution,
         intervention_contribution=intervention_contribution,
         restored_contribution=restored_contribution,
+        baseline_candidate_contributions=baseline_candidate_contributions,
+        intervention_candidate_contributions=intervention_candidate_contributions,
+        restored_candidate_contributions=restored_candidate_contributions,
         downstream_divergence=(
             str(baseline.get("id", "")) != str(intervention.get("id", ""))
         ),

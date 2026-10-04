@@ -2335,6 +2335,74 @@ class ConsciousRuntime:
             "updates": updates,
         }
 
+    def _metacognitive_plasticity_context(
+        self,
+        trajectory_id: str | None = None,
+    ) -> dict[str, Any]:
+        """Derive a bounded learning multiplier from the runtime's own predictive trust."""
+        model = self.state.self_model
+        raw_expected = model.get("metacognitive_prediction_expected_accuracy")
+        if not isinstance(raw_expected, (int, float)) or isinstance(raw_expected, bool):
+            return {
+                "enabled": False,
+                "expected_accuracy": 0.5,
+                "reported_confidence": None,
+                "trust_adjusted_confidence": 0.5,
+                "factor": 1.0,
+                "source": "disabled",
+            }
+
+        expected = max(0.0, min(1.0, float(raw_expected)))
+        trajectory: Mapping[str, Any] | None = None
+        target = str(trajectory_id).strip() if trajectory_id is not None else ""
+
+        for receipt in reversed(self.state.action_history):
+            if not isinstance(receipt, Mapping):
+                continue
+            candidate = receipt.get("trajectory")
+            if not isinstance(candidate, Mapping):
+                continue
+            candidate_id = str(candidate.get("id", "")).strip()
+            if target and candidate_id == target:
+                trajectory = candidate
+                break
+
+        if trajectory is None and isinstance(self.state.selected_trajectory, Mapping):
+            selected_id = str(self.state.selected_trajectory.get("id", "")).strip()
+            if not target or selected_id == target:
+                trajectory = self.state.selected_trajectory
+
+        reported_raw = (
+            trajectory.get("predicted_outcome_confidence")
+            if isinstance(trajectory, Mapping)
+            else None
+        )
+        reported = (
+            max(0.0, min(1.0, float(reported_raw)))
+            if isinstance(reported_raw, (int, float)) and not isinstance(reported_raw, bool)
+            else None
+        )
+
+        if reported is None:
+            trust_adjusted = expected
+            source = "expected_accuracy"
+        else:
+            trust_adjusted = 0.5 + (reported - 0.5) * (2.0 * expected - 1.0)
+            trust_adjusted = max(0.0, min(1.0, trust_adjusted))
+            source = "trajectory_confidence"
+
+        # 0.5 trust => neutral factor 1.0; bounded so metacognition
+        # modulates plasticity without dominating consequence evidence.
+        factor = max(0.5, min(1.5, 0.5 + trust_adjusted))
+        return {
+            "enabled": True,
+            "expected_accuracy": round(expected, 6),
+            "reported_confidence": None if reported is None else round(reported, 6),
+            "trust_adjusted_confidence": round(trust_adjusted, 6),
+            "factor": round(factor, 6),
+            "source": source,
+        }
+
     def trajectory_priority_adaptation_policy(self) -> dict[str, Any]:
         configured = self.state.self_model.get(
             "trajectory_priority_adaptation",
@@ -2349,6 +2417,7 @@ class ConsciousRuntime:
         evaluation: Mapping[str, Any] | None,
         *,
         evidence_id: str | None = None,
+        trajectory_id: str | None = None,
     ) -> dict[str, Any]:
         """Accumulate consequence-evaluation evidence and update one trajectory weight."""
         policy = self.trajectory_priority_adaptation_policy()
@@ -2489,6 +2558,9 @@ class ConsciousRuntime:
             gate["ready"]
             and confidence >= confidence_threshold
         )
+        metacognitive_plasticity = self._metacognitive_plasticity_context(
+            trajectory_id=trajectory_id,
+        )
 
         event_evidence = {
             "sample_count": count,
@@ -2501,6 +2573,7 @@ class ConsciousRuntime:
             "reversal": gate["reversal"],
             "effective_utility_threshold": round(gate["effective_threshold"], 6),
             "effective_min_samples": gate["effective_min_samples"],
+            "metacognitive_plasticity": dict(metacognitive_plasticity),
             "evidence_ids": evidence_ids[-min_samples:],
         }
 
@@ -2532,9 +2605,11 @@ class ConsciousRuntime:
         ):
             current_weight = 0.0
 
+        base_delta = learning_rate * mean_utility
+        effective_delta = base_delta * float(metacognitive_plasticity["factor"])
         delta = max(
             -max_step,
-            min(max_step, learning_rate * mean_utility),
+            min(max_step, effective_delta),
         )
         proposed = float(current_weight) + delta
 
@@ -2614,9 +2689,14 @@ class ConsciousRuntime:
             },
             "constraints": {
                 "learning_rate": learning_rate,
+                "effective_learning_rate": round(
+                    learning_rate * float(metacognitive_plasticity["factor"]), 6
+                ),
                 "max_step": max_step,
                 "cooldown": cooldown,
             },
+            "metacognitive_plasticity": dict(metacognitive_plasticity),
+            "base_delta": round(base_delta, 6),
             "ignored_direct_weight_delta": evaluation.get("weight_delta"),
         }
         history.append(update)
@@ -3688,10 +3768,17 @@ class ConsciousRuntime:
                     old = weights.get(signal, 0.0)
                     if not isinstance(old, (int, float)) or isinstance(old, bool):
                         old = 0.0
+                    metacognitive_plasticity = self._metacognitive_plasticity_context(
+                        trajectory_id=trajectory,
+                    )
+                    effective_delta = float(delta) * float(metacognitive_plasticity["factor"])
                     weights[signal] = round(
-                        max(-3.0, min(3.0, float(old) + float(delta))),
+                        max(-3.0, min(3.0, float(old) + effective_delta)),
                         6,
                     )
+                    result["metacognitive_plasticity"] = dict(metacognitive_plasticity)
+                    result["metacognitive_plasticity"]["base_delta"] = round(float(delta), 6)
+                    result["metacognitive_plasticity"]["effective_delta"] = round(effective_delta, 6)
                     model["trajectory_weights"] = weights
 
         # Commit the ordinary consequence feedback first. The evidence-gated
@@ -3702,6 +3789,7 @@ class ConsciousRuntime:
         if priority_enabled and isinstance(evaluation, Mapping):
             result["priority_adaptation"] = self.adapt_trajectory_priority_from_evidence(
                 evaluation,
+                trajectory_id=trajectory,
                 evidence_id=(
                     str(self.state.action_history[-1].get("action_id"))
                     if self.state.action_history
@@ -3719,13 +3807,22 @@ class ConsciousRuntime:
             "last_self_evaluation": dict(evaluation or {}),
         }
 
-        self.state.transformation_log.append({
+        feedback_event = {
             "revision": self.state.revision,
             "type": "consequence_feedback",
             "trajectory": trajectory,
             "outcome": dict(outcome),
             "evaluation": dict(evaluation or {}),
-        })
+        }
+        if "metacognitive_plasticity" in result:
+            feedback_event["metacognitive_plasticity"] = dict(result["metacognitive_plasticity"])
+        if "priority_adaptation" in result:
+            priority = result["priority_adaptation"]
+            if isinstance(priority, Mapping) and isinstance(priority.get("update"), Mapping):
+                feedback_event["metacognitive_plasticity"] = dict(
+                    priority["update"].get("metacognitive_plasticity", {})
+                )
+        self.state.transformation_log.append(feedback_event)
         self.state.transformation_log = (
             self.state.transformation_log[-self.transformation_limit :]
         )

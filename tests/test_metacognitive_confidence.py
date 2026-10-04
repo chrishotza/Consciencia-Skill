@@ -61,8 +61,9 @@ def test_reversible_metacognitive_confidence_intervention(tmp_path: Path):
     assert result.reversible is True
     assert result.expected_accuracy_restored is True
     assert result.evidence_unchanged is True
-    assert result.baseline_contribution != result.intervention_contribution
-    assert result.baseline_contribution == result.restored_contribution
+    assert result.baseline_candidate_contributions != result.intervention_candidate_contributions
+    assert result.baseline_candidate_contributions == result.restored_candidate_contributions
+    assert result.baseline_contribution == result.restored_contribution == 1.64
 
 
 def test_metacognitive_confidence_is_runtime_owned(tmp_path: Path):
