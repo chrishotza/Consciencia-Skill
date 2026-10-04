@@ -47,6 +47,7 @@ def test_adapter_parses_json_text():
         {"response": "ok", "self_model": {"metacognitive_prediction_expected_accuracy": 0.0}},
         {"response": "ok", "self_model": {"metacognitive_prediction_sequence": 9999}},
         {"response": "ok", "self_model": {"metacognitive_prediction_evidence": {}}},
+            {"response": "ok", "self_model": {"metacognitive_uncertainty": 1.0}},
     ],
 )
 def test_adapter_rejects_invalid_or_runtime_owned_output(output):
