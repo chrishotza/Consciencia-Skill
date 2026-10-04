@@ -3761,6 +3761,19 @@ class ConsciousRuntime:
         self.state.history = self.state.history[-self.history_limit :]
 
         self.refresh_affective_state()
+        expected_accuracy = self.state.self_model.get(
+            "metacognitive_prediction_expected_accuracy",
+        )
+        if isinstance(expected_accuracy, (int, float)) and not isinstance(
+            expected_accuracy, bool
+        ):
+            self.state.self_model = {
+                **self.state.self_model,
+                "metacognitive_uncertainty": round(
+                    1.0 - max(0.0, min(1.0, float(expected_accuracy))),
+                    6,
+                ),
+            }
         self.store.save(self.state)
         return response
 
