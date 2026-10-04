@@ -25,7 +25,7 @@ class MetacognitiveTrace:
     experience_dynamics: dict[str, float]
     metacognitive_prediction: dict[str, float]
     metacognitive_uncertainty: dict[str, float]
-    valuation_weights: dict[str, float>
+    valuation_weights: dict[str, float]
     predicted_outcome: dict[str, Any] | None = None
     predicted_state_delta: dict[str, Any] | None = None
     prediction_error: float | None = None
