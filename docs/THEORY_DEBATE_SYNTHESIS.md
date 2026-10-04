@@ -227,3 +227,70 @@ Implementation:
 - experiments/theory_adversarial_battery.py
 
 The next methodological improvement should replace the toy mechanism controls with richer matched baselines and preregistered metrics before drawing stronger conclusions.
+
+## 2026 corpus extension: perspective and experience geometry
+
+The research corpus now adds a second architectural axis to persistent causal self-reference: the geometry of the states through which the system moves.
+
+The key methodological shift is:
+
+OLD: consciousness approximately one scalar
+NEW: state is a multidimensional point; transition is a measurable distance; trajectory is a path through state space.
+
+This is motivated primarily by Enzo Tagliazucchi's treatment of conscious states as a family of states that can be compared using multidimensional representations and distances rather than a privileged scalar reference state.
+
+Repository implementation:
+- src/skill_conscious/experience_geometry.py
+- tests/test_experience_geometry.py
+- docs/EXPERIENCE_GEOMETRY.md
+- sources/CONSCIOUSNESS_CORPUS_2026.md
+
+The experience geometry currently combines operational features including valence, coherence, self-dissonance, salience, metacognitive uncertainty, prediction error, self-observation error and dynamic/field features.
+
+The purpose is not to infer phenomenal consciousness. The purpose is to make perspective, transition and recurrence experimentally measurable.
+
+New research question:
+> Does persistent causal self-reference alter not only which action is selected, but the geometry of the internal state-space through which the system subsequently moves?
+
+A stronger future result would therefore require both:
+
+SELF intervention
+→ different future selection
+→ different experience-space trajectory
+→ reversible restoration
+
+## Corpus hierarchy
+
+The expanded corpus is deliberately stratified.
+
+Experimental anchor: neuroscience, computational neuroscience and consciousness work, especially Tagliazucchi and other experimentally testable models.
+
+Computationally useful speculative source: Grinberg's Syntergic Theory, treated as a source of motifs such as field coherence and multidimensional organization rather than established physics.
+
+Phenomenological methods: Krishnamurti, Gurdjieff and Tolle, translated into testable ideas about observation, self-remembering, attention and present-centered processing.
+
+Conceptual possibility-space source: Vadim Zeland, useful for vocabulary around variants and attention but not treated as quantum physics.
+
+Exploratory meditation source: Joe Dispenza, useful only where a claim can be isolated and experimentally tested, with explicit methodological caveats.
+
+This hierarchy prevents the project from flattening fundamentally different kinds of evidence into one undifferentiated consciousness theory.
+
+## Immediate architectural frontier
+
+The next high-priority layer after experience geometry is a conscious-interface / bandwidth bottleneck:
+
+FULL RUNTIME STATE
+↓
+ATTENTION / SELECTION
+↓
+LIMITED PRESENT
+↓
+SELF-ACCESS
+↓
+REPORT / ACTION
+
+The scientific question is not whether a bottleneck sounds conscious.
+
+It is whether restricting the system's self-access to a controlled subset of otherwise identical internal information changes its causal trajectory, prediction quality, learning, and state-space dynamics.
+
+That gives the project another adversarial experiment rather than another philosophical assertion.
