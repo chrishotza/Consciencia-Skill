@@ -11,6 +11,11 @@ from typing import Any, Mapping
 
 from .ontology import CONSCIOUSNESS_DEFINITION
 from .experience_field import ExperienceFieldProfile
+from .experience_geometry import (
+    ExperienceState,
+    build_experience_state,
+    transition_record,
+)
 from .runtime_bridge import ExperienceDynamicsBridge, RUNTIME_OWNED_KEYS
 from .metacognition import (
     METACOGNITIVE_RUNTIME_KEYS,
@@ -1032,6 +1037,44 @@ class ConsciousRuntime:
 
         self._persist_metacognitive_trace(updated)
         return prediction_receipt
+
+    def snapshot_experience_geometry(self) -> dict[str, Any]:
+        current = build_experience_state(self.state.to_dict())
+        model = self.state.self_model
+        raw_history = model.get("experience_geometry_history", [])
+        history = (
+            [dict(item) for item in raw_history if isinstance(item, Mapping)]
+            if isinstance(raw_history, list)
+            else []
+        )
+        return {
+            "current": current.to_dict(),
+            "history": history,
+        }
+
+    def _record_experience_geometry_transition(
+        self,
+        before_snapshot: Mapping[str, Any],
+    ) -> dict[str, Any]:
+        previous = build_experience_state(before_snapshot)
+        current = build_experience_state(self.state.to_dict())
+        record = transition_record(
+            previous,
+            current,
+            revision=self.state.revision,
+        )
+        model = dict(self.state.self_model)
+        history = model.get("experience_geometry_history", [])
+        history = (
+            [dict(item) for item in history if isinstance(item, Mapping)]
+            if isinstance(history, list)
+            else []
+        )
+        history.append(record)
+        model["experience_geometry_current"] = current.to_dict()
+        model["experience_geometry_history"] = history[-self.history_limit :]
+        self.state.self_model = model
+        return record
 
     def experience_dynamics_state(self) -> dict[str, Any]:
         if not self.dynamic_core_enabled:
@@ -2951,6 +2994,7 @@ class ConsciousRuntime:
                 "fit": self.homeostatic_fit(),
             },
             "experience_dynamics": self.experience_dynamics_state(),
+            "experience_geometry": self.snapshot_experience_geometry(),
             "self_observation": self.snapshot_self_observation(),
             "metacognition": self.snapshot_metacognition(),
             "metacognitive_uncertainty": self.metacognitive_uncertainty(),
@@ -3378,6 +3422,9 @@ class ConsciousRuntime:
         }
         if self.self_observation_enabled:
             receipt["self_observation"] = self.observe_self(persist=False)
+        receipt["experience_geometry_transition"] = self._record_experience_geometry_transition(
+            action_before_snapshot,
+        )
         prediction_receipt = self._close_metacognitive_trace(
             receipt,
             outcome,
@@ -3470,6 +3517,8 @@ class ConsciousRuntime:
                 *METACOGNITIVE_RUNTIME_KEYS,
                 *METACOGNITIVE_PREDICTION_RUNTIME_KEYS,
                 "metacognitive_uncertainty",
+                "experience_geometry_current",
+                "experience_geometry_history",
             }
             # Once adaptive targets are enabled and initialized, the runtime owns
             # the target unless an experiment explicitly permits external changes.
@@ -3761,6 +3810,13 @@ class ConsciousRuntime:
         self.state.history = self.state.history[-self.history_limit :]
 
         self.refresh_affective_state()
+        experience_geometry_transition = self._record_experience_geometry_transition(
+            previous_snapshot,
+        )
+        self.state.workspace = {
+            **self.state.workspace,
+            "last_experience_geometry_transition": experience_geometry_transition,
+        }
         expected_accuracy = self.state.self_model.get(
             "metacognitive_prediction_expected_accuracy",
         )
