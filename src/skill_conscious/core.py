@@ -218,6 +218,7 @@ class ConsciousRuntime:
         self_observation_enabled: bool = False,
         self_observation_weight: float = 0.5,
         metacognitive_prediction_weight: float = 0.5,
+        metacognitive_uncertainty_weight: float = 0.5,
     ):
         self.identity = identity
         self.memory_limit = max(1, int(memory_limit))
@@ -232,6 +233,7 @@ class ConsciousRuntime:
         self.self_observation_enabled = bool(self_observation_enabled)
         self.self_observation_weight = float(self_observation_weight)
         self.metacognitive_prediction_weight = float(metacognitive_prediction_weight)
+        self.metacognitive_uncertainty_weight = float(metacognitive_uncertainty_weight)
         dynamic_path = (
             Path(dynamic_core_state_path)
             if dynamic_core_state_path is not None
@@ -848,7 +850,9 @@ class ConsciousRuntime:
         model["metacognitive_prediction_error"] = round(error, 6)
         model["metacognitive_prediction_accuracy"] = round(accuracy, 6)
         model["metacognitive_prediction_expected_accuracy"] = round(expected, 6)
+        model["metacognitive_uncertainty"] = round(1.0 - expected, 6)
         model["metacognitive_prediction_sequence"] = sequence
+        model["metacognitive_uncertainty"] = round(1.0 - expected, 6)
         self.state.self_model = model
 
         return {
@@ -877,6 +881,7 @@ class ConsciousRuntime:
         self.state.self_model = {
             **self.state.self_model,
             "metacognitive_prediction_expected_accuracy": sanitized,
+            "metacognitive_uncertainty": round(1.0 - sanitized, 6),
         }
         if persist:
             self.store.save(self.state)
@@ -905,6 +910,9 @@ class ConsciousRuntime:
             "metacognitive_prediction_error": snapshot.get("error", 0.0),
             "metacognitive_prediction_accuracy": snapshot.get("accuracy", 0.0),
             "metacognitive_prediction_expected_accuracy": expected,
+            "metacognitive_uncertainty": round(
+                1.0 - max(0.0, min(1.0, float(expected))), 6
+            ),
             "metacognitive_prediction_sequence": snapshot.get("sequence", 0),
             "metacognitive_prediction_evidence": snapshot.get("evidence", {}),
             "metacognitive_prediction_history": snapshot.get("history", []),
@@ -918,6 +926,37 @@ class ConsciousRuntime:
             "evidence_added": False,
         }
 
+    def metacognitive_uncertainty(self) -> float:
+        """Return the runtime-owned uncertainty implied by predictive self-trust."""
+        raw = self.state.self_model.get("metacognitive_prediction_expected_accuracy")
+        if not isinstance(raw, (int, float)) or isinstance(raw, bool):
+            return 0.5
+        return round(max(0.0, min(1.0, 1.0 - float(raw))), 6)
+
+    def _score_metacognitive_uncertainty_candidate(
+        self,
+        candidate: Mapping[str, Any],
+    ) -> tuple[float, dict[str, float]]:
+        value = candidate.get("epistemic_value", 0.0)
+        if not isinstance(value, (int, float)) or isinstance(value, bool):
+            return 0.0, {
+                "uncertainty": self.metacognitive_uncertainty(),
+                "epistemic_value": 0.0,
+                "weight": 0.0,
+                "fit": 0.0,
+            }
+
+        uncertainty = self.metacognitive_uncertainty()
+        epistemic_value = max(0.0, min(1.0, float(value)))
+        weight = max(0.0, float(self.metacognitive_uncertainty_weight))
+        contribution = round(weight * uncertainty * epistemic_value, 6)
+        return contribution, {
+            "uncertainty": uncertainty,
+            "epistemic_value": round(epistemic_value, 6),
+            "weight": round(weight, 6),
+            "fit": round(uncertainty * epistemic_value, 6),
+        }
+
     def snapshot_metacognition(self) -> dict[str, Any]:
         model = self.state.self_model
         raw_trace = model.get("metacognitive_trace", {})
@@ -929,6 +968,7 @@ class ConsciousRuntime:
             "enabled": True,
             "trace": trace,
             "prediction": self.snapshot_metacognitive_prediction(),
+            "uncertainty": self.metacognitive_uncertainty(),
             "sequence": int(sequence) if isinstance(sequence, (int, float)) and not isinstance(sequence, bool) else 0,
             "history": history,
         }
@@ -2913,6 +2953,7 @@ class ConsciousRuntime:
             "experience_dynamics": self.experience_dynamics_state(),
             "self_observation": self.snapshot_self_observation(),
             "metacognition": self.snapshot_metacognition(),
+            "metacognitive_uncertainty": self.metacognitive_uncertainty(),
             "temporal_state": self.state.temporal_state,
             "perspectives": self.state.perspectives,
             "transformation_log": self.state.transformation_log[-self.transformation_limit :],
@@ -2990,6 +3031,15 @@ class ConsciousRuntime:
             )
             score += self_observation_score
 
+        metacognitive_uncertainty_score = 0.0
+        metacognitive_uncertainty_diagnostics: dict[str, float] = {}
+        if "epistemic_value" in candidate:
+            (
+                metacognitive_uncertainty_score,
+                metacognitive_uncertainty_diagnostics,
+            ) = self._score_metacognitive_uncertainty_candidate(candidate)
+            score += metacognitive_uncertainty_score
+
         metacognitive_prediction_score = 0.0
         metacognitive_prediction_diagnostics: dict[str, float] = {}
         if isinstance(candidate.get("predicted_outcome_confidence"), (int, float)) and not isinstance(
@@ -3048,6 +3098,10 @@ class ConsciousRuntime:
             "metacognitive_prediction": {
                 **metacognitive_prediction_diagnostics,
                 "contribution": round(metacognitive_prediction_score, 6),
+            },
+            "metacognitive_uncertainty": {
+                **metacognitive_uncertainty_diagnostics,
+                "contribution": round(metacognitive_uncertainty_score, 6),
             },
         }
 
@@ -3415,6 +3469,7 @@ class ConsciousRuntime:
                 *SELF_OBSERVATION_RUNTIME_KEYS,
                 *METACOGNITIVE_RUNTIME_KEYS,
                 *METACOGNITIVE_PREDICTION_RUNTIME_KEYS,
+                "metacognitive_uncertainty",
             }
             # Once adaptive targets are enabled and initialized, the runtime owns
             # the target unless an experiment explicitly permits external changes.
@@ -3706,6 +3761,19 @@ class ConsciousRuntime:
         self.state.history = self.state.history[-self.history_limit :]
 
         self.refresh_affective_state()
+        expected_accuracy = self.state.self_model.get(
+            "metacognitive_prediction_expected_accuracy",
+        )
+        if isinstance(expected_accuracy, (int, float)) and not isinstance(
+            expected_accuracy, bool
+        ):
+            self.state.self_model = {
+                **self.state.self_model,
+                "metacognitive_uncertainty": round(
+                    1.0 - max(0.0, min(1.0, float(expected_accuracy))),
+                    6,
+                ),
+            }
         self.store.save(self.state)
         return response
 
